@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>จัดการหน่วยงาน - Traffy Fondue Internal Backstage</title>
+  <title>จัดการหน่วยงาน - Traffy Fondue Internal Website</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -31,12 +31,20 @@
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-feature-settings: "tnum" 1, "zero" 1;
     }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-    
-    .table-scroll::-webkit-scrollbar { height: 6px; }
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
+    }
 
     /* REAL PROJECT SIDEBAR STYLES */
     .real-sidebar {
@@ -58,158 +66,253 @@
       background: #f8fafc;
     }
     .real-menu-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 12px; border-radius: 10px;
-      color: #334155; font-size: 14px; font-weight: 500;
-      text-decoration: none; transition: background 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
       cursor: pointer;
     }
-    .real-menu-item:hover { background: #f1f5f9; color: #0f172a; }
-    .real-menu-active { background: #111827 !important; color: #ffffff !important; }
-    
+    .real-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
     .real-group-header {
-      display: flex; align-items: center; gap: 10px; margin: 0;
-      padding: 9px 12px; border-radius: 10px;
-      color: #334155; font-size: 14px; font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
     }
     .real-children-group {
-      display: flex; flex-direction: column; gap: 2px;
-      margin-left: 20px; padding-left: 8px; border-left: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
     }
     .real-nested-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 7px 12px; font-size: 13px; border-radius: 10px;
-      color: #334155; text-decoration: none;
-      transition: background 0.15s, color 0.15s; cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
     }
-    .real-nested-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
 
     /* REAL PROJECT TOPBAR STYLES */
     .real-topbar {
-      height: var(--topbar-height); background: #ffffff;
-      border-bottom: 1px solid #e2e8f0; display: flex;
-      justify-content: space-between; align-items: center;
-      padding: 0 24px; flex-shrink: 0;
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
     }
     .real-topbar-btn {
-      display: flex; align-items: center; gap: 8px;
-      height: 36px; padding: 0 14px; border: 1px solid #e2e8f0;
-      border-radius: 10px; font-size: 13px; font-weight: 500;
-      background: #ffffff; color: #334155; cursor: pointer;
-      text-decoration: none; transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
     }
-    .real-topbar-btn:hover { border-color: #cbd5e1; background: #f8fafc; color: #0f172a; }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
     @media (max-width: 767px) {
-      .real-sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid #e2e8f0; }
-      .real-topbar { padding: 0 16px; height: 56px; }
+      .real-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 280px;
+        max-width: 84vw;
+        height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transform: translateX(-100%);
+      }
+      .real-sidebar.sidebar-open {
+        transform: translateX(0) !important;
+      }
+      .real-topbar {
+        padding: 0 12px;
+        height: 54px;
+      }
     }
-
-    /* Org Management Specific Styles */
-    .view-panel, .org-tab-content { display: none; animation: fadeIn 0.2s ease; }
-    .view-panel.active, .org-tab-content.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
-<body class="flex flex-col md:flex-row h-screen overflow-hidden text-xs">
+<body class="flex h-screen overflow-hidden text-xs">
 
-  <!-- =====================================================================
-       1. EXACT REAL PROJECT SIDEBAR
-       ===================================================================== -->
-  <aside class="real-sidebar select-none">
+  <!-- 1. SIDEBAR NAVIGATION -->
+    <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+
+  <!-- Main Sidebar (Pinned on Desktop, Slide-over Drawer on Mobile) -->
+  <aside id="main-sidebar" class="real-sidebar select-none">
     
-    <!-- UserCard.jsx structure -->
+    <!-- User Card -->
     <div class="real-user-card">
       <div class="flex items-center gap-2.5">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile"
+          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+        />
         <div class="flex-1 min-w-0">
           <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
           <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
         </div>
-        <button type="button" class="w-7 h-7 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+        <!-- Close button on Mobile Drawer -->
+        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <!-- Logout on Desktop -->
+        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
+
+      <!-- Badges -->
       <div class="flex flex-wrap gap-1 mt-2">
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">
+          ADMIN
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">
+          EDITOR
+        </span>
       </div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation Menu Items -->
     <nav class="flex flex-col gap-0.5">
-      <a href="./reset-otp.html" class="real-menu-item">
+      <!-- 1. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item ">
         <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Reset OTP</span>
       </a>
 
-      <!-- เอาคลาส real-menu-active ออกจาก จัดการ Case -->
-      <a href="./index.html" class="real-menu-item">
+      <!-- 2. จัดการ Case -->
+      <a href="./index.html" class="real-menu-item ">
         <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการ Case</span>
       </a>
 
-      <!-- จัดการหน่วยงาน (ย้าย real-menu-active มาไว้ที่นี่แทน) -->
+      <!-- 3. จัดการหน่วยงาน (Group with Children) -->
       <div class="flex flex-col gap-1 mt-1">
         <div class="real-group-header">
           <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">จัดการหน่วยงาน</span>
         </div>
         <div class="real-children-group">
-          <!-- Active Menu -->
-          <a href="./organizations.html" class="real-nested-item real-menu-active font-semibold">
+          <a href="./organizations.html" class="real-nested-item real-menu-active">
             <span class="flex-1 truncate">จัดการหน่วยงาน</span>
           </a>
-          <a href="./search-duplicate.html" class="real-nested-item">
+          <a href="./search-duplicate.html" class="real-nested-item ">
             <span class="flex-1 truncate">ค้นหาชื่อที่คล้ายกัน</span>
           </a>
         </div>
       </div>
 
-      <a href="./flex-message.html" class="real-menu-item mt-1">
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1 ">
         <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Flex Message</span>
       </a>
 
+      <!-- 5. Rich Menu (Group with Children) -->
       <div class="flex flex-col gap-1 mt-1">
         <div class="real-group-header">
           <i data-lucide="layout-grid" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">Rich Menu</span>
         </div>
         <div class="real-children-group">
-          <a href="./richmenu.html" class="real-nested-item">
+          <a href="./richmenu.html" class="real-nested-item ">
             <span class="flex-1 truncate">จัดการ Rich Menu</span>
           </a>
-          <a href="./richmenu-stats.html" class="real-nested-item">
+          <a href="./richmenu-stats.html" class="real-nested-item ">
             <span class="flex-1 truncate">สถิติ</span>
           </a>
         </div>
       </div>
 
-      <a href="./users.html" class="real-menu-item mt-1">
+      <!-- 6. จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1 ">
         <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการผู้ใช้</span>
       </a>
 
-      <a href="./faq.html" class="real-menu-item">
+      <!-- 7. FAQ -->
+      <a href="./faq.html" class="real-menu-item ">
         <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">FAQ</span>
       </a>
     </nav>
   </aside>
 
-  <!-- =====================================================================
-       2. MAIN CONTENT AREA (Topbar + Body)
-       ===================================================================== -->
+  <!-- 2. MAIN CONTENT AREA -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
     
     <!-- Topbar Header -->
     <header class="real-topbar">
-      <!-- Breadcrumb -->
-      <div class="flex items-center gap-2 text-xs">
-        <span class="text-slate-400 font-medium">จัดการหน่วยงาน</span>
+      <!-- Left: Mobile Hamburger + Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs min-w-0">
+        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <span class="text-slate-400 font-medium">Traffy Backstage</span>
         <span class="text-slate-300">/</span>
-        <span id="breadcrumb-title" class="font-bold text-slate-800">ค้นหาหน่วยงาน</span>
+        <span class="font-bold text-slate-800">จัดการหน่วยงาน</span>
       </div>
 
       <div class="flex items-center gap-2.5">
@@ -220,435 +323,58 @@
       </div>
     </header>
 
-    <!-- Scrollable Content Body -->
+    <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
     <div class="flex-1 overflow-y-auto p-4 lg:p-6" id="content-container">
-      
-      <!-- ========================================================
-           VIEW 1: ORG SEARCH 
-           ======================================================== -->
-      <section id="view-org-search" class="view-panel active max-w-2xl mx-auto mt-4 md:mt-10">
-        <div class="text-center mb-6">
-          <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-200 shadow-xs">
-            <i data-lucide="search" class="w-6 h-6"></i>
-          </div>
-          <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-1.5">ค้นหาหน่วยงานที่ต้องการจัดการ</h3>
-          <p class="text-sm text-slate-500">โปรดระบุชื่อหรือ ID ของหน่วยงานในระบบ</p>
+      <div class="max-w-6xl mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
+        
+        <!-- Empty Placeholder Visual -->
+        <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3 shadow-2xs">
+          <i data-lucide="layout-template" class="w-6 h-6 text-slate-400"></i>
         </div>
         
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-          <div class="flex flex-col md:flex-row gap-3">
-            <label for="search-org-input" class="sr-only">ค้นหาหน่วยงาน</label>
-            <div class="relative flex-1">
-              <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-              <input id="search-org-input" type="text" placeholder="พิมพ์ชื่อหน่วยงาน เช่น Traffy @ ITS Lab2" class="w-full rounded-xl border-slate-300 border py-2.5 pl-10 pr-4 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none text-slate-900 placeholder:text-slate-400">
-            </div>
-            <button onclick="mockSelectOrg('Traffy @ ITS Lab2', '151')" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-slate-800 transition-colors w-full md:w-auto text-sm shadow-xs focus:ring-2 focus:ring-slate-900 focus:ring-offset-2 outline-none">
-              ค้นหา
-            </button>
-          </div>
-          
-          <div class="mt-5 pt-5 border-t border-slate-100">
-            <p class="text-xs font-semibold text-slate-500 mb-3 uppercase tracking-wider">หน่วยงานที่พบล่าสุด</p>
-            <div class="flex flex-wrap gap-2">
-              <button onclick="mockSelectOrg('Traffy @ ITS Lab2', '151')" class="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 transition-colors flex items-center gap-1.5">
-                <i data-lucide="building-2" class="w-3.5 h-3.5 text-slate-400"></i>
-                Traffy @ ITS Lab2 (151)
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========================================================
-           VIEW 2: ORG DASHBOARD (6 TABS)
-           ======================================================== -->
-      <section id="view-org-dashboard" class="view-panel max-w-5xl mx-auto w-full pb-10">
+        <h2 class="text-sm font-bold text-slate-800">จัดการหน่วยงาน (รอเพื่อนแปะโค้ด)</h2>
+        <p class="text-xs text-slate-400 mt-1 max-w-md">หน้าโล่งเปล่าๆ พร้อมสำหรับให้เพื่อนนำโค้ด UI มาแปะแทนที่ในส่วนนี้ได้ทันที</p>
         
-        <!-- Header Card -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-5 mb-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center border border-indigo-100/50 shadow-xs shrink-0">
-              <i data-lucide="building-2" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h3 class="text-lg md:text-xl font-bold text-slate-900 leading-tight" id="display-org-name">Traffy @ ITS Lab2</h3>
-              <p class="text-xs text-slate-500 mt-0.5">หน่วยงานหมายเลข : <span id="display-org-id" class="font-mono-code font-medium">151</span></p>
-            </div>
-          </div>
-          <button onclick="clearSelectedOrg()" class="text-xs px-4 py-2 border border-slate-300 rounded-xl hover:bg-slate-50 text-slate-700 font-medium w-full md:w-auto transition-colors flex items-center justify-center gap-1.5">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> เปลี่ยนหน่วยงาน
-          </button>
+        <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-mono-code">
+          <i data-lucide="code" class="w-3.5 h-3.5 text-blue-500"></i>
+          <span>&lt;!-- วางโค้ด UI ของหน้านี้ใน #content-container --&gt;</span>
         </div>
 
-        <!-- Tabs Navigation -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-5">
-          <div class="flex overflow-x-auto table-scroll">
-            <button onclick="switchOrgTab('general')" id="tab-btn-general" class="tab-btn flex-1 px-5 py-3.5 text-[13px] font-bold text-slate-900 border-b-2 border-slate-900 whitespace-nowrap bg-slate-50/50 flex items-center justify-center gap-2">
-              <i data-lucide="info" class="w-4 h-4"></i> ข้อมูลทั่วไป
-            </button>
-            <button onclick="switchOrgTab('account')" id="tab-btn-account" class="tab-btn flex-1 px-5 py-3.5 text-[13px] font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent whitespace-nowrap hover:bg-slate-50 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="users" class="w-4 h-4"></i> บัญชีผู้ใช้
-            </button>
-            <button onclick="switchOrgTab('area')" id="tab-btn-area" class="tab-btn flex-1 px-5 py-3.5 text-[13px] font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent whitespace-nowrap hover:bg-slate-50 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="map" class="w-4 h-4"></i> พื้นที่ดูแล
-            </button>
-            <button onclick="switchOrgTab('qr')" id="tab-btn-qr" class="tab-btn flex-1 px-5 py-3.5 text-[13px] font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent whitespace-nowrap hover:bg-slate-50 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="qr-code" class="w-4 h-4"></i> QR Code
-            </button>
-            <button onclick="switchOrgTab('permission')" id="tab-btn-permission" class="tab-btn flex-1 px-5 py-3.5 text-[13px] font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent whitespace-nowrap hover:bg-slate-50 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="shield" class="w-4 h-4"></i> สิทธิ์
-            </button>
-            <button onclick="switchOrgTab('stats')" id="tab-btn-stats" class="tab-btn flex-1 px-5 py-3.5 text-[13px] font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent whitespace-nowrap hover:bg-slate-50 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="bar-chart-2" class="w-4 h-4"></i> สถิติ
-            </button>
-          </div>
-        </div>
-
-        <!-- Content Container -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-7 min-h-[450px]">
-          
-          <!-- TAB 1: ข้อมูลทั่วไป -->
-          <div id="tab-content-general" class="org-tab-content active">
-            <h3 class="text-sm font-bold text-slate-900 mb-5 pb-2 border-b border-slate-100 flex items-center gap-2">
-              <i data-lucide="info" class="w-4 h-4 text-slate-500"></i> ข้อมูลทั่วไป (General Info)
-            </h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-              <div class="md:col-span-3">
-                <p class="block text-xs font-semibold text-slate-700 mb-2">Logo หน่วยงาน</p>
-                <button class="w-full flex justify-center px-4 py-8 border-2 border-slate-200 border-dashed rounded-xl bg-slate-50 hover:bg-slate-100 cursor-pointer transition-colors outline-none focus:ring-2 focus:ring-slate-400">
-                  <div class="space-y-2 text-center flex flex-col items-center">
-                    <img src="https://ui-avatars.com/api/?name=Traffy&background=fff&color=4f46e5" alt="Logo preview" class="mx-auto h-16 w-16 rounded-xl border border-slate-200 shadow-sm">
-                    <span class="text-xs font-medium text-indigo-600 hover:text-indigo-700">เปลี่ยนรูปโลโก้</span>
-                  </div>
-                </button>
-              </div>
-              
-              <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="md:col-span-2">
-                  <label for="org-name" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">ชื่อหน่วยงาน (name)</label>
-                  <input id="org-name" type="text" value="Traffy @ ITS Lab2" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none text-slate-900 shadow-xs">
-                </div>
-                <div class="md:col-span-2">
-                  <label for="org-desc" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">รายละเอียด (desc)</label>
-                  <input id="org-desc" type="text" placeholder="(ไม่บังคับ)" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none bg-slate-50 text-slate-900 placeholder:text-slate-400">
-                </div>
-                <div class="md:col-span-2">
-                  <label for="org-address" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">ที่อยู่ไปรษณีย์ (address)</label>
-                  <input id="org-address" type="text" value="ตำบลคลองหนึ่ง อำเภอคลองหลวง จังหวัดปทุมธานี" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none text-slate-900 shadow-xs">
-                </div>
-                <div>
-                  <label for="org-tel" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">เบอร์โทร (tel)</label>
-                  <input id="org-tel" type="text" value="0869016124" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none text-slate-900 font-mono-code">
-                </div>
-                <div>
-                  <label for="org-province" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">จังหวัด (province)</label>
-                  <input id="org-province" type="text" value="ปทุมธานี" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none text-slate-900">
-                </div>
-                <div>
-                  <label for="org-latlon" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">พิกัด Latitude, Longitude</label>
-                  <input id="org-latlon" type="text" value="14.07778588, 100.60131311" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none text-slate-900 font-mono-code">
-                </div>
-                <div>
-                  <label for="org-type" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">ประเภทหน่วยงาน (type_id)</label>
-                  <select id="org-type" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none bg-white text-slate-900">
-                    <option>อื่นๆ (รัศมี)</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="org-purpose" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">ประเภทการใช้งาน (purpose_id)</label>
-                  <input id="org-purpose" type="text" value="1=ปัญหาทั่วไป" disabled class="w-full rounded-lg border-slate-200 border px-3 py-2 text-sm bg-slate-100 text-slate-500 cursor-not-allowed">
-                </div>
-                <div>
-                  <label for="org-tags" class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">Tags (fondue_group_tags)</label>
-                  <input id="org-tags" type="text" value="{test_invite}" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none font-mono-code text-slate-900">
-                </div>
-              </div>
-            </div>
-            <div class="pt-5 mt-6 border-t border-slate-100 flex justify-end">
-              <button onclick="showToast('บันทึกข้อมูลทั่วไปสำเร็จ')" class="bg-slate-900 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-800 transition-colors w-full md:w-auto text-sm shadow-xs outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-1 flex items-center justify-center gap-2">
-                <i data-lucide="save" class="w-4 h-4"></i> บันทึกข้อมูลทั่วไป
-              </button>
-            </div>
-          </div>
-
-          <!-- TAB 2: บัญชีผู้ใช้ -->
-          <div id="tab-content-account" class="org-tab-content">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-3 border-b border-slate-100 pb-3">
-              <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="users" class="w-4 h-4 text-slate-500"></i> จัดการเจ้าหน้าที่ในหน่วยงาน
-              </h3>
-              <div class="flex gap-2 w-full md:w-auto">
-                <button class="bg-white border border-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 transition-colors shadow-xs outline-none focus:ring-2 focus:ring-slate-200 flex-1 md:flex-none flex items-center justify-center gap-1.5">
-                  <i data-lucide="qr-code" class="w-3.5 h-3.5"></i> QR Code เชิญ
-                </button>
-                <button class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors shadow-xs outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-1 flex-1 md:flex-none flex items-center justify-center gap-1.5">
-                  <i data-lucide="plus" class="w-3.5 h-3.5"></i> สร้างรหัส
-                </button>
-              </div>
-            </div>
-
-            <div class="overflow-x-auto table-scroll w-full border border-slate-200 rounded-xl shadow-xs">
-              <table class="w-full min-w-[700px] text-left text-[13px] text-slate-600">
-                <thead class="bg-slate-50/80 border-b border-slate-200 text-slate-700">
-                  <tr>
-                    <th class="px-4 py-3 font-semibold w-24">ID</th>
-                    <th class="px-4 py-3 font-semibold w-24">Role</th>
-                    <th class="px-4 py-3 font-semibold">Name</th>
-                    <th class="px-4 py-3 font-semibold w-32">Phone</th>
-                    <th class="px-4 py-3 font-semibold">Email</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 bg-white">
-                  <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="px-4 py-2.5 font-mono-code text-slate-500 text-xs">217529</td>
-                    <td class="px-4 py-2.5"><span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border border-slate-200">staff</span></td>
-                    <td class="px-4 py-2.5 font-semibold text-slate-900">Pittayut Capasuwan</td>
-                    <td class="px-4 py-2.5 font-mono-code text-slate-600 text-xs">0656249312</td>
-                    <td class="px-4 py-2.5 text-slate-500 truncate max-w-[150px]" title="U28411986e589f74593a199ac7ba2bda@mail.com">U28411986e5...@mail.com</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="px-4 py-2.5 font-mono-code text-slate-500 text-xs">216143</td>
-                    <td class="px-4 py-2.5"><span class="bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase shadow-xs">admin</span></td>
-                    <td class="px-4 py-2.5 font-semibold text-slate-900">ยัย บี</td>
-                    <td class="px-4 py-2.5 font-mono-code text-slate-600 text-xs">0928264455</td>
-                    <td class="px-4 py-2.5 text-slate-500">yaibabygoodgril@gmail.com</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="px-4 py-2.5 font-mono-code text-slate-500 text-xs">215695</td>
-                    <td class="px-4 py-2.5"><span class="bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase shadow-xs">admin</span></td>
-                    <td class="px-4 py-2.5 font-semibold text-slate-900">ธนโชติ ทับทิม</td>
-                    <td class="px-4 py-2.5 font-mono-code text-slate-600 text-xs">0899963925</td>
-                    <td class="px-4 py-2.5 text-slate-500 truncate max-w-[150px]" title="abudahbeecitydata1@gmail.com">abudahbee...1@gmail.com</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- TAB 3: พื้นที่ดูแล -->
-          <div id="tab-content-area" class="org-tab-content">
-            <h3 class="text-sm font-bold text-slate-900 mb-5 pb-2 border-b border-slate-100 flex items-center gap-2">
-              <i data-lucide="map" class="w-4 h-4 text-slate-500"></i> พื้นที่ดูแล (Coverage Area)
-            </h3>
-            
-            <div class="mb-5">
-              <p class="text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider" id="area-group-label">รูปแบบการดูแลของหน่วยงานนี้</p>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup" aria-labelledby="area-group-label">
-                <!-- Radio 1: Radius -->
-                <label id="label-radius" class="relative flex cursor-pointer rounded-xl border bg-white p-4 shadow-sm focus-within:ring-2 focus-within:ring-slate-900 border-slate-900 ring-1 ring-slate-900 transition-all items-center gap-3">
-                  <input type="radio" name="r_area" id="radio-radius" class="sr-only" checked onchange="toggleAreaType()"> 
-                  <i data-lucide="circle-check" class="w-5 h-5 text-slate-900 flex-shrink-0" id="icon-radius"></i>
-                  <span class="text-[13px] font-semibold text-slate-900">กำหนดด้วยรัศมีวงกลม (Radius)</span>
-                </label>
-                
-                <!-- Radio 2: Area -->
-                <label id="label-area" class="relative flex cursor-pointer rounded-xl border bg-white p-4 shadow-sm focus-within:ring-2 focus-within:ring-slate-900 border-slate-200 hover:bg-slate-50 transition-all items-center gap-3">
-                  <input type="radio" name="r_area" id="radio-area" class="sr-only" onchange="toggleAreaType()"> 
-                  <i data-lucide="circle" class="w-5 h-5 text-slate-300 flex-shrink-0" id="icon-area"></i>
-                  <span class="text-[13px] font-semibold text-slate-700">กำหนดด้วยพื้นที่ (ตำบล/อำเภอ)</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Content: Radius -->
-            <div id="section-radius" class="block animate-[fadeIn_0.2s_ease]">
-              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                <label for="input-org-radius" class="block text-xs font-bold text-slate-700 mb-2 uppercase">ครอบคลุมรัศมี (radius_km)</label>
-                <div class="flex items-center gap-3 max-w-xs">
-                  <input id="input-org-radius" type="number" step="0.1" value="0.3" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none text-center text-slate-900">
-                  <span class="text-[13px] text-slate-600 font-medium">กิโลเมตร</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Content: Area -->
-            <div id="section-area" class="hidden animate-[fadeIn_0.2s_ease]">
-              <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl text-indigo-900">
-                <div class="flex items-start gap-3">
-                  <i data-lucide="info" class="w-5 h-5 flex-shrink-0 mt-0.5 text-indigo-500"></i>
-                  <div>
-                    <h4 class="text-[13px] font-bold mb-1">การจัดการพื้นที่ระดับ ตำบล/อำเภอ/จังหวัด</h4>
-                    <p class="text-xs opacity-90 leading-relaxed">
-                      ต้องไปเพิ่มพื้นที่รับผิดชอบให้ <span class="font-mono-code bg-white px-1.5 py-0.5 rounded font-semibold border border-indigo-200">group_id=151</span> ในตาราง <span class="font-mono-code bg-white px-1.5 py-0.5 rounded font-semibold border border-indigo-200">voice_fonduegroupcoverage</span>
-                    </p>
-                    <a href="#" class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-indigo-700 hover:text-indigo-800 hover:underline underline-offset-2">
-                      กดดูพื้นที่รับผิดชอบได้ที่นี่ <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pt-5 mt-6 border-t border-slate-100 flex justify-end">
-              <button onclick="showToast('อัปเดตพื้นที่สำเร็จ')" class="bg-slate-900 text-white px-5 py-2 rounded-lg font-medium hover:bg-slate-800 transition-colors w-full md:w-auto text-sm shadow-xs outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-1 flex items-center justify-center gap-2">
-                <i data-lucide="save" class="w-4 h-4"></i> บันทึกข้อมูลพื้นที่
-              </button>
-            </div>
-          </div>
-
-          <!-- TAB 4: QR Code -->
-          <div id="tab-content-qr" class="org-tab-content text-center">
-            <h3 class="text-sm font-bold text-slate-900 mb-5 pb-2 border-b border-slate-100 text-left flex items-center gap-2">
-              <i data-lucide="qr-code" class="w-4 h-4 text-slate-500"></i> QR Code สำหรับแจ้งเรื่อง
-            </h3>
-            <div class="inline-block p-4 bg-white border border-slate-200 rounded-2xl shadow-sm mb-4 mt-2">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://traffy.in.th/org" alt="QR Code" class="w-40 h-40 mx-auto">
-            </div>
-            <p class="text-slate-600 mb-6 text-[13px] font-medium">สแกนเพื่อแจ้งเรื่องตรงเข้าหน่วยงาน <br class="md:hidden">Traffy @ ITS Lab2 ทันที</p>
-            <div class="flex justify-center">
-              <button class="w-full md:w-auto bg-white border border-slate-300 text-slate-700 px-5 py-2 rounded-lg font-semibold hover:bg-slate-50 transition-colors shadow-xs flex items-center justify-center gap-2">
-                <i data-lucide="download" class="w-4 h-4"></i> ดาวน์โหลด .PNG
-              </button>
-            </div>
-          </div>
-
-          <!-- TAB 5: สิทธิ์ -->
-          <div id="tab-content-permission" class="org-tab-content">
-            <h3 class="text-sm font-bold text-slate-900 mb-5 pb-2 border-b border-slate-100 flex items-center gap-2">
-              <i data-lucide="shield" class="w-4 h-4 text-slate-500"></i> สิทธิ์ และ การตั้งค่าสถานะ (Flags)
-            </h3>
-            
-            <div class="space-y-4 mb-6">
-              <!-- Official Flag -->
-              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <label for="flag-official" class="flex items-start justify-between cursor-pointer mb-3">
-                  <div>
-                    <p class="font-bold text-slate-900 text-[13px]">บัญชีทางการ (official_group)</p>
-                    <p class="text-[11px] text-slate-500 mt-0.5">เปิดใช้งาน ต้องระบุ tag_type ด้านล่างด้วย</p>
-                  </div>
-                  <input id="flag-official" type="checkbox" class="w-4 h-4 rounded text-slate-900 focus:ring-slate-900 accent-slate-900 mt-0.5" checked>
-                </label>
-                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                  <label for="flag-tagtype" class="text-[11px] font-bold text-slate-600 uppercase w-20">tag_type</label>
-                  <input id="flag-tagtype" type="text" value="chg-profile-only" class="w-full sm:flex-1 max-w-[200px] rounded-md border-slate-300 border px-3 py-1.5 text-xs focus:border-slate-800 focus:ring-1 focus:ring-slate-800 outline-none font-mono-code text-slate-900">
-                </div>
-              </div>
-
-              <!-- Small Flags -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <label class="flex items-center justify-between p-3.5 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
-                  <span class="font-medium text-slate-800 text-[13px]">อนุญาตให้แสดงในแชทบอท</span>
-                  <input type="checkbox" class="w-4 h-4 accent-slate-900">
-                </label>
-                <label class="flex items-center justify-between p-3.5 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
-                  <span class="font-medium text-slate-800 text-[13px]">อนุญาตแสดงแผนที่สาธารณะ</span>
-                  <input type="checkbox" class="w-4 h-4 accent-slate-900" checked>
-                </label>
-                <label class="flex items-center justify-between p-3.5 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
-                  <span class="font-medium text-slate-800 text-[13px]">อนุญาตดาวน์โหลดไฟล์ CSV</span>
-                  <input type="checkbox" class="w-4 h-4 accent-slate-900" checked>
-                </label>
-              </div>
-            </div>
-            
-            <div class="flex justify-end mb-6 pb-6 border-b border-slate-100">
-              <button onclick="showToast('บันทึกสิทธิ์สำเร็จ')" class="bg-slate-900 text-white px-5 py-2 rounded-lg text-sm font-medium w-full md:w-auto shadow-xs flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
-                <i data-lucide="save" class="w-4 h-4"></i> บันทึกสิทธิ์ / Flags
-              </button>
-            </div>
-
-            <!-- Danger Zone -->
-            <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl">
-              <h4 class="text-rose-800 font-bold text-[13px] mb-1.5 flex items-center gap-1.5">
-                <i data-lucide="triangle-alert" class="w-4 h-4"></i> Danger Zone (ระงับ/ลบหน่วยงาน)
-              </h4>
-              <p class="text-[11px] text-rose-600/90 mb-3">ระบุเวลาซ่อนหน่วยงาน (deleted_at) หรือใส่คำว่า NULL เพื่อให้เปิดใช้งานปกติ</p>
-              <div class="flex flex-col md:flex-row gap-2">
-                <input type="text" value="NULL" class="w-full md:w-48 rounded-lg border-rose-200 border px-3 py-2 text-sm bg-white text-slate-900 font-mono-code focus:border-rose-500 outline-none">
-                <button onclick="openOrgDeleteModal()" class="w-full md:w-auto bg-rose-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-rose-700 shadow-xs transition-colors">บันทึกการระงับ</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- TAB 6: สถิติ -->
-          <div id="tab-content-stats" class="org-tab-content">
-            <h3 class="text-sm font-bold text-slate-900 mb-5 pb-2 border-b border-slate-100 flex items-center gap-2">
-              <i data-lucide="bar-chart-2" class="w-4 h-4 text-slate-500"></i> สถิติภาพรวม (org_info)
-            </h3>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-              <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">เรื่องแจ้งทั้งหมด</p>
-                <p class="text-xl font-bold text-slate-900 mt-1 font-mono-code">4,413</p>
-              </div>
-              <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">คะแนนเฉลี่ย</p>
-                <p class="text-xl font-bold text-amber-600 mt-1 font-mono-code">3.12</p>
-              </div>
-              <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">เจ้าหน้าที่</p>
-                <p class="text-xl font-bold text-slate-900 mt-1 font-mono-code">49</p>
-              </div>
-              <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
-                <p class="text-[10px] text-emerald-700 font-bold uppercase tracking-wider">สถานะการใช้งาน</p>
-                <p class="text-sm font-bold text-emerald-900 mt-1.5">ใช้งานหนัก</p>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="border border-slate-200 rounded-xl overflow-hidden shadow-xs">
-                <div class="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-bold text-[11px] text-slate-700 uppercase tracking-wider">สถิติสถานะเรื่อง (post_state)</div>
-                <div class="p-4 font-mono-code text-xs text-slate-600 bg-white">
-                  <ul class="space-y-2">
-                    <li class="flex justify-between border-b border-slate-100 pb-2"><span>"start" (รอรับเรื่อง)</span> <span class="font-bold text-slate-900">2,395</span></li>
-                    <li class="flex justify-between border-b border-slate-100 pb-2"><span>"finish" (เสร็จสิ้น)</span> <span class="font-bold text-slate-900">1,102</span></li>
-                    <li class="flex justify-between"><span>"follow" (ดำเนินการ)</span> <span class="font-bold text-slate-900">628</span></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="border border-slate-200 rounded-xl overflow-hidden shadow-xs">
-                <div class="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-bold text-[11px] text-slate-700 uppercase tracking-wider">สถิติหมวดหมู่ (problem_type)</div>
-                <div class="p-4 font-mono-code text-xs text-slate-600 bg-white">
-                  <ul class="space-y-2">
-                    <li class="flex justify-between border-b border-slate-100 pb-2"><span>"ถนน"</span> <span class="font-bold text-slate-900">134</span></li>
-                    <li class="flex justify-between border-b border-slate-100 pb-2"><span>"ไฟฟ้า"</span> <span class="font-bold text-slate-900">329</span></li>
-                    <li class="flex justify-between"><span>"อื่นๆ"</span> <span class="font-bold text-slate-900">2,282</span></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-      </section>
-
+      </div>
     </div>
   </main>
 
-  <!-- =====================================================================
-       MODALS & NOTIFICATIONS
-       ===================================================================== -->
-  <div id="org-delete-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
-    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeOrgDeleteModal()"></div>
-    <div class="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full mx-4 relative z-10 animate-[fadeIn_0.2s_ease]">
-      <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4 border border-rose-200">
-        <i data-lucide="triangle-alert" class="w-6 h-6"></i>
-      </div>
-      <h3 class="text-lg font-bold text-slate-900 mb-1.5">ยืนยันการระงับหน่วยงาน</h3>
-      <p class="text-slate-500 text-[13px] mb-6 leading-relaxed">คุณแน่ใจหรือไม่ที่จะระงับหน่วยงานนี้? การกระทำนี้อาจส่งผลกระทบต่อข้อมูลการแจ้งเรื่องที่เกี่ยวข้อง</p>
-      <div class="flex gap-2 justify-end">
-        <button onclick="closeOrgDeleteModal()" class="px-4 py-2 rounded-xl font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors text-xs focus:ring-2 focus:ring-slate-300 outline-none">ยกเลิก</button>
-        <button onclick="confirmOrgDelete()" class="px-4 py-2 rounded-xl font-medium text-white bg-rose-600 hover:bg-rose-700 transition-colors text-xs focus:ring-2 focus:ring-rose-500 outline-none shadow-xs">ยืนยันการระงับ</button>
-      </div>
-    </div>
-  </div>
-
+  <!-- Toast Notification Box -->
   <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
-    <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-slate-800">
+    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-slate-800">
       <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
       <span id="toast-message">แจ้งเตือน</span>
     </div>
   </div>
 
-  <!-- =====================================================================
-       SCRIPTS
-       ===================================================================== -->
   <script>
-    // Initialize Icons
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (!sidebar || !backdrop) return;
+      const isOpen = sidebar.classList.contains('sidebar-open');
+      if (isOpen) {
+        closeMobileSidebar();
+      } else {
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (sidebar) sidebar.classList.remove('sidebar-open');
+      if (backdrop) backdrop.classList.add('hidden');
+    }
+
     lucide.createIcons();
 
-    // Toast Logic
     let toastTimer = null;
     function showToast(msg) {
       const toast = document.getElementById('toast-box');
@@ -663,90 +389,7 @@
       toastTimer = setTimeout(() => {
         toast.classList.add('translate-y-20', 'opacity-0');
         toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2500);
-    }
-
-    // Navigation & Dashboard Logic
-    function mockSelectOrg(orgName, id) {
-      document.getElementById('display-org-name').innerText = orgName;
-      document.getElementById('display-org-id').innerText = id;
-      document.getElementById('view-org-search').classList.remove('active');
-      document.getElementById('view-org-dashboard').classList.add('active');
-      document.getElementById('breadcrumb-title').innerText = orgName;
-      switchOrgTab('general');
-    }
-
-    function clearSelectedOrg() {
-      document.getElementById('view-org-dashboard').classList.remove('active');
-      document.getElementById('view-org-search').classList.add('active');
-      document.getElementById('breadcrumb-title').innerText = "ค้นหาหน่วยงาน";
-    }
-
-    function switchOrgTab(tabId) {
-      // Hide all contents
-      document.querySelectorAll('.org-tab-content').forEach(c => c.classList.remove('active'));
-      document.getElementById('tab-content-' + tabId).classList.add('active');
-      
-      // Update Desktop Buttons
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('border-slate-900', 'text-slate-900', 'bg-slate-50/50', 'font-bold'); 
-        btn.classList.add('border-transparent', 'text-slate-500', 'font-medium');
-      });
-      const activeBtn = document.getElementById('tab-btn-' + tabId);
-      if (activeBtn) {
-        activeBtn.classList.remove('border-transparent', 'text-slate-500', 'font-medium'); 
-        activeBtn.classList.add('border-slate-900', 'text-slate-900', 'bg-slate-50/50', 'font-bold');
-        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }
-
-    // Area Toggle Logic
-    function toggleAreaType() {
-      const isRadius = document.getElementById('radio-radius').checked;
-      const sectionRadius = document.getElementById('section-radius');
-      const sectionArea = document.getElementById('section-area');
-      const labelRadius = document.getElementById('label-radius');
-      const labelArea = document.getElementById('label-area');
-      
-      const iconRadius = document.getElementById('icon-radius');
-      const iconArea = document.getElementById('icon-area');
-
-      if (isRadius) {
-        sectionRadius.classList.remove('hidden'); sectionRadius.classList.add('block');
-        sectionArea.classList.remove('block'); sectionArea.classList.add('hidden');
-        
-        labelRadius.classList.add('border-slate-900', 'ring-1', 'ring-slate-900');
-        labelRadius.classList.remove('border-slate-200');
-        labelArea.classList.remove('border-slate-900', 'ring-1', 'ring-slate-900');
-        labelArea.classList.add('border-slate-200');
-
-        iconRadius.setAttribute('data-lucide', 'circle-check');
-        iconRadius.classList.replace('text-slate-300', 'text-slate-900');
-        iconArea.setAttribute('data-lucide', 'circle');
-        iconArea.classList.replace('text-slate-900', 'text-slate-300');
-      } else {
-        sectionRadius.classList.remove('block'); sectionRadius.classList.add('hidden');
-        sectionArea.classList.remove('hidden'); sectionArea.classList.add('block');
-
-        labelArea.classList.add('border-slate-900', 'ring-1', 'ring-slate-900');
-        labelArea.classList.remove('border-slate-200');
-        labelRadius.classList.remove('border-slate-900', 'ring-1', 'ring-slate-900');
-        labelRadius.classList.add('border-slate-200');
-
-        iconArea.setAttribute('data-lucide', 'circle-check');
-        iconArea.classList.replace('text-slate-300', 'text-slate-900');
-        iconRadius.setAttribute('data-lucide', 'circle');
-        iconRadius.classList.replace('text-slate-900', 'text-slate-300');
-      }
-      lucide.createIcons();
-    }
-
-    // Modal Logic
-    function openOrgDeleteModal() { document.getElementById('org-delete-modal').classList.replace('hidden', 'flex'); }
-    function closeOrgDeleteModal() { document.getElementById('org-delete-modal').classList.replace('flex', 'hidden'); }
-    function confirmOrgDelete() {
-      closeOrgDeleteModal();
-      showToast('อัปเดตสถานะระงับหน่วยงานแล้ว');
+      }, 2200);
     }
   </script>
 </body>
