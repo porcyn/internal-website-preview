@@ -16,7 +16,7 @@
   
   <style>
     :root {
-      --font-family: "Noto Sans Thai", system-ui, sans-serif;
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       --sidebar-width: 260px;
       --topbar-height: 64px;
     }
@@ -24,14 +24,14 @@
       font-family: var(--font-family);
       margin: 0;
       background-color: #f8fafc;
-      color: #0f172a;
+      color: #1e293b;
       -webkit-font-smoothing: antialiased;
     }
     .font-mono-code {
-      font-family: 'JetBrains Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-feature-settings: "tnum" 1, "zero" 1;
     }
-    /* Minimal Custom Scrollbar */
+    /* Minimal Modern Scrollbars */
     ::-webkit-scrollbar {
       width: 5px;
       height: 5px;
@@ -40,14 +40,16 @@
       background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: #e2e8f0;
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+      background: #cbd5e1;
     }
 
-    /* Exact Real Project Sidebar Styles */
+    /* =========================================================
+       REAL PROJECT SIDEBAR STYLES (from /Desktop/internal-website)
+       ========================================================= */
     .real-sidebar {
       width: var(--sidebar-width);
       height: 100vh;
@@ -123,15 +125,17 @@
       color: #0f172a;
     }
 
-    /* Exact Real Project Topbar Styles */
+    /* =========================================================
+       REAL PROJECT TOPBAR STYLES (from /Desktop/internal-website)
+       ========================================================= */
     .real-topbar {
       height: var(--topbar-height);
       background: #ffffff;
       border-bottom: 1px solid #e2e8f0;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
-      padding: 0 32px;
+      padding: 0 24px;
       flex-shrink: 0;
     }
     .real-topbar-btn {
@@ -170,18 +174,19 @@
     }
   </style>
 </head>
-<body class="flex flex-col md:flex-row h-screen overflow-hidden">
+<body class="flex flex-col md:flex-row h-screen overflow-hidden text-xs">
 
   <!-- =====================================================================
-       1. EXACT REAL PROJECT SIDEBAR
+       1. EXACT REAL PROJECT SIDEBAR (from /Desktop/internal-website)
        ===================================================================== -->
-  <aside class="real-sidebar">
-    <!-- User Card (Exact from UserCard.jsx) -->
+  <aside class="real-sidebar select-none">
+    
+    <!-- UserCard.jsx structure -->
     <div class="real-user-card">
       <div class="flex items-center gap-2.5">
         <img
           src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-          alt="User Profile"
+          alt="Profile"
           class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
         />
         <div class="flex-1 min-w-0">
@@ -207,13 +212,13 @@
     <!-- Navigation (Exact items from menu.js) -->
     <nav class="flex flex-col gap-0.5">
       <!-- 1. Reset OTP -->
-      <a href="#reset-otp" onclick="showToast('เมนู Reset OTP (หน้าตัวอย่าง)'); return false;" class="real-menu-item">
+      <a href="#reset-otp" onclick="showToast('เมนู Reset OTP'); return false;" class="real-menu-item">
         <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Reset OTP</span>
       </a>
 
-      <!-- 2. จัดการ Case (ACTIVE) -->
-      <a href="#cases" class="real-menu-item real-menu-active">
+      <!-- 2. จัดการ Case (ACTIVE: real-menu-active) -->
+      <a href="#cases" onclick="switchView('case-detail'); return false;" class="real-menu-item real-menu-active">
         <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการ Case</span>
       </a>
@@ -271,132 +276,104 @@
   </aside>
 
   <!-- =====================================================================
-       2. MAIN APPLICATION SHELL (Topbar + Body)
+       2. MAIN CONTENT AREA (Topbar + Body)
        ===================================================================== -->
-  <div class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
+  <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
     
-    <!-- Exact Real Project Topbar Header (Topbar.jsx) -->
+    <!-- Exact Real Project Topbar Header (Integrated with Breadcrumb & Tools) -->
     <header class="real-topbar">
-      <div class="flex items-center gap-2">
+      <!-- Left Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs">
+        <span class="text-slate-400 font-medium">จัดการ Case</span>
+        <span class="text-slate-300">/</span>
+        <span id="breadcrumb-title" class="font-bold text-slate-800">เจาะลึกข้อมูลเคส (Detail View)</span>
+      </div>
+
+      <!-- Right Topbar Action (สถิติกลุ่มหน่วยงาน + Raw JSON + Moderation Indicator) -->
+      <div class="flex items-center gap-2.5">
+        <span id="header-mod-badge" class="hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+          <span id="header-mod-text">ซ่อนข้อมูลอยู่</span>
+        </span>
+
+        <button onclick="openJsonModal()" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-600 transition-colors shadow-2xs">
+          <i data-lucide="code" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>Raw JSON</span>
+        </button>
+
         <a href="#stats" onclick="showToast('สถิติกลุ่มหน่วยงาน'); return false;" class="real-topbar-btn">
           <i data-lucide="chart-column" class="w-4 h-4 text-slate-600"></i>
-          <span class="text-sm font-medium text-slate-700">สถิติกลุ่มหน่วยงาน</span>
+          <span>สถิติกลุ่มหน่วยงาน</span>
         </a>
       </div>
     </header>
 
-    <!-- Scrollable Page Body (Case Management View) -->
-    <main class="flex-1 overflow-y-auto p-4 lg:p-7" id="main-scroll-body">
-      
-      <!-- ===================================================================
-           VIEW 1: CASE SEARCH & RESULTS
-           =================================================================== -->
-      <section id="view-search" class="max-w-6xl mx-auto space-y-4">
+    <!-- Scrollable Content Body (EXACT DESIGN FROM https://share.gemini.google/iP66Q0ufhArw) -->
+    <div class="flex-1 overflow-y-auto p-4 lg:p-6" id="content-container">
+
+      <!-- ========================================================
+           VIEW 1: CLEAN CASE SEARCH & LIST
+           ======================================================== -->
+      <section id="view-case-list" class="max-w-4xl mx-auto space-y-4 hidden">
         
-        <!-- Search Card -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
+        <!-- Search Box Card -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
           <div>
-            <h1 class="text-base font-bold text-slate-900">ค้นหาเคสเรื่องแจ้ง (Search Case by ID / Ticket UUID)</h1>
-            <p class="text-xs text-slate-500 mt-0.5">ใส่ Case ID หรือ Ticket UUID เพื่อตรวจสอบข้อมูลเบื้องหลัง</p>
+            <h1 class="text-sm font-semibold text-slate-900">ค้นหาเคสเรื่องแจ้ง (Backstage Inspector)</h1>
+            <p class="text-[11px] text-slate-500 mt-0.5">ระบุรหัสเคสเพื่อตรวจสอบความสัมพันธ์ระหว่างหน่วยงาน, AI, และจัดการการซ่อนข้อมูล</p>
           </div>
 
           <div class="flex gap-2">
             <div class="relative flex-1">
-              <input
-                type="text"
-                id="search-input"
-                onkeypress="if(event.key==='Enter') doSearch()"
-                value="2026-FEV7GP"
-                placeholder="พิมพ์ Case ID เช่น 2026-FEV7GP หรือ 2026-F089..."
-                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 pl-8 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 font-mono-code transition-all"
-              />
-              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-3"></i>
+              <input type="text" id="input-case-id" onkeypress="if(event.key==='Enter') handleCaseSearch()" value="2026-FEV7GP" placeholder="พิมพ์ Case ID เช่น 2026-FEV7GP หรือ 2264192..." class="w-full bg-slate-50/70 border border-slate-200 rounded-xl px-3 py-2 pl-8 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 font-mono-code transition-all">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
             </div>
-            <button onclick="doSearch()" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center gap-2 flex-shrink-0">
-              <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <button onclick="handleCaseSearch()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-medium transition-all shadow-xs flex items-center gap-1.5 flex-shrink-0">
               <span>ค้นหาเคส</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </button>
           </div>
 
-          <!-- Quick Samples -->
-          <div class="flex items-center gap-2 pt-1 text-xs text-slate-500 flex-wrap">
+          <!-- Quick Case Suggestions -->
+          <div class="flex items-center gap-2 pt-0.5 text-[11px] text-slate-500">
             <span class="text-slate-400">ตัวอย่างเคสจริง:</span>
-            <button onclick="openCase('2026-FEV7GP')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-mono-code font-semibold transition-colors">
-              #2026-FEV7GP (ทดสอบระบบ Traffy @ ITS Lab)
-            </button>
-            <button onclick="openCase('2026-F089')" class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 hover:bg-amber-100 font-mono-code font-semibold transition-colors">
-              #2026-F089 (ฝาท่อชำรุด ซอยอารีย์ 3)
-            </button>
+            <button onclick="inspectCase('2026-FEV7GP')" class="px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-mono-code transition-colors">#2026-FEV7GP (ทดสอบระบบ Traffy @ ITS Lab)</button>
           </div>
         </div>
 
-        <!-- Search Results List -->
-        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
-          <div class="px-4 py-3 bg-slate-50/80 border-b border-slate-200 flex items-center justify-between text-xs">
-            <span class="font-bold text-slate-800">ผลการค้นหาเคสเบื้องต้น พบทั้งหมด 2 เรื่อง</span>
-            <span class="text-slate-400">คลิกที่การ์ดเพื่อดูรายละเอียดทั้งหมด</span>
-          </div>
+        <!-- Case Results List -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-medium text-slate-500 px-1">ผลการค้นหาเคสล่าสุด</div>
 
-          <!-- Result Items -->
-          <div class="divide-y divide-slate-100">
-            <!-- Item 1: 2026-FEV7GP -->
-            <div onclick="openCase('2026-FEV7GP')" class="p-4 hover:bg-slate-50/80 transition-colors cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex-shrink-0 overflow-hidden flex items-center justify-center p-1.5">
-                  <img src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png" class="w-full h-full object-contain">
+          <!-- Case Card 1 (Real Dump Case #2026-FEV7GP) -->
+          <div onclick="inspectCase('2026-FEV7GP')" class="bg-white p-3.5 rounded-2xl border border-blue-200/80 hover:border-blue-400 transition-all cursor-pointer shadow-2xs group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-12 h-12 rounded-xl bg-slate-50 flex-shrink-0 overflow-hidden border border-slate-200 flex items-center justify-center p-1">
+                <img src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png" class="w-full h-full object-contain">
+              </div>
+              <div class="min-w-0 space-y-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-mono-code font-bold text-xs text-blue-700 group-hover:text-blue-900 transition-colors">#2026-FEV7GP</span>
+                  <span class="text-[10px] text-slate-400 font-mono-code">[msg_id: 2264192]</span>
+                  <span class="px-2 py-0.5 rounded-full text-[9.5px] font-medium bg-amber-50 text-amber-800 border border-amber-200">รับเรื่อง (inprogress)</span>
+                  <span class="text-[10px] text-slate-400">12 ต.ค. 2026 • 17:37 น.</span>
                 </div>
-                <div class="space-y-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="font-mono-code font-bold text-xs text-blue-700">#2026-FEV7GP</span>
-                    <span class="text-[10px] text-slate-400 font-mono-code">[msg_id: 2264192]</span>
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
-                      กำลังดำเนินการ (รับเรื่อง)
-                    </span>
-                    <span class="text-xs text-slate-400">12 ต.ค. 2026 • 17:37 น.</span>
-                  </div>
-                  <div class="text-xs font-semibold text-slate-900 truncate">
-                    ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line
-                  </div>
-                  <div class="text-[11px] text-slate-500 flex items-center gap-2 flex-wrap">
-                    <span class="text-blue-600 font-semibold">Traffy @ ITS Lab (บัญชีทางการ)</span>
-                    <span class="text-slate-300">•</span>
-                    <span>ต.คลองหนึ่ง อ.คลองหลวง จ.ปทุมธานี [14.0779, 100.6013]</span>
-                  </div>
+                <div class="text-xs font-medium text-slate-800 truncate">ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line</div>
+                <div class="text-[10.5px] text-slate-500 flex items-center gap-1.5 flex-wrap">
+                  <span class="text-blue-600 font-medium flex items-center gap-0.5">
+                    <i data-lucide="badge-check" class="w-3 h-3 text-blue-600"></i>
+                    <span>Traffy @ ITS Lab (บัญชีทางการ)</span>
+                  </span>
+                  <span class="text-slate-300">•</span>
+                  <span>ปทุมธานี [14.0779, 100.6013]</span>
+                  <span class="text-slate-300">•</span>
+                  <span class="text-emerald-600 font-medium">Gemini AI สรุปแล้ว</span>
                 </div>
               </div>
-              <button class="px-3.5 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors inline-flex items-center gap-1 self-end sm:self-center">
-                <span>ดูรายละเอียดทั้งหมด</span>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-              </button>
             </div>
-
-            <!-- Item 2: 2026-F089 -->
-            <div onclick="openCase('2026-F089')" class="p-4 hover:bg-slate-50/80 transition-colors cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div class="flex items-center gap-3.5 min-w-0">
-                <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex-shrink-0 overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=300&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                </div>
-                <div class="space-y-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="font-mono-code font-bold text-xs text-blue-700">#2026-F089</span>
-                    <span class="text-[10px] text-slate-400 font-mono-code">[Ticket #2024-L6MYEE]</span>
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
-                      กำลังดำเนินการ (ฝ่ายโยธา)
-                    </span>
-                    <span class="text-xs text-slate-400">21 ต.ค. 2026 • 10:15 น.</span>
-                  </div>
-                  <div class="text-xs font-semibold text-slate-900 truncate">
-                    ฝาท่อชำรุดเสี่ยงอันตราย มอเตอร์ไซค์ล้ม ปากซอยอารีย์ 3
-                  </div>
-                  <div class="text-[11px] text-slate-500 flex items-center gap-2 flex-wrap">
-                    <span class="text-blue-600 font-semibold">สำนักงานเขตพญาไท & กฟน.</span>
-                    <span class="text-slate-300">•</span>
-                    <span>แขวงสามเสนใน เขตพญาไท กทม.</span>
-                  </div>
-                </div>
-              </div>
-              <button class="px-3.5 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors inline-flex items-center gap-1 self-end sm:self-center">
-                <span>ดูรายละเอียดทั้งหมด</span>
+            <div class="flex items-center gap-2 self-end sm:self-center">
+              <button class="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors inline-flex items-center gap-1">
+                <span>เจาะลึกเคส</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
             </div>
@@ -405,656 +382,1332 @@
 
       </section>
 
-      <!-- ===================================================================
-           VIEW 2: DEEP-DIVE CASE INSPECTOR (With Preserved Right Sidebar)
-           =================================================================== -->
-      <section id="view-detail" class="max-w-6xl mx-auto space-y-4 hidden">
+      <!-- ========================================================
+           VIEW 2: COMPLETE CASE INSPECTOR (EXACT DESIGN MATCH)
+           ======================================================== -->
+      <section id="view-case-detail" class="max-w-6xl mx-auto space-y-4">
         
-        <!-- Case Top Bar Navigation -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs">
-          <div class="flex items-center gap-2.5 flex-wrap">
-            <button onclick="backToSearch()" class="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-colors inline-flex items-center gap-1.5">
+        <!-- Case Top Bar: Navigation + Safeguard + Action Links -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs">
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="switchView('case-list')" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 font-medium text-xs transition-colors inline-flex items-center gap-1" title="ย้อนกลับไปค้นหาเคส">
               <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
               <span>ย้อนกลับไปค้นหาเคส</span>
             </button>
-            <div class="h-4 w-px bg-slate-200"></div>
-            <span class="font-mono-code font-bold text-slate-900 text-sm" id="detail-case-id">#2026-FEV7GP</span>
-            <span class="text-[11px] text-slate-500 font-mono-code bg-slate-100 px-2 py-0.5 rounded" id="detail-msg-id">message_id: 2264192</span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
-              • กำลังดำเนินการ (รับเรื่อง)
-            </span>
+            
+            <div class="h-4 w-px bg-slate-200 mx-1"></div>
+
+            <span class="font-mono-code font-bold text-slate-900 text-xs sm:text-sm" id="detail-ticket-id">#2026-FEV7GP</span>
+            <span class="text-[10px] text-slate-500 font-mono-code bg-slate-100 px-1.5 py-0.5 rounded">message_id: 2264192</span>
+            <span class="text-[10px] text-slate-500 font-mono-code bg-slate-100 px-1.5 py-0.5 rounded">รหัส: 3528</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-800 border border-amber-200">กำลังดำเนินการ (รับเรื่อง)</span>
           </div>
 
-          <!-- Actions -->
+          <!-- Read-only link & Action buttons -->
           <div class="flex items-center gap-2 flex-wrap">
-            <a id="external-link" href="https://c.traffy.in.th/2026-FEV7GP?p=3528" target="_blank" class="px-3 py-1.5 rounded-xl border border-rose-200 bg-rose-50 text-rose-700 font-semibold text-xs inline-flex items-center gap-1.5 hover:bg-rose-100 transition-colors">
-              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-              <span>ลิงก์ดูอย่างเดียว (ห้ามปรับสถานะ)</span>
+            <a href="https://c.traffy.in.th/2026-FEV7GP?p=3528" target="_blank" class="px-2.5 py-1.5 rounded-lg border border-blue-200 bg-blue-50/70 hover:bg-blue-100 text-blue-700 font-medium text-[11px] inline-flex items-center gap-1 transition-colors" title="ลิงก์สำหรับดูอย่างเดียว ห้ามกดปรับสถานะ">
+              <i data-lucide="external-link" class="w-3 h-3 text-blue-600"></i>
+              <span>ลิงก์ดูอย่างเดียว (Read-Only)</span>
             </a>
-            <button onclick="openManageModal()" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs transition-colors flex items-center gap-1.5 shadow-2xs">
-              <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-              <span>จัดการสิทธิ์ & ซ่อนรูป/ปก</span>
+
+            <button onclick="copyCaseLink()" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 font-medium text-[11px] transition-colors flex items-center gap-1">
+              <i data-lucide="copy" class="w-3 h-3"></i>
+              <span>คัดลอกลิงก์</span>
             </button>
-            <button onclick="openJsonModal()" class="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium">
-              &lt;/&gt; Raw JSON
+
+            <button onclick="switchView('case-list')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-[11px] transition-colors flex items-center gap-1">
+              <i data-lucide="x" class="w-3 h-3"></i>
+              <span>[ปิด]</span>
             </button>
           </div>
         </div>
 
-        <!-- Hero Summary Card -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs flex flex-col md:flex-row gap-5">
-          <div class="relative w-full md:w-44 h-36 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex-shrink-0 flex items-center justify-center p-2">
-            <img id="detail-cover-img" src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png" class="w-full h-full object-contain">
-            <div class="absolute bottom-2 left-2 bg-slate-900/85 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
-              <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
-              <span>ภาพหน้าปกปัจจุบัน</span>
-            </div>
+        <!-- Read-Only Safeguard Banner -->
+        <div class="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200/90 text-[11px] text-amber-900 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+            <span><strong>คำเตือนระบบ:</strong> ลิงก์เรื่องแจ้งภายนอกเปิดให้ดูได้อย่างเดียว <u>ห้ามกดปรับสถานะใดๆ เด็ดขาด</u> | ชื่อหน่วยงานที่เป็น <span class="text-blue-700 font-bold">สีน้ำเงิน</span> คือบัญชีทางการ</span>
           </div>
-
-          <div class="flex-1 space-y-2 min-w-0">
-            <div class="flex items-center justify-between text-xs text-slate-500 border-b border-slate-100 pb-2">
-              <span id="detail-org-headline" class="font-bold text-blue-600">Traffy @ ITS Lab (บัญชีทางการ)</span>
-              <span id="detail-created-at" class="font-mono-code">2026-10-12 17:37:34</span>
-            </div>
-
-            <h2 id="detail-title" class="text-sm font-bold text-slate-900 leading-snug">
-              ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line
-            </h2>
-
-            <p id="detail-desc" class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 font-mono-code">
-              [open] ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line
-            </p>
-
-            <div class="flex items-center justify-between pt-1 text-xs flex-wrap gap-2">
-              <div class="flex items-center gap-2">
-                <span class="text-slate-400">หมวดหมู่:</span>
-                <span class="px-2 py-0.5 bg-blue-50 text-blue-700 font-semibold rounded-md">ทางเท้า (ID: 6)</span>
-                <span class="text-slate-300">•</span>
-                <span class="text-slate-400">ผู้แจ้งเลือก: อื่นๆ</span>
-              </div>
-              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 text-[11px]">
-                AI Sentiment: 100% สุภาพ ชัดเจน
-              </span>
-            </div>
-          </div>
+          <span class="text-[10px] text-amber-700 font-mono-code flex-shrink-0">is_follow = FALSE</span>
         </div>
 
-        <!-- 2-Column Split: Main Timeline Left + Preserved Sidebar Right -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-          
-          <!-- LEFT 8 COLS: Organization Matrix, Timeline, AI Insights -->
+        <!-- 2-Column Responsive Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+          <!-- Left Column (8 of 12 cols): Case Info, Multi-Org Routing, Timeline, AI -->
           <div class="lg:col-span-8 space-y-4">
             
-            <!-- Routing Matrix -->
-            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
-              <div class="px-4 py-3 bg-slate-900 text-white flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <i data-lucide="building-2" class="w-4 h-4 text-blue-400"></i>
-                  <h3 class="text-xs font-bold">หน่วยงานที่รับเรื่องแจ้ง (Multi-Org Routing Matrix)</h3>
+            <!-- 1. Case Header & Problem Headline with Current Issue Photo -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3.5">
+              
+              <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-2.5">
+                <div class="text-[11px] text-slate-500 font-mono-code">
+                  แจ้งเข้าระบบเมื่อ: <strong>2026-10-12 17:37:34.608781</strong>
                 </div>
-                <span class="text-[10px] bg-white/20 text-white px-2 py-0.5 rounded font-mono-code">
-                  1 หน่วยงานรับผิดชอบ
-                </span>
+                <!-- Global Status Indicator -->
+                <div class="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono-code">
+                  global: inprogress | th: รับเรื่อง
+                </div>
               </div>
 
-              <div class="p-4 space-y-3">
-                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                  <div>
-                    <div class="flex items-center gap-1.5">
-                      <span class="font-bold text-blue-700">Traffy @ ITS Lab</span>
-                      <span class="text-[10px] bg-blue-100 text-blue-800 font-semibold px-1.5 py-0.2 rounded">บัญชีทางการ</span>
-                      <span class="text-[10px] text-slate-400 font-mono-code">[ID: 151]</span>
-                    </div>
-                    <div class="text-[11px] text-slate-500 mt-0.5">
-                      หน่วยงานบรรทัดแรกที่ผู้แจ้งเลือกรับผิดชอบโดยตรงตามพิกัด
+              <!-- Main Info with Current Issue Photo -->
+              <div class="flex flex-col sm:flex-row gap-4 items-start">
+                
+                <!-- ภาพปัญหาปัจจุบัน / ภาพหน้าปก -->
+                <div class="relative group flex-shrink-0 w-full sm:w-36">
+                  <div class="w-full h-32 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 relative shadow-2xs flex items-center justify-center p-2">
+                    <img id="current-cover-image" src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png" alt="ภาพปัญหาปัจจุบัน" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105">
+                    <div class="absolute top-1.5 left-1.5 bg-slate-900/85 text-white text-[9px] font-medium px-1.5 py-0.5 rounded flex items-center gap-1 shadow-xs">
+                      <i data-lucide="image" class="w-2.5 h-2.5 text-amber-400"></i>
+                      <span>ภาพปัญหาปัจจุบัน</span>
                     </div>
                   </div>
-
-                  <div class="flex items-center gap-2">
-                    <span class="px-2 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg font-bold text-[11px]">
-                      สถานะ: รับเรื่อง (กำลังดำเนินการ)
-                    </span>
-                    <button onclick="promptDeleteOrg('151')" class="px-2.5 py-1 text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg font-medium text-[11px] transition-colors">
-                      ลบหน่วยงานออก
+                  <div class="mt-1 flex items-center justify-between text-[10.5px]">
+                    <span id="cover-filename" class="text-slate-400 truncate max-w-[85px]">img-1 (logo)</span>
+                    <button onclick="openChangeCoverSelector()" class="text-indigo-600 hover:text-indigo-800 font-medium hover:underline inline-flex items-center gap-0.5">
+                      <i data-lucide="refresh-cw" class="w-2.5 h-2.5"></i>
+                      <span>เปลี่ยนปก</span>
                     </button>
                   </div>
                 </div>
 
-                <div class="text-[11px] text-slate-500 bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 text-emerald-900 flex items-center gap-2">
-                  <i data-lucide="info" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
-                  <span><strong>การเชิญร่วม/ส่งต่อ:</strong> เคสนี้ไม่มีการเชิญร่วมหรือส่งต่อไปยังหน่วยงานภายนอกอื่น</span>
+                <!-- Text Content & Problem Summary -->
+                <div class="flex-1 space-y-2 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <h2 class="text-xs sm:text-sm font-semibold text-slate-900 leading-snug">
+                      ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line
+                    </h2>
+                  </div>
+
+                  <p class="text-xs text-slate-600 leading-relaxed bg-slate-50/70 p-2.5 rounded-xl border border-slate-100 font-mono-code text-[11px]">
+                    [open] ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line
+                  </p>
+
+                  <div class="flex flex-wrap items-center gap-2 pt-1 text-[11px]">
+                    <span class="text-slate-400">หมวดหมู่ดั้งเดิม:</span>
+                    <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md font-medium">อื่นๆ</span>
+                    <span class="text-slate-300">•</span>
+                    <span class="text-slate-400">หมวดหมู่ที่หน่วยงานปรับ:</span>
+                    <span class="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-md font-semibold">ทางเท้า (ID: 6)</span>
+                  </div>
                 </div>
               </div>
+
             </div>
 
-            <!-- Activity Timeline Stream -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+            <!-- 2. การกระจายเรื่อง & หน่วยงานที่รับเรื่อง (Modern Organization Card) -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3.5">
               <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
                 <div class="flex items-center gap-2">
-                  <i data-lucide="clock" class="w-4 h-4 text-slate-700"></i>
-                  <h3 class="text-xs font-bold text-slate-900">กิจกรรมที่เกิดขึ้น (Activity Timeline)</h3>
-                </div>
-                <span class="text-[10px] text-slate-400">คลิกที่ปุ่มดวงตาเพื่อซ่อน/แสดงกิจกรรม</span>
-              </div>
-
-              <!-- Timeline Items Container -->
-              <div class="space-y-3 relative before:absolute before:inset-0 before:left-3.5 before:w-px before:bg-slate-200" id="timeline-container">
-                <!-- Dynamically populated by JS -->
-              </div>
-            </div>
-
-            <!-- Gemini AI Deep Analysis -->
-            <div class="bg-gradient-to-br from-indigo-50/40 via-white to-purple-50/20 p-5 rounded-2xl border border-indigo-200 shadow-2xs space-y-3.5">
-              <div class="flex items-center justify-between border-b border-indigo-100 pb-2.5">
-                <div class="flex items-center gap-2">
-                  <div class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
-                    AI
+                  <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
                   </div>
                   <div>
-                    <h3 class="text-xs font-bold text-slate-900">AI วิเคราะห์ข้อความเชิงลึก (Gemini 3.1 Flash Lite)</h3>
-                    <div class="text-[10px] text-slate-400 font-mono-code">เวลาประมวลผล: 3.18s • PDPA Passed</div>
+                    <h3 class="text-xs font-semibold text-slate-900">หน่วยงานที่รับเรื่องแจ้ง</h3>
+                    <p class="text-[10px] text-slate-400">หน่วยงานแรกคือหน่วยงานที่ผู้แจ้งเลือกรับผิดชอบ</p>
                   </div>
                 </div>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                  ความสุภาพ 100%
+                <span class="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium">
+                  1 หน่วยงานรับผิดชอบ
                 </span>
               </div>
 
-              <!-- Quick Cards -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+              <!-- Organization Card (Clean & Modern representation of database tables) -->
+              <div class="p-3.5 rounded-xl border border-slate-200/90 bg-slate-50/40 space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200/60 pb-2.5">
+                  <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
+                      IT
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="font-semibold text-blue-600 text-xs">Traffy @ ITS Lab</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-medium bg-blue-100 text-blue-700">บัญชีทางการ</span>
+                        <span class="text-slate-400 text-[10px] font-mono-code">[ID: 151 / org: 151]</span>
+                      </div>
+                      <div class="text-[10px] text-slate-500 font-mono-code">
+                        assignment_id: 127281359 • reported_to_id: 9814986
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Status badges for this org -->
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="px-2 py-0.5 rounded-lg text-[10px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
+                      สถานะ: รับเรื่อง (1219410)
+                    </span>
+                    <span class="px-2 py-0.5 rounded-lg text-[10px] font-medium bg-slate-100 text-slate-700">
+                      หมวด: ทางเท้า (6)
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Org Details Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10.5px]">
+                  <div class="bg-white p-2 rounded-lg border border-slate-200/70">
+                    <span class="text-slate-400 block text-[9.5px]">สถานะกลางระบบ</span>
+                    <span class="font-medium text-slate-800">2 กำลังดำเนินการ</span>
+                  </div>
+                  <div class="bg-white p-2 rounded-lg border border-slate-200/70">
+                    <span class="text-slate-400 block text-[9.5px]">หมวดหมู่ของระบบ</span>
+                    <span class="font-medium text-slate-800">6 ทางเท้า</span>
+                  </div>
+                  <div class="bg-white p-2 rounded-lg border border-slate-200/70">
+                    <span class="text-slate-400 block text-[9.5px]">การส่งต่อ (is_forward)</span>
+                    <span class="font-medium text-slate-800">FALSE</span>
+                  </div>
+                  <div class="bg-white p-2 rounded-lg border border-slate-200/70">
+                    <span class="text-slate-400 block text-[9.5px]">อัปเดตล่าสุด</span>
+                    <span class="font-mono-code text-slate-600 text-[10px]">2026-10-19 17:03</span>
+                  </div>
+                </div>
+
+                <!-- Danger Action: Remove Org Tool with Safe Modal -->
+                <div class="flex items-center justify-between pt-1 text-[11px]">
+                  <span class="text-[10px] text-slate-400 leading-none">
+                    ลบหน่วยงานออกจากเรื่องแจ้งนี้อย่างถาวร (จะไม่ลบออกจาก Timeline)
+                  </span>
+                  <button onclick="handleDeleteGroupPrompt('151')" class="px-2.5 py-1 rounded-lg text-rose-600 hover:bg-rose-50 border border-rose-200 font-medium text-[10.5px] transition-colors inline-flex items-center gap-1">
+                    <i data-lucide="trash-2" class="w-3 h-3"></i>
+                    <span>ลบหน่วยงานนี้</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Delegation & Forwarding Card -->
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px]">
+                  <span class="font-semibold text-slate-700 flex items-center gap-1">
+                    <i data-lucide="git-fork" class="w-3.5 h-3.5 text-indigo-500"></i>
+                    <span>การเชิญร่วม / ส่งต่อหน่วยงาน (Delegation)</span>
+                  </span>
+                  <span class="text-slate-400 font-mono-code text-[10px]">2026-10-12 17:37:34</span>
+                </div>
+                <p class="text-[10.5px] text-slate-500 leading-normal">
+                  (ไม่ได้เชิญร่วมหรือส่งต่อหน่วยงานใดเลย — ประชาชนส่งตรงเข้า Traffy @ ITS Lab)
+                </p>
+              </div>
+
+            </div>
+
+            <!-- 3. ไทม์ไลน์กิจกรรม (Activity Log & Timeline Stream) -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3.5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
+                <div>
+                  <h3 class="text-xs font-semibold text-slate-900 flex items-center gap-1.5">
+                    <i data-lucide="git-commit" class="w-3.5 h-3.5 text-slate-600"></i>
+                    <span>ประวัติกิจกรรมและการดำเนินงาน</span>
+                  </h3>
+                  <p class="text-[10px] text-slate-400 mt-0.5">
+                    คลิกปุ่มดวงตาเพื่อซ่อนกิจกรรม หรือซ่อนรูปภาพในไทม์ไลน์รายชิ้นได้
+                  </p>
+                </div>
+                <div class="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-mono-code">
+                  8 บันทึกกิจกรรม
+                </div>
+              </div>
+
+              <!-- Stream Container -->
+              <div class="space-y-3 relative before:absolute before:inset-0 before:left-3 before:w-px before:bg-slate-200" id="timeline-stream-container">
+                <!-- Dynamically rendered by renderTimelineStream() -->
+              </div>
+            </div>
+
+            <!-- 4. การคุยกัน (Discussion & Comments) -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="messages-square" class="w-3.5 h-3.5 text-slate-500"></i>
+                  <h3 class="text-xs font-semibold text-slate-900">
+                    การคุยกัน (Comment & Discussion)
+                  </h3>
+                </div>
+                <span class="text-[10.5px] text-slate-500">ผู้แจ้ง: กมนัช พรหมบำรุง [654858]</span>
+              </div>
+              <div class="p-3 rounded-xl border border-dashed border-slate-200 text-center text-[11px] text-slate-400">
+                (ไม่มีการสนทนาในเคสนี้)
+              </div>
+            </div>
+
+            <!-- 5. AI วิเคราะห์ข้อความเชิงลึก 9 ด้าน (Gemini Deep Insights) -->
+            <div class="bg-gradient-to-br from-indigo-50/30 via-white to-purple-50/20 p-4 sm:p-5 rounded-2xl border border-indigo-200/70 shadow-2xs space-y-4">
+              
+              <div class="flex items-center justify-between border-b border-indigo-100 pb-2.5 flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs">
+                    AI
+                  </div>
+                  <div>
+                    <h3 class="text-xs font-bold text-slate-900">
+                      AI วิเคราะห์ข้อความเชิงลึก (Gemini 3.1 Flash Lite)
+                    </h3>
+                    <div class="text-[10px] text-slate-500 font-mono-code">
+                      exec_time: 3.18s • timestamp: 2026-10-12 17:37:35
+                    </div>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                  Sentimental: 100% (สุภาพ ชัดเจน)
+                </span>
+              </div>
+
+              <!-- Quick Meta Highlights -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
                 <div class="bg-white p-2.5 rounded-xl border border-indigo-100 space-y-1">
                   <span class="text-slate-400 text-[10px] block">Keywords ตรวจพบ</span>
-                  <div class="flex flex-wrap gap-1 font-mono-code text-[11px] font-semibold text-slate-700">
-                    <span class="bg-slate-100 px-1.5 py-0.5 rounded">#ทดสอบระบบ</span>
-                    <span class="bg-slate-100 px-1.5 py-0.5 rounded">#แจ้งปัญหา</span>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="px-1.5 py-0.5 rounded bg-slate-100 font-mono-code text-[10px]">ทดสอบระบบ</span>
+                    <span class="px-1.5 py-0.5 rounded bg-slate-100 font-mono-code text-[10px]">แจ้งปัญหา</span>
+                    <span class="px-1.5 py-0.5 rounded bg-slate-100 font-mono-code text-[10px]">การใช้งาน</span>
                   </div>
                 </div>
 
                 <div class="bg-white p-2.5 rounded-xl border border-indigo-100 space-y-1">
-                  <span class="text-slate-400 text-[10px] block">หมวดหมู่อนุมาน</span>
-                  <div class="font-bold text-slate-800 text-xs">การทดสอบระบบ (100%)</div>
+                  <span class="text-slate-400 text-[10px] block">หมวดหมู่ที่ AI จำแนก</span>
+                  <div class="font-semibold text-slate-800">
+                    อื่นๆ (Confidence 100%)
+                  </div>
+                  <div class="text-[9.5px] text-slate-500">หมวดทั่วไป: การทดสอบระบบ (100%)</div>
                 </div>
 
                 <div class="bg-white p-2.5 rounded-xl border border-indigo-100 space-y-1">
-                  <span class="text-slate-400 text-[10px] block">ข้อความปรับปรุง</span>
-                  <div class="text-slate-600 italic text-[11px]">"ขอทดสอบการใช้งานระบบแจ้งเหตุเป็นครั้งที่ 1"</div>
+                  <span class="text-slate-400 text-[10px] block">ข้อความปรับปรุง (Improved Input)</span>
+                  <div class="text-slate-700 italic">
+                    "ขอทดสอบการใช้งานระบบแจ้งเหตุเป็นครั้งที่ 1 เมื่อวันที่ 12/10/69"
+                  </div>
                 </div>
               </div>
 
-              <!-- Staff Suggestions -->
-              <div class="space-y-1.5 pt-1">
-                <span class="text-xs font-bold text-slate-800 block">ข้อความแนะนำสำหรับเจ้าหน้าที่ตอบกลับ (คลิกคัดลอกได้ทันที):</span>
-                <div class="p-2.5 bg-white rounded-xl border border-slate-200/90 flex items-center justify-between text-xs gap-2">
-                  <span class="text-slate-700">"ได้รับข้อมูลการทดสอบระบบครั้งที่ 1 เรียบร้อยแล้ว ระบบทำงานเป็นปกติ"</span>
-                  <button onclick="copyText('ได้รับข้อมูลการทดสอบระบบครั้งที่ 1 เรียบร้อยแล้ว ระบบทำงานเป็นปกติ')" class="px-2.5 py-1 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg font-semibold text-[11px] transition-colors flex-shrink-0">
-                    คัดลอกข้อความ
-                  </button>
+              <!-- Gemini Deep Structured 9 Analysis Points -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200/90 space-y-3 text-[11px] leading-relaxed">
+                <div class="font-semibold text-slate-900 text-xs border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  <span>บทวิเคราะห์เชิงลึก 9 ด้าน (Gemini Result)</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-slate-700">
+                  <div class="space-y-1">
+                    <div class="font-semibold text-indigo-900">1. วิเคราะห์ปัญหา:</div>
+                    <p class="text-slate-600 text-[10.5px]">เป็นการทดสอบการใช้งานระบบเพื่อตรวจสอบประสิทธิภาพและความพร้อมของช่องทาง Traffy Fondue มีความคลาดเคลื่อนของข้อมูลเชิงพื้นที่ เนื่องจากระบุพิกัดปทุมธานี แต่ข้อความระบุว่ากรุงเทพฯ</p>
+                  </div>
+
+                  <div class="space-y-1">
+                    <div class="font-semibold text-indigo-900">2. เป้าหมายที่ควรบรรลุ:</div>
+                    <p class="text-slate-600 text-[10.5px]">ระบบตอบรับรวดเร็วเพื่อให้ผู้ทดสอบทราบว่าข้อมูลเข้าระบบแล้ว แสดงสถานะการรับทราบเรื่อง สร้างความมั่นใจว่าหากเกิดเหตุจริงจะจัดการได้</p>
+                  </div>
+
+                  <div class="space-y-1">
+                    <div class="font-semibold text-indigo-900">3. แนวทางแก้ไขปัญหา:</div>
+                    <p class="text-slate-600 text-[10.5px]">• <strong>เบื้องต้น:</strong> เปลี่ยนสถานะเป็น "รับเรื่องแล้ว" และปิดเคสด้วย "เสร็จสิ้น" เพื่อเคลียร์ข้อมูล<br>• <strong>ยั่งยืน:</strong> จัดทำคู่มือการทดสอบแยกต่างหาก และพัฒนาระบบคัดกรองคำแจ้งทดสอบออกจากสถิติจริง</p>
+                  </div>
+
+                  <div class="space-y-1">
+                    <div class="font-semibold text-indigo-900">4. ตัวชี้วัด & ลดภาระ:</div>
+                    <p class="text-slate-600 text-[10.5px]">• วัดระยะเวลาที่เจ้าหน้าที่ตอบสนอง และความแม่นยำพิกัด<br>• จัดทำระบบสถานะอัตโนมัติสำหรับการทดสอบเพื่อลดการตอบโต้ด้วยคน</p>
+                  </div>
+                </div>
+
+                <!-- Suggestions for Staff -->
+                <div class="mt-2.5 pt-2.5 border-t border-slate-100">
+                  <span class="font-semibold text-slate-800 text-[11px] block mb-1.5">ข้อความแนะนำสำหรับเจ้าหน้าที่ตอบกลับ (คลิกเพื่อคัดลอก):</span>
+                  <div class="space-y-1.5">
+                    <div class="p-2 bg-slate-50 rounded-lg border border-slate-200/70 flex items-start justify-between text-[10.5px]">
+                      <span><strong>ยืนยันการรับทราบ:</strong> ได้รับข้อมูลการทดสอบระบบครั้งที่ 1 เรียบร้อยแล้ว ระบบทำงานเป็นปกติ</span>
+                      <button onclick="copyToClipboard('ได้รับข้อมูลการทดสอบระบบครั้งที่ 1 เรียบร้อยแล้ว ระบบทำงานเป็นปกติ')" class="text-indigo-600 hover:underline text-[10px] ml-2 flex-shrink-0">คัดลอก</button>
+                    </div>
+                    <div class="p-2 bg-slate-50 rounded-lg border border-slate-200/70 flex items-start justify-between text-[10.5px]">
+                      <span><strong>ขอบคุณที่ร่วมตรวจสอบ:</strong> ขอบคุณสำหรับการทดสอบระบบ เพื่อให้มั่นใจว่าช่องทางการแจ้งเหตุพร้อมใช้งานสำหรับประชาชน</span>
+                      <button onclick="copyToClipboard('ขอบคุณสำหรับการทดสอบระบบ เพื่อให้มั่นใจว่าช่องทางการแจ้งเหตุพร้อมใช้งานสำหรับประชาชน')" class="text-indigo-600 hover:underline text-[10px] ml-2 flex-shrink-0">คัดลอก</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- 6. AI อื่นๆ (Vision & Reporter Comment) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                  <h4 class="text-xs font-semibold text-slate-900">AI วิเคราะห์รูป (Vision AI)</h4>
+                  <span class="text-[9px] font-mono-code text-slate-400">ai_photo</span>
+                </div>
+                <div class="p-2.5 rounded-xl border border-dashed border-slate-200 text-center text-[10.5px] text-slate-400">
+                  (ไม่มีการวิเคราะห์รูปด้วย AI ในเคสนี้)
+                </div>
+              </div>
+
+              <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                  <h4 class="text-xs font-semibold text-slate-900">AI วิเคราะห์ความคิดเห็น</h4>
+                  <span class="text-[9px] font-mono-code text-slate-400">ai_reporter_comment</span>
+                </div>
+                <div class="p-2.5 rounded-xl border border-dashed border-slate-200 text-center text-[10.5px] text-slate-400">
+                  (ไม่มีการวิเคราะห์ข้อความประเมินของผู้แจ้งด้วย AI)
                 </div>
               </div>
             </div>
 
           </div>
 
-          <!-- RIGHT 4 COLS: PRESERVED SIDEBAR INFO CARDS -->
-          <aside class="lg:col-span-4 space-y-3.5">
+          <!-- Right Column (4 of 12 cols): Exact Location Widget, Reporter Widget, Media Manager -->
+          <div class="lg:col-span-4 space-y-3.5">
             
-            <!-- Widget 1: Location & Map -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2.5">
+            <!-- 1. พิกัดและตำแหน่งที่ตั้ง (ตามภาพที่แนบเป๊ะๆ) -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2.5">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-1.5">
                   <i data-lucide="map-pin" class="w-4 h-4 text-slate-700"></i>
                   <h4 class="text-xs font-bold text-slate-900">พิกัดและตำแหน่งที่ตั้ง</h4>
                 </div>
-                <a href="https://maps.google.com/?q=14.07792,100.60134" target="_blank" class="text-xs text-blue-600 hover:underline inline-flex items-center gap-1 font-semibold">
+                <a href="https://maps.google.com/?q=14.07792,100.60134" target="_blank" class="text-[11px] text-blue-600 hover:underline inline-flex items-center gap-0.5 font-medium">
                   <span>Google Maps</span>
                   <i data-lucide="external-link" class="w-3 h-3"></i>
                 </a>
               </div>
 
-              <!-- Map Image Card -->
-              <div class="h-32 w-full rounded-xl overflow-hidden border border-slate-200 relative flex items-center justify-center">
-                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop&q=60" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-slate-900/10"></div>
-                <!-- Pin marker -->
+              <!-- Map Visual Card with Center Pin -->
+              <div class="h-32 w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-100 relative flex items-center justify-center">
+                <div class="absolute inset-0 bg-cover bg-center opacity-85" style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop&q=60');"></div>
+                
+                <!-- Center Map Pin Marker -->
                 <div class="relative z-10 flex flex-col items-center">
-                  <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg ring-2 ring-white">
-                    <i data-lucide="map-pin" class="w-4 h-4"></i>
+                  <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md ring-2 ring-white">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
                   </div>
-                  <span class="mt-1 px-2 py-0.5 bg-white text-slate-900 text-[10px] font-mono-code font-bold rounded shadow-xs">
+                  <span class="mt-1 px-2 py-0.5 bg-white/95 backdrop-blur-xs text-slate-900 text-[10px] font-mono-code font-bold rounded shadow-xs border border-slate-200">
                     14.07792, 100.60134
                   </span>
                 </div>
               </div>
 
-              <div class="text-xs text-slate-700 space-y-0.5">
-                <div class="font-bold text-slate-900">QGRM+RWR Bangkok</div>
-                <div class="text-[11px] text-slate-500">ตำบลคลองหนึ่ง อำเภอคลองหลวง จังหวัดปทุมธานี</div>
+              <!-- Location Text Labels -->
+              <div class="text-[11px] text-slate-700 space-y-0.5 pt-0.5">
+                <div class="font-bold text-slate-900 text-xs">QGRM+RWR Bangkok</div>
+                <div class="text-[10.5px] text-slate-500">ตำบลคลองหนึ่ง อำเภอคลองหลวง จังหวัดปทุมธานี</div>
               </div>
             </div>
 
-            <!-- Widget 2: Reporter Info -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
+            <!-- 2. ข้อมูลผู้แจ้งเรื่อง (ตามภาพที่แนบเป๊ะๆ) -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2.5">
               <h4 class="text-xs font-bold text-slate-900">ข้อมูลผู้แจ้งเรื่อง</h4>
-              <div class="space-y-1.5 text-xs">
+              
+              <div class="space-y-2 text-[11px]">
                 <div class="flex items-center justify-between">
                   <span class="text-slate-400">ชื่อผู้แจ้ง:</span>
-                  <span class="font-bold text-slate-900">กมนัช พรหมบำรุง</span>
+                  <span class="text-slate-900 font-semibold">กมนัช พรหมบำรุง</span>
                 </div>
                 <div class="flex items-center justify-between">
                   <span class="text-slate-400">User ID:</span>
-                  <span class="font-mono-code font-bold text-slate-800">[654858]</span>
+                  <span class="font-mono-code text-slate-800 font-bold">[654858]</span>
                 </div>
                 <div class="flex items-center justify-between">
-                  <span class="text-slate-400">ช่องทางแจ้ง:</span>
-                  <span class="text-slate-800 font-semibold">LINE Fondue Bot</span>
+                  <span class="text-slate-400">ช่องทาง:</span>
+                  <span class="text-slate-800 font-medium">LINE Fondue Bot</span>
                 </div>
               </div>
             </div>
 
-            <!-- Widget 3: Media Gallery in Case -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
+            <!-- 3. คลังรูปภาพในเคส (Media Manager & Cover Selection) -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-1.5">
-                  <i data-lucide="images" class="w-4 h-4 text-slate-700"></i>
-                  <h4 class="text-xs font-bold text-slate-900">รูปภาพในเคส (Media Manager)</h4>
+                  <i data-lucide="images" class="w-3.5 h-3.5 text-slate-600"></i>
+                  <h3 class="text-xs font-semibold text-slate-900">รูปภาพในเคส (Media Manager)</h3>
                 </div>
-                <span class="text-[11px] text-slate-400" id="media-count">2 รูป</span>
+                <span class="text-[10px] text-slate-400" id="media-count-badge">2 รูป</span>
               </div>
 
-              <p class="text-[11px] text-slate-500">
-                คลิก <span class="text-amber-700 font-bold">"ตั้งเป็นปก"</span> หรือ <span class="text-rose-600 font-bold">"ซ่อนรูป"</span> เพื่อคัดกรองข้อมูลสาธารณะ
+              <p class="text-[10.5px] text-slate-500 leading-normal">
+                กด <span class="text-amber-700 font-semibold">"⭐ ปก"</span> เพื่อตั้งภาพหน้าปก และกด <span class="text-rose-600 font-semibold">"👁️"</span> เพื่อซ่อนรูปที่ไม่เหมาะสม (พร้อมระบุเหตุผล)
               </p>
 
-              <!-- Media List -->
-              <div class="space-y-2" id="media-list-container">
-                <!-- Populated by JS -->
+              <!-- Media Cards List -->
+              <div class="space-y-2" id="media-inspector-container">
+                <!-- Dynamically rendered by renderMediaInspector() -->
               </div>
             </div>
 
-            <!-- Widget 4: Audit Diagnostics -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2 text-xs">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-slate-800">🛡️ สถานะการตรวจสอบหลังบ้าน</span>
-                <span class="text-[10px] bg-slate-100 text-slate-500 font-mono-code px-1.5 py-0.2 rounded">ENV: PROD</span>
-              </div>
-              <div class="space-y-1 text-[11px] text-slate-600">
-                <div>• รูปภาพที่ซ่อน: <strong class="text-emerald-700" id="audit-hidden-media">0 รูป (APPROVED)</strong></div>
-                <div>• ไทม์ไลน์ที่ซ่อน: <strong class="text-emerald-700" id="audit-hidden-timeline">0 รายการ (PUBLIC)</strong></div>
-                <div>• Latency: <strong class="font-mono-code text-slate-800">142ms • OK</strong></div>
-              </div>
-            </div>
-
-          </aside>
+          </div>
 
         </div>
 
       </section>
 
-    </main>
-  </div>
+    </div>
+  </main>
 
-  <!-- =====================================================================
-       3. MODALS (Manage Moderation, Confirm Action, Raw JSON)
-       ===================================================================== -->
-  
-  <!-- Manage Moderation Modal -->
-  <div id="manage-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="font-bold text-slate-900 text-sm">จัดการสิทธิ์และรูปภาพ (Moderation Hub)</h3>
-        <button onclick="closeManageModal()" class="p-1 rounded-md text-slate-400 hover:text-slate-600">
+  <!-- ========================================================
+       3. MODALS (Audit Reason, Cover Picker, Raw JSON)
+       ======================================================== -->
+  <!-- 3.1 REASON CONFIRMATION MODAL (Popup ยืนยันระบุเหตุผลเสมอ) -->
+  <div id="reason-confirm-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl border border-slate-200 space-y-3.5 animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-slate-100 pb-2.5">
+        <div class="flex items-center gap-2">
+          <div id="reason-modal-icon-container" class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5" id="reason-modal-icon"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-slate-900 text-xs sm:text-sm" id="reason-modal-title">ยืนยันการดำเนินการ</h3>
+            <p class="text-[10px] text-slate-500" id="reason-modal-subtitle">โปรดระบุเหตุผลในการแก้ไขข้อมูลเพื่อบันทึก Audit Trail ของระบบ</p>
+          </div>
+        </div>
+        <button onclick="closeReasonModal()" class="p-1 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <div class="space-y-3" id="modal-media-list">
-        <!-- Rendered by JS -->
+      <!-- Item Preview Snippet in Modal -->
+      <div id="reason-modal-preview" class="p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center gap-2.5 text-xs">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Quick Preset Reason Chips -->
+      <div class="space-y-1">
+        <label class="text-[10.5px] font-medium text-slate-600">เลือกเหตุผลด่วน (Quick Presets):</label>
+        <div class="flex flex-wrap gap-1" id="quick-reason-chips">
+          <!-- Dynamically populated based on action type -->
+        </div>
+      </div>
+
+      <!-- Reason Textarea -->
+      <div class="space-y-1">
+        <label class="text-[10.5px] font-medium text-slate-700 flex items-center justify-between">
+          <span>รายละเอียดเหตุผลประกอบ <span class="text-rose-500">*จำเป็นต้องระบุ</span>:</span>
+          <span class="text-[9.5px] text-slate-400 font-mono-code">Super Admin Log</span>
+        </label>
+        <textarea id="reason-modal-textarea" rows="3" placeholder="พิมพ์เหตุผล เช่น พบข้อมูลส่วนบุคคล / ป้ายทะเบียนรถ / ไม่เกี่ยวข้องกับเรื่องร้องเรียน..." class="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 text-slate-800 transition-all"></textarea>
+        <div id="reason-error-msg" class="text-[10.5px] text-rose-600 hidden font-medium flex items-center gap-1">
+          <i data-lucide="alert-circle" class="w-3 h-3"></i>
+          <span>กรุณาระบุเหตุผลก่อนกดยืนยัน</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+        <button onclick="closeReasonModal()" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+          ยกเลิก
+        </button>
+        <button onclick="submitReasonAction()" id="reason-modal-submit-btn" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5">
+          <i data-lucide="check" class="w-3.5 h-3.5"></i>
+          <span>ยืนยันการบันทึก</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3.2 SELECT COVER PICKER MODAL -->
+  <div id="cover-picker-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-4 shadow-2xl border border-slate-200 space-y-3.5 animate-in fade-in zoom-in-95 duration-150">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+            <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-slate-900 text-xs">เลือกภาพปัญหาปัจจุบัน (หน้าปก)</h3>
+            <p class="text-[9.5px] text-slate-400">เลือกรูปที่เห็นปัญหาชัดเจนที่สุดเพื่อตั้งเป็นภาพปก</p>
+          </div>
+        </div>
+        <button onclick="closeCoverPickerModal()" class="p-1 rounded-md text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-1.5 max-h-60 overflow-y-auto pr-1" id="cover-picker-list">
+        <!-- Rendered dynamically -->
       </div>
 
       <div class="flex justify-end pt-2 border-t border-slate-100">
-        <button onclick="closeManageModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold">
-          เสร็จสิ้น
-        </button>
+        <button onclick="closeCoverPickerModal()" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-medium text-slate-600 hover:bg-slate-50">ปิด</button>
       </div>
     </div>
   </div>
 
-  <!-- Raw JSON Modal -->
-  <div id="json-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-950 text-white rounded-2xl max-w-2xl w-full p-5 shadow-2xl border border-slate-800 space-y-3">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
-        <span class="font-mono-code text-xs font-semibold text-slate-300">Raw Database Payload (Case Details)</span>
+  <!-- 3.3 RAW JSON MODAL -->
+  <div id="json-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 text-slate-100 rounded-2xl max-w-2xl w-full p-4 shadow-2xl border border-slate-800 space-y-2.5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <span class="font-mono-code text-xs font-medium text-slate-300">Raw Case Payload (Traffy Backend Structure)</span>
         <button onclick="closeJsonModal()" class="text-slate-400 hover:text-white">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
-      <pre class="bg-slate-900 p-3 rounded-xl text-[11px] font-mono-code text-emerald-400 overflow-x-auto max-h-80"><code id="json-content"></code></pre>
+      <pre class="bg-slate-900 p-3 rounded-xl text-[10.5px] font-mono-code text-emerald-400 overflow-x-auto max-h-80"><code id="raw-json-content"></code></pre>
       <div class="flex justify-end">
-        <button onclick="closeJsonModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-xl text-white font-medium">ปิด</button>
+        <button onclick="closeJsonModal()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-white">ปิด</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-200 pointer-events-none bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-2">
-    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-    <span id="toast-text">สำเร็จ</span>
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-box" class="fixed bottom-4 right-4 z-50 transform translate-y-20 opacity-0 transition-all duration-200 pointer-events-none bg-slate-900 text-white px-3 py-2 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2">
+    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+    <span id="toast-message">เรียบร้อย</span>
   </div>
 
-  <!-- =====================================================================
-       4. JAVASCRIPT LOGIC
-       ===================================================================== -->
+  <!-- ========================================================
+       4. JAVASCRIPT APPLICATION LOGIC
+       ======================================================== -->
   <script>
     lucide.createIcons();
 
-    // Mock Database Store
-    const CASES_DB = {
-      "2026-FEV7GP": {
-        id: "2026-FEV7GP",
-        messageId: "2264192",
-        refCode: "3528",
-        title: "ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line",
-        description: "[open] ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line",
-        createdAt: "2026-10-12 17:37:34",
-        orgHeadline: "Traffy @ ITS Lab (บัญชีทางการ)",
-        coverIndex: 0,
-        media: [
-          {
-            id: "m-1",
-            title: "ภาพโลโก้แจ้งเรื่องเริ่มต้น",
-            url: "https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png",
-            hidden: false
-          },
-          {
-            id: "m-2",
-            title: "ภาพถ่ายหน้างานตัวอย่าง",
-            url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&auto=format&fit=crop&q=80",
-            hidden: false
-          }
-        ],
-        timeline: [
-          {
-            id: "tl-1",
-            author: "กมนัช พรหมบำรุง",
-            role: "ผู้แจ้ง",
-            time: "2026-10-12 17:37:34",
-            text: "[open] ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line",
-            hidden: false
-          },
-          {
-            id: "tl-2",
-            author: "AbuDaHBeE ทับทิม",
-            role: "จนท. รับเรื่อง",
-            time: "2026-10-14 09:05:20",
-            text: "กำลังดำเนินการตรวจสอบหน้างาน",
-            hidden: false
-          },
-          {
-            id: "tl-3",
-            author: "ธนโชติ ทับทิม",
-            role: "จนท. โยธา",
-            time: "2026-10-19 16:59:02",
-            text: "Traffy @ ITS Lab เปลี่ยนประเภทเรื่องเป็น ทางเท้า",
-            hidden: false
-          },
-          {
-            id: "tl-4",
-            author: "Moshi - test NAT:D",
-            role: "จนท. ตรวจสอบ",
-            time: "2026-10-20 18:25:39",
-            text: "ถูกแจ้งว่าซ้ำกับ 2026-JXKL2P และเป็นเรื่องแจ้งหลัก",
-            hidden: false
-          }
-        ]
-      },
-      "2026-F089": {
-        id: "2026-F089",
-        messageId: "1982441",
-        refCode: "1014",
-        title: "ฝาท่อชำรุดเสี่ยงอันตราย มอเตอร์ไซค์ล้ม ปากซอยอารีย์ 3",
-        description: "ฝาท่อระบายน้ำทรุดตัว แตกหักเป็นรูใหญ่ หน้าปากซอยอารีย์ 3 ตอนกลางคืนมืดมาก เกรงว่าจะเกิดอุบัติเหตุ",
-        createdAt: "2026-10-21 10:15:22",
-        orgHeadline: "สำนักงานเขตพญาไท & กฟน.",
-        coverIndex: 0,
-        media: [
-          {
-            id: "m-f089-1",
-            title: "ภาพฝาท่อแตกปากซอยอารีย์ 3",
-            url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&auto=format&fit=crop&q=80",
-            hidden: false
-          }
-        ],
-        timeline: [
-          {
-            id: "tl-f1",
-            author: "ประชาชน (ผ่าน LINE)",
-            role: "ผู้แจ้ง",
-            time: "2026-10-21 10:15:22",
-            text: "ฝาท่อระบายน้ำทรุดตัว แตกหักเป็นรูใหญ่ หน้าปากซอยอารีย์ 3",
-            hidden: false
-          },
-          {
-            id: "tl-f2",
-            author: "สำนักงานเขตพญาไท",
-            role: "ฝ่ายโยธา",
-            time: "2026-10-21 10:28:00",
-            text: "เจ้าหน้าที่ฝ่ายโยธารับเรื่องแล้ว กำลังส่งช่างออกไปสำรวจหน้างาน",
-            hidden: false
-          }
-        ]
-      }
+    // Authenticated Case State (Matching 100% of User's Backend Dump #2026-FEV7GP)
+    let caseData = {
+      id: "2026-FEV7GP",
+      messageId: "2264192",
+      refCode: "3528",
+      createdAt: "2026-10-12 17:37:34.608781",
+      coverId: "img-1",
+      coverReason: "ภาพแจ้งเรื่องเริ่มต้นจากผู้ใช้",
+      coverUpdatedAt: "2026-10-12 17:37:34",
+      reportedTos: [
+        {
+          id: "9814986",
+          hashtag: "-",
+          groupName: "Traffy @ ITS Lab",
+          groupId: "151",
+          isOfficial: true,
+          deleted: null
+        }
+      ],
+      media: [
+        {
+          id: "img-1",
+          title: "ภาพโลโก้ Traffy Fondue ที่ผู้ใช้ส่ง",
+          url: "https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png",
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        },
+        {
+          id: "img-2",
+          title: "ภาพถ่ายหน้างานตัวอย่าง",
+          url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&auto=format&fit=crop&q=60",
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        }
+      ],
+      timeline: [
+        {
+          id: "11784072",
+          updatedOn: "2026-10-12 17:37:34.608781",
+          author: "กมนัช พรหมบำรุง",
+          userId: "654858",
+          groupName: "-",
+          role: "ผู้แจ้ง (LINE)",
+          status: "open",
+          stateNameTh: "รอรับเรื่อง",
+          note: "[open]ทดสอบแจ้งเข้า เพื่อลองใช้งานระบบ ครั้งที่1 12/10/69 | by line",
+          mediaIds: ["img-1"],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        },
+        {
+          id: "11798004",
+          updatedOn: "2026-10-14 09:05:20.462481",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab [151]",
+          role: "จนท. กำลังดำเนินการ",
+          status: "inprogress",
+          stateNameTh: "กำลังดำเนินการ",
+          note: "[open]ขอทดสอบ",
+          mediaIds: [],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        },
+        {
+          id: "11870399",
+          updatedOn: "2026-10-19 16:59:02.476348",
+          author: "ธนโชติ ทับทิม",
+          userId: "35548",
+          groupName: "Traffy @ ITS Lab [151]",
+          role: "จนท. ปรับเปลี่ยนประเภท",
+          status: "inprogress",
+          stateNameTh: "กำลังดำเนินการ",
+          note: "Traffy @ ITS Lab เปลี่ยนประเภทเป็น ทางเท้า",
+          mediaIds: [],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        },
+        {
+          id: "11870407",
+          updatedOn: "2026-10-19 17:00:03.367665",
+          author: "ธนโชติ ทับทิม",
+          userId: "35548",
+          groupName: "Traffy @ ITS Lab [151]",
+          role: "จนท. รับเรื่อง",
+          status: "inprogress",
+          stateNameTh: "รับเรื่อง",
+          note: "[open]ลองเทส",
+          mediaIds: [],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        },
+        {
+          id: "11870435",
+          updatedOn: "2026-10-19 17:02:14.204792",
+          author: "ธนโชติ ทับทิม",
+          userId: "35548",
+          groupName: "Traffy @ ITS Lab [151]",
+          role: "จนท. รับเรื่อง",
+          status: "inprogress",
+          stateNameTh: "รับเรื่อง",
+          note: "[open]ทดสอบอีกรอบ",
+          mediaIds: [],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        },
+        {
+          id: "11870442",
+          updatedOn: "2026-10-19 17:03:03.210669",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab [151]",
+          role: "จนท. รับเรื่อง",
+          status: "inprogress",
+          stateNameTh: "รับเรื่อง",
+          note: "ทดสอบ",
+          mediaIds: [],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: ""
+        },
+        {
+          id: "11887094",
+          updatedOn: "2026-10-20 18:25:39.847806",
+          author: "Moshi - test NAT:D",
+          userId: "8004",
+          groupName: "Traffy @ ITS Lab [151]",
+          role: "จนท. แจ้งเคสซ้ำ",
+          status: "inprogress",
+          stateNameTh: "รับเรื่อง",
+          note: "ถูกแจ้งว่าซ้ำกับ 2026-JXKL2P และเป็นเรื่องแจ้งหลัก",
+          mediaIds: [],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: "",
+          isDuplicateEvent: true
+        },
+        {
+          id: "11887105",
+          updatedOn: "2026-10-20 18:26:29.880699",
+          author: "Moshi - test NAT:D",
+          userId: "8004",
+          groupName: "Traffy @ ITS Lab [151]",
+          role: "จนท. ยกเลิกเคสซ้ำ",
+          status: "inprogress",
+          stateNameTh: "รับเรื่อง",
+          note: "2026-JXKL2P ถูกยกเลิกการแจ้งซ้ำ จากเรื่องแจ้งหลักหมายเลข 2026-FEV7GP",
+          mediaIds: [],
+          hidden: false,
+          hiddenReason: "",
+          hiddenBy: "",
+          hiddenAt: "",
+          isDuplicateEvent: true
+        }
+      ]
     };
 
-    let currentCaseId = "2026-FEV7GP";
+    let pendingAction = null; 
 
-    function doSearch() {
-      const q = document.getElementById('search-input').value.trim();
-      if (CASES_DB[q]) {
-        openCase(q);
-      } else {
-        showToast(`ไม่พบรหัสเคส "${q}"`);
-      }
-    }
+    const REASON_PRESETS = {
+      hide_media: [
+        "ข้อมูลส่วนบุคคล / ติดบัตรประชาชน / PDPA",
+        "ภาพไม่เหมาะสม / คำหยาบคาย / อนาจาร",
+        "ภาพไม่เกี่ยวกับเรื่องร้องเรียน",
+        "ภาพเบลอ / มืดมองไม่เห็นปัญหา",
+        "ภาพติดป้ายทะเบียนรถหรือใบหน้าบุคคลภายนอก"
+      ],
+      hide_timeline: [
+        "ข้อความสื่อสารภายในระหว่างช่างและหน่วยงาน",
+        "มีถ้อยคำไม่สุภาพหรือพาดพิงบุคคลอื่น",
+        "ข้อมูลระบุตัวตนผู้แจ้ง หรือเบอร์โทรศัพท์ (PDPA)",
+        "แจ้งเรื่องซ้ำซ้อนหรือประสานงานผิดช่องทาง"
+      ],
+      set_cover: [
+        "ภาพนี้เห็นจุดเกิดเหตุและระดับความเสียหายชัดเจนที่สุด",
+        "ภาพถ่ายมุมกว้างเห็นบริบทถนนและป้ายซอย",
+        "เปลี่ยนเป็นภาพขณะช่างเข้าแก้ไขหน้างาน",
+        "ภาพเดิมมืดหรือไม่ตรงจุดปัญหา"
+      ],
+      unhide: [
+        "ตรวจสอบแล้วไม่มีข้อมูลส่วนบุคคล สามารถแสดงผลได้",
+        "ตรวจสอบแล้วภาพเหมาะสมและตรงกับเรื่องแจ้ง",
+        "ปลดการซ่อนตามคำร้องขอของหัวหน้าหน่วยงาน"
+      ]
+    };
 
-    function openCase(caseId) {
-      currentCaseId = caseId;
-      const c = CASES_DB[caseId];
-      if (!c) return;
-
-      document.getElementById('view-search').classList.add('hidden');
-      document.getElementById('view-detail').classList.remove('hidden');
-
-      // Populate Detail View
-      document.getElementById('detail-case-id').innerText = `#${c.id}`;
-      document.getElementById('detail-msg-id').innerText = `message_id: ${c.messageId}`;
-      document.getElementById('detail-title').innerText = c.title;
-      document.getElementById('detail-desc').innerText = c.description;
-      document.getElementById('detail-created-at').innerText = c.createdAt;
-      document.getElementById('detail-org-headline').innerText = c.orgHeadline;
-      document.getElementById('external-link').href = `https://c.traffy.in.th/${c.id}?p=${c.refCode}`;
-
-      renderCaseMedia();
-      renderCaseTimeline();
-      updateAuditStatus();
-      lucide.createIcons();
-      document.getElementById('main-scroll-body').scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function backToSearch() {
-      document.getElementById('view-detail').classList.add('hidden');
-      document.getElementById('view-search').classList.remove('hidden');
-      lucide.createIcons();
-    }
-
-    function renderCaseTimeline() {
-      const c = CASES_DB[currentCaseId];
-      const container = document.getElementById('timeline-container');
-      if (!container || !c) return;
+    function renderTimelineStream() {
+      const container = document.getElementById('timeline-stream-container');
+      if (!container) return;
 
       container.innerHTML = '';
-      c.timeline.forEach((item, idx) => {
-        const div = document.createElement('div');
-        div.className = `relative pl-7 transition-all ${item.hidden ? 'opacity-50' : ''}`;
-        div.innerHTML = `
-          <div class="absolute left-2 top-2.5 w-3 h-3 rounded-full ${item.hidden ? 'bg-amber-500' : 'bg-slate-900'} ring-4 ring-white"></div>
-          <div class="p-3 bg-white rounded-xl border ${item.hidden ? 'border-amber-300 bg-amber-50/30' : 'border-slate-200/90'} shadow-2xs space-y-1">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-900">${item.author}</span>
-                <span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium">${item.role}</span>
-                ${item.hidden ? '<span class="text-[9px] bg-amber-500 text-white px-1.5 rounded font-bold">ซ่อนอยู่</span>' : ''}
+      let hiddenTimelineCount = 0;
+
+      caseData.timeline.forEach((item) => {
+        if (item.hidden) hiddenTimelineCount++;
+
+        const isHidden = item.hidden;
+        const itemEl = document.createElement('div');
+        itemEl.className = `relative pl-6 transition-all ${isHidden ? 'opacity-70' : ''}`;
+
+        let photosHtml = '';
+        if (item.mediaIds && item.mediaIds.length > 0) {
+          photosHtml = '<div class="flex flex-wrap gap-2 pt-2">';
+          item.mediaIds.forEach(mId => {
+            const m = caseData.media.find(x => x.id === mId);
+            if (!m) return;
+            const isCover = (caseData.coverId === m.id);
+            const isMediaHidden = m.hidden;
+
+            photosHtml += `
+              <div class="relative group rounded-xl overflow-hidden border ${
+                isCover ? 'border-amber-400 ring-2 ring-amber-200' : 'border-slate-200'
+              } w-20 h-20 bg-slate-50 flex-shrink-0 shadow-2xs">
+                
+                <img src="${m.url}" class="w-full h-full object-contain p-1 transition-all ${isMediaHidden ? 'blur-xs grayscale opacity-50' : ''}">
+                
+                ${isCover ? '<span class="absolute top-1 left-1 bg-amber-500 text-white text-[7.5px] px-1 py-0.2 rounded font-bold shadow-2xs">⭐ ปก</span>' : ''}
+                
+                ${isMediaHidden ? `
+                  <div class="absolute inset-0 bg-slate-900/80 p-1 flex flex-col items-center justify-center text-center">
+                    <span class="text-rose-400 text-[8.5px] font-bold">🚫 ซ่อนรูปนี้</span>
+                    <span class="text-[7px] text-slate-300 truncate max-w-[70px] mt-0.5" title="${m.hiddenReason || ''}">${m.hiddenReason || 'มีเหตุผลการซ่อน'}</span>
+                  </div>
+                ` : ''}
+
+                <!-- Action Toolbar on Hover -->
+                <div class="absolute inset-0 bg-slate-900/85 opacity-0 group-hover:opacity-100 transition-opacity p-1 flex flex-col justify-between">
+                  <div class="flex items-center justify-between">
+                    <button onclick="promptReasonAction('${isMediaHidden ? 'unhide_media' : 'hide_media'}', '${m.id}')" title="${isMediaHidden ? 'เปิดแสดงรูปนี้' : 'ซ่อนเฉพาะรูปนี้'}" class="px-1.5 py-0.5 rounded text-[7.5px] font-medium ${isMediaHidden ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}">
+                      ${isMediaHidden ? 'เปิดรูป' : 'ซ่อนรูป'}
+                    </button>
+                    ${!isCover ? `
+                      <button onclick="promptReasonAction('set_cover', '${m.id}')" title="ตั้งรูปนี้เป็นปก" class="px-1.5 py-0.5 rounded text-[7.5px] font-medium bg-amber-500 text-white">
+                        ตั้งปก
+                      </button>
+                    ` : ''}
+                  </div>
+                  <span class="text-[7.5px] text-slate-200 text-center truncate">${m.title}</span>
+                </div>
+
               </div>
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] text-slate-400 font-mono-code">${item.time}</span>
-                <button onclick="toggleTimelineItem(${idx})" class="p-1 rounded text-slate-400 hover:text-slate-700" title="${item.hidden ? 'แสดง' : 'ซ่อน'}">
-                  <i data-lucide="${item.hidden ? 'eye' : 'eye-off'}" class="w-3 h-3"></i>
+            `;
+          });
+          photosHtml += '</div>';
+        }
+
+        const isDuplicateNotice = item.isDuplicateEvent;
+
+        itemEl.innerHTML = `
+          <!-- Bullet Marker -->
+          <div class="absolute left-1.5 top-2.5 w-3 h-3 rounded-full ${
+            isDuplicateNotice 
+              ? 'bg-purple-600 ring-4 ring-purple-100' 
+              : (isHidden ? 'bg-amber-500 ring-4 ring-amber-100' : 'bg-slate-800 ring-4 ring-white')
+          } flex items-center justify-center"></div>
+
+          <div class="p-3 rounded-xl border ${
+            isHidden 
+              ? 'bg-amber-50/50 border-amber-200/90' 
+              : (isDuplicateNotice ? 'bg-purple-50/30 border-purple-200/70' : 'bg-white border-slate-200/80')
+          } shadow-2xs space-y-1.5">
+            
+            <!-- Timeline Item Header -->
+            <div class="flex items-center justify-between text-xs gap-2">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-semibold text-slate-800">${item.author}</span>
+                <span class="text-[10px] text-slate-400 font-mono-code font-normal">[${item.userId}]</span>
+                <span class="text-[9.5px] text-blue-600 font-medium">(${item.groupName})</span>
+                <span class="text-[9.5px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-medium">${item.stateNameTh}</span>
+                ${isHidden ? '<span class="text-[9px] bg-amber-600 text-white font-medium px-1.5 py-0.5 rounded">🔒 ซ่อนกิจกรรมนี้ (เฉพาะ จนท.)</span>' : ''}
+              </div>
+
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <span class="text-[9.5px] text-slate-400 font-mono-code">${item.updatedOn}</span>
+                
+                <button onclick="promptReasonAction('${isHidden ? 'unhide_timeline' : 'hide_timeline'}', '${item.id}')" 
+                  class="px-2 py-0.5 rounded text-[9.5px] font-medium border transition-colors inline-flex items-center gap-1 ${
+                    isHidden 
+                      ? 'bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200' 
+                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200'
+                  }" title="${isHidden ? 'เปิดแสดงกิจกรรมนี้' : 'ซ่อนกิจกรรมนี้จากประชาชน'}">
+                  <i data-lucide="${isHidden ? 'eye' : 'eye-off'}" class="w-2.5 h-2.5"></i>
+                  <span>${isHidden ? 'เปิดแสดง' : 'ซ่อนกิจกรรม'}</span>
                 </button>
               </div>
             </div>
-            <p class="text-xs text-slate-700 font-mono-code">${item.text}</p>
+
+            <p class="text-[11px] ${isHidden ? 'text-slate-600 italic' : 'text-slate-700'} leading-relaxed font-mono-code">${item.note}</p>
+
+            ${isHidden && item.hiddenReason ? `
+              <div class="p-1.5 rounded-lg bg-amber-100/70 border border-amber-200 text-[9.5px] text-amber-900 flex items-start gap-1">
+                <i data-lucide="info" class="w-3 h-3 text-amber-600 flex-shrink-0 mt-0.5"></i>
+                <div>
+                  <span class="font-semibold">เหตุผลการซ่อน:</span> ${item.hiddenReason} 
+                  <span class="text-amber-700 font-mono-code text-[8.5px] ml-1">(${item.hiddenBy || 'Super Admin'} • ${item.hiddenAt || ''})</span>
+                </div>
+              </div>
+            ` : ''}
+
+            ${photosHtml}
           </div>
         `;
-        container.appendChild(div);
+        container.appendChild(itemEl);
       });
+
+      updateModerationHeaderBadge();
+      updateCurrentCoverDisplay();
       lucide.createIcons();
     }
 
-    function renderCaseMedia() {
-      const c = CASES_DB[currentCaseId];
-      const coverImg = document.getElementById('detail-cover-img');
-      const container = document.getElementById('media-list-container');
-      const countEl = document.getElementById('media-count');
-
-      if (coverImg && c.media[c.coverIndex]) {
-        coverImg.src = c.media[c.coverIndex].url;
-      }
-      if (countEl) countEl.innerText = `${c.media.length} รูป`;
-
+    function renderMediaInspector() {
+      const container = document.getElementById('media-inspector-container');
       if (!container) return;
-      container.innerHTML = '';
 
-      c.media.forEach((m, idx) => {
-        const isCover = (c.coverIndex === idx);
+      container.innerHTML = '';
+      const countEl = document.getElementById('media-count-badge');
+      if (countEl) countEl.innerText = `${caseData.media.length} รูป`;
+
+      caseData.media.forEach((m) => {
+        const isCover = (caseData.coverId === m.id);
+        const isHidden = m.hidden;
+
         const card = document.createElement('div');
-        card.className = `p-2.5 rounded-xl border flex items-center justify-between gap-2 ${
-          isCover ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200 bg-white'
+        card.className = `p-2 rounded-xl border transition-all space-y-1.5 ${
+          isCover ? 'border-amber-400 bg-amber-50/20' : 'border-slate-200/80 bg-white'
         }`;
+
         card.innerHTML = `
-          <div class="flex items-center gap-2 min-w-0">
-            <img src="${m.url}" class="w-9 h-9 rounded-lg object-contain bg-slate-50 border border-slate-200 p-0.5 ${m.hidden ? 'blur-xs grayscale' : ''}">
-            <div class="truncate text-xs">
-              <div class="font-bold text-slate-900 truncate">${m.title}</div>
-              <div class="text-[10px] text-slate-400">${isCover ? '⭐ ปกปัจจุบัน' : (m.hidden ? '🚫 ซ่อนอยู่' : 'ปกติ')}</div>
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex-shrink-0 relative flex items-center justify-center p-1">
+                <img src="${m.url}" class="w-full h-full object-contain ${isHidden ? 'blur-xs grayscale opacity-60' : ''}">
+                ${isCover ? '<span class="absolute top-0.5 left-0.5 bg-amber-500 text-white text-[6.5px] font-bold px-1 rounded">ปก</span>' : ''}
+              </div>
+              <div class="min-w-0 space-y-0.5">
+                <div class="text-[11px] font-medium text-slate-800 truncate">${m.title}</div>
+                <div class="text-[9.5px] text-slate-400">
+                  ${isHidden ? '<span class="text-rose-600 font-medium">🚫 ซ่อนจากสาธารณะ</span>' : '👁️ แสดงปกติ'}
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <button onclick="promptReasonAction('set_cover', '${m.id}')" title="${isCover ? 'เป็นภาพหน้าปกอยู่แล้ว' : 'เปลี่ยนให้รูปนี้เป็นภาพหน้าปก'}" class="px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${
+                isCover ? 'bg-amber-100 text-amber-900 font-semibold cursor-default' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }">
+                ${isCover ? '⭐ หน้าปก' : 'ตั้งเป็นปก'}
+              </button>
+
+              <button onclick="promptReasonAction('${isHidden ? 'unhide_media' : 'hide_media'}', '${m.id}')" title="${isHidden ? 'เปิดแสดงรูปนี้' : 'ซ่อนรูปนี้จากสาธารณะ'}" class="p-1 rounded transition-colors ${
+                isHidden ? 'text-rose-600 bg-rose-50 hover:bg-rose-100' : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'
+              }">
+                <i data-lucide="${isHidden ? 'eye' : 'eye-off'}" class="w-3 h-3"></i>
+              </button>
             </div>
           </div>
-          <div class="flex items-center gap-1 flex-shrink-0">
-            <button onclick="setCover(${idx})" class="px-2 py-0.5 rounded text-[10px] font-semibold ${
-              isCover ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-            }">
-              ${isCover ? 'ปก' : 'ตั้งเป็นปก'}
-            </button>
-            <button onclick="toggleMediaItem(${idx})" class="p-1 text-slate-400 hover:text-slate-700">
-              <i data-lucide="${m.hidden ? 'eye' : 'eye-off'}" class="w-3 h-3"></i>
-            </button>
-          </div>
+
+          ${isHidden && m.hiddenReason ? `
+            <div class="text-[9px] text-rose-700 bg-rose-50/70 p-1 rounded border border-rose-100 flex items-center justify-between">
+              <span class="truncate">เหตุผล: ${m.hiddenReason}</span>
+              <span class="font-mono-code text-slate-400 text-[8px] ml-1 flex-shrink-0">${m.hiddenAt || ''}</span>
+            </div>
+          ` : ''}
         `;
+
         container.appendChild(card);
       });
+
+      updateModerationHeaderBadge();
+      updateCurrentCoverDisplay();
       lucide.createIcons();
     }
 
-    function toggleTimelineItem(idx) {
-      const c = CASES_DB[currentCaseId];
-      c.timeline[idx].hidden = !c.timeline[idx].hidden;
-      showToast(c.timeline[idx].hidden ? 'ซ่อนกิจกรรมนี้แล้ว' : 'แสดงกิจกรรมนี้แล้ว');
-      renderCaseTimeline();
-      updateAuditStatus();
-    }
+    function updateCurrentCoverDisplay() {
+      const coverImg = document.getElementById('current-cover-image');
+      const filenameEl = document.getElementById('cover-filename');
+      const activeCover = caseData.media.find(m => m.id === caseData.coverId);
 
-    function toggleMediaItem(idx) {
-      const c = CASES_DB[currentCaseId];
-      c.media[idx].hidden = !c.media[idx].hidden;
-      showToast(c.media[idx].hidden ? 'ซ่อนรูปนี้จากสาธารณะแล้ว' : 'แสดงรูปนี้แล้ว');
-      renderCaseMedia();
-      updateAuditStatus();
-    }
+      if (coverImg && activeCover) {
+        coverImg.src = activeCover.url;
+        if (activeCover.hidden) {
+          coverImg.classList.add('blur-xs', 'grayscale');
+        } else {
+          coverImg.classList.remove('blur-xs', 'grayscale');
+        }
+      }
 
-    function setCover(idx) {
-      const c = CASES_DB[currentCaseId];
-      c.coverIndex = idx;
-      showToast(`เปลี่ยนภาพหน้าปกสำเร็จ`);
-      renderCaseMedia();
-    }
-
-    function updateAuditStatus() {
-      const c = CASES_DB[currentCaseId];
-      const hMedia = c.media.filter(m => m.hidden).length;
-      const hTimeline = c.timeline.filter(t => t.hidden).length;
-
-      document.getElementById('audit-hidden-media').innerText = `${hMedia} รูป (${hMedia > 0 ? 'HIDDEN' : 'APPROVED'})`;
-      document.getElementById('audit-hidden-timeline').innerText = `${hTimeline} รายการ (${hTimeline > 0 ? 'HIDDEN' : 'PUBLIC'})`;
-    }
-
-    function promptDeleteOrg(orgId) {
-      if (confirm(`คุณต้องการลบหน่วยงาน ID: ${orgId} ออกจากเรื่องแจ้งนี้หรือไม่?\n(จะไม่ลบออกจาก Timeline)`)) {
-        showToast(`ลบหน่วยงาน ID: ${orgId} สำเร็จ`);
+      if (filenameEl && activeCover) {
+        filenameEl.textContent = `${activeCover.id} (${activeCover.title})`;
       }
     }
 
-    function copyText(text) {
-      navigator.clipboard.writeText(text);
-      showToast('คัดลอกข้อความแล้ว');
-    }
+    function promptReasonAction(actionType, targetId) {
+      pendingAction = { type: actionType, targetId: targetId };
 
-    function openManageModal() {
-      const modal = document.getElementById('manage-modal');
-      const list = document.getElementById('modal-media-list');
-      const c = CASES_DB[currentCaseId];
-      list.innerHTML = '';
+      const modal = document.getElementById('reason-confirm-modal');
+      const titleEl = document.getElementById('reason-modal-title');
+      const subtitleEl = document.getElementById('reason-modal-subtitle');
+      const iconEl = document.getElementById('reason-modal-icon');
+      const iconBox = document.getElementById('reason-modal-icon-container');
+      const previewEl = document.getElementById('reason-modal-preview');
+      const chipsContainer = document.getElementById('quick-reason-chips');
+      const textarea = document.getElementById('reason-modal-textarea');
+      const errorMsg = document.getElementById('reason-error-msg');
+      const submitBtn = document.getElementById('reason-modal-submit-btn');
 
-      c.media.forEach((m, idx) => {
-        const isCover = (c.coverIndex === idx);
-        const item = document.createElement('div');
-        item.className = 'p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-xs';
-        item.innerHTML = `
-          <div class="flex items-center gap-3">
-            <img src="${m.url}" class="w-12 h-12 rounded-lg object-contain bg-white border border-slate-200 p-1 ${m.hidden ? 'blur-xs grayscale' : ''}">
-            <div>
-              <div class="font-bold text-slate-900">${m.title}</div>
-              <div class="text-[11px] text-slate-500">${m.hidden ? '🚫 กำลังซ่อนอยู่' : '👁️ แสดงผลสาธารณะ'}</div>
-            </div>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="setCover(${idx}); openManageModal();" class="px-2.5 py-1 text-xs font-semibold rounded-lg ${isCover ? 'bg-amber-500 text-white' : 'bg-slate-200 hover:bg-slate-300'}">
-              ${isCover ? 'หน้าปก' : 'ตั้งเป็นปก'}
-            </button>
-            <button onclick="toggleMediaItem(${idx}); openManageModal();" class="px-2.5 py-1 text-xs font-semibold rounded-lg ${m.hidden ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}">
-              ${m.hidden ? 'เปิดแสดง' : 'ซ่อนรูป'}
-            </button>
+      if (!modal || !titleEl || !previewEl || !chipsContainer || !textarea) return;
+
+      textarea.value = '';
+      if (errorMsg) errorMsg.classList.add('hidden');
+
+      let presets = [];
+
+      if (actionType === 'hide_timeline') {
+        const item = caseData.timeline.find(t => t.id === targetId);
+        titleEl.textContent = 'ยืนยันการซ่อนกิจกรรมไทม์ไลน์';
+        subtitleEl.textContent = 'กิจกรรมนี้จะไม่ปรากฏให้ประชาชนเห็น (จะมองเห็นเฉพาะเจ้าหน้าที่เท่านั้น)';
+        iconBox.className = 'w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0';
+        iconEl.setAttribute('data-lucide', 'eye-off');
+        submitBtn.className = 'px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5';
+
+        previewEl.innerHTML = `
+          <div class="w-7 h-7 rounded-lg bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-[10px] flex-shrink-0">TL</div>
+          <div class="min-w-0">
+            <div class="font-medium text-slate-800 text-[11px]">${item?.author || 'กิจกรรม'} <span class="text-[9.5px] text-slate-400 font-mono-code">(${item?.updatedOn || ''})</span></div>
+            <div class="text-[10.5px] text-slate-500 truncate font-mono-code">${item?.note || ''}</div>
           </div>
         `;
-        list.appendChild(item);
+        presets = REASON_PRESETS.hide_timeline;
+
+      } else if (actionType === 'unhide_timeline') {
+        const item = caseData.timeline.find(t => t.id === targetId);
+        titleEl.textContent = 'ยืนยันการเปิดแสดงกิจกรรมไทม์ไลน์';
+        subtitleEl.textContent = 'กิจกรรมนี้จะกลับมาแสดงให้ประชาชนเห็นตามปกติ';
+        iconBox.className = 'w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0';
+        iconEl.setAttribute('data-lucide', 'eye');
+        submitBtn.className = 'px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5';
+
+        previewEl.innerHTML = `
+          <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold flex-shrink-0">TL</div>
+          <div class="min-w-0">
+            <div class="font-medium text-slate-800 text-[11px]">${item?.author || 'กิจกรรม'}</div>
+            <div class="text-[10.5px] text-slate-500 truncate font-mono-code">${item?.note || ''}</div>
+          </div>
+        `;
+        presets = REASON_PRESETS.unhide;
+
+      } else if (actionType === 'hide_media') {
+        const m = caseData.media.find(x => x.id === targetId);
+        titleEl.textContent = 'ยืนยันการซ่อนรูปภาพจากสาธารณะ';
+        subtitleEl.textContent = 'รูปนี้จะถูกเบลอและไม่แสดงผลบนหน้าติดตามสถานะของประชาชน';
+        iconBox.className = 'w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0';
+        iconEl.setAttribute('data-lucide', 'image-off');
+        submitBtn.className = 'px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5';
+
+        previewEl.innerHTML = `
+          <img src="${m?.url || ''}" class="w-8 h-8 rounded-lg object-contain border border-slate-200 flex-shrink-0 p-0.5">
+          <div class="min-w-0">
+            <div class="font-medium text-slate-800 text-[11px]">${m?.title || 'รูปภาพ'}</div>
+            <div class="text-[9.5px] text-slate-400 font-mono-code">รหัสไฟล์: ${m?.id || ''}</div>
+          </div>
+        `;
+        presets = REASON_PRESETS.hide_media;
+
+      } else if (actionType === 'unhide_media') {
+        const m = caseData.media.find(x => x.id === targetId);
+        titleEl.textContent = 'ยืนยันการเปิดแสดงรูปภาพ';
+        subtitleEl.textContent = 'รูปภาพนี้จะกลับมาแสดงผลให้ประชาชนเห็นตามปกติ';
+        iconBox.className = 'w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0';
+        iconEl.setAttribute('data-lucide', 'image');
+        submitBtn.className = 'px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5';
+
+        previewEl.innerHTML = `
+          <img src="${m?.url || ''}" class="w-8 h-8 rounded-lg object-contain border border-slate-200 flex-shrink-0 p-0.5">
+          <div class="min-w-0">
+            <div class="font-medium text-slate-800 text-[11px]">${m?.title || 'รูปภาพ'}</div>
+            <div class="text-[9.5px] text-slate-400 font-mono-code">รหัสไฟล์: ${m?.id || ''}</div>
+          </div>
+        `;
+        presets = REASON_PRESETS.unhide;
+
+      } else if (actionType === 'set_cover') {
+        const m = caseData.media.find(x => x.id === targetId);
+        titleEl.textContent = 'ยืนยันการเปลี่ยนภาพปัญหาปัจจุบัน (Cover)';
+        subtitleEl.textContent = 'รูปนี้จะถูกนำมาแสดงเป็นการ์ดหัวเรื่องและหน้าพรีวิวหลักของเคส';
+        iconBox.className = 'w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0';
+        iconEl.setAttribute('data-lucide', 'star');
+        submitBtn.className = 'px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5';
+
+        previewEl.innerHTML = `
+          <img src="${m?.url || ''}" class="w-8 h-8 rounded-lg object-contain border border-slate-200 flex-shrink-0 p-0.5">
+          <div class="min-w-0">
+            <div class="font-medium text-slate-800 text-[11px]">${m?.title || 'รูปภาพ'}</div>
+            <div class="text-[9.5px] text-amber-700 font-semibold">จะตั้งเป็นภาพหน้าปกใหม่</div>
+          </div>
+        `;
+        presets = REASON_PRESETS.set_cover;
+      }
+
+      chipsContainer.innerHTML = '';
+      presets.forEach(p => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[9.5px] font-medium transition-colors text-left';
+        chip.textContent = p;
+        chip.onclick = () => {
+          textarea.value = p;
+          if (errorMsg) errorMsg.classList.add('hidden');
+        };
+        chipsContainer.appendChild(chip);
       });
 
       modal.classList.remove('hidden');
       lucide.createIcons();
     }
-    function closeManageModal() {
-      document.getElementById('manage-modal').classList.add('hidden');
+
+    function closeReasonModal() {
+      const modal = document.getElementById('reason-confirm-modal');
+      if (modal) modal.classList.add('hidden');
+      pendingAction = null;
+    }
+
+    function submitReasonAction() {
+      if (!pendingAction) return;
+
+      const textarea = document.getElementById('reason-modal-textarea');
+      const errorMsg = document.getElementById('reason-error-msg');
+      const reason = textarea ? textarea.value.trim() : '';
+
+      if (!reason) {
+        if (errorMsg) errorMsg.classList.remove('hidden');
+        if (textarea) textarea.focus();
+        return;
+      }
+
+      const now = new Date();
+      const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')} น.`;
+      const dateStr = `21 ต.ค. 2026 • ${timeStr}`;
+
+      const { type, targetId } = pendingAction;
+
+      if (type === 'hide_timeline') {
+        const item = caseData.timeline.find(t => t.id === targetId);
+        if (item) {
+          item.hidden = true;
+          item.hiddenReason = reason;
+          item.hiddenBy = "Super Admin";
+          item.hiddenAt = dateStr;
+          showToast(`ซ่อนกิจกรรมของ "${item.author}" แล้ว`);
+        }
+      } else if (type === 'unhide_timeline') {
+        const item = caseData.timeline.find(t => t.id === targetId);
+        if (item) {
+          item.hidden = false;
+          item.hiddenReason = "";
+          showToast(`เปิดแสดงกิจกรรมของ "${item.author}" แล้ว`);
+        }
+      } else if (type === 'hide_media') {
+        const m = caseData.media.find(x => x.id === targetId);
+        if (m) {
+          m.hidden = true;
+          m.hiddenReason = reason;
+          m.hiddenBy = "Super Admin";
+          m.hiddenAt = dateStr;
+          showToast(`ซ่อนรูป "${m.title}" แล้ว`);
+        }
+      } else if (type === 'unhide_media') {
+        const m = caseData.media.find(x => x.id === targetId);
+        if (m) {
+          m.hidden = false;
+          m.hiddenReason = "";
+          showToast(`เปิดแสดงรูป "${m.title}" แล้ว`);
+        }
+      } else if (type === 'set_cover') {
+        caseData.coverId = targetId;
+        caseData.coverReason = reason;
+        caseData.coverUpdatedAt = dateStr;
+        showToast('เปลี่ยนภาพปัญหาปัจจุบัน (หน้าปก) สำเร็จ');
+      } else if (type === 'delete_group_id') {
+        showToast(`ลบหน่วยงาน ID: ${targetId} ออกจากเรื่องแจ้งแล้ว`);
+      }
+
+      closeReasonModal();
+      renderTimelineStream();
+      renderMediaInspector();
+    }
+
+    function handleDeleteGroupPrompt(groupId) {
+      pendingAction = { type: 'delete_group_id', targetId: groupId };
+      
+      const modal = document.getElementById('reason-confirm-modal');
+      const titleEl = document.getElementById('reason-modal-title');
+      const subtitleEl = document.getElementById('reason-modal-subtitle');
+      const previewEl = document.getElementById('reason-modal-preview');
+      const chipsContainer = document.getElementById('quick-reason-chips');
+      const submitBtn = document.getElementById('reason-modal-submit-btn');
+
+      titleEl.textContent = 'ยืนยันการลบหน่วยงานออกจากเรื่องแจ้ง';
+      subtitleEl.textContent = 'การลบนี้เป็นการลบถาวร ไม่สามารถกู้คืนได้ (จะไม่ลบออกจาก timeline)';
+      submitBtn.className = 'px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5';
+
+      previewEl.innerHTML = `
+        <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-xs flex-shrink-0">DEL</div>
+        <div>
+          <div class="font-medium text-slate-800 text-[11px]">ลบหน่วยงาน ID: <span class="font-mono-code font-bold text-rose-600">${groupId} (Traffy @ ITS Lab)</span></div>
+          <div class="text-[10px] text-slate-400">จะตัดสิทธิ์การมองเห็นของหน่วยงานนี้ทันที</div>
+        </div>
+      `;
+
+      chipsContainer.innerHTML = `
+        <button type="button" onclick="document.getElementById('reason-modal-textarea').value='หน่วยงานไม่มีส่วนเกี่ยวข้องในพื้นที่เกิดเหตุ'" class="px-2 py-0.5 rounded bg-slate-100 text-[9.5px]">ไม่อยู่ในพื้นที่รับผิดชอบ</button>
+        <button type="button" onclick="document.getElementById('reason-modal-textarea').value='ประชาชนเลือกหน่วยงานปลายทางผิดพลาด'" class="px-2 py-0.5 rounded bg-slate-100 text-[9.5px]">เลือกหน่วยงานผิด</button>
+      `;
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function openChangeCoverSelector() {
+      const modal = document.getElementById('cover-picker-modal');
+      const listEl = document.getElementById('cover-picker-list');
+      if (!modal || !listEl) return;
+
+      listEl.innerHTML = '';
+      caseData.media.forEach(m => {
+        const isCover = (caseData.coverId === m.id);
+        const itemEl = document.createElement('div');
+        itemEl.className = `p-2 rounded-xl border flex items-center justify-between text-xs transition-colors ${
+          isCover ? 'border-amber-400 bg-amber-50/30' : 'border-slate-200 hover:bg-slate-50'
+        }`;
+
+        itemEl.innerHTML = `
+          <div class="flex items-center gap-2 min-w-0">
+            <img src="${m.url}" class="w-8 h-8 rounded-lg object-contain border border-slate-200 flex-shrink-0 p-0.5 ${m.hidden ? 'grayscale blur-xs' : ''}">
+            <div class="truncate">
+              <div class="font-medium text-slate-800 truncate text-[11px]">${m.title}</div>
+              <div class="text-[9.5px] text-slate-400">${isCover ? '⭐ ปกปัจจุบัน' : (m.hidden ? '🚫 ซ่อนอยู่' : 'รูปในเคส')}</div>
+            </div>
+          </div>
+          <button onclick="closeCoverPickerModal(); promptReasonAction('set_cover', '${m.id}')" class="px-2.5 py-1 rounded-lg text-[9.5px] font-medium ${
+            isCover ? 'bg-amber-500 text-white font-bold' : 'bg-slate-900 text-white hover:bg-slate-800'
+          }">
+            ${isCover ? 'ปกปัจจุบัน' : 'เลือกรูปนี้'}
+          </button>
+        `;
+        listEl.appendChild(itemEl);
+      });
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeCoverPickerModal() {
+      const modal = document.getElementById('cover-picker-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function updateModerationHeaderBadge() {
+      const hiddenMedia = caseData.media.filter(m => m.hidden).length;
+      const hiddenTimeline = caseData.timeline.filter(t => t.hidden).length;
+      const badge = document.getElementById('header-mod-badge');
+      const text = document.getElementById('header-mod-text');
+
+      if (!badge || !text) return;
+
+      if (hiddenMedia > 0 || hiddenTimeline > 0) {
+        badge.classList.remove('hidden');
+        text.innerText = `ซ่อนอยู่: ${hiddenMedia} รูป / ${hiddenTimeline} ข้อความ`;
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function handleCaseSearch() {
+      const val = document.getElementById('input-case-id').value.trim();
+      if (!val) {
+        showToast('กรุณาระบุรหัสเคส');
+        return;
+      }
+      inspectCase(val);
+    }
+
+    function inspectCase(caseId) {
+      caseData.id = caseId;
+      const idEl = document.getElementById('detail-ticket-id');
+      if (idEl) idEl.innerText = `#${caseId}`;
+      switchView('case-detail');
+    }
+
+    function copyCaseLink() {
+      const textToCopy = `https://c.traffy.in.th/${caseData.id}?p=${caseData.refCode}`;
+      copyToClipboard(textToCopy);
+      showToast('คัดลอกลิงก์เรื่องแจ้งแล้ว');
+    }
+
+    function copyToClipboard(text) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showToast('คัดลอกข้อความแล้ว');
     }
 
     function openJsonModal() {
-      document.getElementById('json-content').innerText = JSON.stringify(CASES_DB[currentCaseId], null, 2);
+      const el = document.getElementById('raw-json-content');
+      if (el) el.innerText = JSON.stringify(caseData, null, 2);
       document.getElementById('json-modal').classList.remove('hidden');
     }
     function closeJsonModal() {
       document.getElementById('json-modal').classList.add('hidden');
     }
 
+    function switchView(viewName) {
+      const sections = document.querySelectorAll('#content-container > section');
+      sections.forEach(s => s.classList.add('hidden'));
+
+      if (viewName === 'case-list') {
+        document.getElementById('view-case-list').classList.remove('hidden');
+        document.getElementById('breadcrumb-title').textContent = 'ค้นหาเคสเรื่องแจ้ง';
+      } else {
+        document.getElementById('view-case-detail').classList.remove('hidden');
+        document.getElementById('breadcrumb-title').textContent = 'เจาะลึกข้อมูลเคส (Detail View)';
+      }
+      lucide.createIcons();
+    }
+
     let toastTimer = null;
     function showToast(msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-text').innerText = msg;
+      const toast = document.getElementById('toast-box');
+      const msgEl = document.getElementById('toast-message');
+      if (!toast || !msgEl) return;
+
+      msgEl.textContent = msg;
       toast.classList.remove('translate-y-20', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
 
@@ -1062,8 +1715,12 @@
       toastTimer = setTimeout(() => {
         toast.classList.add('translate-y-20', 'opacity-0');
         toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2000);
+      }, 2200);
     }
+
+    // Initial Renders on Load
+    renderTimelineStream();
+    renderMediaInspector();
   </script>
 </body>
 </html>
