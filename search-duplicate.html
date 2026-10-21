@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ค้นหาชื่อที่คล้ายกัน - Traffy Fondue Internal Website</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Noto Sans Thai & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --sidebar-width: 260px;
+      --topbar-height: 64px;
+    }
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      background-color: #f8fafc;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
+    }
+
+    /* REAL PROJECT SIDEBAR STYLES */
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .real-user-card {
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+    .real-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .real-children-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
+    }
+    .real-nested-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* REAL PROJECT TOPBAR STYLES */
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .real-topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    @media (max-width: 768px) {
+      .real-sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="flex h-screen overflow-hidden text-xs">
+
+  <!-- 1. SIDEBAR NAVIGATION -->
+  <aside class="real-sidebar select-none">
+    
+    <!-- User Card -->
+    <div class="real-user-card">
+      <div class="flex items-center gap-2.5">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile"
+          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+        />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <button type="button" class="w-7 h-7 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">
+          ADMIN
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">
+          EDITOR
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex flex-col gap-0.5">
+      <!-- 1. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item ">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
+
+      <!-- 2. จัดการ Case -->
+      <a href="./index.html" class="real-menu-item ">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <!-- 3. จัดการหน่วยงาน (Group with Children) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./organizations.html" class="real-nested-item ">
+            <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+          </a>
+          <a href="./search-duplicate.html" class="real-nested-item real-menu-active">
+            <span class="flex-1 truncate">ค้นหาชื่อที่คล้ายกัน</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1 ">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+      <!-- 5. Rich Menu (Group with Children) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="layout-grid" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">Rich Menu</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./richmenu.html" class="real-nested-item ">
+            <span class="flex-1 truncate">จัดการ Rich Menu</span>
+          </a>
+          <a href="./richmenu-stats.html" class="real-nested-item ">
+            <span class="flex-1 truncate">สถิติ</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1 ">
+        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- 7. FAQ -->
+      <a href="./faq.html" class="real-menu-item ">
+        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- 2. MAIN CONTENT AREA -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
+    
+    <!-- Topbar Header -->
+    <header class="real-topbar">
+      <div class="flex items-center gap-2 text-xs">
+        <span class="text-slate-400 font-medium">Traffy Backstage</span>
+        <span class="text-slate-300">/</span>
+        <span class="font-bold text-slate-800">ค้นหาชื่อที่คล้ายกัน</span>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <a href="#stats" onclick="showToast('สถิติกลุ่มหน่วยงาน'); return false;" class="real-topbar-btn">
+          <i data-lucide="chart-column" class="w-4 h-4 text-slate-600"></i>
+          <span>สถิติกลุ่มหน่วยงาน</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
+    <div class="flex-1 overflow-y-auto p-4 lg:p-6" id="content-container">
+      <div class="max-w-6xl mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
+        
+        <!-- Empty Placeholder Visual -->
+        <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3 shadow-2xs">
+          <i data-lucide="layout-template" class="w-6 h-6 text-slate-400"></i>
+        </div>
+        
+        <h2 class="text-sm font-bold text-slate-800">ค้นหาชื่อที่คล้ายกัน (รอเพื่อนแปะโค้ด)</h2>
+        <p class="text-xs text-slate-400 mt-1 max-w-md">หน้าโล่งเปล่าๆ พร้อมสำหรับให้เพื่อนนำโค้ด UI มาแปะแทนที่ในส่วนนี้ได้ทันที</p>
+        
+        <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-mono-code">
+          <i data-lucide="code" class="w-3.5 h-3.5 text-blue-500"></i>
+          <span>&lt;!-- วางโค้ด UI ของหน้านี้ใน #content-container --&gt;</span>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Notification Box -->
+  <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
+    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-slate-800">
+      <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toast-message">แจ้งเตือน</span>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast-box');
+      const msgEl = document.getElementById('toast-message');
+      if (!toast || !msgEl) return;
+
+      msgEl.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2200);
+    }
+  </script>
+</body>
+</html>
