@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <style>
+  <style>AC
     :root {
       --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       --sidebar-width: 260px;
@@ -217,13 +217,13 @@
         <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-lg">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-        <span class="text-slate-400 font-medium whitespace-nowrap">จัดการหน่วยงาน</span>
+        <span class="text-slate-400 font-medium">จัดการหน่วยงาน</span>
         <span class="text-slate-300">/</span>
-        <span id="topbar-breadcrumb" class="font-bold text-slate-800 truncate">ค้นหาหน่วยงาน</span>
+        <span id="topbar-breadcrumb" class="font-bold text-slate-800">ค้นหาหน่วยงาน</span>
       </div>
-      <div id="topbar-action-right" class="hidden items-center gap-2 flex-shrink-0">
-        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-semibold border border-blue-200 whitespace-nowrap">ID: 151</span>
-        <button onclick="backToSearch()" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-xs whitespace-nowrap">เปลี่ยนหน่วยงาน</button>
+      <div id="topbar-action-right" class="hidden items-center gap-2">
+        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-semibold border border-blue-200">ID: 151</span>
+        <button onclick="backToSearch()" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-xs">เปลี่ยนหน่วยงาน</button>
       </div>
     </header>
 
@@ -248,7 +248,7 @@
                 <input type="text" id="input-search-query" value="Traffy @ ITS Lab2" placeholder="ชื่อหน่วยงาน หรือ ID (เช่น 151)..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 pl-9 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/10 text-slate-800">
                 <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
               </div>
-              <button onclick="selectOrganization()" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-xs font-medium transition-all shadow-xs flex-shrink-0 whitespace-nowrap">
+              <button onclick="selectOrganization()" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-xs font-medium transition-all shadow-xs flex-shrink-0">
                 ค้นหา
               </button>
             </div>
@@ -256,8 +256,8 @@
             <div class="pt-2 border-t border-slate-100">
               <span class="text-[11px] text-slate-400 block mb-2">หน่วยงานที่พบ / ล่าสุด:</span>
               <button onclick="selectOrganization()" class="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors flex items-center justify-between text-xs">
-                <span class="font-semibold text-slate-800 truncate">Traffy @ ITS Lab2</span>
-                <span class="text-[10px] text-slate-400 font-mono-code bg-slate-100 px-2 py-0.5 rounded flex-shrink-0 ml-2">ID: 151</span>
+                <span class="font-semibold text-slate-800">Traffy @ ITS Lab2</span>
+                <span class="text-[10px] text-slate-400 font-mono-code bg-slate-100 px-2 py-0.5 rounded">ID: 151</span>
               </button>
             </div>
           </div>
@@ -267,15 +267,15 @@
       <!-- VIEW 2: ORG DASHBOARD -->
       <div id="view-dashboard" class="max-w-5xl mx-auto space-y-4 hidden">
         
-        <!-- Responsive Menu Card (Fixed duplication issue) -->
+        <!-- Responsive Menu Card -->
         <div class="bg-white rounded-2xl p-2 border border-slate-200/90 shadow-2xs flex items-center justify-between relative">
           
-          <div class="flex items-center gap-2 px-3 py-1.5 text-slate-900 font-bold text-xs flex-shrink-0">
+          <div class="flex items-center gap-2 px-3 py-1.5 text-slate-900 font-bold text-xs">
             <i data-lucide="sliders-horizontal" class="w-4 h-4 text-slate-700"></i>
           </div>
 
           <!-- Mobile Dropdown Selector -->
-          <div class="md:hidden flex-1 max-w-[240px] ml-2">
+          <div class="md:hidden flex-1 max-w-[220px] ml-2">
             <select id="mobile-tab-selector" onchange="switchTab(this.value)" class="w-full bg-slate-100 border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer">
               <option value="general">1. ข้อมูลทั่วไป</option>
               <option value="account">2. บัญชีผู้ใช้</option>
@@ -301,7 +301,7 @@
         <!-- TAB CONTENT CONTAINER -->
         <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-2xs">
           
-          <!-- TAB 1: GENERAL INFO (Fully Restored Backend Fields) -->
+          <!-- TAB 1: GENERAL INFO (Fully Restored Fields) -->
           <div id="content-general" class="org-tab-content active space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -476,7 +476,7 @@
             </div>
           </div>
 
-          <!-- TAB 4: QR CODE -->
+          <!-- TAB 4: QR CODE (Snug-fit card sizing without stretching full width) -->
           <div id="content-qr" class="org-tab-content space-y-6">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3 gap-2 flex-wrap sm:flex-nowrap">
               <h2 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2 min-w-0 truncate">
@@ -488,26 +488,28 @@
               </button>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-              <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-2xs relative space-y-4">
-                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด"><i data-lucide="download" class="w-4 h-4"></i></button>
-                <div class="w-32 h-32 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151" class="w-full h-full object-contain"></div>
-                <div class="text-center space-y-1"><div class="font-bold text-slate-900 text-xs">QR หลัก (หน้าหน่วยงาน)</div><div class="text-[10px] text-slate-400 font-mono-code">ID: #1</div></div>
-                <div class="flex items-center justify-center gap-2"><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-black text-white tracking-wider">OFFICIAL</span><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span></div>
+            <div class="flex flex-wrap gap-4 items-start">
+              <!-- QR Card 1 -->
+              <div class="bg-white rounded-3xl p-4 border border-slate-200/90 shadow-2xs relative space-y-3 w-full sm:w-[260px] flex-shrink-0">
+                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-3 right-3 w-7 h-7 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด"><i data-lucide="download" class="w-3.5 h-3.5"></i></button>
+                <div class="w-28 h-28 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-1.5 flex items-center justify-center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151" class="w-full h-full object-contain"></div>
+                <div class="text-center space-y-0.5"><div class="font-bold text-slate-900 text-xs">QR หลัก (หน้าหน่วยงาน)</div><div class="text-[10px] text-slate-400 font-mono-code">ID: #1</div></div>
+                <div class="flex items-center justify-center gap-1.5"><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-black text-white tracking-wider">OFFICIAL</span><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span></div>
                 <div class="flex items-center justify-center gap-2 pt-2 border-t border-slate-100">
-                  <button onclick="showToast('ขยายดู QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-                  <button onclick="showToast('แก้ไข QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+                  <button onclick="showToast('ขยายดู QR Code')" class="p-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></button>
+                  <button onclick="showToast('แก้ไข QR Code')" class="p-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
                 </div>
               </div>
 
-              <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-2xs relative space-y-4">
-                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด"><i data-lucide="download" class="w-4 h-4"></i></button>
-                <div class="w-32 h-32 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151/gate" class="w-full h-full object-contain"></div>
-                <div class="text-center space-y-1"><div class="font-bold text-slate-900 text-xs">QR ประตูทางเข้า</div><div class="text-[10px] text-slate-400 font-mono-code">ID: #2</div></div>
-                <div class="flex items-center justify-center gap-2"><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-black text-white tracking-wider">OFFICIAL</span><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span></div>
+              <!-- QR Card 2 -->
+              <div class="bg-white rounded-3xl p-4 border border-slate-200/90 shadow-2xs relative space-y-3 w-full sm:w-[260px] flex-shrink-0">
+                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-3 right-3 w-7 h-7 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด"><i data-lucide="download" class="w-3.5 h-3.5"></i></button>
+                <div class="w-28 h-28 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-1.5 flex items-center justify-center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151/gate" class="w-full h-full object-contain"></div>
+                <div class="text-center space-y-0.5"><div class="font-bold text-slate-900 text-xs">QR ประตูทางเข้า</div><div class="text-[10px] text-slate-400 font-mono-code">ID: #2</div></div>
+                <div class="flex items-center justify-center gap-1.5"><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-black text-white tracking-wider">OFFICIAL</span><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span></div>
                 <div class="flex items-center justify-center gap-2 pt-2 border-t border-slate-100">
-                  <button onclick="showToast('ขยายดู QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
-                  <button onclick="showToast('แก้ไข QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+                  <button onclick="showToast('ขยายดู QR Code')" class="p-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></button>
+                  <button onclick="showToast('แก้ไข QR Code')" class="p-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
                 </div>
               </div>
             </div>
@@ -666,6 +668,9 @@
 
       const mobileSel = document.getElementById('mobile-tab-selector');
       if (mobileSel) mobileSel.value = tabId;
+
+      const titleSpan = document.getElementById('mobile-current-title');
+      if (titleSpan && tabTitles[tabId]) titleSpan.textContent = tabTitles[tabId];
 
       lucide.createIcons();
     }
