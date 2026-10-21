@@ -29,6 +29,7 @@
     }
     .font-mono-code {
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-feature-settings: "tnum" 1, "zero" 1;
     }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -266,16 +267,15 @@
       <!-- VIEW 2: ORG DASHBOARD -->
       <div id="view-dashboard" class="max-w-5xl mx-auto space-y-4 hidden">
         
-        <!-- Responsive Menu Card -->
+        <!-- Responsive Menu Card (Fixed duplication issue) -->
         <div class="bg-white rounded-2xl p-2 border border-slate-200/90 shadow-2xs flex items-center justify-between relative">
           
           <div class="flex items-center gap-2 px-3 py-1.5 text-slate-900 font-bold text-xs flex-shrink-0">
             <i data-lucide="sliders-horizontal" class="w-4 h-4 text-slate-700"></i>
-            <span id="mobile-current-title">1. ข้อมูลทั่วไป</span>
           </div>
 
           <!-- Mobile Dropdown Selector -->
-          <div class="md:hidden flex-1 max-w-[220px] ml-2">
+          <div class="md:hidden flex-1 max-w-[240px] ml-2">
             <select id="mobile-tab-selector" onchange="switchTab(this.value)" class="w-full bg-slate-100 border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer">
               <option value="general">1. ข้อมูลทั่วไป</option>
               <option value="account">2. บัญชีผู้ใช้</option>
@@ -301,7 +301,7 @@
         <!-- TAB CONTENT CONTAINER -->
         <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-2xs">
           
-          <!-- TAB 1: GENERAL INFO -->
+          <!-- TAB 1: GENERAL INFO (Fully Restored Backend Fields) -->
           <div id="content-general" class="org-tab-content active space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -322,24 +322,52 @@
 
               <div class="md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="sm:col-span-2">
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อหน่วยงาน NAME</label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อหน่วยงาน name</label>
                   <input type="text" value="Traffy @ ITS Lab2" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900">
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">รายละเอียด DESC (ไม่บังคับ)</label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">รายละเอียด desc (ไม่บังคับ)</label>
                   <input type="text" placeholder="ระบุรายละเอียด..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900">
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">ที่อยู่สำนักงาน ADDRESS</label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">ที่อยู่สำนักงาน address</label>
                   <input type="text" value="ตำบลคลองหนึ่ง อำเภอคลองหลวง จังหวัดปทุมธานี" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900">
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">เบอร์โทรศัพท์ TEL</label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">เบอร์โทรศัพท์ tel</label>
                   <input type="text" value="0869016124" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900">
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">จังหวัด PROVINCE</label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">จังหวัด province</label>
                   <input type="text" value="ปทุมธานี" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">พิกัด Latitude, Longitude</label>
+                  <input type="text" value="14.07778588, 100.60131311" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-900">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">ประเภทหน่วยงาน type_fondue_group_id</label>
+                  <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900">
+                    <option>อื่นๆ (รัศมี)</option>
+                    <option>เขต/อำเภอ</option>
+                    <option>เทศบาล</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">ประเภทการใช้งาน purpose_fondue_group_id</label>
+                  <input type="text" value="1 = ปัญหาทั่วไป" disabled class="w-full bg-slate-100 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">problemtype_creator</label>
+                  <input type="text" value="{traffy}" disabled class="w-full bg-slate-100 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Tags (fondue_group_tags)</label>
+                  <input type="text" value="{test_invite}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-900">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">ลำดับในแชทบอท index_g</label>
+                  <input type="text" placeholder="ปล่อยว่างได้" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-900">
                 </div>
               </div>
             </div>
@@ -448,7 +476,7 @@
             </div>
           </div>
 
-          <!-- TAB 4: QR CODE (Fully Restored: Expand & Edit buttons + 1-Line Header) -->
+          <!-- TAB 4: QR CODE -->
           <div id="content-qr" class="org-tab-content space-y-6">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3 gap-2 flex-wrap sm:flex-nowrap">
               <h2 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2 min-w-0 truncate">
@@ -461,55 +489,25 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-              <!-- QR Card 1 -->
               <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-2xs relative space-y-4">
-                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด">
-                  <i data-lucide="download" class="w-4 h-4"></i>
-                </button>
-                <div class="w-32 h-32 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151" class="w-full h-full object-contain">
-                </div>
-                <div class="text-center space-y-1">
-                  <div class="font-bold text-slate-900 text-xs">QR หลัก (หน้าหน่วยงาน)</div>
-                  <div class="text-[10px] text-slate-400 font-mono-code">ID: #1</div>
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                  <span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-black text-white tracking-wider">OFFICIAL</span>
-                  <span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span>
-                </div>
+                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด"><i data-lucide="download" class="w-4 h-4"></i></button>
+                <div class="w-32 h-32 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151" class="w-full h-full object-contain"></div>
+                <div class="text-center space-y-1"><div class="font-bold text-slate-900 text-xs">QR หลัก (หน้าหน่วยงาน)</div><div class="text-[10px] text-slate-400 font-mono-code">ID: #1</div></div>
+                <div class="flex items-center justify-center gap-2"><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-black text-white tracking-wider">OFFICIAL</span><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span></div>
                 <div class="flex items-center justify-center gap-2 pt-2 border-t border-slate-100">
-                  <button onclick="showToast('ขยายดู QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย">
-                    <i data-lucide="maximize-2" class="w-4 h-4"></i>
-                  </button>
-                  <button onclick="showToast('แก้ไข QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข">
-                    <i data-lucide="pencil" class="w-4 h-4"></i>
-                  </button>
+                  <button onclick="showToast('ขยายดู QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
+                  <button onclick="showToast('แก้ไข QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข"><i data-lucide="pencil" class="w-4 h-4"></i></button>
                 </div>
               </div>
 
-              <!-- QR Card 2 -->
               <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-2xs relative space-y-4">
-                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด">
-                  <i data-lucide="download" class="w-4 h-4"></i>
-                </button>
-                <div class="w-32 h-32 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151/gate" class="w-full h-full object-contain">
-                </div>
-                <div class="text-center space-y-1">
-                  <div class="font-bold text-slate-900 text-xs">QR ประตูทางเข้า</div>
-                  <div class="text-[10px] text-slate-400 font-mono-code">ID: #2</div>
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                  <span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-black text-white tracking-wider">OFFICIAL</span>
-                  <span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span>
-                </div>
+                <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs" title="ดาวน์โหลด"><i data-lucide="download" class="w-4 h-4"></i></button>
+                <div class="w-32 h-32 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151/gate" class="w-full h-full object-contain"></div>
+                <div class="text-center space-y-1"><div class="font-bold text-slate-900 text-xs">QR ประตูทางเข้า</div><div class="text-[10px] text-slate-400 font-mono-code">ID: #2</div></div>
+                <div class="flex items-center justify-center gap-2"><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-black text-white tracking-wider">OFFICIAL</span><span class="px-3 py-1 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 tracking-wider">REPORT</span></div>
                 <div class="flex items-center justify-center gap-2 pt-2 border-t border-slate-100">
-                  <button onclick="showToast('ขยายดู QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย">
-                    <i data-lucide="maximize-2" class="w-4 h-4"></i>
-                  </button>
-                  <button onclick="showToast('แก้ไข QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข">
-                    <i data-lucide="pencil" class="w-4 h-4"></i>
-                  </button>
+                  <button onclick="showToast('ขยายดู QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="ขยาย"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
+                  <button onclick="showToast('แก้ไข QR Code')" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="แก้ไข"><i data-lucide="pencil" class="w-4 h-4"></i></button>
                 </div>
               </div>
             </div>
@@ -668,9 +666,6 @@
 
       const mobileSel = document.getElementById('mobile-tab-selector');
       if (mobileSel) mobileSel.value = tabId;
-
-      const titleSpan = document.getElementById('mobile-current-title');
-      if (titleSpan && tabTitles[tabId]) titleSpan.textContent = tabTitles[tabId];
 
       lucide.createIcons();
     }
