@@ -314,11 +314,6 @@
           <span id="header-mod-text">ซ่อนอยู่</span>
         </span>
 
-        <button onclick="openJsonModal()" class="inline-flex items-center gap-1 px-2 py-1.5 sm:px-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-600 transition-colors shadow-2xs whitespace-nowrap">
-          <i data-lucide="code" class="w-3.5 h-3.5 text-slate-400"></i>
-          <span class="hidden sm:inline">Raw JSON</span>
-        </button>
-
         <a href="#stats" onclick="showToast('สถิติกลุ่มหน่วยงาน'); return false;" class="real-topbar-btn whitespace-nowrap !h-8 sm:!h-9 !px-2.5 sm:!px-3.5 text-xs inline-flex items-center gap-1.5">
           <i data-lucide="chart-column" class="w-3.5 h-3.5 text-slate-600"></i>
           <span class="hidden sm:inline">สถิติกลุ่มหน่วยงาน</span>
@@ -399,10 +394,10 @@
             <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between">
               <span class="text-xs text-slate-400 sm:text-slate-500">
                 <span class="sm:hidden">12 ต.ค. 2569 • 17:37 น.</span>
-                <span class="hidden sm:inline">คลิกที่การ์ดเพื่อตรวจสอบข้อมูลเจาะลึก</span>
+                <span class="hidden sm:inline">คลิกที่การ์ดเพื่อดูรายละเอียด</span>
               </span>
               <button class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-semibold group-hover:bg-slate-800 transition-colors inline-flex items-center gap-1.5 shadow-xs flex-shrink-0">
-                <span>เจาะลึกเคส</span>
+                <span>ดูรายละเอียด</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
             </div>
@@ -433,14 +428,6 @@
               <span>สถานะ: รับเรื่องแล้ว</span>
             </span>
 
-            <!-- Role & Sensitivity Simulation Badges -->
-            <button onclick="toggleAdminRoleSimulation()" id="badge-role-sim" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors" title="คลิกเพื่อจำลองสิทธิ์ Admin / Non-Admin">
-              สิทธิ์: Admin (คลิกสลับ)
-            </button>
-
-            <button onclick="toggleSensitiveIssueSimulation()" id="badge-sensitive-sim" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors" title="คลิกเพื่อจำลองสถานะ Sensitive Issue">
-              ความปลอดภัย: เรื่องทั่วไป (คลิกสลับ)
-            </button>
           </div>
 
           <!-- Action Hub Top Controls -->
@@ -457,12 +444,6 @@
               <i data-lucide="external-link" class="w-3.5 h-3.5 text-blue-600"></i>
               <span>Read-Only</span>
             </a>
-
-            <!-- Raw JSON Button -->
-            <button onclick="openJsonModal()" class="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs inline-flex items-center gap-1.5 transition-colors shadow-2xs min-h-[38px]" title="ดูข้อมูลดิบ (JSON Payload)">
-              <i data-lucide="code" class="w-3.5 h-3.5 text-slate-400"></i>
-              <span>Raw JSON</span>
-            </button>
 
             <button onclick="switchView('case-list')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors min-h-[38px]">
               [ปิด]
@@ -1874,7 +1855,7 @@
         document.getElementById('breadcrumb-title').textContent = 'ค้นหาเคสเรื่องแจ้ง';
       } else {
         document.getElementById('view-case-detail').classList.remove('hidden');
-        document.getElementById('breadcrumb-title').textContent = 'เจาะลึกข้อมูลเคส (Detail View)';
+        document.getElementById('breadcrumb-title').textContent = 'รายละเอียดเคส';
       }
       lucide.createIcons();
     }
