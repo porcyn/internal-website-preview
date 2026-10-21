@@ -263,38 +263,37 @@
         </div>
       </div>
 
-      <!-- VIEW 2: ORG DASHBOARD (6 TABS WITH RESPONSIVE DROPDOWN MENU) -->
+      <!-- VIEW 2: ORG DASHBOARD -->
       <div id="view-dashboard" class="max-w-5xl mx-auto space-y-4 hidden">
         
-        <!-- Responsive Menu Card (Dropdown Selector on Mobile, Tabs on Desktop) -->
+        <!-- Responsive Menu Card (Dropdown on Mobile, Slate Dark Tabs on Desktop) -->
         <div class="bg-white rounded-2xl p-2 border border-slate-200/90 shadow-2xs flex items-center justify-between relative">
           
-          <!-- Left Label / Settings Header -->
           <div class="flex items-center gap-2 px-3 py-1.5 text-slate-900 font-bold text-xs">
-            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-emerald-600"></i>
+            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-slate-700"></i>
             <span>ตั้งค่า</span>
           </div>
 
-          <!-- Mobile Dropdown Selector (Responsive Mode) -->
+          <!-- Mobile Dropdown Selector -->
           <div class="md:hidden flex-1 max-w-[220px] ml-2">
-            <select id="mobile-tab-selector" onchange="switchTab(this.value)" class="w-full bg-emerald-50/60 border border-emerald-200 text-emerald-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer">
-              <option value="general">เปลี่ยนชื่อและLogo</option>
-              <option value="account">จัดการเจ้าหน้าที่</option>
-              <option value="area">เปลี่ยนพื้นที่รับผิดชอบ</option>
-              <option value="qr">QR Code</option>
-              <option value="permission">ตั้งค่าแผนที่สาธารณะ</option>
-              <option value="stats">สถานะและประเภท</option>
+            <select id="mobile-tab-selector" onchange="switchTab(this.value)" class="w-full bg-slate-100 border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer">
+              <option value="general">1. ข้อมูลทั่วไป</option>
+              <option value="account">2. บัญชีผู้ใช้</option>
+              <option value="area">3. พื้นที่ดูแล</option>
+              <option value="qr">4. QR Code</option>
+              <option value="permission">5. สิทธิ์</option>
+              <option value="stats">6. สถิติ</option>
             </select>
           </div>
 
-          <!-- Desktop Tabs Buttons -->
+          <!-- Desktop Tabs Buttons (Slate Dark Theme) -->
           <div class="hidden md:flex items-center gap-1 overflow-x-auto no-scrollbar">
-            <button onclick="switchTab('general')" id="btn-tab-general" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 transition-all">เปลี่ยนชื่อและLogo</button>
-            <button onclick="switchTab('account')" id="btn-tab-account" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">จัดการเจ้าหน้าที่</button>
-            <button onclick="switchTab('area')" id="btn-tab-area" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">เปลี่ยนพื้นที่รับผิดชอบ</button>
-            <button onclick="switchTab('qr')" id="btn-tab-qr" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">QR Code</button>
-            <button onclick="switchTab('permission')" id="btn-tab-permission" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">ตั้งค่าแผนที่สาธารณะ</button>
-            <button onclick="switchTab('stats')" id="btn-tab-stats" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">สถานะและประเภท</button>
+            <button onclick="switchTab('general')" id="btn-tab-general" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-semibold bg-slate-900 text-white transition-all">1. ข้อมูลทั่วไป</button>
+            <button onclick="switchTab('account')" id="btn-tab-account" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">2. บัญชีผู้ใช้</button>
+            <button onclick="switchTab('area')" id="btn-tab-area" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">3. พื้นที่ดูแล</button>
+            <button onclick="switchTab('qr')" id="btn-tab-qr" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">4. QR Code</button>
+            <button onclick="switchTab('permission')" id="btn-tab-permission" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">5. สิทธิ์</button>
+            <button onclick="switchTab('stats')" id="btn-tab-stats" class="org-tab-btn py-1.5 px-3 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all">6. สถิติ</button>
           </div>
 
         </div>
@@ -307,7 +306,7 @@
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="info" class="w-4 h-4 text-blue-600"></i>
-                <span>ข้อมูลทั่วไปของหน่วยงาน (เปลี่ยนชื่อและLogo)</span>
+                <span>ข้อมูลทั่วไปของหน่วยงาน</span>
               </h2>
               <span class="text-[11px] text-slate-400 font-mono-code">created_on: 2018-10-05 09:59:23</span>
             </div>
@@ -357,7 +356,7 @@
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
-                <span>จัดการเจ้าหน้าที่และรหัสเข้าหน่วยงาน</span>
+                <span>บัญชีผู้ใช้และรหัสเชิญ</span>
               </h2>
             </div>
 
@@ -422,7 +421,7 @@
             <div class="border-b border-slate-100 pb-3">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="map-pin" class="w-4 h-4 text-blue-600"></i>
-                <span>เปลี่ยนพื้นที่รับผิดชอบ (Coverage Area)</span>
+                <span>พื้นที่ดูแล (Coverage Area)</span>
               </h2>
             </div>
             <div class="space-y-4">
@@ -445,22 +444,23 @@
               </div>
             </div>
             <div class="pt-4 border-t border-slate-100 flex justify-end">
-              <button onclick="showToast('บันทึกพื้นที่รับผิดชอบสำเร็จ')" class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-xl text-xs font-medium">บันทึกพื้นที่รับผิดชอบ</button>
+              <button onclick="showToast('บันทึกพื้นที่ดูแลสำเร็จ')" class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-xl text-xs font-medium">บันทึกพื้นที่ดูแล</button>
             </div>
           </div>
 
-          <!-- TAB 4: QR CODE -->
+          <!-- TAB 4: QR CODE (Fully Responsive & Aligned) -->
           <div id="content-qr" class="org-tab-content space-y-6">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="qr-code" class="w-4 h-4 text-blue-600"></i>
                 <span>QR CODE ทั้งหมด (จุดรับแจ้งเหตุที่บันทึกไว้)</span>
               </h2>
-              <button onclick="showToast('เพิ่ม QR ใหม่สำเร็จ')" class="bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-medium shadow-2xs inline-flex items-center gap-1.5">
+              <button onclick="showToast('เพิ่ม QR ใหม่สำเร็จ')" class="bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-medium shadow-2xs inline-flex items-center gap-1.5 self-start sm:self-auto">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i><span>เพิ่ม QR ใหม่</span>
               </button>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-2xs relative space-y-4">
                 <button onclick="showToast('ดาวน์โหลด QR สำเร็จ')" class="absolute top-4 right-4 w-8 h-8 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 shadow-2xs"><i data-lucide="download" class="w-4 h-4"></i></button>
                 <div class="w-32 h-32 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151" class="w-full h-full object-contain"></div>
@@ -476,12 +476,12 @@
             </div>
           </div>
 
-          <!-- TAB 5: PERMISSIONS / ตั้งค่าแผนที่สาธารณะ -->
+          <!-- TAB 5: PERMISSIONS -->
           <div id="content-permission" class="org-tab-content space-y-6">
             <div class="border-b border-slate-100 pb-3">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="shield-check" class="w-4 h-4 text-blue-600"></i>
-                <span>ตั้งค่าแผนที่สาธารณะและสิทธิ์ (Permissions)</span>
+                <span>สิทธิ์และการตั้งค่า Flags ของหน่วยงาน</span>
               </h2>
             </div>
             <div class="space-y-4">
@@ -537,12 +537,12 @@
             </div>
           </div>
 
-          <!-- TAB 6: STATS / สถานะและประเภท -->
+          <!-- TAB 6: STATS -->
           <div id="content-stats" class="org-tab-content space-y-5">
             <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
               <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="bar-chart-3" class="w-4 h-4 text-blue-600"></i>
-                <span>สถานะและประเภท (fondue-dashboard-data.org_info)</span>
+                <span>สถิติของหน่วยงาน (fondue-dashboard-data.org_info)</span>
               </h2>
               <span class="text-[10.5px] text-slate-400 font-mono-code">อัปเดตล่าสุด: 2026-10-19 17:29:58</span>
             </div>
@@ -607,14 +607,14 @@
     function switchTab(tabId) {
       document.querySelectorAll('.org-tab-content').forEach(c => c.classList.remove('active'));
       document.querySelectorAll('.org-tab-btn').forEach(b => {
-        b.classList.remove('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200', 'font-semibold');
+        b.classList.remove('bg-slate-900', 'text-white');
         b.classList.add('text-slate-600', 'hover:bg-slate-50');
       });
 
       document.getElementById('content-' + tabId).classList.add('active');
       const activeBtn = document.getElementById('btn-tab-' + tabId);
       if (activeBtn) {
-        activeBtn.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200', 'font-semibold');
+        activeBtn.classList.add('bg-slate-900', 'text-white');
         activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-50');
       }
 
