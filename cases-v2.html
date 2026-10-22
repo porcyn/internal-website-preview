@@ -46,7 +46,7 @@
       background: #94a3b8;
     }
 
-    /* REAL PROJECT SIDEBAR STYLES */
+    /* REAL PROJECT SIDEBAR STYLES (internal-website) */
     .real-sidebar {
       width: var(--sidebar-width);
       height: 100vh;
@@ -58,32 +58,13 @@
       padding: 16px 12px;
       overflow-y: auto;
       flex-shrink: 0;
-      transition: transform 0.25s ease-in-out;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .real-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 4px 8px 12px 8px;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .real-brand-logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #38bdf8;
-      box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.1);
-      flex-shrink: 0;
-    }
-    .real-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
+    .real-user-card {
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
     }
     .real-menu-item {
       display: flex;
@@ -91,143 +72,237 @@
       gap: 10px;
       padding: 9px 12px;
       border-radius: 10px;
-      font-size: 13px;
+      color: #334155;
+      font-size: 14px;
       font-weight: 500;
-      color: #475569;
       text-decoration: none;
-      transition: all 0.15s ease;
+      transition: background 0.15s, color 0.15s;
       cursor: pointer;
     }
     .real-menu-item:hover {
-      background-color: #f1f5f9;
+      background: #f1f5f9;
       color: #0f172a;
     }
-    .real-menu-item.active {
-      background-color: #eff6ff;
-      color: #2563eb;
-      font-weight: 600;
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
     }
     .real-children-group {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      padding-left: 20px;
-      margin-left: 14px;
-      border-left: 1.5px solid #e2e8f0;
-      margin-top: 2px;
-      margin-bottom: 4px;
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
     }
     .real-nested-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      color: #64748b;
+      gap: 10px;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
       text-decoration: none;
-      transition: all 0.15s ease;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
     }
     .real-nested-item:hover {
-      background-color: #f8fafc;
+      background: #f1f5f9;
       color: #0f172a;
     }
-    .real-nested-item.active {
-      background-color: #eff6ff;
-      color: #2563eb;
-      font-weight: 600;
+    .real-group-active {
+      background: #111827 !important;
+      color: #ffffff !important;
     }
+    .real-nested-active,
+    .real-nested-active:hover {
+      position: relative;
+      background: #52525b !important;
+      color: #ffffff !important;
+    }
+    .real-nested-active::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #111827;
+      transform: translateY(-50%);
+    }
+
+    /* REAL PROJECT TOPBAR STYLES */
     .real-topbar {
       height: var(--topbar-height);
       background: #ffffff;
       border-bottom: 1px solid #e2e8f0;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
     }
-    @media (max-width: 768px) {
+    .real-topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Responsive Mobile Drawer */
+    @media (max-width: 767px) {
       .real-sidebar {
         position: fixed;
-        left: 0;
         top: 0;
+        left: 0;
         bottom: 0;
-        z-index: 40;
+        z-index: 50;
+        width: 280px;
+        max-width: 84vw;
+        height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         transform: translateX(-100%);
       }
       .real-sidebar.sidebar-open {
-        transform: translateX(0);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        transform: translateX(0) !important;
+      }
+      .real-topbar {
+        padding: 0 12px;
+        height: 54px;
       }
     }
   </style>
 </head>
-<body class="min-h-screen flex text-slate-800 bg-[#f8fafc]">
+<body class="flex flex-col md:flex-row h-screen overflow-hidden text-xs">
 
-  <!-- Mobile Sidebar Backdrop -->
-  <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/40 z-30 hidden md:hidden backdrop-blur-xs"></div>
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
 
-  <!-- SIDEBAR -->
-  <aside class="real-sidebar" id="main-sidebar">
-    <div class="real-brand">
-      <div class="real-brand-logo">
-        <i data-lucide="layers" class="w-5 h-5"></i>
+  <!-- =====================================================================
+       1. EXACT REAL PROJECT SIDEBAR (from /Desktop/internal-website)
+       ===================================================================== -->
+  <aside id="main-sidebar" class="real-sidebar select-none">
+    
+    <!-- UserCard.jsx structure -->
+    <div class="real-user-card">
+      <div class="flex items-center gap-2.5">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="Profile"
+          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+        />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <!-- Close button on Mobile Drawer -->
+        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <!-- Logout on Desktop -->
+        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
       </div>
-      <div class="flex flex-col min-w-0">
-        <span class="font-bold text-slate-900 text-sm tracking-tight truncate">Traffy Internal</span>
-        <span class="text-[10px] text-slate-600 font-medium">Administration Portal</span>
+
+      <!-- Roles Badges -->
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">
+          ADMIN
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">
+          EDITOR
+        </span>
       </div>
     </div>
 
-    <nav class="real-nav">
-      <a href="./dashboard.html" class="real-menu-item">
-        <i data-lucide="layout-dashboard" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">แดชบอร์ด</span>
-      </a>
-
-      <div>
-        <div class="real-menu-item active">
-          <i data-lucide="folder-kanban" class="w-[18px] h-[18px] flex-shrink-0 text-blue-600"></i>
-          <span class="flex-1 truncate">จัดการ Case</span>
-          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-blue-600"></i>
-        </div>
-        <div class="real-children-group">
-          <a href="./cases.html" class="real-nested-item">
-            <span class="flex-1 truncate">จัดการเคส (Version 1)</span>
-          </a>
-          <a href="./cases-v2.html" class="real-nested-item active">
-            <span class="flex-1 truncate">จัดการเคส Version 2</span>
-            <span class="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.2 rounded font-semibold">Active</span>
-          </a>
-        </div>
-      </div>
-
-      <a href="./organizations.html" class="real-menu-item mt-1">
+    <!-- Navigation (Exact items from menu.js) -->
+    <nav class="flex flex-col gap-0.5">
+      <!-- 1. จัดการหน่วยงาน -->
+      <a href="./organizations.html" class="real-menu-item ">
         <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการหน่วยงาน</span>
       </a>
 
-      <div>
-        <div class="real-menu-item">
-          <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
-          <span class="flex-1 truncate">จัดการข้อความ & แชท</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+      <!-- 2. จัดการ Case (Group with Children: จัดการเคส Version 1 & Version 2) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header real-group-active">
+          <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">จัดการ Case</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./cases.html" class="real-nested-item font-medium">
+            <span class="flex-1 truncate">จัดการเคส Version 1</span>
+          </a>
+          <a href="./cases-v2.html" class="real-nested-item real-nested-active font-medium">
+            <span class="flex-1 truncate">จัดการเคส Version 2</span>
+          </a>
         </div>
       </div>
 
-      <div>
-        <div class="real-menu-item">
-          <i data-lucide="bar-chart-3" class="w-[18px] h-[18px] flex-shrink-0"></i>
+      <!-- 3. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item mt-1 ">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
+
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1 ">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+      <!-- 5. รายงานและสถิติ (Group with Children: สถิติ Rich Menu) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">รายงานและสถิติ</span>
         </div>
+        <div class="real-children-group">
+          <a href="./richmenu-stats.html" class="real-nested-item ">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+        </div>
       </div>
 
-      <a href="./users.html" class="real-menu-item mt-1">
+      <!-- 6. จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1 ">
         <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- 7. FAQ -->
+      <a href="./faq.html" class="real-menu-item mt-1 ">
+        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
       </a>
     </nav>
   </aside>
@@ -1616,9 +1691,21 @@
     function toggleMobileSidebar() {
       const sidebar = document.getElementById('main-sidebar');
       const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      if (!sidebar) return;
-      sidebar.classList.toggle('sidebar-open');
-      backdrop?.classList.toggle('hidden');
+      if (!sidebar || !backdrop) return;
+      const isOpen = sidebar.classList.contains('sidebar-open');
+      if (isOpen) {
+        closeMobileSidebar();
+      } else {
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (sidebar) sidebar.classList.remove('sidebar-open');
+      if (backdrop) backdrop.classList.add('hidden');
     }
 
     function switchView(viewName) {
