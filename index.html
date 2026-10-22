@@ -317,9 +317,15 @@
       <section id="view-case-list" class="max-w-4xl mx-auto space-y-4">
         
         <!-- Search Box Card -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
-          <div>
-            <h1 class="text-sm sm:text-base font-bold text-slate-900">ค้นหาเคสเรื่องแจ้ง</h1>
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h1 class="text-sm sm:text-base font-bold text-slate-900">ค้นหาเคสเรื่องแจ้ง</h1>
+              <p class="text-xs text-slate-500 mt-0.5">พิมพ์รหัส Case ID หรือชื่อเรื่องแจ้งที่ต้องการจัดการ</p>
+            </div>
           </div>
 
           <div class="flex flex-col sm:flex-row gap-2">
@@ -349,7 +355,7 @@
           <!-- Case Card 1 (Real Dump Case #2026-FEV7GP) -->
           <div onclick="inspectCase('2026-FEV7GP')" class="bg-white p-3.5 sm:p-4 rounded-2xl border border-blue-200/90 hover:border-blue-400 transition-all cursor-pointer shadow-2xs group flex flex-col justify-between gap-3">
             <div class="flex items-start gap-3.5 sm:gap-4 min-w-0">
-              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200/90 shadow-2xs">
+              <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200/90 shadow-2xs">
                 <img src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png" alt="ภาพเคสเรื่องแจ้ง" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
               </div>
               <div class="min-w-0 flex-1 space-y-1.5">
