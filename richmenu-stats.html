@@ -235,32 +235,31 @@
     </div>
 
     <!-- Navigation Menu Items -->
-    <nav class="flex flex-col gap-0.5">
-      <!-- 1. Reset OTP -->
-      <a href="./reset-otp.html" class="real-menu-item ">
-        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">Reset OTP</span>
-      </a>
-
-      <!-- 2. จัดการ Case -->
-      <a href="./index.html" class="real-menu-item ">
-        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">จัดการ Case</span>
-      </a>
-
-      <!-- 3. จัดการหน่วยงาน (Group with Children) -->
-      <div class="flex flex-col gap-1 mt-1">
-        <div class="real-group-header">
+            <nav class="flex flex-col gap-0.5">
+      <!-- 1. จัดการหน่วยงาน (Group with Children) -->
+      <div class="flex flex-col gap-1">
+        <a href="./organizations.html" class="real-group-header hover:bg-slate-100 transition-colors">
           <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">จัดการหน่วยงาน</span>
-        </div>
+        </a>
         <div class="real-children-group">
           <a href="./organizations.html" class="real-nested-item ">
             <span class="flex-1 truncate">จัดการหน่วยงาน</span>
           </a>
-          
         </div>
       </div>
+
+      <!-- 2. จัดการ Case -->
+      <a href="./index.html" class="real-menu-item mt-1 ">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <!-- 3. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item ">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
 
       <!-- 4. Flex Message -->
       <a href="./flex-message.html" class="real-menu-item mt-1 ">
@@ -268,33 +267,27 @@
         <span class="flex-1 truncate">Flex Message</span>
       </a>
 
-      <!-- 5. Rich Menu (Group with Children) -->
+      <!-- 5. รายงานและสถิติ -->
+      <a href="./richmenu-stats.html" class="real-menu-item mt-1 real-menu-active">
+        <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">รายงานและสถิติ</span>
+      </a>
+
+      <!-- 6. ระบบ (Group with Children: จัดการผู้ใช้, FAQ) -->
       <div class="flex flex-col gap-1 mt-1">
         <div class="real-group-header">
-          <i data-lucide="layout-grid" class="w-[18px] h-[18px] flex-shrink-0"></i>
-          <span class="flex-1 truncate">Rich Menu</span>
+          <i data-lucide="settings" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">ระบบ</span>
         </div>
         <div class="real-children-group">
-          <a href="./richmenu.html" class="real-nested-item ">
-            <span class="flex-1 truncate">จัดการ Rich Menu</span>
+          <a href="./users.html" class="real-nested-item ">
+            <span class="flex-1 truncate">จัดการผู้ใช้</span>
           </a>
-          <a href="./richmenu-stats.html" class="real-nested-item real-menu-active">
-            <span class="flex-1 truncate">สถิติ</span>
+          <a href="./faq.html" class="real-nested-item ">
+            <span class="flex-1 truncate">FAQ</span>
           </a>
         </div>
       </div>
-
-      <!-- 6. จัดการผู้ใช้ -->
-      <a href="./users.html" class="real-menu-item mt-1 ">
-        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">จัดการผู้ใช้</span>
-      </a>
-
-      <!-- 7. FAQ -->
-      <a href="./faq.html" class="real-menu-item ">
-        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">FAQ</span>
-      </a>
     </nav>
   </aside>
 
