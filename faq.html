@@ -236,18 +236,11 @@
 
     <!-- Navigation Menu Items -->
             <nav class="flex flex-col gap-0.5">
-      <!-- 1. จัดการหน่วยงาน (Group with Children) -->
-      <div class="flex flex-col gap-1">
-        <a href="./organizations.html" class="real-group-header hover:bg-slate-100 transition-colors">
-          <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
-          <span class="flex-1 truncate">จัดการหน่วยงาน</span>
-        </a>
-        <div class="real-children-group">
-          <a href="./organizations.html" class="real-nested-item ">
-            <span class="flex-1 truncate">จัดการหน่วยงาน</span>
-          </a>
-        </div>
-      </div>
+      <!-- 1. จัดการหน่วยงาน -->
+      <a href="./organizations.html" class="real-menu-item ">
+        <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+      </a>
 
       <!-- 2. จัดการ Case -->
       <a href="./index.html" class="real-menu-item mt-1 ">
@@ -256,7 +249,7 @@
       </a>
 
       <!-- 3. Reset OTP -->
-      <a href="./reset-otp.html" class="real-menu-item ">
+      <a href="./reset-otp.html" class="real-menu-item mt-1 ">
         <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Reset OTP</span>
       </a>
@@ -267,11 +260,18 @@
         <span class="flex-1 truncate">Flex Message</span>
       </a>
 
-      <!-- 5. รายงานและสถิติ -->
-      <a href="./richmenu-stats.html" class="real-menu-item mt-1 ">
-        <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">รายงานและสถิติ</span>
-      </a>
+      <!-- 5. รายงานและสถิติ (Group with Children: สถิติ Rich Menu) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">รายงานและสถิติ</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./richmenu-stats.html" class="real-nested-item ">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+        </div>
+      </div>
 
       <!-- 6. จัดการผู้ใช้ -->
       <a href="./users.html" class="real-menu-item mt-1 ">
