@@ -659,7 +659,7 @@
                 <span>เรียง: ปัจจุบัน → เก่า</span>
               </span>
               <span id="timeline-stats-badge" class="text-[11px] text-slate-700 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg font-mono-code font-semibold">
-                10 กิจกรรม • 2 รูปภาพ
+                8 กิจกรรม • 2 รูปภาพ
               </span>
             </div>
           </div>
@@ -749,6 +749,8 @@
               </tbody>
             </table>
           </div>
+        </div>
+
         <!-- ========================================================
              PANEL 3: DEDICATED CONVERSATION HISTORY (MODERN CHAT STREAM, NOT A RAW DB TABLE)
              ======================================================== -->
@@ -1251,52 +1253,6 @@
           is_hidden_note: false,
           hiddenHistory: []
         },
-        // --- การคุยกันระหว่างผู้แจ้งและเจ้าหน้าที่ (ชื่อตรงกับไทม์ไลน์) ---
-        {
-          id: "11805580",
-          updatedOn: "2026-10-15 14:18 น.",
-          author: "กมนัช พรหมบำรุง",
-          userId: "654858",
-          groupName: "-",
-          role: "ผู้แจ้งเรื่อง",
-          status: "inprogress",
-          stateNameTh: "ข้อความจากผู้แจ้ง",
-          note: "ขอบคุณมากครับ รบกวนด้วยนะครับ มีผู้สูงอายุเดินผ่านบ่อยมาก",
-          isCommentChat: true,
-          mediaIds: [],
-          is_hidden_note: false,
-          hiddenHistory: []
-        },
-        {
-          id: "11805312",
-          updatedOn: "2026-10-15 14:05 น.",
-          author: "Moshi - test NAT:D",
-          userId: "8004",
-          groupName: "Traffy @ ITS Lab",
-          role: "เจ้าหน้าที่",
-          status: "inprogress",
-          stateNameTh: "ตอบกลับผู้แจ้ง",
-          note: "รับทราบข้อมูลเพิ่มเติมจากผู้แจ้งแล้วครับ เจ้าหน้าที่ Traffy @ ITS Lab ได้ตรวจสอบพื้นที่เรียบร้อย อยู่ระหว่างจัดรอบทีมช่างเข้าซ่อมแซมกระเบื้องทางเท้าครับ",
-          isCommentChat: true,
-          mediaIds: [],
-          is_hidden_note: false,
-          hiddenHistory: []
-        },
-        {
-          id: "11802140",
-          updatedOn: "2026-10-15 11:20 น.",
-          author: "กมนัช พรหมบำรุง",
-          userId: "654858",
-          groupName: "-",
-          role: "ผู้แจ้งเรื่อง",
-          status: "inprogress",
-          stateNameTh: "ข้อความจากผู้แจ้ง",
-          note: "สอบถามครับ ตรงจุดนี้ทางเท้าพังและมีกระเบื้องปูยุบตัวลึก เกรงว่าคนเดินจะสะดุดล้ม จะมีเจ้าหน้าที่เข้ามาซ่อมช่วงไหนครับ",
-          isCommentChat: true,
-          mediaIds: [],
-          is_hidden_note: false,
-          hiddenHistory: []
-        },
         {
           id: "11798004",
           updatedOn: "2026-10-14 09:05 น.",
@@ -1634,12 +1590,11 @@
       updateModerationHeaderBadge();
       updateCurrentCoverDisplay();
 
-      const commentsCount = caseData.timeline.filter(t => t.isCommentChat).length;
-      const activitiesCount = caseData.timeline.filter(t => !t.isCommentChat).length;
+      const activitiesCount = caseData.timeline.length;
       const photosCount = caseData.media.length;
       const statsBadge = document.getElementById('timeline-stats-badge');
       if (statsBadge) {
-        statsBadge.textContent = `${activitiesCount} กิจกรรม • ${commentsCount} ข้อความคุยกัน • ${photosCount} รูปภาพ`;
+        statsBadge.textContent = `${activitiesCount} กิจกรรม • ${photosCount} รูปภาพ`;
       }
 
       lucide.createIcons();
