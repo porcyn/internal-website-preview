@@ -419,7 +419,7 @@
       <!-- ===================================================================
            VIEW 2: COMPLETE CASE DETAIL (HIDDEN UNTIL CASE IS SELECTED)
            =================================================================== -->
-      <section id="view-case-detail" class="max-w-4xl mx-auto space-y-4 hidden">
+      <section id="view-case-detail" class="max-w-6xl mx-auto space-y-4 hidden">
         
         <!-- Case Top Bar -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
@@ -477,351 +477,378 @@
           </span>
         </div>
 
-        <!-- =================================================================
-             CARD 1: ข้อมูลเคสและรายละเอียด (Case Overview, Location & Reporter)
-             ================================================================= -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-4">
-          <!-- Top Meta Row -->
-          <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 flex-wrap">
-            <div class="flex items-center gap-2 text-xs text-slate-600">
-              <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
-              <span class="font-medium">วันที่แจ้ง: <strong>8 ก.ค. 2026, 19:31 น.</strong></span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-50 text-amber-800 border border-amber-200">กำลังดำเนินการ (ส่งต่อ)</span>
-              <span class="px-2 py-0.5 rounded-md text-[10.5px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">ส่งต่อ(ใหม่)</span>
-            </div>
-          </div>
+        <!-- 2-COLUMN LAYOUT: MAIN CONTENT (LEFT 8 COLS) + SIDEBAR (RIGHT 4 COLS MATCHING IMAGE 2) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
 
-          <!-- Main Info with Clickable Dog Thumbnail -->
-          <div class="flex flex-col sm:flex-row gap-4 items-start">
-            <div class="relative group flex-shrink-0 w-full sm:w-36">
-              <div onclick="openImageLightbox(document.getElementById('current-cover-image').src, 'ภาพปัญหาปัจจุบัน #2026-3U3734')" class="w-full h-32 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 relative shadow-2xs flex items-center justify-center p-1 cursor-zoom-in group/cover" title="แตะเพื่อดูภาพขนาดเต็ม">
-                <img id="current-cover-image" src="https://storage.googleapis.com/traffy_public_bucket/attachment/2026-07/7980818968aecfcc2f144eac1ae9d3ac.jpeg" alt="ภาพปัญหาปัจจุบัน" class="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover/cover:scale-105">
-                <div class="absolute top-1.5 left-1.5 bg-slate-900/85 text-white text-[9px] font-medium px-1.5 py-0.5 rounded flex items-center gap-1 shadow-xs pointer-events-none">
-                  <i data-lucide="image" class="w-2.5 h-2.5 text-amber-400"></i>
-                  <span>ภาพปัญหาปัจจุบัน</span>
+          <!-- ===================================================================
+               LEFT COLUMN (8 COLS): Case Header, Real Timeline (Current -> Old), Orgs, Delegations, Chat, AI
+               =================================================================== -->
+          <div class="lg:col-span-8 space-y-4">
+
+            <!-- 1. Case Header & Problem Headline -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+              <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5 flex-wrap">
+                <div class="flex items-center gap-2 text-xs text-slate-600">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span class="font-medium">วันที่แจ้ง: <strong>8 ก.ค. 2026, 19:31 น.</strong></span>
                 </div>
-                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover/cover:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
-                  <i data-lucide="zoom-in" class="w-5 h-5 text-white drop-shadow"></i>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">กำลังดำเนินการ (ส่งต่อ)</span>
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">ส่งต่อ(ใหม่)</span>
                 </div>
               </div>
-              <div class="mt-1.5 flex items-center justify-between text-[10.5px]">
-                <span class="text-slate-400 text-[10px]">ภาพหน้าปก</span>
-                <span id="cover-edit-action-container">
-                  <!-- Rendered by updateEditModeUI() -->
+
+              <!-- Main Info with Clickable Dog Thumbnail -->
+              <div class="flex flex-col sm:flex-row gap-4 items-start">
+                <div class="relative group flex-shrink-0 w-full sm:w-36">
+                  <div onclick="openImageLightbox(document.getElementById('current-cover-image').src, 'ภาพปัญหาปัจจุบัน #2026-3U3734')" class="w-full h-32 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 relative shadow-2xs flex items-center justify-center p-1 cursor-zoom-in group/cover" title="แตะเพื่อดูภาพขนาดเต็ม">
+                    <img id="current-cover-image" src="https://storage.googleapis.com/traffy_public_bucket/attachment/2026-07/7980818968aecfcc2f144eac1ae9d3ac.jpeg" alt="ภาพปัญหาปัจจุบัน" class="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover/cover:scale-105">
+                    <div class="absolute top-1.5 left-1.5 bg-slate-900/85 text-white text-[9px] font-medium px-1.5 py-0.5 rounded flex items-center gap-1 shadow-xs pointer-events-none">
+                      <i data-lucide="image" class="w-2.5 h-2.5 text-amber-400"></i>
+                      <span>ภาพปัญหาปัจจุบัน</span>
+                    </div>
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover/cover:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
+                      <i data-lucide="zoom-in" class="w-5 h-5 text-white drop-shadow"></i>
+                    </div>
+                  </div>
+                  <div class="mt-1.5 flex items-center justify-between text-[10.5px]">
+                    <span class="text-slate-400 text-[10px]">ภาพหน้าปก</span>
+                    <span id="cover-edit-action-container">
+                      <!-- Rendered by updateEditModeUI() -->
+                    </span>
+                  </div>
+                </div>
+
+                <div class="flex-1 space-y-2 min-w-0">
+                  <h2 class="text-xs sm:text-sm font-semibold text-slate-900 leading-snug">
+                    ฟิวแจ้งทดสอบ 8กรก 2 | by line
+                  </h2>
+
+                  <p class="text-xs text-slate-700 leading-relaxed bg-slate-50/80 p-2.5 rounded-xl border border-slate-200/70 font-medium text-[11px]">
+                    ฟิวแจ้งทดสอบ 8กรก 2 | by line
+                  </p>
+
+                  <div class="flex flex-wrap items-center gap-2 pt-1 text-[11px]">
+                    <span class="text-slate-400">หมวดหมู่ดั้งเดิมที่ผู้แจ้งเลือก:</span>
+                    <span class="px-2 py-0.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-md font-medium">ทางเท้า</span>
+                    <span class="text-slate-300">•</span>
+                    <span class="text-slate-400">หมวดหมู่กลางที่หน่วยงานปรับ:</span>
+                    <span class="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-md font-semibold">ความสะอาด (ID: 5)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. ไทม์ไลน์กิจกรรมและการดำเนินงาน (REAL TRAFFY TIMELINE: ปัจจุบัน -> เก่า MATCHING IMAGE 1) -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
+                <div>
+                  <h3 class="text-xs sm:text-sm font-semibold text-slate-900 flex items-center gap-1.5">
+                    <i data-lucide="git-commit" class="w-4 h-4 text-slate-600"></i>
+                    <span>ไทม์ไลน์กิจกรรมและการดำเนินงาน</span>
+                  </h3>
+                  <p class="text-[10px] text-slate-400 mt-0.5" id="timeline-mode-hint">
+                    เรียงตามลำดับจริง: ปัจจุบัน → เก่า (แตะรูปเพื่อขยายภาพขนาดเต็ม)
+                  </p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-md font-semibold flex items-center gap-1">
+                    <i data-lucide="arrow-down" class="w-3 h-3 text-blue-600"></i>
+                    <span>ปัจจุบัน → เก่า</span>
+                  </span>
+                  <span class="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-mono-code">
+                    10 บันทึกกิจกรรม
+                  </span>
+                </div>
+              </div>
+
+              <!-- Timeline Stream Container (Rendered by renderTimelineStream()) -->
+              <div class="space-y-3.5 relative before:absolute before:inset-0 before:left-3 before:w-px before:bg-slate-200" id="timeline-stream-container">
+              </div>
+            </div>
+
+            <!-- 3. หน่วยงานที่รับผิดชอบเรื่องแจ้ง (4 หน่วยงาน) -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-semibold text-slate-900">หน่วยงานที่รับผิดชอบเรื่องแจ้ง</h3>
+                    <p class="text-[10px] text-slate-400">หน่วยงานแรกคือหน่วยงานที่ผู้แจ้งเลือกรับผิดชอบโดยตรง</p>
+                  </div>
+                </div>
+                <span class="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full font-medium" id="org-count-badge">
+                  4 หน่วยงานรับผิดชอบ
                 </span>
               </div>
+
+              <!-- Organizations Cards Container -->
+              <div class="space-y-3" id="org-list-container">
+                <!-- Dynamically rendered by renderOrgCards() -->
+              </div>
+
+              <!-- Bulk delete org tool container -->
+              <div id="org-bulk-delete-container"></div>
             </div>
 
-            <div class="flex-1 space-y-2.5 min-w-0">
-              <h2 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                ฟิวแจ้งทดสอบ 8กรก 2 | by line
-              </h2>
+            <!-- 4. ประวัติการเชิญร่วมและส่งต่อหน่วยงาน (4 รายการ) -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="git-fork" class="w-4 h-4 text-indigo-500"></i>
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-semibold text-slate-900">
+                      ประวัติการเชิญร่วมและส่งต่อหน่วยงาน
+                    </h3>
+                    <p class="text-[10px] text-slate-400">
+                      กิจกรรมที่วันเวลาใกล้เคียงกับเวลาแจ้ง เป็นการเชิญร่วมอัตโนมัติตามผังองค์กร
+                    </p>
+                  </div>
+                </div>
+                <span class="text-[10px] text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full font-medium" id="delegation-count-badge">
+                  4 รายการ
+                </span>
+              </div>
 
-              <p class="text-xs text-slate-700 leading-relaxed bg-slate-50/80 p-3 rounded-xl border border-slate-200/70 font-medium">
-                ฟิวแจ้งทดสอบ 8กรก 2 | by line
-              </p>
+              <!-- Delegation Rules Explainer -->
+              <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[10.5px] text-slate-600 space-y-1">
+                <div>
+                  💡 <strong>ข้อสังเกต:</strong> ถ้าเชิญร่วมหลายหน่วยงานด้วยวันเวลาเดียวกัน แต่ไม่ใกล้เคียงกับเวลาแจ้ง แปลว่ารายการแรกคือเจ้าหน้าที่กด ส่วนรายการถัดไปคือการเชิญร่วมอัตโนมัติตามผังองค์กร
+                </div>
+              </div>
 
-              <div class="flex flex-wrap items-center gap-2 pt-0.5 text-xs">
-                <span class="text-slate-400 text-[11px]">หมวดหมู่เดิม:</span>
-                <span class="px-2 py-0.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-md font-medium text-[11px]">ทางเท้า</span>
-                <span class="text-slate-300">•</span>
-                <span class="text-slate-400 text-[11px]">หมวดหมู่ที่ปรับ:</span>
-                <span class="px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-md font-semibold text-[11px]">ความสะอาด (ID: 5)</span>
+              <!-- Delegations List -->
+              <div class="space-y-2" id="delegation-list-container">
+                <!-- Dynamically rendered by renderDelegations() -->
+              </div>
+
+              <!-- Bulk delete delegation tool container -->
+              <div id="delegation-bulk-delete-container"></div>
+            </div>
+
+            <!-- 5. ประวัติการสนทนากับประชาชนผู้แจ้ง (แชท) -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <h3 class="text-xs sm:text-sm font-semibold text-slate-900">
+                    ประวัติการสนทนากับประชาชนผู้แจ้ง
+                  </h3>
+                </div>
+                <span class="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-mono-code">
+                  ผู้แจ้ง: ธนโชติ ทับทิม [35548]
+                </span>
+              </div>
+
+              <div class="space-y-3" id="comments-list-container">
+                <!-- Dynamically rendered by renderComments() -->
               </div>
             </div>
+
+            <!-- 6. การวิเคราะห์ข้อความแจ้งด้วย AI (Gemini 2.5 Flash Lite) -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-indigo-200/70 shadow-2xs space-y-4">
+              <div class="flex items-center justify-between border-b border-indigo-100 pb-2.5 flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs">
+                    AI
+                  </div>
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900">
+                      การวิเคราะห์ข้อความแจ้งด้วย AI (Gemini 2.5 Flash Lite)
+                    </h3>
+                    <div class="text-[10px] text-slate-500 font-medium">
+                      เวลาประมวลผล: 4.551s • 8 ก.ค. 2026, 19:29 น.
+                    </div>
+                  </div>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                  Sentimental: 80% (สุภาพ ไม่มีอารมณ์ลบ)
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
+                <div class="bg-slate-50/70 p-2.5 rounded-xl border border-indigo-100/80 space-y-1">
+                  <span class="text-slate-400 text-[10px] block">คำสำคัญ (Keywords) ที่ตรวจพบ</span>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="px-2 py-0.5 rounded bg-white border border-slate-200 font-mono-code text-[10px] text-slate-700">ทดสอบ</span>
+                    <span class="px-2 py-0.5 rounded bg-white border border-slate-200 font-mono-code text-[10px] text-slate-700">แจ้ง</span>
+                    <span class="px-2 py-0.5 rounded bg-white border border-slate-200 font-mono-code text-[10px] text-slate-700">กรก</span>
+                  </div>
+                </div>
+
+                <div class="bg-slate-50/70 p-2.5 rounded-xl border border-indigo-100/80 space-y-1">
+                  <span class="text-slate-400 text-[10px] block">หมวดหมู่ที่จำแนกได้</span>
+                  <div class="font-semibold text-slate-800 text-[11px]">อื่นๆ (ความมั่นใจ 100%)</div>
+                  <div class="text-[9.5px] text-slate-500">หมวดทั่วไป: การทดสอบระบบ (100%)</div>
+                </div>
+
+                <div class="bg-slate-50/70 p-2.5 rounded-xl border border-indigo-100/80 space-y-1">
+                  <span class="text-slate-400 text-[10px] block">ข้อความที่ปรับปรุงแล้ว</span>
+                  <div class="text-slate-700 italic text-[11px]">"แจ้งทดสอบ 8กรก 2"</div>
+                </div>
+              </div>
+
+              <div class="bg-slate-50/40 p-4 rounded-xl border border-slate-200/90 space-y-3 text-[11px] leading-relaxed">
+                <div class="font-semibold text-slate-900 text-xs border-b border-slate-200/60 pb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  <span>บทวิเคราะห์เชิงลึก 9 ด้าน (Gemini Result)</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-700">
+                  <div class="space-y-1">
+                    <div class="font-bold text-slate-900">1. วิเคราะห์ปัญหา:</div>
+                    <p class="text-slate-600 text-[10.5px]">มีการแจ้งปัญหาเข้ามาผ่าน Traffy Fondue ลักษณะข้อความสั้น "ฟิวแจ้งทดสอบ 8กรก 2" มีตำแหน่งที่ตั้งชัดเจน เป็นการทดสอบระบบ</p>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="font-bold text-slate-900">2. เป้าหมายที่ควรบรรลุ:</div>
+                    <p class="text-slate-600 text-[10.5px]">ได้รับคำตอบที่ชัดเจนเกี่ยวกับการทดสอบ การสื่อสารราบรื่น เจ้าหน้าที่รับทราบและตอบกลับทันท่วงที</p>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="font-bold text-slate-900">3. แนวทางแก้ไขปัญหา:</div>
+                    <p class="text-slate-600 text-[10.5px]">• เบื้องต้น: ตอบรับทราบการทดสอบระบบ ตรวจสอบความถูกต้องของการกระจายหน่วยงาน<br>• ยั่งยืน: ปรับปรุงระบบคัดกรอง AI ให้แยกข้อความทดสอบอัตโนมัติ</p>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="font-bold text-slate-900">4. ตัวชี้วัด & ลดภาระ:</div>
+                    <p class="text-slate-600 text-[10.5px]">ลดการเสียเวลาของเจ้าหน้าที่หน้างานด้วย Quick Staff Replies และการจำแนกสถานะอัตโนมัติ</p>
+                  </div>
+                </div>
+
+                <!-- Quick Staff Replies -->
+                <div class="mt-3 pt-3 border-t border-slate-200/70">
+                  <span class="font-semibold text-slate-800 text-[11px] block mb-2">ข้อความแนะนำสำหรับเจ้าหน้าที่ตอบกลับ (คลิกเพื่อคัดลอก):</span>
+                  <div class="space-y-1.5">
+                    <div class="p-2.5 bg-white rounded-lg border border-slate-200/80 flex items-start justify-between text-[10.5px]">
+                      <span><strong>รับทราบและดำเนินการทันที:</strong> รับทราบข้อมูลการแจ้งทดสอบแล้ว กำลังดำเนินการตรวจสอบระบบเพื่อให้การใช้งานเป็นไปอย่างราบรื่น</span>
+                      <button onclick="copyToClipboard('รับทราบข้อมูลการแจ้งทดสอบแล้ว กำลังดำเนินการตรวจสอบระบบเพื่อให้การใช้งานเป็นไปอย่างราบรื่น')" class="text-indigo-600 hover:underline text-[10px] ml-2 flex-shrink-0 font-medium cursor-pointer">คัดลอก</button>
+                    </div>
+                    <div class="p-2.5 bg-white rounded-lg border border-slate-200/80 flex items-start justify-between text-[10.5px]">
+                      <span><strong>ขอบคุณสำหรับการทดสอบ:</strong> ขอบคุณที่ช่วยทดสอบระบบ Traffy Fondue ครับ/ค่ะ ข้อมูลนี้เป็นประโยชน์อย่างยิ่งในการปรับปรุงการให้บริการของเรา</span>
+                      <button onclick="copyToClipboard('ขอบคุณที่ช่วยทดสอบระบบ Traffy Fondue ครับ/ค่ะ ข้อมูลนี้เป็นประโยชน์อย่างยิ่งในการปรับปรุงการให้บริการของเรา')" class="text-indigo-600 hover:underline text-[10px] ml-2 flex-shrink-0 font-medium cursor-pointer">คัดลอก</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vision photo card -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2.5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                <h4 class="text-xs font-semibold text-slate-900">การวิเคราะห์ภาพถ่ายด้วย AI</h4>
+                <span class="text-[9px] font-mono-code text-slate-400">Gemini 3.1 Flash Lite</span>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex gap-3 items-start">
+                  <div onclick="openImageLightbox('https://storage.googleapis.com/traffy_public_bucket/chat-bot-img/thaithealth-photos/1783513855818.jpeg', 'ภาพถ่ายระยะใกล้ของสุนัข (AI Vision)')" class="w-20 h-20 rounded-xl overflow-hidden border border-slate-200 flex-shrink-0 cursor-zoom-in relative group" title="แตะเพื่อดูภาพขนาดเต็ม">
+                    <img src="https://storage.googleapis.com/traffy_public_bucket/chat-bot-img/thaithealth-photos/1783513855818.jpeg" alt="สุนัข" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                      <i data-lucide="zoom-in" class="w-4 h-4 text-white drop-shadow"></i>
+                    </div>
+                  </div>
+                  <div class="space-y-1 min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold text-[9.5px]">อื่นๆ (100%)</span>
+                      <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold text-[9.5px]">ไม่พบปัญหา (100%)</span>
+                    </div>
+                    <div class="text-[9.5px] text-slate-400 font-mono-code">รหัสภาพ: 1318448 • 8 ก.ค. 2026, 19:30 น.</div>
+                    <div class="text-[9.5px] text-emerald-700 font-medium">ตรวจสอบความเหมาะสม: ไม่พบลามกอนาจาร / ไม่พบบุคคล (ปลอดภัย 100%)</div>
+                  </div>
+                </div>
+                <p class="text-[10.5px] text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
+                  ภาพถ่ายระยะใกล้ของสุนัขตัวหนึ่ง เป็นภาพสัตว์เลี้ยง (สุนัข) ไม่ปรากฏรายละเอียดของปัญหาที่เกี่ยวข้องกับโครงสร้างพื้นฐานหรือความเดือดร้อนรำคาญ
+                </p>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Integrated Location & Reporter Strip -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-slate-100">
-            <!-- Location -->
-            <div class="bg-slate-50/80 p-3 rounded-xl border border-slate-200/80 space-y-1">
+          <!-- ===================================================================
+               RIGHT COLUMN (4 COLS - แถบข้าง MATCHING IMAGE 2 EXACTLY)
+               1. พิกัดและตำแหน่งที่ตั้ง
+               2. ข้อมูลผู้แจ้งเรื่อง
+               3. รูปภาพแนบจากเรื่องแจ้ง (4 รูป)
+               =================================================================== -->
+          <div class="lg:col-span-4 space-y-4 lg:sticky lg:top-4">
+
+            <!-- 1. พิกัดและตำแหน่งที่ตั้ง -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2.5">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-blue-600"></i>
-                  <span>พิกัดและตำแหน่งที่ตั้ง</span>
-                </span>
-                <a href="https://maps.google.com/maps?f=q&z=16&q=13.77996,100.75787" target="_blank" class="text-[11px] text-blue-600 hover:underline inline-flex items-center gap-1 font-semibold">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-4 h-4 text-slate-700"></i>
+                  <h4 class="text-xs font-bold text-slate-900">พิกัดและตำแหน่งที่ตั้ง</h4>
+                </div>
+                <a href="https://maps.google.com/maps?f=q&z=16&q=13.77996,100.75787" target="_blank" class="text-[11px] text-blue-600 hover:underline inline-flex items-center gap-0.5 font-medium">
                   <span>Google Maps</span>
                   <i data-lucide="external-link" class="w-3 h-3"></i>
                 </a>
               </div>
-              <div class="text-xs font-bold text-slate-900">แขวงแสนแสบ เขตมีนบุรี กรุงเทพมหานคร</div>
-              <div class="text-[10.5px] text-slate-500 font-mono-code">กรุงเทพมหานคร [13.77996, 100.75787]</div>
-            </div>
 
-            <!-- Reporter -->
-            <div class="bg-slate-50/80 p-3 rounded-xl border border-slate-200/80 space-y-1">
-              <div class="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
-                <i data-lucide="user" class="w-3.5 h-3.5 text-slate-600"></i>
-                <span>ข้อมูลผู้แจ้งเรื่อง</span>
+              <!-- Map Visual Card with Center Pin -->
+              <div class="h-32 w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-100 relative flex items-center justify-center">
+                <div class="absolute inset-0 bg-cover bg-center opacity-85" style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop&q=60');"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                  <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md ring-2 ring-white">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <span class="mt-1 px-2 py-0.5 bg-white/95 backdrop-blur-xs text-slate-900 text-[10px] font-mono-code font-bold rounded shadow-xs border border-slate-200">
+                    13.77996, 100.75787
+                  </span>
+                </div>
               </div>
-              <div class="flex items-center justify-between text-xs pt-0.5">
-                <span class="font-bold text-slate-900">ธนโชติ ทับทิม</span>
-                <span class="text-[10px] font-mono-code text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">ID: 35548</span>
-              </div>
-              <div class="text-[10.5px] text-emerald-700 font-medium flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                <span>ช่องทาง: LINE Fondue Bot</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- =================================================================
-             CARD 2: รูปภาพแนบจากเรื่องแจ้ง (Attached Media Grid - Symmetrical & Zoomable)
-             ================================================================= -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                <i data-lucide="images" class="w-3.5 h-3.5"></i>
-              </div>
-              <div>
-                <h3 class="text-xs sm:text-sm font-semibold text-slate-900">รูปภาพแนบจากเรื่องแจ้ง</h3>
-                <p class="text-[10px] text-slate-400 mt-0.5" id="media-mode-hint">
-                  โหมดดูรูปภาพ (แตะรูปเพื่อขยาย หรือกดปุ่ม "แก้ไขข้อมูล" ด้านบนเพื่อเปลี่ยนภาพปกหรือซ่อนรูปภาพ)
-                </p>
+              <div class="text-[11px] text-slate-700 space-y-0.5 pt-0.5">
+                <div class="font-bold text-slate-900 text-xs">แขวงแสนแสบ เขตมีนบุรี กรุงเทพมหานคร</div>
+                <div class="text-[10.5px] text-slate-500">กรุงเทพมหานคร [13.77996, 100.75787]</div>
               </div>
             </div>
-            <span class="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full font-semibold" id="media-count-badge">
-              4 รูป
-            </span>
-          </div>
 
-          <!-- Media Inspector Grid Container (Dynamically rendered by renderMediaInspector()) -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="media-inspector-container"></div>
-        </div>
-
-        <!-- =================================================================
-             CARD 3: หน่วยงานที่รับผิดชอบเรื่องแจ้ง (4 หน่วยงาน)
-             ================================================================= -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
-              </div>
-              <div>
-                <h3 class="text-xs sm:text-sm font-semibold text-slate-900">หน่วยงานที่รับผิดชอบเรื่องแจ้ง</h3>
-                <p class="text-[10px] text-slate-400">หน่วยงานแรกคือหน่วยงานที่ผู้แจ้งเลือกรับผิดชอบโดยตรง</p>
+            <!-- 2. ข้อมูลผู้แจ้งเรื่อง -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2.5">
+              <h4 class="text-xs font-bold text-slate-900">ข้อมูลผู้แจ้งเรื่อง</h4>
+              <div class="space-y-2 text-[11px]">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">ชื่อผู้แจ้ง:</span>
+                  <span class="text-slate-900 font-semibold">ธนโชติ ทับทิม</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">User ID:</span>
+                  <span class="font-mono-code text-slate-800 font-bold">[35548]</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">ช่องทาง:</span>
+                  <span class="text-slate-800 font-medium">LINE Fondue Bot</span>
+                </div>
               </div>
             </div>
-            <span class="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium" id="org-count-badge">
-              4 หน่วยงานรับผิดชอบ
-            </span>
-          </div>
 
-          <!-- Organizations Cards Container -->
-          <div class="space-y-3" id="org-list-container">
-            <!-- Dynamically rendered by renderOrgCards() -->
-          </div>
-
-          <!-- Bulk delete org tool container -->
-          <div id="org-bulk-delete-container"></div>
-        </div>
-
-        <!-- =================================================================
-             CARD 4: ประวัติการเชิญร่วมและส่งต่อหน่วยงาน (4 รายการ)
-             ================================================================= -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <i data-lucide="git-fork" class="w-4 h-4 text-indigo-500"></i>
-              <div>
-                <h3 class="text-xs sm:text-sm font-semibold text-slate-900">
-                  ประวัติการเชิญร่วมและส่งต่อหน่วยงาน
-                </h3>
-                <p class="text-[10px] text-slate-400">
-                  กิจกรรมที่วันเวลาใกล้เคียงกับเวลาแจ้ง เป็นการเชิญร่วมอัตโนมัติตามผังองค์กร
-                </p>
+            <!-- 3. รูปภาพแนบจากเรื่องแจ้ง (4 รูป - MATCHING IMAGE 2 EXACTLY) -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="images" class="w-3.5 h-3.5 text-slate-600"></i>
+                  <h3 class="text-xs font-semibold text-slate-900">รูปภาพแนบจากเรื่องแจ้ง</h3>
+                </div>
+                <span class="text-[10px] text-slate-400" id="media-count-badge">4 รูป</span>
               </div>
-            </div>
-            <span class="text-[10px] text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full font-medium" id="delegation-count-badge">
-              4 รายการ
-            </span>
-          </div>
 
-          <!-- Delegation Rules Explainer -->
-          <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[10.5px] text-slate-600 space-y-1">
-            <div>
-              💡 <strong>ข้อสังเกต:</strong> ถ้าเชิญร่วมหลายหน่วยงานด้วยวันเวลาเดียวกัน แต่ไม่ใกล้เคียงกับเวลาแจ้ง แปลว่ารายการแรกคือเจ้าหน้าที่กด ส่วนรายการถัดไปคือการเชิญร่วมอัตโนมัติตามผังองค์กร
-            </div>
-          </div>
-
-          <!-- Delegations List -->
-          <div class="space-y-2" id="delegation-list-container">
-            <!-- Dynamically rendered by renderDelegations() -->
-          </div>
-
-          <!-- Bulk delete delegation tool container -->
-          <div id="delegation-bulk-delete-container"></div>
-        </div>
-
-        <!-- =================================================================
-             CARD 5: ไทม์ไลน์กิจกรรมและการดำเนินงาน (10 บันทึกกิจกรรม)
-             ================================================================= -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
-            <div>
-              <h3 class="text-xs sm:text-sm font-semibold text-slate-900 flex items-center gap-1.5">
-                <i data-lucide="git-commit" class="w-3.5 h-3.5 text-slate-600"></i>
-                <span>ไทม์ไลน์กิจกรรมและการดำเนินงาน</span>
-              </h3>
-              <p class="text-[10px] text-slate-400 mt-0.5" id="timeline-mode-hint">
-                แสดงประวัติการอัปเดตสถานะและรูปภาพผลการปฏิบัติงานของเจ้าหน้าที่ (แตะรูปเพื่อขยาย)
+              <p class="text-[10.5px] text-slate-500 leading-normal" id="media-mode-hint">
+                โหมดดูรูปภาพ (กดปุ่ม "แก้ไขข้อมูล" ด้านบนเพื่อเปลี่ยนภาพปกหรือซ่อนรูปภาพ)
               </p>
+
+              <!-- Media Cards List (Vertical List in Sidebar like Image 2) -->
+              <div class="space-y-2" id="media-inspector-container">
+                <!-- Dynamically rendered by renderMediaInspector() -->
+              </div>
             </div>
-            <div class="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-mono-code">
-              10 บันทึกกิจกรรม
-            </div>
+
           </div>
 
-          <div class="space-y-3 relative before:absolute before:inset-0 before:left-3 before:w-px before:bg-slate-200" id="timeline-stream-container">
-            <!-- Dynamically rendered by renderTimelineStream() -->
-          </div>
         </div>
 
-        <!-- =================================================================
-             CARD 6: ประวัติการสนทนากับประชาชนผู้แจ้ง (แชท)
-             ================================================================= -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-              </div>
-              <h3 class="text-xs sm:text-sm font-semibold text-slate-900">
-                ประวัติการสนทนากับประชาชนผู้แจ้ง
-              </h3>
-            </div>
-            <span class="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded font-mono-code">
-              ผู้แจ้ง: ธนโชติ ทับทิม [35548]
-            </span>
-          </div>
-
-          <div class="space-y-3" id="comments-list-container">
-            <!-- Dynamically rendered by renderComments() -->
-          </div>
-        </div>
-
-        <!-- =================================================================
-             CARD 7: การวิเคราะห์ข้อความแจ้งด้วย AI (Gemini 2.5 Flash Lite)
-             ================================================================= -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-indigo-200/70 shadow-2xs space-y-4">
-          <div class="flex items-center justify-between border-b border-indigo-100 pb-2.5 flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs">
-                AI
-              </div>
-              <div>
-                <h3 class="text-xs sm:text-sm font-bold text-slate-900">
-                  การวิเคราะห์ข้อความแจ้งด้วย AI (Gemini 2.5 Flash Lite)
-                </h3>
-                <div class="text-[10px] text-slate-500 font-medium">
-                  เวลาประมวลผล: 4.551s • 8 ก.ค. 2026, 19:29 น.
-                </div>
-              </div>
-            </div>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
-              Sentimental: 80% (สุภาพ ไม่มีอารมณ์ลบ)
-            </span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
-            <div class="bg-slate-50/70 p-2.5 rounded-xl border border-indigo-100/80 space-y-1">
-              <span class="text-slate-400 text-[10px] block">คำสำคัญ (Keywords) ที่ตรวจพบ</span>
-              <div class="flex flex-wrap gap-1">
-                <span class="px-2 py-0.5 rounded bg-white border border-slate-200 font-mono-code text-[10px] text-slate-700">ทดสอบ</span>
-                <span class="px-2 py-0.5 rounded bg-white border border-slate-200 font-mono-code text-[10px] text-slate-700">แจ้ง</span>
-                <span class="px-2 py-0.5 rounded bg-white border border-slate-200 font-mono-code text-[10px] text-slate-700">กรก</span>
-              </div>
-            </div>
-
-            <div class="bg-slate-50/70 p-2.5 rounded-xl border border-indigo-100/80 space-y-1">
-              <span class="text-slate-400 text-[10px] block">หมวดหมู่ที่จำแนกได้</span>
-              <div class="font-semibold text-slate-800 text-[11px]">อื่นๆ (ความมั่นใจ 100%)</div>
-              <div class="text-[9.5px] text-slate-500">หมวดทั่วไป: การทดสอบระบบ (100%)</div>
-            </div>
-
-            <div class="bg-slate-50/70 p-2.5 rounded-xl border border-indigo-100/80 space-y-1">
-              <span class="text-slate-400 text-[10px] block">ข้อความที่ปรับปรุงแล้ว</span>
-              <div class="text-slate-700 italic text-[11px]">"แจ้งทดสอบ 8กรก 2"</div>
-            </div>
-          </div>
-
-          <div class="bg-slate-50/40 p-4 rounded-xl border border-slate-200/90 space-y-3 text-[11px] leading-relaxed">
-            <div class="font-semibold text-slate-900 text-xs border-b border-slate-200/60 pb-1.5 flex items-center gap-1.5">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i>
-              <span>บทวิเคราะห์เชิงลึก 9 ด้าน (Gemini Result)</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-700">
-              <div class="space-y-1">
-                <div class="font-bold text-slate-900">1. วิเคราะห์ปัญหา:</div>
-                <p class="text-slate-600 text-[10.5px]">มีการแจ้งปัญหาเข้ามาผ่าน Traffy Fondue ลักษณะข้อความสั้น "ฟิวแจ้งทดสอบ 8กรก 2" มีตำแหน่งที่ตั้งชัดเจน เป็นการทดสอบระบบ</p>
-              </div>
-              <div class="space-y-1">
-                <div class="font-bold text-slate-900">2. เป้าหมายที่ควรบรรลุ:</div>
-                <p class="text-slate-600 text-[10.5px]">ได้รับคำตอบที่ชัดเจนเกี่ยวกับการทดสอบ การสื่อสารราบรื่น เจ้าหน้าที่รับทราบและตอบกลับทันท่วงที</p>
-              </div>
-              <div class="space-y-1">
-                <div class="font-bold text-slate-900">3. แนวทางแก้ไขปัญหา:</div>
-                <p class="text-slate-600 text-[10.5px]">• เบื้องต้น: ตอบรับทราบการทดสอบระบบ ตรวจสอบความถูกต้องของการกระจายหน่วยงาน<br>• ยั่งยืน: ปรับปรุงระบบคัดกรอง AI ให้แยกข้อความทดสอบอัตโนมัติ</p>
-              </div>
-              <div class="space-y-1">
-                <div class="font-bold text-slate-900">4. ตัวชี้วัด & ลดภาระ:</div>
-                <p class="text-slate-600 text-[10.5px]">ลดการเสียเวลาของเจ้าหน้าที่หน้างานด้วย Quick Staff Replies และการจำแนกสถานะอัตโนมัติ</p>
-              </div>
-            </div>
-
-            <!-- Quick Staff Replies -->
-            <div class="mt-3 pt-3 border-t border-slate-200/70">
-              <span class="font-semibold text-slate-800 text-[11px] block mb-2">ข้อความแนะนำสำหรับเจ้าหน้าที่ตอบกลับ (คลิกเพื่อคัดลอก):</span>
-              <div class="space-y-1.5">
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200/80 flex items-start justify-between text-[10.5px]">
-                  <span><strong>รับทราบและดำเนินการทันที:</strong> รับทราบข้อมูลการแจ้งทดสอบแล้ว กำลังดำเนินการตรวจสอบระบบเพื่อให้การใช้งานเป็นไปอย่างราบรื่น</span>
-                  <button onclick="copyToClipboard('รับทราบข้อมูลการแจ้งทดสอบแล้ว กำลังดำเนินการตรวจสอบระบบเพื่อให้การใช้งานเป็นไปอย่างราบรื่น')" class="text-indigo-600 hover:underline text-[10px] ml-2 flex-shrink-0 font-medium cursor-pointer">คัดลอก</button>
-                </div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200/80 flex items-start justify-between text-[10.5px]">
-                  <span><strong>ขอบคุณสำหรับการทดสอบ:</strong> ขอบคุณที่ช่วยทดสอบระบบ Traffy Fondue ครับ/ค่ะ ข้อมูลนี้เป็นประโยชน์อย่างยิ่งในการปรับปรุงการให้บริการของเรา</span>
-                  <button onclick="copyToClipboard('ขอบคุณที่ช่วยทดสอบระบบ Traffy Fondue ครับ/ค่ะ ข้อมูลนี้เป็นประโยชน์อย่างยิ่งในการปรับปรุงการให้บริการของเรา')" class="text-indigo-600 hover:underline text-[10px] ml-2 flex-shrink-0 font-medium cursor-pointer">คัดลอก</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Vision photo card -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2.5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
-            <h4 class="text-xs font-semibold text-slate-900">การวิเคราะห์ภาพถ่ายด้วย AI</h4>
-            <span class="text-[9px] font-mono-code text-slate-400">Gemini 3.1 Flash Lite</span>
-          </div>
-
-          <div class="space-y-2">
-            <div class="flex gap-3 items-start">
-              <div onclick="openImageLightbox('https://storage.googleapis.com/traffy_public_bucket/chat-bot-img/thaithealth-photos/1783513855818.jpeg', 'ภาพถ่ายระยะใกล้ของสุนัข (AI Vision)')" class="w-20 h-20 rounded-xl overflow-hidden border border-slate-200 flex-shrink-0 cursor-zoom-in relative group" title="แตะเพื่อดูภาพขนาดเต็ม">
-                <img src="https://storage.googleapis.com/traffy_public_bucket/chat-bot-img/thaithealth-photos/1783513855818.jpeg" alt="สุนัข" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
-                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <i data-lucide="zoom-in" class="w-4 h-4 text-white drop-shadow"></i>
-                </div>
-              </div>
-              <div class="space-y-1 min-w-0">
-                <div class="flex items-center gap-1.5 flex-wrap">
-                  <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold text-[9.5px]">อื่นๆ (100%)</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold text-[9.5px]">ไม่พบปัญหา (100%)</span>
-                </div>
-                <div class="text-[9.5px] text-slate-400 font-mono-code">รหัสภาพ: 1318448 • 8 ก.ค. 2026, 19:30 น.</div>
-                <div class="text-[9.5px] text-emerald-700 font-medium">ตรวจสอบความเหมาะสม: ไม่พบลามกอนาจาร / ไม่พบบุคคล (ปลอดภัย 100%)</div>
-              </div>
-            </div>
-            <p class="text-[10.5px] text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
-              ภาพถ่ายระยะใกล้ของสุนัขตัวหนึ่ง เป็นภาพสัตว์เลี้ยง (สุนัข) ไม่ปรากฏรายละเอียดของปัญหาที่เกี่ยวข้องกับโครงสร้างพื้นฐานหรือความเดือดร้อนรำคาญ
-            </p>
-          </div>
-        </div>
       </section>
 
     </div>
@@ -1055,16 +1082,126 @@
         }
       ],
       timeline: [
-        { id: "10715387", updatedOn: "2026-07-08 19:31:19", author: "ธนโชติ ทับทิม", groupName: "ประชาชนผู้แจ้ง", stateNameTh: "รอรับเรื่อง", note: "ฟิวแจ้งทดสอบ 8กรก 2 | by line", mediaIds: ["att-10715387"], hidden: false },
-        { id: "10715391", updatedOn: "2026-07-08 19:31:55", author: "AbuDaHBeE ทับทิม", groupName: "Traffy @ ITS Lab2", stateNameTh: "รอรับเรื่อง", note: "Traffy @ ITS Lab2 เปลี่ยนประเภทเป็น ความสะอาด", hidden: false },
-        { id: "10715403", updatedOn: "2026-07-08 19:35:01", author: "AbuDaHBeE ทับทิม", groupName: "Traffy @ ITS Lab2", stateNameTh: "กำลังดำเนินการ", note: "สถานะอะไรกันนี่ เอ๊ะๆๆๆๆ", mediaIds: ["att-10715403"], hidden: false },
-        { id: "10715407", updatedOn: "2026-07-08 19:35:40", author: "AbuDaHBeE ทับทิม", groupName: "Traffy @ ITS Lab2", stateNameTh: "กำลังดำเนินการ", note: "เชิญร่วมไปยัง ทดสอบ toy (2) เนื่องจาก เชิญร่วมพี่ทอยครับ", hidden: false },
-        { id: "10715409", updatedOn: "2026-07-08 19:36:26", author: "AbuDaHBeE ทับทิม", groupName: "Traffy @ ITS Lab2", stateNameTh: "กำลังดำเนินการ", note: "ส่งต่อไปยัง อบต.แอตแลนติส เนื่องจาก ส่งต่อหาใครซักคน", hidden: false },
-        { id: "10720329", updatedOn: "2026-07-09 10:05:00", author: "AbuDaHBeE ทับทิม", groupName: "Traffy @ ITS Lab2", stateNameTh: "กำลังดำเนินการ", note: "เปลี่ยนประเภทเป็น ไฟฟ้า", hidden: false },
-        { id: "10728208", updatedOn: "2026-07-09 21:34:44", author: "AbuDaHBeE ทับทิม", groupName: "Traffy @ ITS Lab2", stateNameTh: "กำลังดำเนินการ", note: "เปลี่ยนประเภทเป็น ทดสอบ category manualจ้า", hidden: false },
-        { id: "10728212", updatedOn: "2026-07-09 21:35:07", author: "AbuDaHBeE ทับทิม", groupName: "Traffy @ ITS Lab2", stateNameTh: "กำลังดำเนินการ", note: "Hi (ทดสอบ sync legacy แก้ไขแล้ว)", mediaIds: ["att-10728212"], hidden: false },
-        { id: "11126237", updatedOn: "2026-08-19 13:40:29", author: "AbuDaHBeE ทับทิม", groupName: "ทดสอบ toy (2)", stateNameTh: "กำลังดำเนินการ", note: "ทดสอบอีกนะ", mediaIds: ["att-11126237"], hidden: false },
-        { id: "11126266", updatedOn: "2026-08-19 13:41:58", author: "AbuDaHBeE ทับทิม", groupName: "ทดสอบ toy (2)", stateNameTh: "ส่งต่อ(ใหม่)", note: "ส่งต่อไปยัง Test create by few1 เนื่องจาก ทดสอบส่งต่อ", hidden: false }
+        {
+          id: "11126266",
+          updatedOn: "2026-08-19 13:41:58",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "ทดสอบ toy (2)",
+          stateNameTh: "ส่งต่อ(ใหม่)",
+          statusType: "forward",
+          note: "ทดสอบ toy (2) ส่งต่อไปยัง Test create by few1 เนื่องจาก ทดสอบส่งต่อ ( ⓘ และ Traffy @ ITS Lab2 ก็เป็นส่งต่อด้วยโดยอัตโนมัติ)",
+          mediaIds: [],
+          hidden: false
+        },
+        {
+          id: "11126237",
+          updatedOn: "2026-08-19 13:40:29",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "ทดสอบ toy (2)",
+          stateNameTh: "กำลังดำเนินการ",
+          statusType: "inprogress",
+          note: "ทดสอบอีกนะ",
+          mediaIds: ["att-11126237"],
+          hidden: false
+        },
+        {
+          id: "10728212",
+          updatedOn: "2026-07-09 21:35:07",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab2",
+          stateNameTh: "กำลังดำเนินการ",
+          statusType: "inprogress",
+          note: "Hi",
+          mediaIds: ["att-10728212"],
+          hidden: false
+        },
+        {
+          id: "10728208",
+          updatedOn: "2026-07-09 21:34:44",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab2",
+          stateNameTh: "กำลังดำเนินการ",
+          statusType: "inprogress",
+          note: "Traffy @ ITS Lab2 เปลี่ยนประเภทเป็น ทดสอบ category manualจ้า",
+          mediaIds: [],
+          hidden: false
+        },
+        {
+          id: "10720329",
+          updatedOn: "2026-07-09 10:05:00",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab2",
+          stateNameTh: "กำลังดำเนินการ",
+          statusType: "inprogress",
+          note: "Traffy @ ITS Lab2 เปลี่ยนประเภทเป็น ไฟฟ้า",
+          mediaIds: [],
+          hidden: false
+        },
+        {
+          id: "10715409",
+          updatedOn: "2026-07-08 19:36:26",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab2",
+          stateNameTh: "ส่งต่อ(ใหม่)",
+          statusType: "forward",
+          note: "Traffy @ ITS Lab2 ส่งต่อไปยัง อบต.แอตแลนติส (ใช้ทดสอบ) เนื่องจาก ส่งต่อหาใครซักคน",
+          mediaIds: [],
+          hidden: false
+        },
+        {
+          id: "10715407",
+          updatedOn: "2026-07-08 19:35:40",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab2",
+          stateNameTh: "กำลังดำเนินการ",
+          statusType: "inprogress",
+          note: "Traffy @ ITS Lab2 เชิญร่วมไปยัง ทดสอบ toy (2) เนื่องจาก เชิญร่วมพี่ทอยครับ",
+          mediaIds: [],
+          hidden: false
+        },
+        {
+          id: "10715403",
+          updatedOn: "2026-07-08 19:35:01",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab2",
+          stateNameTh: "กำลังดำเนินการ",
+          statusType: "inprogress",
+          note: "สถานะอะไรกันนี่ เอ๊ะๆๆๆๆ",
+          mediaIds: ["att-10715403"],
+          hidden: false
+        },
+        {
+          id: "10715391",
+          updatedOn: "2026-07-08 19:31:55",
+          author: "AbuDaHBeE ทับทิม",
+          userId: "11705",
+          groupName: "Traffy @ ITS Lab2",
+          stateNameTh: "รอรับเรื่อง",
+          statusType: "start",
+          note: "Traffy @ ITS Lab2 เปลี่ยนประเภทเป็น ความสะอาด",
+          mediaIds: [],
+          hidden: false
+        },
+        {
+          id: "10715387",
+          updatedOn: "2026-07-08 19:31:19",
+          author: "ธนโชติ ทับทิม",
+          userId: "35548",
+          groupName: "ประชาชนผู้แจ้ง",
+          stateNameTh: "รอรับเรื่อง",
+          statusType: "start",
+          note: "ฟิวแจ้งทดสอบ 8กรก 2 | by line",
+          mediaIds: ["att-10715387"],
+          hidden: false
+        }
       ],
       comments: [
         { id: "1994880", timestamp: "2026-07-08 19:37:54", userName: "AbuDaHBeE ทับทิม", userId: "11705", isStaff: true, comment: "คุยครับสวัสดีคนแจ้ง" },
@@ -1350,7 +1487,7 @@
 
         let photosHtml = '';
         if (item.mediaIds && item.mediaIds.length > 0) {
-          photosHtml = '<div class="flex flex-wrap gap-2 pt-2">';
+          photosHtml = '<div class="flex flex-wrap gap-2.5 pt-2">';
           item.mediaIds.forEach(mId => {
             const m = caseData.media.find(x => x.id === mId);
             if (!m) return;
@@ -1358,11 +1495,11 @@
             photosHtml += `
               <div onclick="openImageLightbox('${m.url}', '${m.title}')" class="relative group rounded-xl overflow-hidden border ${
                 isCover ? 'border-amber-400 ring-2 ring-amber-200' : 'border-slate-200'
-              } w-20 h-20 bg-slate-50 flex-shrink-0 shadow-2xs cursor-zoom-in hover:opacity-95 transition-opacity" title="แตะเพื่อดูภาพขนาดเต็ม">
-                <img src="${m.url}" class="w-full h-full object-cover p-0.5 group-hover:scale-105 transition-transform duration-200">
-                ${isCover ? '<span class="absolute top-1 left-1 bg-amber-500 text-white text-[7.5px] px-1 py-0.2 rounded font-bold shadow-2xs">⭐ ปก</span>' : ''}
+              } w-24 h-24 sm:w-28 sm:h-28 bg-slate-50 flex-shrink-0 shadow-2xs cursor-zoom-in hover:opacity-95 transition-all" title="แตะเพื่อดูภาพขนาดเต็ม">
+                <img src="${m.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                ${isCover ? '<span class="absolute top-1.5 left-1.5 bg-amber-500 text-white text-[8px] px-1.5 py-0.5 rounded font-bold shadow-xs flex items-center gap-0.5"><i data-lucide="star" class="w-2.5 h-2.5 fill-white"></i><span>ปก</span></span>' : ''}
                 <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <i data-lucide="zoom-in" class="w-4 h-4 text-white drop-shadow"></i>
+                  <i data-lucide="zoom-in" class="w-5 h-5 text-white drop-shadow"></i>
                 </div>
               </div>
             `;
@@ -1370,38 +1507,51 @@
           photosHtml += '</div>';
         }
 
+        // Color coding for bullets matching real Traffy in Image 1:
+        // Yellow = ส่งต่อ, Blue = กำลังดำเนินการ, Purple = เปลี่ยนประเภท, Red/Rose = รอรับเรื่อง
+        let bulletColor = 'bg-blue-600 ring-2 ring-blue-100';
+        let badgeStyle = 'bg-blue-50 text-blue-700 border-blue-200';
+
+        if (item.stateNameTh?.includes('ส่งต่อ')) {
+          bulletColor = 'bg-amber-500 ring-2 ring-amber-100';
+          badgeStyle = 'bg-amber-50 text-amber-800 border-amber-200';
+        } else if (item.note?.includes('เปลี่ยนประเภท') || item.note?.includes('เชิญร่วม')) {
+          bulletColor = 'bg-purple-600 ring-2 ring-purple-100';
+          badgeStyle = 'bg-purple-50 text-purple-700 border-purple-200';
+        } else if (item.stateNameTh === 'รอรับเรื่อง') {
+          bulletColor = 'bg-rose-500 ring-2 ring-rose-100';
+          badgeStyle = 'bg-rose-50 text-rose-700 border-rose-200';
+        }
+
         itemEl.innerHTML = `
-          <div class="absolute left-1.5 top-2.5 w-3 h-3 rounded-full flex items-center justify-center ${
-            isHidden ? 'bg-rose-500 ring-2 ring-rose-200' :
-            item.stateNameTh === 'รอรับเรื่อง' ? 'bg-slate-400 ring-2 ring-slate-100' :
-            item.stateNameTh.includes('ส่งต่อ') ? 'bg-indigo-500 ring-2 ring-indigo-100' :
-            'bg-blue-600 ring-2 ring-blue-100'
+          <div class="absolute left-1.5 top-3 w-3 h-3 rounded-full flex items-center justify-center ${
+            isHidden ? 'bg-slate-400 ring-2 ring-slate-200' : bulletColor
           }"></div>
 
-          <div class="p-3 rounded-xl border text-xs space-y-2 transition-all ${
-            isHidden ? 'bg-rose-50/30 border-rose-200' : 'bg-white border-slate-200/80 shadow-2xs'
+          <div class="p-3.5 rounded-2xl border text-xs space-y-2 transition-all ${
+            isHidden ? 'bg-rose-50/30 border-rose-200' : 'bg-white border-slate-200/90 shadow-2xs hover:border-slate-300'
           }">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-slate-100 pb-1.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-b border-slate-100 pb-2">
               <div class="flex items-center gap-2 flex-wrap">
-                <span class="font-semibold text-slate-800 text-[11px]">${item.author}</span>
-                <span class="text-[9.5px] text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded">${item.groupName}</span>
-                <span class="px-2 py-0.2 rounded-full text-[9.5px] font-medium bg-blue-50 text-blue-700">${item.stateNameTh}</span>
+                <span class="font-bold text-slate-900 text-xs">${item.author}</span>
+                <span class="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md font-medium">${item.groupName}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${badgeStyle}">${item.stateNameTh}</span>
               </div>
-              <span class="text-[9.5px] text-slate-400 font-mono-code">${item.updatedOn}</span>
+              <span class="text-[10px] text-slate-400 font-mono-code font-medium">${item.updatedOn}</span>
             </div>
 
-            <p class="text-[11px] text-slate-700 leading-relaxed font-mono-code">${item.note}</p>
+            <p class="text-xs text-slate-700 leading-relaxed font-mono-code pt-0.5">${item.note}</p>
             ${photosHtml}
 
             ${isEditing ? `
-              <div class="flex items-center justify-between pt-1 border-t border-slate-100/60">
-                <span class="text-[9px] text-slate-400">
+              <div class="flex items-center justify-between pt-1.5 border-t border-slate-100/70">
+                <span class="text-[9.5px] text-slate-400">
                   ${isHidden ? '🚫 ซ่อนจากประชาชนแล้ว' : '👁️ ประชาชนมองเห็นปกติ'}
                 </span>
-                <button onclick="promptReasonAction('${isHidden ? 'unhide_timeline' : 'hide_timeline'}', '${item.id}')" class="px-2 py-0.5 rounded text-[9.5px] font-medium transition-colors flex items-center gap-1 ${
-                  isHidden ? 'text-rose-700 bg-rose-100 hover:bg-rose-200' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+                <button onclick="promptReasonAction('${isHidden ? 'unhide_timeline' : 'hide_timeline'}', '${item.id}')" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
+                  isHidden ? 'text-rose-700 bg-rose-100 hover:bg-rose-200' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200'
                 }">
-                  <i data-lucide="${isHidden ? 'eye' : 'eye-off'}" class="w-2.5 h-2.5"></i>
+                  <i data-lucide="${isHidden ? 'eye' : 'eye-off'}" class="w-3 h-3"></i>
                   <span>${isHidden ? 'ยกเลิกการซ่อน' : 'ซ่อนกิจกรรมนี้'}</span>
                 </button>
               </div>
@@ -1413,7 +1563,6 @@
       lucide.createIcons();
     }
 
-    // Render Comments
     function renderComments() {
       const container = document.getElementById('comments-list-container');
       if (!container) return;
@@ -1471,40 +1620,39 @@
         if (isCover && coverImg) coverImg.src = m.url;
 
         const card = document.createElement('div');
-        card.className = `p-3 rounded-2xl border transition-all flex flex-col justify-between gap-2.5 ${
+        card.className = `p-2.5 rounded-2xl border transition-all space-y-2 ${
           isCover ? 'border-amber-400 bg-amber-50/20 shadow-2xs' : 'border-slate-200/90 bg-white hover:border-slate-300'
         }`;
 
         card.innerHTML = `
-          <div class="space-y-2">
-            <div onclick="openImageLightbox('${m.url}', '${m.title}')" class="w-full h-28 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 relative flex items-center justify-center p-1 cursor-zoom-in group/img" title="แตะเพื่อดูภาพขนาดเต็ม">
-              <img src="${m.url}" class="w-full h-full object-contain ${isHidden ? 'blur-xs grayscale opacity-60' : ''} group-hover/img:scale-105 transition-transform duration-200">
-              ${isCover ? '<span class="absolute top-1.5 left-1.5 bg-amber-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-xs">⭐ ปก</span>' : ''}
-              <div class="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
-                <i data-lucide="zoom-in" class="w-5 h-5 text-white drop-shadow"></i>
+          <div class="flex items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div onclick="openImageLightbox('${m.url}', '${m.title}')" class="w-12 h-12 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex-shrink-0 relative flex items-center justify-center p-0.5 cursor-zoom-in group/thumb" title="แตะเพื่อดูภาพขนาดเต็ม">
+                <img src="${m.url}" class="w-full h-full object-cover rounded-lg ${isHidden ? 'blur-xs grayscale opacity-60' : ''} group-hover/thumb:scale-105 transition-transform duration-200">
+                ${isCover ? '<span class="absolute top-0.5 left-0.5 bg-amber-500 text-white text-[7px] font-bold px-1 rounded">ปก</span>' : ''}
+              </div>
+              <div class="min-w-0 space-y-0.5">
+                <div class="text-xs font-semibold text-slate-800 truncate">${m.title}</div>
+                <div class="text-[10px] text-slate-400">
+                  ${isHidden ? '<span class="text-rose-600 font-medium">🚫 ซ่อนจากสาธารณะ</span>' : '👁️ แสดงปกติ'}
+                </div>
               </div>
             </div>
-            <div>
-              <div class="text-xs font-semibold text-slate-800 truncate">${m.title}</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">
-                ${isHidden ? '<span class="text-rose-600 font-medium">🚫 ซ่อนจากสาธารณะ</span>' : '👁️ แสดงปกติ'}
-              </div>
-            </div>
-          </div>
 
-          <div class="flex items-center gap-1.5 pt-1 border-t border-slate-100">
-            ${isEditing ? `
-              <button onclick="promptReasonAction('set_cover', '${m.id}')" class="flex-1 py-1 px-1.5 rounded-lg text-[10px] font-semibold transition-colors cursor-pointer text-center ${
-                isCover ? 'bg-amber-100 text-amber-900 font-bold cursor-default' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }">
-                ${isCover ? '⭐ ปก' : 'ตั้งเป็นปก'}
-              </button>
-              <button onclick="promptReasonAction('${isHidden ? 'unhide_media' : 'hide_media'}', '${m.id}')" class="p-1.5 rounded-lg transition-colors cursor-pointer ${
-                isHidden ? 'text-rose-600 bg-rose-50 hover:bg-rose-100' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
-              }" title="${isHidden ? 'ยกเลิกการซ่อน' : 'ซ่อนรูปนี้'}">
-                <i data-lucide="${isHidden ? 'eye' : 'eye-off'}" class="w-3.5 h-3.5"></i>
-              </button>
-            ` : (isCover ? '<span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-900 font-semibold">⭐ ภาพหน้าปก</span>' : '<span class="text-[10px] text-slate-400">รูปภาพแนบ</span>')}
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              ${isEditing ? `
+                <button onclick="promptReasonAction('set_cover', '${m.id}')" class="px-2 py-1 rounded-lg text-[9.5px] font-semibold transition-colors cursor-pointer text-center ${
+                  isCover ? 'bg-amber-100 text-amber-900 font-bold cursor-default' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }">
+                  ${isCover ? '⭐ หน้าปก' : 'ตั้งเป็นปก'}
+                </button>
+                <button onclick="promptReasonAction('${isHidden ? 'unhide_media' : 'hide_media'}', '${m.id}')" class="p-1.5 rounded-lg transition-colors cursor-pointer ${
+                  isHidden ? 'text-rose-600 bg-rose-50 hover:bg-rose-100' : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'
+                }" title="${isHidden ? 'ยกเลิกการซ่อน' : 'ซ่อนรูปนี้'}">
+                  <i data-lucide="${isHidden ? 'eye' : 'eye-off'}" class="w-3.5 h-3.5"></i>
+                </button>
+              ` : (isCover ? '<span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-900 font-semibold border border-amber-200">⭐ หน้าปก</span>' : '')}
+            </div>
           </div>
         `;
         container.appendChild(card);
