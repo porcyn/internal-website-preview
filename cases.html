@@ -676,7 +676,7 @@
             <div>
               <h3 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="git-commit" class="w-4 h-4 text-slate-500"></i>
-                <span>ประวัติกิจกรรม & รูปภาพในเคส (Timeline Stream)</span>
+                <span>ประวัติกิจกรรม & รูปภาพในเคส</span>
               </h3>
               <p class="text-[11px] text-slate-500 mt-0.5">
                 ในโหมดแก้ไขข้อมูล สามารถ <strong>ซ่อน/ยกเลิกซ่อนรูปภาพ</strong>, <strong>ซ่อนกิจกรรมไทม์ไลน์</strong> หรือ <strong>เปลี่ยนภาพหน้าปก</strong> พร้อมบันทึกเหตุผล
@@ -957,7 +957,7 @@
               </div>
               <div>
                 <h3 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <span>ประวัติการคุยกัน (Conversation History)</span>
+                  <span>ประวัติการคุยกัน</span>
                 </h3>
                 <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1.5 flex-wrap">
                   <span>บันทึกการส่งข้อความ/สนทนาระหว่างผู้แจ้ง</span>
@@ -979,16 +979,16 @@
             </div>
           </div>
 
-          <!-- Chat Messages Thread Container -->
-          <div class="space-y-3.5 max-w-4xl mx-auto py-2">
+          <!-- Chat Messages Thread Container (Dialogue Style: Citizen on Left, Staff on Right) -->
+          <div class="space-y-4 max-w-4xl mx-auto py-2 flex flex-col">
             
-            <!-- Message 1: Citizen (ธนโชติ ทับทิม) -->
-            <div class="flex items-start gap-3">
+            <!-- Message 1: Citizen (ธนโชติ ทับทิม) - ชิดซ้าย -->
+            <div class="flex items-start gap-3 max-w-2xl self-start">
               <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
                 ธท
               </div>
-              <div class="flex-1 max-w-2xl space-y-1">
-                <div class="flex items-center gap-2">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 flex-wrap">
                   <span class="font-bold text-slate-900 text-xs">ธนโชติ ทับทิม</span>
                   <span class="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold px-2 py-0.5 rounded">ผู้แจ้งเรื่อง</span>
                   <span class="text-[11px] text-slate-400 font-mono-code">8 ก.ค. 2026 • 19:33 น.</span>
@@ -999,30 +999,30 @@
               </div>
             </div>
 
-            <!-- Message 2: Officer (เจ้าหน้าที่ ITS Lab) -->
-            <div class="flex items-start gap-3 flex-row-reverse sm:flex-row">
+            <!-- Message 2: Officer (เจ้าหน้าที่ ITS Lab) - ชิดขวา -->
+            <div class="flex items-start gap-3 max-w-2xl self-end flex-row-reverse">
               <div class="w-8 h-8 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
                 IT
               </div>
-              <div class="flex-1 max-w-2xl space-y-1">
-                <div class="flex items-center gap-2">
-                  <span class="font-bold text-slate-900 text-xs">เจ้าหน้าที่ ITS Lab (คุณทับทิม)</span>
-                  <span class="text-[10px] bg-blue-50 text-blue-800 border border-blue-200 font-semibold px-2 py-0.5 rounded">เจ้าหน้าที่ • Traffy @ ITS Lab2</span>
+              <div class="space-y-1 text-right">
+                <div class="flex items-center gap-2 justify-end flex-row-reverse flex-wrap">
                   <span class="text-[11px] text-slate-400 font-mono-code">8 ก.ค. 2026 • 19:45 น.</span>
+                  <span class="text-[10px] bg-blue-50 text-blue-800 border border-blue-200 font-semibold px-2 py-0.5 rounded">เจ้าหน้าที่ • Traffy @ ITS Lab2</span>
+                  <span class="font-bold text-slate-900 text-xs">เจ้าหน้าที่ ITS Lab (คุณทับทิม)</span>
                 </div>
-                <div class="p-3.5 rounded-2xl rounded-tl-sm sm:rounded-tl-2xl sm:rounded-tr-sm bg-blue-50/70 border border-blue-200 text-slate-900 text-xs leading-relaxed shadow-2xs">
+                <div class="p-3.5 rounded-2xl rounded-tr-sm bg-blue-50/90 border border-blue-200 text-slate-900 text-xs leading-relaxed shadow-2xs text-left">
                   รับทราบการแจ้งทดสอบครับ ทางเจ้าหน้าที่ Traffy @ ITS Lab2 ได้เชิญร่วมหน่วยงานที่เกี่ยวข้องและจัดส่งทีมตรวจตราแล้วครับ
                 </div>
               </div>
             </div>
 
-            <!-- Message 3: Citizen (ธนโชติ ทับทิม) -->
-            <div class="flex items-start gap-3">
+            <!-- Message 3: Citizen (ธนโชติ ทับทิม) - ชิดซ้าย -->
+            <div class="flex items-start gap-3 max-w-2xl self-start">
               <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
                 ธท
               </div>
-              <div class="flex-1 max-w-2xl space-y-1">
-                <div class="flex items-center gap-2">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 flex-wrap">
                   <span class="font-bold text-slate-900 text-xs">ธนโชติ ทับทิม</span>
                   <span class="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold px-2 py-0.5 rounded">ผู้แจ้งเรื่อง</span>
                   <span class="text-[11px] text-slate-400 font-mono-code">9 ก.ค. 2026 • 09:00 น.</span>
@@ -1033,18 +1033,18 @@
               </div>
             </div>
 
-            <!-- Message 4: Officer (เจ้าหน้าที่ ITS Lab) -->
-            <div class="flex items-start gap-3 flex-row-reverse sm:flex-row">
+            <!-- Message 4: Officer (เจ้าหน้าที่ ITS Lab) - ชิดขวา -->
+            <div class="flex items-start gap-3 max-w-2xl self-end flex-row-reverse">
               <div class="w-8 h-8 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
                 IT
               </div>
-              <div class="flex-1 max-w-2xl space-y-1">
-                <div class="flex items-center gap-2">
-                  <span class="font-bold text-slate-900 text-xs">เจ้าหน้าที่ ITS Lab (คุณทับทิม)</span>
-                  <span class="text-[10px] bg-blue-50 text-blue-800 border border-blue-200 font-semibold px-2 py-0.5 rounded">เจ้าหน้าที่ • Traffy @ ITS Lab2</span>
+              <div class="space-y-1 text-right">
+                <div class="flex items-center gap-2 justify-end flex-row-reverse flex-wrap">
                   <span class="text-[11px] text-slate-400 font-mono-code">9 ก.ค. 2026 • 10:30 น.</span>
+                  <span class="text-[10px] bg-blue-50 text-blue-800 border border-blue-200 font-semibold px-2 py-0.5 rounded">เจ้าหน้าที่ • Traffy @ ITS Lab2</span>
+                  <span class="font-bold text-slate-900 text-xs">เจ้าหน้าที่ ITS Lab (คุณทับทิม)</span>
                 </div>
-                <div class="p-3.5 rounded-2xl rounded-tl-sm sm:rounded-tl-2xl sm:rounded-tr-sm bg-blue-50/70 border border-blue-200 text-slate-900 text-xs leading-relaxed shadow-2xs">
+                <div class="p-3.5 rounded-2xl rounded-tr-sm bg-blue-50/90 border border-blue-200 text-slate-900 text-xs leading-relaxed shadow-2xs text-left">
                   ทีมตรวจการ อบต.แอตแลนติส ลงพื้นที่ตรวจสอบจุดพิกัดเรียบร้อยครับ ขณะนี้เคสอยู่ในสถานะกำลังดำเนินการตามลำดับครับ
                 </div>
               </div>
