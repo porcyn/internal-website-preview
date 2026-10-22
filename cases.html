@@ -607,9 +607,14 @@
               
               <!-- Cover Photo with Actionable Overlay in Edit Mode (Enlarged & Prominent) -->
               <div class="flex flex-col items-center gap-1.5 sm:gap-2 flex-shrink-0 self-center sm:self-start">
-                <div class="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/90 shadow-2xs group hover:border-slate-300 transition-colors flex items-center justify-center">
+                <div onclick="if (!isDetailEditMode) openImageLightbox(document.getElementById('current-cover-image').src, 'ภาพหน้าปก #2026-3U3734')" class="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/90 shadow-2xs group hover:border-slate-300 transition-colors flex items-center justify-center cursor-zoom-in" title="แตะเพื่อดูภาพขนาดเต็ม">
                   <img id="current-cover-image" src="https://storage.googleapis.com/traffy_public_bucket/attachment/2026-07/7980818968aecfcc2f144eac1ae9d3ac.jpeg" alt="ภาพปัญหาปัจจุบันของเรื่องแจ้ง" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                   
+                  <!-- Zoom icon hint on hover -->
+                  <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
+                    <i data-lucide="zoom-in" class="w-6 h-6 text-white drop-shadow"></i>
+                  </div>
+
                   <!-- Subtle Bottom Badge -->
                   <div class="absolute bottom-1.5 inset-x-1.5 flex justify-center pointer-events-none">
                     <span class="bg-slate-900/85 backdrop-blur-xs text-amber-300 text-[9.5px] sm:text-[10.5px] font-semibold px-2 py-0.5 rounded-full shadow-xs inline-flex items-center gap-1">
@@ -619,8 +624,8 @@
                   </div>
                   
                   <!-- Change Cover Overlay button (Only visible in Edit Mode) -->
-                  <div id="cover-edit-overlay" class="hidden absolute inset-0 bg-slate-950/75 backdrop-blur-2xs flex flex-col items-center justify-center p-1.5 text-center transition-all">
-                    <button onclick="openChangeCoverSelector()" class="px-2.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-md flex items-center gap-1 transition-transform active:scale-95">
+                  <div id="cover-edit-overlay" class="hidden absolute inset-0 bg-slate-950/75 backdrop-blur-2xs flex flex-col items-center justify-center p-1.5 text-center transition-all z-10">
+                    <button onclick="event.stopPropagation(); openChangeCoverSelector()" class="px-2.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-md flex items-center gap-1 transition-transform active:scale-95">
                       <i data-lucide="camera" class="w-3.5 h-3.5"></i>
                       <span class="text-xs">เปลี่ยนรูป</span>
                     </button>
@@ -714,6 +719,36 @@
               </div>
             </div>
 
+          </div>
+
+          <!-- Divider between primary case info and attached media gallery -->
+          <div class="border-t border-slate-200/80 my-3.5 sm:my-4"></div>
+
+          <!-- Consolidated Attached Media Gallery (4 photos from report) -->
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
+                  <i data-lucide="images" class="w-3.5 h-3.5"></i>
+                </div>
+                <div>
+                  <h2 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                    <span>รูปภาพแนบจากเรื่องแจ้ง</span>
+                    <span id="header-media-count-badge" class="text-[11px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.2 rounded-full">4 รูป</span>
+                  </h2>
+                </div>
+                <span class="text-[11px] text-slate-700 hidden md:inline">• แตะภาพเพื่อดูขนาดเต็ม หรือกดปุ่ม "แก้ไขข้อมูล" ด้านบนเพื่อเปลี่ยนภาพหน้าปกหรือซ่อนภาพ</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-xs">
+                <span class="text-slate-700 font-medium">ภาพหน้าปก:</span>
+                <span id="header-cover-title" class="font-bold text-amber-950 bg-amber-50 border border-amber-300 px-2 py-0.5 rounded-md text-[11px]">ภาพสุนัขที่ผู้แจ้งส่ง</span>
+              </div>
+            </div>
+
+            <!-- Media Grid: 4 columns on desktop, 2 on tablet/mobile, 1 on 320px -->
+            <div id="case-attached-media-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+              <!-- Dynamically populated by renderCaseAttachedMedia() -->
+            </div>
           </div>
         </div>
 
@@ -1361,6 +1396,19 @@
     </div>
   </div>
 
+  <!-- 3.5 IMAGE LIGHTBOX MODAL (WCAG 2.2 AAA Compliant) -->
+  <div id="image-lightbox-modal" role="dialog" aria-modal="true" aria-label="ดูภาพขนาดใหญ่" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[100] flex items-center justify-center p-4 hidden" onclick="closeImageLightbox()">
+    <div class="relative max-w-4xl max-h-[92vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <button onclick="closeImageLightbox()" aria-label="ปิดหน้าต่างขยายภาพ (ESC)" class="absolute -top-12 right-0 text-white/90 hover:text-white p-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-xs transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2" title="ปิด (ESC)">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="rounded-2xl overflow-hidden bg-black/40 border border-white/20 shadow-2xl flex items-center justify-center max-h-[78vh]">
+        <img id="lightbox-img" src="" alt="ขยายภาพรายละเอียดเรื่องแจ้ง" class="max-w-full max-h-[78vh] object-contain">
+      </div>
+      <div id="lightbox-caption" class="text-white text-xs sm:text-sm mt-3 text-center font-bold bg-slate-900/90 px-4 py-2 rounded-xl backdrop-blur-xs border border-white/20 shadow-lg max-w-lg truncate"></div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION -->
   <div id="toast-box" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium flex items-center gap-2.5 border border-slate-800">
     <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
@@ -1625,6 +1673,7 @@
 
       updateEditModeChangesTracker();
       renderTimelineStream();
+      renderCaseAttachedMedia();
       showToast('เข้าสู่โหมดแก้ไขข้อมูลแล้ว — สามารถซ่อนรูป, ซ่อนกิจกรรม หรือเปลี่ยนภาพปกได้');
     }
 
@@ -1733,8 +1782,11 @@
                 isCover ? 'border-amber-400 ring-2 ring-amber-300' : 'border-slate-200'
               } p-2 shadow-2xs max-w-xs">
                 
-                <div class="relative w-32 h-32 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center p-1">
-                  <img src="${m.url}" alt="${m.title}" class="w-full h-full object-contain ${isMediaHidden ? 'blur-xs grayscale opacity-40' : ''}">
+                <div onclick="openImageLightbox('${m.url}', '${m.title}')" class="relative w-32 h-32 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center p-1 cursor-zoom-in group" title="แตะเพื่อดูภาพขนาดเต็ม">
+                  <img src="${m.url}" alt="${m.title}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200 ${isMediaHidden ? 'blur-xs grayscale opacity-40' : ''}">
+                  <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
+                    <i data-lucide="zoom-in" class="w-5 h-5 text-white drop-shadow"></i>
+                  </div>
                   ${isCover ? '<span class="absolute top-1 left-1 bg-amber-500 text-slate-950 text-[10px] px-1.5 py-0.5 rounded font-bold shadow-2xs">⭐ ภาพหน้าปก</span>' : ''}
                   ${isMediaHidden ? '<span class="absolute inset-0 bg-slate-950/80 flex items-center justify-center text-rose-300 font-bold text-xs p-1 text-center">🚫 ถูกซ่อน</span>' : ''}
                 </div>
@@ -2199,6 +2251,7 @@
       closeReasonModal();
       updateEditModeChangesTracker();
       renderTimelineStream();
+      updateCurrentCoverDisplay();
     }
 
     function showCustomAlert(title, message) {
@@ -2254,6 +2307,7 @@
           coverImg.classList.remove('blur-xs', 'grayscale');
         }
       }
+      renderCaseAttachedMedia();
     }
 
     function updateModerationHeaderBadge() {
@@ -2448,8 +2502,140 @@
       toast.classList.remove('translate-y-0', 'opacity-100');
     }
 
+    // ========================================================
+    // Image Lightbox Functions (WCAG 2.2 AAA Compliant)
+    // ========================================================
+    function openImageLightbox(url, caption) {
+      const modal = document.getElementById('image-lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (!modal || !img) return;
+      img.src = url;
+      img.alt = caption || 'ขยายภาพรายละเอียดเรื่องแจ้ง';
+      if (cap) cap.textContent = caption || '';
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+
+    function closeImageLightbox() {
+      const modal = document.getElementById('image-lightbox-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeImageLightbox();
+      }
+    });
+
+    // ========================================================
+    // Render Consolidated Attached Media Gallery in Header
+    // (WCAG 2.2 AAA: Target Size >=44px, Contrast >=7:1, Focus Appearance >=3:1)
+    // ========================================================
+    function renderCaseAttachedMedia() {
+      const container = document.getElementById('case-attached-media-grid');
+      const coverTitle = document.getElementById('header-cover-title');
+      const countBadge = document.getElementById('header-media-count-badge');
+      if (!container) return;
+
+      const currentCover = caseData.media.find(m => m.id === caseData.coverId);
+      if (coverTitle && currentCover) {
+        coverTitle.textContent = currentCover.title;
+      }
+      if (countBadge) {
+        countBadge.textContent = `${caseData.media.length} รูป`;
+      }
+
+      container.innerHTML = '';
+
+      caseData.media.forEach((m, idx) => {
+        const isCover = (caseData.coverId === m.id);
+        const isHidden = m.is_hidden_photo;
+
+        const card = document.createElement('div');
+        card.className = `p-2.5 rounded-xl border transition-all space-y-2.5 ${
+          isCover 
+            ? 'border-amber-400 bg-amber-50/30 ring-1 ring-amber-300 shadow-2xs' 
+            : 'border-slate-200/90 bg-slate-50/70 hover:bg-white hover:border-slate-300'
+        }`;
+
+        card.innerHTML = `
+          <div class="flex items-center gap-2.5 min-w-0">
+            <!-- Thumbnail with WCAG 2.2 AAA Target Size min 44x44px & Focus Outline >= 3:1 -->
+            <button type="button" 
+              onclick="openImageLightbox('${m.url}', '${m.title}')"
+              class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-white border ${
+                isCover ? 'border-amber-400' : 'border-slate-200'
+              } flex-shrink-0 cursor-zoom-in group/item focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900 focus-visible:outline-offset-2"
+              title="แตะเพื่อดูภาพขนาดเต็ม"
+              aria-label="ขยายภาพ: ${m.title}">
+              <img src="${m.url}" alt="${m.title}" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-200 ${isHidden ? 'blur-xs grayscale opacity-50' : ''}">
+              ${isCover ? '<span class="absolute top-1 left-1 bg-amber-500 text-slate-950 text-[9px] font-bold px-1.5 py-0.2 rounded shadow-xs">ปก</span>' : ''}
+              <div class="absolute inset-0 bg-black/25 opacity-0 group-hover/item:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
+                <i data-lucide="zoom-in" class="w-4 h-4 text-white drop-shadow"></i>
+              </div>
+            </button>
+
+            <!-- Metadata Info with High Contrast (Text >= 7:1) -->
+            <div class="min-w-0 flex-1 space-y-1">
+              <div class="text-xs font-bold text-slate-900 truncate" title="${m.title}">
+                ${idx + 1}. ${m.title}
+              </div>
+              <div class="text-[11px] text-slate-700 font-mono-code truncate">
+                รหัส: ${m.id}
+              </div>
+              <div>
+                ${isHidden 
+                  ? '<span class="inline-flex items-center gap-1 text-[10px] font-bold text-rose-950 bg-rose-100 border border-rose-300 px-1.5 py-0.5 rounded"><i data-lucide="eye-off" class="w-3 h-3"></i><span>ซ่อนจากสาธารณะ</span></span>' 
+                  : '<span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-950 bg-emerald-100 border border-emerald-300 px-1.5 py-0.5 rounded"><i data-lucide="eye" class="w-3 h-3"></i><span>แสดงปกติ</span></span>'
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Mode Actions (WCAG 2.2 AAA Target Size min 44px) -->
+          ${isDetailEditMode ? `
+            <div class="flex items-center gap-1.5 pt-1.5 border-t border-slate-200/80">
+              ${!isCover ? `
+                <button type="button" onclick="promptReasonAction('set_cover', '${m.id}')"
+                  class="flex-1 py-1.5 px-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 text-[11px] font-bold transition-colors flex items-center justify-center gap-1 min-h-[44px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900"
+                  aria-label="ตั้ง ${m.title} เป็นภาพหน้าปก">
+                  <i data-lucide="star" class="w-3.5 h-3.5 text-amber-700"></i>
+                  <span>ตั้งเป็นปก</span>
+                </button>
+              ` : `
+                <div class="flex-1 py-1.5 px-2 rounded-lg bg-amber-100 text-amber-950 border border-amber-300 text-[11px] font-bold flex items-center justify-center gap-1 min-h-[44px]">
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-amber-700"></i>
+                  <span>ภาพหน้าปก</span>
+                </div>
+              `}
+              <button type="button" onclick="handlePhotoHideTrigger('${m.id}')"
+                class="py-1.5 px-2.5 rounded-lg text-[11px] font-bold transition-colors flex items-center justify-center gap-1 min-h-[44px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900 ${
+                  isHidden 
+                    ? 'bg-emerald-50 text-emerald-950 hover:bg-emerald-100 border border-emerald-300' 
+                    : 'bg-rose-50 text-rose-950 hover:bg-rose-100 border border-rose-300'
+                }"
+                title="${isHidden ? 'ยกเลิกการซ่อน' : 'ซ่อนรูปนี้'}"
+                aria-label="${isHidden ? 'ยกเลิกการซ่อน ' + m.title : 'ซ่อน ' + m.title}">
+                <i data-lucide="${isHidden ? 'eye' : 'eye-off'}" class="w-3.5 h-3.5"></i>
+                <span>${isHidden ? 'เลิกซ่อน' : 'ซ่อน'}</span>
+              </button>
+            </div>
+          ` : ''}
+        `;
+
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
     // Initial Renders on Load
     renderTimelineStream();
+    renderCaseAttachedMedia();
   </script>
 </body>
 </html>
