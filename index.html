@@ -456,6 +456,7 @@
                 <option value="all">ทั้งหมด</option>
                 <option value="timeline">ไทม์ไลน์และรูปภาพ</option>
                 <option value="orgs">หน่วยงานที่รับเรื่อง</option>
+                <option value="comments">ประวัติการคุยกัน</option>
                 <option value="ai">บทวิเคราะห์ AI</option>
               </select>
             </div>
@@ -473,6 +474,10 @@
               <button type="button" onclick="switchCaseTab('orgs')" id="btn-case-tab-orgs" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
                 <i data-lucide="network" class="w-3.5 h-3.5 text-slate-600"></i>
                 <span>หน่วยงานที่รับเรื่อง</span>
+              </button>
+              <button type="button" onclick="switchCaseTab('comments')" id="btn-case-tab-comments" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
+                <i data-lucide="messages-square" class="w-3.5 h-3.5 text-slate-600"></i>
+                <span>ประวัติการคุยกัน</span>
               </button>
               <button type="button" onclick="switchCaseTab('ai')" id="btn-case-tab-ai" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
@@ -744,9 +749,123 @@
               </tbody>
             </table>
           </div>
+        <!-- ========================================================
+             PANEL 3: DEDICATED CONVERSATION HISTORY (MODERN CHAT STREAM, NOT A RAW DB TABLE)
+             ======================================================== -->
+        <div id="section-case-comments" class="case-panel-section bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-4 scroll-mt-16" role="tabpanel" aria-labelledby="btn-case-tab-comments">
+          <!-- Header -->
+          <div class="flex items-center justify-between flex-wrap gap-2.5 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold flex-shrink-0 border border-blue-200">
+                <i data-lucide="messages-square" class="w-4 h-4 text-blue-600"></i>
+              </div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <span>ประวัติการคุยกัน (Conversation History)</span>
+                </h3>
+                <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1.5 flex-wrap">
+                  <span>บันทึกการส่งข้อความ/สนทนาระหว่างผู้แจ้ง</span>
+                  <span class="inline-flex items-center gap-1 font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    กมนัช พรหมบำรุง
+                  </span>
+                  <span>และเจ้าหน้าที่</span>
+                  <span class="inline-flex items-center gap-1 font-semibold text-blue-800 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                    Moshi - test NAT:D (Traffy @ ITS Lab)
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-mono-code font-semibold text-slate-700">
+                4 ข้อความสนทนา
+              </span>
+            </div>
+          </div>
+
+          <!-- Chat Messages Thread Container -->
+          <div class="space-y-3.5 max-w-4xl mx-auto py-2">
+            
+            <!-- Message 1: Citizen (กมนัช พรหมบำรุง) -->
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
+                กม
+              </div>
+              <div class="flex-1 max-w-2xl space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-slate-900 text-xs">กมนัช พรหมบำรุง</span>
+                  <span class="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold px-2 py-0.5 rounded">ผู้แจ้งเรื่อง</span>
+                  <span class="text-[11px] text-slate-400 font-mono-code">15 ต.ค. 2026 • 11:20 น.</span>
+                </div>
+                <div class="p-3.5 rounded-2xl rounded-tl-sm bg-slate-50 border border-slate-200/90 text-slate-900 text-xs leading-relaxed shadow-2xs">
+                  สอบถามครับ ตรงจุดนี้ทางเท้าพังและมีกระเบื้องปูยุบตัวลึก เกรงว่าคนเดินจะสะดุดล้ม จะมีเจ้าหน้าที่เข้ามาซ่อมช่วงไหนครับ
+                </div>
+              </div>
+            </div>
+
+            <!-- Message 2: Officer (Moshi - test NAT:D) -->
+            <div class="flex items-start gap-3 flex-row-reverse sm:flex-row">
+              <div class="w-8 h-8 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
+                Mo
+              </div>
+              <div class="flex-1 max-w-2xl space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-slate-900 text-xs">Moshi - test NAT:D</span>
+                  <span class="text-[10px] bg-blue-50 text-blue-800 border border-blue-200 font-semibold px-2 py-0.5 rounded">เจ้าหน้าที่ • Traffy @ ITS Lab</span>
+                  <span class="text-[11px] text-slate-400 font-mono-code">15 ต.ค. 2026 • 14:05 น.</span>
+                </div>
+                <div class="p-3.5 rounded-2xl rounded-tl-sm sm:rounded-tl-2xl sm:rounded-tr-sm bg-blue-50/70 border border-blue-200 text-slate-900 text-xs leading-relaxed shadow-2xs">
+                  รับทราบข้อมูลเพิ่มเติมจากผู้แจ้งแล้วครับ ทางเจ้าหน้าที่ Traffy @ ITS Lab ได้ตรวจสอบพื้นที่เรียบร้อย อยู่ระหว่างจัดรอบทีมช่างเข้าซ่อมแซมกระเบื้องทางเท้าครับ
+                </div>
+              </div>
+            </div>
+
+            <!-- Message 3: Citizen (กมนัช พรหมบำรุง) -->
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
+                กม
+              </div>
+              <div class="flex-1 max-w-2xl space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-slate-900 text-xs">กมนัช พรหมบำรุง</span>
+                  <span class="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold px-2 py-0.5 rounded">ผู้แจ้งเรื่อง</span>
+                  <span class="text-[11px] text-slate-400 font-mono-code">15 ต.ค. 2026 • 14:18 น.</span>
+                </div>
+                <div class="p-3.5 rounded-2xl rounded-tl-sm bg-slate-50 border border-slate-200/90 text-slate-900 text-xs leading-relaxed shadow-2xs">
+                  ขอบคุณมากครับ รบกวนด้วยนะครับ มีผู้สูงอายุและเด็กนักเรียนเดินผ่านบ่อยมาก
+                </div>
+              </div>
+            </div>
+
+            <!-- Message 4: Officer (Moshi - test NAT:D) -->
+            <div class="flex items-start gap-3 flex-row-reverse sm:flex-row">
+              <div class="w-8 h-8 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs">
+                Mo
+              </div>
+              <div class="flex-1 max-w-2xl space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-slate-900 text-xs">Moshi - test NAT:D</span>
+                  <span class="text-[10px] bg-blue-50 text-blue-800 border border-blue-200 font-semibold px-2 py-0.5 rounded">เจ้าหน้าที่ • Traffy @ ITS Lab</span>
+                  <span class="text-[11px] text-slate-400 font-mono-code">19 ต.ค. 2026 • 10:00 น.</span>
+                </div>
+                <div class="p-3.5 rounded-2xl rounded-tl-sm sm:rounded-tl-2xl sm:rounded-tr-sm bg-blue-50/70 border border-blue-200 text-slate-900 text-xs leading-relaxed shadow-2xs">
+                  ทีมช่างได้ลงพื้นที่สำรวจและนำกรวยกั้นจุดชำรุดชั่วคราวแล้วครับ ขณะนี้กำลังเตรียมแผ่นกระเบื้องปูพื้นใหม่ คาดว่าจะเข้าติดตั้งเรียบร้อยในสัปดาห์นี้ครับ
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Status Footer -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between flex-wrap gap-2 text-xs text-slate-600">
+            <span class="flex items-center gap-1.5 font-medium">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+              <span>การสนทนาเชื่อมต่อผ่านระบบ Traffy Fondue Official Chatbot</span>
+            </span>
+            <span class="text-[11px] text-slate-500 font-mono-code">ความปลอดภัยระดับ PDPA</span>
+          </div>
+
         </div>
-
-
 
         <!-- ========================================================
              PANEL 4: AI SUMMARY (MOVED BELOW TIMELINE AS REQUESTED)
@@ -1996,10 +2115,11 @@
 
     function switchCaseTab(tabKey) {
       currentCaseActiveTab = tabKey;
-      const tabKeys = ['all', 'timeline', 'orgs', 'ai'];
+      const tabKeys = ['all', 'timeline', 'orgs', 'comments', 'ai'];
       const panelMap = {
         'timeline': 'section-case-timeline',
         'orgs': 'section-case-orgs',
+        'comments': 'section-case-comments',
         'ai': 'section-case-ai'
       };
 
