@@ -15,17 +15,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <style>
+    /*
+      Breakpoints (WCAG 1.4.10 & Internal Website Standard):
+        mobile   ≤ 767px    @media (max-width: 767px)
+        tablet   768–1023px @media (min-width: 768px) and (max-width: 1023px)
+        desktop  ≥ 1024px   @media (min-width: 1024px)
+    */
     :root {
       --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 32px;
       --sidebar-width: 260px;
+      --sidebar-collapsed-width: 72px;
       --topbar-height: 64px;
     }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root {
+        --page-padding: 24px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --page-padding: 16px;
+        --topbar-height: 56px;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
-      font-family: var(--font-family);
       margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
       background-color: #f8fafc;
       color: #0f172a;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
     .font-mono-code {
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -153,7 +189,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 24px;
+      padding: 0 var(--page-padding);
       flex-shrink: 0;
     }
     .real-topbar-btn {
@@ -193,6 +229,20 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* DashboardLayout Content Container */
+    #content-container {
+      padding: var(--page-padding) !important;
+      box-sizing: border-box;
+    }
+    .dashboard-body,
+    #content-container > div,
+    #content-container > section {
+      width: 100%;
+      max-width: var(--content-max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     /* Responsive Mobile Drawer */
     @media (max-width: 767px) {
       .real-sidebar {
@@ -211,8 +261,8 @@
         transform: translateX(0) !important;
       }
       .real-topbar {
-        padding: 0 12px;
-        height: 54px;
+        padding: 0 var(--page-padding);
+        height: var(--topbar-height);
       }
     }
   </style>
@@ -355,12 +405,12 @@
     </header>
 
     <!-- Scrollable Content Body (NEW DESIGN FROM https://share.gemini.google/RIwxd83fTjL5) -->
-    <div class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6" id="content-container">
+    <div class="flex-1 overflow-y-auto" id="content-container">
 
       <!-- ========================================================
            VIEW 1: CLEAN CASE SEARCH & LIST
            ======================================================== -->
-      <section id="view-case-list" class="max-w-4xl mx-auto space-y-4">
+      <section id="view-case-list" class="space-y-4">
         
         <!-- Search Box Card -->
         <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
@@ -436,7 +486,7 @@
            VIEW 2: ACTION-FIRST ACCESSIBLE CASE INSPECTOR WITH EDIT MODE
            (Exact new UI from https://share.gemini.google/RIwxd83fTjL5)
            ======================================================== -->
-      <section id="view-case-detail" class="max-w-6xl mx-auto space-y-4 hidden">
+      <section id="view-case-detail" class="space-y-4 hidden">
         
         <!-- Case Top Bar: Navigation + Core Action Hub + Quick Topic Tabs (Integrated at Very Top, WCAG 2.2 AAA Standard) -->
         <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs divide-y divide-slate-100 overflow-hidden">

@@ -15,17 +15,67 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <style>
+    /*
+      Breakpoints (WCAG 1.4.10 & Internal Website Standard):
+        mobile   ≤ 767px    @media (max-width: 767px)
+        tablet   768–1023px @media (min-width: 768px) and (max-width: 1023px)
+        desktop  ≥ 1024px   @media (min-width: 1024px)
+    */
     :root {
       --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 32px;
       --sidebar-width: 260px;
+      --sidebar-collapsed-width: 72px;
       --topbar-height: 64px;
     }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root {
+        --page-padding: 24px;
+      }
+    }
+
+        /* DashboardLayout Content Container */
+    #content-container {
+      padding: var(--page-padding) !important;
+      box-sizing: border-box;
+    }
+    .dashboard-body,
+    #content-container > div,
+    #content-container > section {
+      width: 100%;
+      max-width: var(--content-max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --page-padding: 16px;
+        --topbar-height: 56px;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
-      font-family: var(--font-family);
       margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
       background-color: #f8fafc;
-      color: #1e293b;
+      color: #0f172a;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
     .font-mono-code {
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -130,7 +180,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 24px;
+      padding: 0 var(--page-padding);
       flex-shrink: 0;
     }
     .real-topbar-btn {
@@ -186,8 +236,8 @@
         transform: translateX(0) !important;
       }
       .real-topbar {
-        padding: 0 12px;
-        height: 54px;
+        padding: 0 var(--page-padding);
+        height: var(--topbar-height);
       }
     }
   </style>
@@ -321,8 +371,8 @@
     </header>
 
     <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
-    <div class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6" id="content-container">
-      <div class="max-w-6xl mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
+    <div class="flex-1 overflow-y-auto" id="content-container">
+      <div class="w-full max-w-[1536px] mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
         
         <!-- Empty Placeholder Visual -->
         <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3 shadow-2xs">
