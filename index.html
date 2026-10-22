@@ -407,41 +407,78 @@
            ======================================================== -->
       <section id="view-case-detail" class="max-w-6xl mx-auto space-y-4 hidden">
         
-        <!-- Case Top Bar: Navigation + Core Action Hub (WCAG 2.2 AAA Standard) -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
-          <div class="flex items-center justify-between sm:justify-start gap-2.5 flex-wrap">
-            <div class="flex items-center gap-2">
-              <button onclick="switchView('case-list')" class="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-900 font-semibold text-xs transition-colors inline-flex items-center gap-1.5 min-h-[44px] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden" title="ย้อนกลับไปค้นหาเคส">
-                <i data-lucide="arrow-left" class="w-4 h-4 text-slate-700"></i>
-                <span class="hidden sm:inline">กลับไปค้นหา</span>
-                <span class="sm:hidden">กลับ</span>
-              </button>
-              
-              <div class="h-5 w-px bg-slate-200 mx-1 hidden sm:block"></div>
+        <!-- Case Top Bar: Navigation + Core Action Hub + Quick Topic Tabs (Integrated at Very Top, WCAG 2.2 AAA Standard) -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs divide-y divide-slate-100 overflow-hidden">
+          <!-- Row 1: Case Identification & Primary Global Actions -->
+          <div class="p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center justify-between sm:justify-start gap-2.5 flex-wrap">
+              <div class="flex items-center gap-2">
+                <button onclick="switchView('case-list')" class="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-900 font-semibold text-xs transition-colors inline-flex items-center gap-1.5 min-h-[44px] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden" title="ย้อนกลับไปค้นหาเคส">
+                  <i data-lucide="arrow-left" class="w-4 h-4 text-slate-700"></i>
+                  <span class="hidden sm:inline">กลับไปค้นหา</span>
+                  <span class="sm:hidden">กลับ</span>
+                </button>
+                
+                <div class="h-5 w-px bg-slate-200 mx-1 hidden sm:block"></div>
 
-              <span class="font-mono-code font-bold text-slate-900 text-xs sm:text-sm" id="detail-ticket-id">#2026-FEV7GP</span>
+                <span class="font-mono-code font-bold text-slate-900 text-xs sm:text-sm" id="detail-ticket-id">#2026-FEV7GP</span>
+              </div>
+
+              <!-- Status Badge: High contrast WCAG 2.2 AAA (amber-950 on amber-100 is >9.5:1 ratio) -->
+              <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-950 border border-amber-300 flex items-center gap-1.5 flex-shrink-0 min-h-[32px] shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-amber-600 animate-pulse" aria-hidden="true"></span>
+                <span>สถานะ: รับเรื่องแล้ว</span>
+              </span>
             </div>
 
-            <!-- Status Badge: High contrast WCAG 2.2 AAA (amber-950 on amber-100 is >9.5:1 ratio) -->
-            <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-950 border border-amber-300 flex items-center gap-1.5 flex-shrink-0 min-h-[32px] shadow-2xs">
-              <span class="w-2 h-2 rounded-full bg-amber-600 animate-pulse" aria-hidden="true"></span>
-              <span>สถานะ: รับเรื่องแล้ว</span>
-            </span>
+            <!-- Action Hub Top Controls -->
+            <div class="flex items-center gap-2 justify-end pt-1 sm:pt-0 border-t border-slate-100 sm:border-0">
+              <!-- Edit Mode Trigger Button (Min-h 44px for AAA Touch Target) -->
+              <button id="btn-start-edit-mode" onclick="handleStartEditMode()" class="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-all shadow-xs min-h-[44px] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-800 focus-visible:outline-hidden">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                <span>แก้ไขข้อมูล</span>
+              </button>
+
+              <!-- Read-only link (Min-h 44px, High Contrast Blue-900 on Blue-50) -->
+              <a href="https://c.traffy.in.th/2026-FEV7GP?p=3528" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl border border-blue-300 bg-blue-50/90 hover:bg-blue-100 text-blue-900 font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-700 focus-visible:outline-hidden" title="ดูอย่างเดียว ห้ามปรับสถานะ">
+                <i data-lucide="external-link" class="w-4 h-4 text-blue-700"></i>
+                <span>Read-Only</span>
+              </a>
+            </div>
           </div>
 
-          <!-- Action Hub Top Controls (Standard Consistent Actions, No Duplicate Close Button) -->
-          <div class="flex items-center gap-2 justify-end pt-1 sm:pt-0 border-t border-slate-100 sm:border-0">
-            <!-- Edit Mode Trigger Button (Min-h 44px for AAA Touch Target) -->
-            <button id="btn-start-edit-mode" onclick="handleStartEditMode()" class="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-all shadow-xs min-h-[44px] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-800 focus-visible:outline-hidden">
-              <i data-lucide="edit-3" class="w-4 h-4"></i>
-              <span>แก้ไขข้อมูล</span>
-            </button>
+          <!-- Row 2: Top Quick Navigation Tabs (Prioritized by Importance, No Numbers, min-h 44px WCAG AAA) -->
+          <div class="px-3 sm:px-4 py-2 bg-slate-50/75 flex items-center justify-between gap-2" role="navigation" aria-label="หมวดหมู่รายละเอียดเคส">
+            <!-- Mobile Selector -->
+            <div class="md:hidden w-full">
+              <label for="case-mobile-tab-selector" class="sr-only">เลือกดูข้อมูล</label>
+              <select id="case-mobile-tab-selector" onchange="switchCaseTab(this.value)" class="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-blue-600 min-h-[44px] cursor-pointer">
+                <option value="all">ทั้งหมด</option>
+                <option value="timeline">ไทม์ไลน์และรูปภาพ</option>
+                <option value="orgs">หน่วยงานที่รับเรื่อง</option>
+                <option value="ai">บทวิเคราะห์ AI</option>
+              </select>
+            </div>
 
-            <!-- Read-only link (Min-h 44px, High Contrast Blue-900 on Blue-50) -->
-            <a href="https://c.traffy.in.th/2026-FEV7GP?p=3528" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl border border-blue-300 bg-blue-50/90 hover:bg-blue-100 text-blue-900 font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-700 focus-visible:outline-hidden" title="ดูอย่างเดียว ห้ามปรับสถานะ">
-              <i data-lucide="external-link" class="w-4 h-4 text-blue-700"></i>
-              <span>Read-Only</span>
-            </a>
+            <!-- Desktop Tabs (Clean, No Numbers, Priority-Ordered) -->
+            <div class="hidden md:flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full" role="tablist" aria-label="เลือกดูข้อมูล">
+              <button type="button" onclick="switchCaseTab('all')" id="btn-case-tab-all" role="tab" aria-selected="true" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-bold bg-slate-900 text-white transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden shadow-xs">
+                <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+                <span>ทั้งหมด</span>
+              </button>
+              <button type="button" onclick="switchCaseTab('timeline')" id="btn-case-tab-timeline" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
+                <i data-lucide="git-commit" class="w-3.5 h-3.5 text-slate-600"></i>
+                <span>ไทม์ไลน์และรูปภาพ</span>
+              </button>
+              <button type="button" onclick="switchCaseTab('orgs')" id="btn-case-tab-orgs" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
+                <i data-lucide="network" class="w-3.5 h-3.5 text-slate-600"></i>
+                <span>หน่วยงานที่รับเรื่อง</span>
+              </button>
+              <button type="button" onclick="switchCaseTab('ai')" id="btn-case-tab-ai" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>บทวิเคราะห์ AI</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -594,52 +631,7 @@
           </div>
         </div>
 
-        <!-- ========================================================
-             RESPONSIVE TAB BAR (Bangkok Traffy & Organizations Pattern)
-             WCAG 2.2 AAA Accessible Navigation (min 44px touch targets)
-             ======================================================== -->
-        <div class="bg-white rounded-2xl p-2 border border-slate-200/90 shadow-2xs flex items-center justify-between relative" role="navigation" aria-label="หมวดหมู่รายละเอียดเคส">
-          <div class="flex items-center gap-2 px-3 py-1.5 text-slate-900 font-bold text-xs flex-shrink-0">
-            <i data-lucide="layers" class="w-4 h-4 text-slate-700"></i>
-            <span>หมวดหมู่</span>
-          </div>
 
-          <!-- Mobile Dropdown Selector (Accessible, WCAG AAA 44px min height) -->
-          <div class="md:hidden flex-1 max-w-[230px] ml-2">
-            <label for="case-mobile-tab-selector" class="sr-only">เลือกหมวดหมู่ข้อมูล</label>
-            <select id="case-mobile-tab-selector" onchange="switchCaseTab(this.value)" class="w-full bg-slate-100 border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-blue-600 min-h-[44px] cursor-pointer">
-              <option value="all">ทั้งหมด (Overview)</option>
-              <option value="timeline">1. ไทม์ไลน์และรูปภาพ</option>
-              <option value="orgs">2. หน่วยงานที่รับเรื่อง</option>
-              <option value="comments">3. ประวัติคุยกัน</option>
-              <option value="ai">4. บทวิเคราะห์ AI</option>
-            </select>
-          </div>
-
-          <!-- Desktop Tabs Buttons (Slate Dark Theme from organizations.html, WCAG AAA 44px) -->
-          <div class="hidden md:flex items-center gap-1 overflow-x-auto no-scrollbar" role="tablist" aria-label="เลือกหมวดหมู่">
-            <button type="button" onclick="switchCaseTab('all')" id="btn-case-tab-all" role="tab" aria-selected="true" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-bold bg-slate-900 text-white transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden shadow-xs">
-              <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-              <span>ทั้งหมด</span>
-            </button>
-            <button type="button" onclick="switchCaseTab('timeline')" id="btn-case-tab-timeline" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-              <i data-lucide="git-commit" class="w-3.5 h-3.5 text-slate-600"></i>
-              <span>1. ไทม์ไลน์และรูปภาพ</span>
-            </button>
-            <button type="button" onclick="switchCaseTab('orgs')" id="btn-case-tab-orgs" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-              <i data-lucide="network" class="w-3.5 h-3.5 text-slate-600"></i>
-              <span>2. หน่วยงานที่รับเรื่อง</span>
-            </button>
-            <button type="button" onclick="switchCaseTab('comments')" id="btn-case-tab-comments" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-              <i data-lucide="messages-square" class="w-3.5 h-3.5 text-slate-600"></i>
-              <span>3. ประวัติคุยกัน</span>
-            </button>
-            <button type="button" onclick="switchCaseTab('ai')" id="btn-case-tab-ai" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
-              <span>4. บทวิเคราะห์ AI</span>
-            </button>
-          </div>
-        </div>
 
         <!-- ========================================================
              PANEL 1: TIMELINE & PHOTO MANAGEMENT STREAM (LIFECYCLE CONTROLLED)
@@ -754,115 +746,7 @@
           </div>
         </div>
 
-        <!-- ========================================================
-             PANEL 3: CONVERSATION HISTORY (VOICE_MESSAGECOMMENTS TABLE)
-             ======================================================== -->
-        <div id="section-case-comments" class="case-panel-section bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5 scroll-mt-16" role="tabpanel" aria-labelledby="btn-case-tab-comments">
-          <div class="flex items-center justify-between flex-wrap gap-2.5 border-b border-slate-100 pb-3">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center font-bold flex-shrink-0 border border-sky-100">
-                <i data-lucide="messages-square" class="w-4 h-4 text-sky-600"></i>
-              </div>
-              <div>
-                <h3 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <span>การคุยกัน (ตาราง voice_messagecomments)</span>
-                </h3>
-                <p class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1.5 flex-wrap">
-                  <span class="inline-flex items-center gap-1 font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                    <span>ผู้แจ้ง = มู Traffy @line [2919]</span>
-                  </span>
-                  <span class="text-slate-300 hidden sm:inline">•</span>
-                  <span>บันทึกการส่งข้อความระหว่างผู้แจ้งและเจ้าหน้าที่</span>
-                </p>
-              </div>
-            </div>
 
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-mono-code font-semibold text-slate-700">
-                7 รายการ
-              </span>
-            </div>
-          </div>
-
-          <!-- Table Container -->
-          <div class="overflow-x-auto border border-slate-200 rounded-xl">
-            <table class="w-full text-left text-xs whitespace-nowrap">
-              <thead class="bg-slate-50 text-slate-700 border-b border-slate-200 font-semibold text-[11px] uppercase tracking-wider">
-                <tr>
-                  <th scope="col" class="py-2.5 px-3.5">id</th>
-                  <th scope="col" class="py-2.5 px-3.5">timestamp</th>
-                  <th scope="col" class="py-2.5 px-3.5">user_id</th>
-                  <th scope="col" class="py-2.5 px-3.5">user_name</th>
-                  <th scope="col" class="py-2.5 px-3.5">comment_type</th>
-                  <th scope="col" class="py-2.5 px-3.5">comment</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100 font-mono-code text-[11.5px]">
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                  <td class="py-2.5 px-3.5 text-slate-600 font-bold">2113475</td>
-                  <td class="py-2.5 px-3.5 text-slate-500">2026-09-16 17:01:18.13813</td>
-                  <td class="py-2.5 px-3.5 text-blue-700 font-semibold">4006</td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-medium">SuperToy Noppadol</td>
-                  <td class="py-2.5 px-3.5"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-sans text-[10.5px]">chat</span></td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-semibold">โหลๆ</td>
-                </tr>
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                  <td class="py-2.5 px-3.5 text-slate-600 font-bold">2113484</td>
-                  <td class="py-2.5 px-3.5 text-slate-500">2026-09-16 17:02:41.161406</td>
-                  <td class="py-2.5 px-3.5 text-blue-700 font-semibold">4006</td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-medium">SuperToy Noppadol</td>
-                  <td class="py-2.5 px-3.5"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-sans text-[10.5px]">chat</span></td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-semibold">โหลๆๆ</td>
-                </tr>
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                  <td class="py-2.5 px-3.5 text-slate-600 font-bold">2113515</td>
-                  <td class="py-2.5 px-3.5 text-slate-500">2026-09-16 17:11:59.470416</td>
-                  <td class="py-2.5 px-3.5 text-blue-700 font-semibold">4006</td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-medium">SuperToy Noppadol</td>
-                  <td class="py-2.5 px-3.5"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-sans text-[10.5px]">chat</span></td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-semibold">โหลๆๆๆ</td>
-                </tr>
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                  <td class="py-2.5 px-3.5 text-slate-600 font-bold">2113554</td>
-                  <td class="py-2.5 px-3.5 text-slate-500">2026-09-16 17:34:07.439493</td>
-                  <td class="py-2.5 px-3.5 text-blue-700 font-semibold">4006</td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-medium">SuperToy Noppadol</td>
-                  <td class="py-2.5 px-3.5"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-sans text-[10.5px]">chat</span></td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-semibold">โหลๆๆๆๆ</td>
-                </tr>
-                <tr class="hover:bg-emerald-50/40 bg-emerald-50/25 transition-colors">
-                  <td class="py-2.5 px-3.5 text-slate-600 font-bold">2113556</td>
-                  <td class="py-2.5 px-3.5 text-slate-500">2026-09-16 17:35:54.93607</td>
-                  <td class="py-2.5 px-3.5 text-emerald-700 font-bold">2919</td>
-                  <td class="py-2.5 px-3.5 text-emerald-900 font-sans font-bold">
-                    <span class="inline-flex items-center gap-1.5">
-                      <span>มู Traffy @line</span>
-                      <span class="px-1.5 py-0.2 rounded text-[9.5px] bg-emerald-100 text-emerald-800 border border-emerald-300">ผู้แจ้ง</span>
-                    </span>
-                  </td>
-                  <td class="py-2.5 px-3.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-sans text-[10.5px] font-semibold">chat</span></td>
-                  <td class="py-2.5 px-3.5 text-emerald-950 font-sans font-bold">ใครส่งทดสอบอะไรมาหรือเปล่า</td>
-                </tr>
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                  <td class="py-2.5 px-3.5 text-slate-600 font-bold">2113557</td>
-                  <td class="py-2.5 px-3.5 text-slate-500">2026-09-16 17:36:40.171214</td>
-                  <td class="py-2.5 px-3.5 text-blue-700 font-semibold">4006</td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-medium">SuperToy Noppadol</td>
-                  <td class="py-2.5 px-3.5"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-sans text-[10.5px]">chat</span></td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-semibold">โหลๆๆๆๆๆ</td>
-                </tr>
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                  <td class="py-2.5 px-3.5 text-slate-600 font-bold">2153600</td>
-                  <td class="py-2.5 px-3.5 text-slate-500">2026-10-02 17:17:44.158964</td>
-                  <td class="py-2.5 px-3.5 text-blue-700 font-semibold">4006</td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-medium">SuperToy Noppadol</td>
-                  <td class="py-2.5 px-3.5"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-sans text-[10.5px]">chat</span></td>
-                  <td class="py-2.5 px-3.5 text-slate-900 font-sans font-semibold">ทดสอบ noti</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
 
         <!-- ========================================================
              PANEL 4: AI SUMMARY (MOVED BELOW TIMELINE AS REQUESTED)
@@ -1248,6 +1132,52 @@
           is_hidden_note: false,
           hiddenHistory: []
         },
+        // --- การคุยกันระหว่างผู้แจ้งและเจ้าหน้าที่ (ชื่อตรงกับไทม์ไลน์) ---
+        {
+          id: "11805580",
+          updatedOn: "2026-10-15 14:18 น.",
+          author: "กมนัช พรหมบำรุง",
+          userId: "654858",
+          groupName: "-",
+          role: "ผู้แจ้งเรื่อง",
+          status: "inprogress",
+          stateNameTh: "ข้อความจากผู้แจ้ง",
+          note: "ขอบคุณมากครับ รบกวนด้วยนะครับ มีผู้สูงอายุเดินผ่านบ่อยมาก",
+          isCommentChat: true,
+          mediaIds: [],
+          is_hidden_note: false,
+          hiddenHistory: []
+        },
+        {
+          id: "11805312",
+          updatedOn: "2026-10-15 14:05 น.",
+          author: "Moshi - test NAT:D",
+          userId: "8004",
+          groupName: "Traffy @ ITS Lab",
+          role: "เจ้าหน้าที่",
+          status: "inprogress",
+          stateNameTh: "ตอบกลับผู้แจ้ง",
+          note: "รับทราบข้อมูลเพิ่มเติมจากผู้แจ้งแล้วครับ เจ้าหน้าที่ Traffy @ ITS Lab ได้ตรวจสอบพื้นที่เรียบร้อย อยู่ระหว่างจัดรอบทีมช่างเข้าซ่อมแซมกระเบื้องทางเท้าครับ",
+          isCommentChat: true,
+          mediaIds: [],
+          is_hidden_note: false,
+          hiddenHistory: []
+        },
+        {
+          id: "11802140",
+          updatedOn: "2026-10-15 11:20 น.",
+          author: "กมนัช พรหมบำรุง",
+          userId: "654858",
+          groupName: "-",
+          role: "ผู้แจ้งเรื่อง",
+          status: "inprogress",
+          stateNameTh: "ข้อความจากผู้แจ้ง",
+          note: "สอบถามครับ ตรงจุดนี้ทางเท้าพังและมีกระเบื้องปูยุบตัวลึก เกรงว่าคนเดินจะสะดุดล้ม จะมีเจ้าหน้าที่เข้ามาซ่อมช่วงไหนครับ",
+          isCommentChat: true,
+          mediaIds: [],
+          is_hidden_note: false,
+          hiddenHistory: []
+        },
         {
           id: "11798004",
           updatedOn: "2026-10-14 09:05 น.",
@@ -1482,37 +1412,50 @@
         }
 
         const isDuplicateNotice = item.isDuplicateEvent;
+        const isComment = item.isCommentChat;
+        const isReporter = (item.role === 'ผู้แจ้งเรื่อง');
 
-        itemEl.innerHTML = `
-          <!-- Bullet Marker -->
-          <div class="absolute left-1.5 top-3 w-3 h-3 rounded-full ${
-            isLatest
+        const markerColor = isComment
+          ? (isReporter ? 'bg-emerald-600 ring-4 ring-emerald-100' : 'bg-blue-600 ring-4 ring-blue-100')
+          : (isLatest
               ? 'bg-emerald-600 ring-4 ring-emerald-100'
               : (isDuplicateNotice 
                   ? 'bg-purple-700 ring-4 ring-purple-100' 
-                  : (isHidden ? 'bg-amber-600 ring-4 ring-amber-100' : 'bg-slate-900 ring-4 ring-white'))
-          } flex items-center justify-center"></div>
+                  : (isHidden ? 'bg-amber-600 ring-4 ring-amber-100' : 'bg-slate-900 ring-4 ring-white')));
 
-          <div class="p-3.5 sm:p-4 rounded-xl border ${
-            isHidden 
-              ? 'bg-amber-50/70 border-amber-200' 
-              : (isDuplicateNotice ? 'bg-purple-50/40 border-purple-200' : 'bg-white border-slate-200/90')
-          } shadow-2xs space-y-2">
+        const cardBgBorder = isHidden 
+          ? 'bg-amber-50/70 border-amber-200' 
+          : (isComment 
+              ? (isReporter ? 'bg-emerald-50/30 border-emerald-200/90' : 'bg-sky-50/30 border-sky-200/90')
+              : (isDuplicateNotice ? 'bg-purple-50/40 border-purple-200' : 'bg-white border-slate-200/90'));
+
+        itemEl.innerHTML = `
+          <!-- Bullet Marker -->
+          <div class="absolute left-1.5 top-3 w-3 h-3 rounded-full ${markerColor} flex items-center justify-center"></div>
+
+          <div class="p-3.5 sm:p-4 rounded-xl border ${cardBgBorder} shadow-2xs space-y-2">
             
             <!-- Timeline Item Header -->
             <div class="flex items-center justify-between text-xs gap-2 flex-wrap sm:flex-nowrap">
               <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 <span class="font-bold text-slate-900">${item.author}</span>
-                <span class="text-[10px] bg-slate-100 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-medium">${item.role}</span>
+                <span class="text-[10px] ${isReporter ? 'bg-emerald-100 text-emerald-900 border-emerald-300' : 'bg-slate-100 text-slate-700 border-slate-200'} border px-2 py-0.5 rounded font-medium">${item.role}</span>
                 ${item.groupName !== '-' ? `<span class="text-[11px] text-blue-700 font-semibold">(${item.groupName})</span>` : ''}
                 
-                <span class="text-[10.5px] ${
-                  item.stateNameTh === 'เปลี่ยนรูปหน้าปก' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-blue-50 text-blue-800 border border-blue-200'
-                } px-2 py-0.5 rounded font-semibold">
-                  ${item.stateNameTh}
-                </span>
+                ${isComment ? `
+                  <span class="text-[10px] ${isReporter ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-blue-50 text-blue-800 border-blue-200'} border px-2 py-0.5 rounded font-bold inline-flex items-center gap-1">
+                    <i data-lucide="${isReporter ? 'message-square' : 'message-circle'}" class="w-3 h-3"></i>
+                    <span>${item.stateNameTh}</span>
+                  </span>
+                ` : `
+                  <span class="text-[10.5px] ${
+                    item.stateNameTh === 'เปลี่ยนรูปหน้าปก' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-blue-50 text-blue-800 border border-blue-200'
+                  } px-2 py-0.5 rounded font-semibold">
+                    ${item.stateNameTh}
+                  </span>
+                `}
 
                 ${isHidden ? '<span class="text-[10.5px] bg-amber-700 text-white font-bold px-2 py-0.5 rounded">🔒 ซ่อนกิจกรรมนี้</span>' : ''}
                 ${isLatest ? '<span class="text-[10px] bg-slate-900 text-emerald-400 font-bold px-2 py-0.5 rounded flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>สถานะล่าสุด</span>' : ''}
@@ -1544,10 +1487,14 @@
                   เข้าสู่โหมดแก้ไขเพื่อจัดการ
                 </button>
               </div>
+            ` : (isComment ? `
+              <div class="p-3 rounded-xl bg-white border ${isReporter ? 'border-emerald-200/90' : 'border-sky-200/90'} shadow-2xs">
+                <p class="text-xs ${isHidden ? 'text-slate-600 italic' : 'text-slate-900'} leading-relaxed font-sans">${item.note}</p>
+              </div>
             ` : `
               <p class="text-xs ${isHidden ? 'text-slate-700 italic' : 'text-slate-800'} leading-relaxed">${item.note}</p>
               ${photosHtml}
-            `}
+            `)}
 
             <!-- Audit Reason Badge -->
             ${(item.hiddenHistory && item.hiddenHistory.length > 0) ? `
@@ -1567,6 +1514,15 @@
 
       updateModerationHeaderBadge();
       updateCurrentCoverDisplay();
+
+      const commentsCount = caseData.timeline.filter(t => t.isCommentChat).length;
+      const activitiesCount = caseData.timeline.filter(t => !t.isCommentChat).length;
+      const photosCount = caseData.media.length;
+      const statsBadge = document.getElementById('timeline-stats-badge');
+      if (statsBadge) {
+        statsBadge.textContent = `${activitiesCount} กิจกรรม • ${commentsCount} ข้อความคุยกัน • ${photosCount} รูปภาพ`;
+      }
+
       lucide.createIcons();
     }
 
@@ -2040,11 +1996,10 @@
 
     function switchCaseTab(tabKey) {
       currentCaseActiveTab = tabKey;
-      const tabKeys = ['all', 'timeline', 'orgs', 'comments', 'ai'];
+      const tabKeys = ['all', 'timeline', 'orgs', 'ai'];
       const panelMap = {
         'timeline': 'section-case-timeline',
         'orgs': 'section-case-orgs',
-        'comments': 'section-case-comments',
         'ai': 'section-case-ai'
       };
 
