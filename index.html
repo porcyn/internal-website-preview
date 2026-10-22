@@ -434,6 +434,31 @@
         </div>
 
         <!-- ========================================================
+             STICKY SECTION QUICK NAVIGATION BAR (Bangkok Traffy Style)
+             ======================================================== -->
+        <nav aria-label="หมวดหมู่รายละเอียดเคส" class="sticky top-2 z-20 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <button type="button" onclick="scrollToCaseSection('section-case-info')" id="nav-case-info" class="case-section-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-1.5 flex-shrink-0 bg-slate-900 text-white shadow-xs">
+            <i data-lucide="info" class="w-3.5 h-3.5 text-white"></i>
+            <span>ข้อมูลเรื่องแจ้ง</span>
+          </button>
+          
+          <button type="button" onclick="scrollToCaseSection('section-case-orgs')" id="nav-case-orgs" class="case-section-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-1.5 flex-shrink-0 text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+            <i data-lucide="network" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span>หน่วยงานที่รับผิดชอบ</span>
+          </button>
+          
+          <button type="button" onclick="scrollToCaseSection('section-case-timeline')" id="nav-case-timeline" class="case-section-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-1.5 flex-shrink-0 text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+            <i data-lucide="git-commit" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span>ไทม์ไลน์และรูปภาพ</span>
+          </button>
+          
+          <button type="button" onclick="scrollToCaseSection('section-case-ai')" id="nav-case-ai" class="case-section-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-1.5 flex-shrink-0 text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i>
+            <span>บทวิเคราะห์ AI</span>
+          </button>
+        </nav>
+
+        <!-- ========================================================
              STICKY EDIT MODE BANNER (Appears when isDetailEditMode === true)
              ======================================================== -->
         <div id="edit-mode-banner" class="hidden bg-white text-slate-900 p-3 sm:p-4 rounded-2xl border-2 border-blue-500 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-3 animate-in fade-in duration-150">
@@ -443,7 +468,7 @@
             </div>
             <div>
               <div class="flex items-center gap-2 flex-wrap">
-                <span class="font-bold text-xs sm:text-base text-slate-900">โหมดแก้ไขข้อมูล</span>
+                <span class="font-bold text-xs sm:base text-slate-900">โหมดแก้ไขข้อมูล</span>
                 <span id="edit-mode-changes-badge" class="px-2 sm:px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">ความเปลี่ยนแปลง: 0 จุด</span>
               </div>
               <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">
@@ -464,7 +489,7 @@
         </div>
 
         <!-- Case Primary Headline + Compact Location & Reporter Strip -->
-        <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs">
+        <div id="section-case-info" class="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs scroll-mt-16">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-5 items-start">
             
             <!-- Left: Current Issue Photo + Problem Text (8 cols) -->
@@ -585,7 +610,7 @@
         <!-- ========================================================
              CONSOLIDATED MULTI-ORG MATRIX
              ======================================================== -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
+        <div id="section-case-orgs" class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 scroll-mt-16">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
               <div class="w-7 h-7 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
@@ -663,9 +688,42 @@
         </div>
 
         <!-- ========================================================
-             AI SUMMARY (EXECUTIVE CARDS & RECOMMENDATIONS)
+             TIMELINE & PHOTO MANAGEMENT STREAM (LIFECYCLE CONTROLLED)
              ======================================================== -->
-        <div class="bg-indigo-50/60 p-4 sm:p-5 rounded-2xl border border-indigo-200/80 shadow-2xs space-y-3.5">
+        <div id="section-case-timeline" class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3 scroll-mt-16">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+            <div>
+              <h3 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="git-commit" class="w-4 h-4 text-slate-500"></i>
+                <span>ประวัติกิจกรรม & รูปภาพในเคส (Timeline Stream)</span>
+              </h3>
+              <p class="text-[11px] text-slate-500 mt-0.5">
+                ในโหมดแก้ไขข้อมูล สามารถ <strong>ซ่อน/ยกเลิกซ่อนรูปภาพ</strong>, <strong>ซ่อนกิจกรรมไทม์ไลน์</strong> หรือ <strong>เปลี่ยนภาพหน้าปก</strong> พร้อมบันทึกเหตุผล
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
+                <i data-lucide="arrow-down-up" class="w-3 h-3 text-blue-600"></i>
+                <span>เรียง: ปัจจุบัน → เก่า</span>
+              </span>
+              <span id="timeline-stats-badge" class="text-[11px] text-slate-700 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg font-mono-code font-semibold">
+                10 กิจกรรม • 2 รูปภาพ
+              </span>
+            </div>
+          </div>
+
+          <!-- Stream Container with Dynamic State-Driven Elements -->
+          <div class="space-y-4 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-slate-200" id="timeline-stream-container">
+            <!-- Dynamically rendered by renderTimelineStream() based on isDetailEditMode -->
+          </div>
+
+        </div>
+
+        <!-- ========================================================
+             AI SUMMARY (MOVED BELOW TIMELINE AS REQUESTED)
+             ======================================================== -->
+        <div id="section-case-ai" class="bg-indigo-50/60 p-4 sm:p-5 rounded-2xl border border-indigo-200/80 shadow-2xs space-y-3.5 scroll-mt-16">
           
           <!-- Top Header: Fast Scan -->
           <div class="flex items-center justify-between flex-wrap gap-2.5">
@@ -750,39 +808,6 @@
               <div><strong class="text-slate-900">4. แนวทางลดภาระ:</strong> ทำระบบคัดกรองอัตโนมัติสำหรับคำว่า "ทดสอบ"</div>
               <div><strong class="text-slate-900">5. สรุปภาพรวม:</strong> ข้อมูลครบถ้วน เป็นเคสทดสอบ ปิดได้ตามระเบียบงาน</div>
             </div>
-          </div>
-
-        </div>
-
-        <!-- ========================================================
-             TIMELINE & PHOTO MANAGEMENT STREAM (LIFECYCLE CONTROLLED)
-             ======================================================== -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3" id="media-hub-section">
-          
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
-            <div>
-              <h3 class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="git-commit" class="w-4 h-4 text-slate-500"></i>
-                <span>ประวัติกิจกรรม & รูปภาพในเคส (Timeline Stream)</span>
-              </h3>
-              <p class="text-[11px] text-slate-500 mt-0.5">
-                ในโหมดแก้ไขข้อมูล สามารถ <strong>ซ่อน/ยกเลิกซ่อนรูปภาพ</strong>, <strong>ซ่อนกิจกรรมไทม์ไลน์</strong> หรือ <strong>เปลี่ยนภาพหน้าปก</strong> พร้อมบันทึกเหตุผล
-              </p>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[11px] bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
-                <i data-lucide="arrow-down-up" class="w-3 h-3 text-blue-600"></i>
-                <span>เรียง: ปัจจุบัน → เก่า</span>
-              </span>
-              <span id="timeline-stats-badge" class="text-[11px] text-slate-700 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg font-mono-code font-semibold">
-                10 กิจกรรม • 2 รูปภาพ
-              </span>
-            </div>
-          </div>
-
-          <!-- Stream Container with Dynamic State-Driven Elements -->
-          <div class="space-y-4 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-slate-200" id="timeline-stream-container">
-            <!-- Dynamically rendered by renderTimelineStream() based on isDetailEditMode -->
           </div>
 
         </div>
@@ -1867,6 +1892,64 @@
       if (backdrop) backdrop.classList.add('hidden');
     }
 
+    function scrollToCaseSection(sectionId) {
+      const el = document.getElementById(sectionId);
+      if (!el) return;
+      const navOffset = 68;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      updateActiveCaseTab(sectionId);
+    }
+
+    function updateActiveCaseTab(activeSectionId) {
+      const tabMap = {
+        'section-case-info': 'nav-case-info',
+        'section-case-orgs': 'nav-case-orgs',
+        'section-case-timeline': 'nav-case-timeline',
+        'section-case-ai': 'nav-case-ai'
+      };
+
+      Object.entries(tabMap).forEach(([sId, tId]) => {
+        const tab = document.getElementById(tId);
+        if (!tab) return;
+        const icon = tab.querySelector('svg, i');
+        if (sId === activeSectionId) {
+          tab.className = 'case-section-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-1.5 flex-shrink-0 bg-slate-900 text-white shadow-xs';
+          if (icon) {
+            icon.setAttribute('class', 'w-3.5 h-3.5 text-white');
+          }
+        } else {
+          tab.className = 'case-section-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-1.5 flex-shrink-0 text-slate-700 hover:bg-slate-100 hover:text-slate-900';
+          if (icon) {
+            icon.setAttribute('class', sId === 'section-case-ai' ? 'w-3.5 h-3.5 text-indigo-500' : 'w-3.5 h-3.5 text-slate-500');
+          }
+        }
+      });
+    }
+
+    // Scrollspy to automatically highlight tab based on scroll position
+    window.addEventListener('scroll', () => {
+      const detailView = document.getElementById('view-case-detail');
+      if (!detailView || detailView.classList.contains('hidden')) return;
+
+      const sectionIds = ['section-case-info', 'section-case-orgs', 'section-case-timeline', 'section-case-ai'];
+      const scrollPos = window.pageYOffset + 120;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          updateActiveCaseTab(sectionIds[i]);
+          break;
+        }
+      }
+    });
+
     function switchView(viewName) {
       closeMobileSidebar();
       const sections = document.querySelectorAll('#content-container > section');
@@ -1878,6 +1961,8 @@
       } else {
         document.getElementById('view-case-detail').classList.remove('hidden');
         document.getElementById('breadcrumb-title').textContent = 'รายละเอียดเคส';
+        updateActiveCaseTab('section-case-info');
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
       lucide.createIcons();
     }
