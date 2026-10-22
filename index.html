@@ -330,20 +330,12 @@
 
           <div class="flex flex-col sm:flex-row gap-2">
             <div class="relative flex-1">
-              <input type="text" id="input-case-id" onkeypress="if(event.key==='Enter') handleCaseSearch()" value="2026-FEV7GP" placeholder="พิมพ์ Case ID เช่น 2026-FEV7GP..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 pl-9 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 font-mono-code transition-all">
+              <input type="text" id="input-case-id" onkeypress="if(event.key==='Enter') handleCaseSearch()" value="" placeholder="พิมพ์ Case ID เช่น 2026-FEV7GP..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 pl-9 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 font-mono-code transition-all">
               <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
             </div>
             <button onclick="handleCaseSearch()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-xs flex items-center justify-center gap-1.5 flex-shrink-0 min-h-[40px]">
               <span>ค้นหาเคส</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
-          </div>
-
-          <!-- Quick Case Suggestions -->
-          <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 pt-0.5 text-xs text-slate-500">
-            <span class="text-slate-400 flex-shrink-0">ตัวอย่างเคสจริง:</span>
-            <button onclick="inspectCase('2026-FEV7GP')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-mono-code transition-colors text-left text-xs leading-normal break-words">
-              #2026-FEV7GP (ทดสอบระบบ Traffy @ ITS Lab)
             </button>
           </div>
         </div>
@@ -370,7 +362,7 @@
                 <div class="text-xs text-slate-500 flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span class="text-blue-600 font-medium inline-flex items-center gap-1">
                     <i data-lucide="badge-check" class="w-3.5 h-3.5 text-blue-600"></i>
-                    <span>Traffy @ ITS Lab (บัญชีทางการ)</span>
+                    <span>Traffy @ ITS Lab</span>
                   </span>
                   <span class="text-slate-300 hidden sm:inline">•</span>
                   <span class="text-slate-400 font-mono-code text-[11px]">ปทุมธานี [คลองหลวง]</span>
@@ -383,11 +375,7 @@
               </div>
             </div>
             
-            <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between">
-              <span class="text-xs text-slate-400 sm:text-slate-500">
-                <span class="sm:hidden">12 ต.ค. 2569 • 17:37 น.</span>
-                <span class="hidden sm:inline">คลิกที่การ์ดเพื่อดูรายละเอียด</span>
-              </span>
+            <div class="pt-2.5 border-t border-slate-100 flex items-center justify-end">
               <button class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-semibold group-hover:bg-slate-800 transition-colors inline-flex items-center gap-1.5 shadow-xs flex-shrink-0">
                 <span>ดูรายละเอียด</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
