@@ -87,21 +87,207 @@
 
     @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } }
     .toast { animation: toast-in 0.2s ease-out; }
-  </style>
+  
+    /* Real Sidebar Styles */
+    :root {
+      --sidebar-width: 260px;
+      --topbar-height: 64px;
+      --page-padding: 32px;
+      --content-max-width: 1536px;
+    }
+    @media (max-width: 767px) {
+      :root {
+        --topbar-height: 56px;
+        --page-padding: 16px;
+      }
+    }
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (max-width: 767px) {
+      .real-sidebar {
+        position: fixed;
+        top: 0; left: 0; bottom: 0;
+        z-index: 50;
+        width: 280px; max-width: 84vw;
+        height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transform: translateX(-100%);
+      }
+      .real-sidebar.sidebar-open { transform: translateX(0) !important; }
+    }
+    .real-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-menu-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-menu-active { background: #111827 !important; color: #ffffff !important; }
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .real-children-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
+    }
+    .real-nested-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-nested-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--page-padding);
+      flex-shrink: 0;
+    }
+
+</style>
 </head>
-<body>
-  <div class="stats-page">
-    <header class="stats-header sticky top-0 z-20 flex items-center gap-3 sm:gap-4 border-b border-slate-200 bg-white flex-shrink-0">
-      <a href="./index.html" onclick="return goBack()" class="flex items-center justify-center gap-1.5 h-9 w-9 md:w-auto md:px-3 border border-slate-200 rounded-[10px] bg-white text-slate-700 text-sm font-medium hover:bg-slate-100 flex-shrink-0" aria-label="กลับ">
-        <i data-lucide="arrow-left" class="w-[18px] h-[18px]"></i>
-        <span class="hidden md:inline">กลับ</span>
+<body class="flex h-screen overflow-hidden text-xs bg-slate-50">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()"
+    class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+
+  <!-- Main Sidebar -->
+  <aside id="main-sidebar" class="real-sidebar select-none">
+    <!-- User Card -->
+    <div class="real-user-card p-3 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col gap-2">
+      <div class="flex items-center gap-2.5">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <button type="button" onclick="closeMobileSidebar()"
+          class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors"
+          title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="flex flex-wrap gap-1 mt-1">
+        <span
+          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
+        <span
+          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex flex-col gap-0.5">
+      <a href="./organizations.html" class="real-menu-item">
+        <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการหน่วยงาน</span>
       </a>
-      <h1 class="m-0 text-base md:text-lg font-semibold text-slate-900 truncate">สถิติกลุ่มหน่วยงาน</h1>
-      <span class="ml-auto hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200 whitespace-nowrap">
-        <i data-lucide="flask-conical" class="w-3 h-3"></i>
-        Mock v4 · ข้อมูลจริง snapshot <span id="snapshot-date"></span>
-      </span>
+
+      <a href="./cases.html" class="real-menu-item mt-1">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <a href="./reset-otp.html" class="real-menu-item mt-1">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
+
+      <a href="./flex-message.html" class="real-menu-item mt-1">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+      <!-- รายงานและสถิติ -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">รายงานและสถิติ</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./richmenu-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./org-group-stats.html" class="real-nested-item real-menu-active font-semibold">
+            <span class="flex-1 truncate">สถิติหน่วยงาน</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="./users.html" class="real-menu-item mt-1">
+        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <a href="./faq.html" class="real-menu-item mt-1">
+        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- 2. MAIN CONTENT AREA -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
+
+    <!-- Topbar Header -->
+    <header class="real-topbar">
+      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+        <button type="button" onclick="toggleMobileSidebar()"
+          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-lg flex-shrink-0" title="เปิดเมนูนำทาง">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <span class="text-slate-400 font-medium whitespace-nowrap hidden sm:inline">รายงานและสถิติ</span>
+        <span class="text-slate-300 hidden sm:inline">/</span>
+        <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">สถิติหน่วยงาน</span>
+      </div>
     </header>
+
+    <!-- Scrollable Content Body -->
+    <div class="flex-1 overflow-y-auto" id="content-container">
+
+  <div class="stats-page">
+    
 
     <main class="stats-body w-full mx-auto grid gap-4 grid-cols-1 lg:grid-cols-[minmax(300px,340px)_minmax(0,1fr)] lg:grid-rows-[auto_minmax(0,1fr)]">
       <!-- ภาพรวมทั้งระบบ -->
@@ -510,5 +696,7 @@
     renderProvinceTable();
     lucide.createIcons();
   </script>
+    </div>
+  </main>
 </body>
 </html>
