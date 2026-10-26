@@ -300,22 +300,31 @@
       lucide.createIcons();
     }
 
+    // builds the buttons once per open/year change; hovering only repaints classes so the button under the cursor is never replaced mid-click
     function renderMonthGrid() {
-      const { viewYear, anchor, hovered } = pickerState;
-      const [rangeFrom, rangeTo] = anchor ? [anchor, hovered ?? anchor].sort() : [pickerState.from, pickerState.to];
+      const { viewYear } = pickerState;
       const available = new Set(monthlyRows.map((row) => row.date));
       document.getElementById("view-year").textContent = viewYear + 543;
       document.getElementById("year-prev").disabled = viewYear <= MIN_YEAR;
       document.getElementById("year-next").disabled = viewYear >= Number(maxMonth.slice(0, 4));
-      document.getElementById("month-hint").textContent = anchor ? "เลือกเดือนสิ้นสุด" : "เลือกเดือนเริ่มต้น";
       document.getElementById("month-grid").innerHTML = THAI_MONTHS_SHORT.map((label, index) => {
         const ym = `${viewYear}-${String(index + 1).padStart(2, "0")}`;
-        const classes = ["relative h-9 rounded-lg bg-slate-50 text-slate-700 text-[13px] hover:bg-slate-200 disabled:bg-transparent disabled:text-slate-300 disabled:cursor-not-allowed"];
-        if (ym === rangeFrom || ym === rangeTo) classes.push("month-selected");
-        else if (ym > rangeFrom && ym < rangeTo) classes.push("month-in-range");
-        if (available.has(ym)) classes.push("month-has-data");
-        return `<button type="button" class="${classes.join(" ")}" onclick="selectMonth('${ym}')" onmouseenter="setHoveredMonth('${ym}')" ${ym > maxMonth ? "disabled" : ""}>${label}</button>`;
+        return `<button type="button" data-ym="${ym}" class="relative h-9 rounded-lg bg-slate-50 text-slate-700 text-[13px] hover:bg-slate-200 disabled:bg-transparent disabled:text-slate-300 disabled:cursor-not-allowed ${available.has(ym) ? "month-has-data" : ""}" onclick="selectMonth('${ym}')" onmouseenter="setHoveredMonth('${ym}')" ${ym > maxMonth ? "disabled" : ""}>${label}</button>`;
       }).join("");
+      paintMonthGrid();
+    }
+
+    function paintMonthGrid() {
+      const { anchor, hovered } = pickerState;
+      const [rangeFrom, rangeTo] = anchor ? [anchor, hovered ?? anchor].sort() : [pickerState.from, pickerState.to];
+      document.getElementById("month-hint").textContent = anchor ? "เลือกเดือนสิ้นสุด" : "เลือกเดือนเริ่มต้น";
+      document.querySelectorAll("#month-grid [data-ym]").forEach((button) => {
+        const ym = button.dataset.ym;
+        const isEdge = ym === rangeFrom || ym === rangeTo;
+        button.classList.toggle("month-selected", isEdge);
+        button.classList.toggle("month-in-range", !isEdge && ym > rangeFrom && ym < rangeTo);
+        button.setAttribute("aria-pressed", String(ym >= rangeFrom && ym <= rangeTo));
+      });
     }
 
     function toggleMonthPicker() {
@@ -336,13 +345,13 @@
     function setHoveredMonth(ym) {
       if (!pickerState.anchor) return;
       pickerState.hovered = ym;
-      renderMonthGrid();
+      paintMonthGrid();
     }
     // first click picks the start month, second click the end; the same month twice selects one month
     function selectMonth(ym) {
       if (!pickerState.anchor) {
         pickerState.anchor = ym;
-        renderMonthGrid();
+        paintMonthGrid();
         return;
       }
       [pickerState.from, pickerState.to] = [pickerState.anchor, ym].sort();
