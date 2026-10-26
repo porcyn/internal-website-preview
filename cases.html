@@ -385,17 +385,12 @@
         <span id="breadcrumb-title" class="font-bold text-slate-800 truncate text-xs sm:text-sm">ค้นหาเคสเรื่องแจ้ง</span>
       </div>
 
-      <!-- Right Topbar Action (สถิติกลุ่มหน่วยงาน + Raw JSON + Moderation Indicator) -->
+      <!-- Right Topbar Action (Moderation Indicator) -->
       <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
         <span id="header-mod-badge" class="hidden inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
           <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
           <span id="header-mod-text">ซ่อนอยู่</span>
         </span>
-
-        <a href="#stats" onclick="showToast('สถิติกลุ่มหน่วยงาน'); return false;" class="real-topbar-btn whitespace-nowrap !h-8 sm:!h-9 !px-2.5 sm:!px-3.5 text-xs inline-flex items-center gap-1.5">
-          <i data-lucide="chart-column" class="w-3.5 h-3.5 text-slate-600"></i>
-          <span class="hidden sm:inline">สถิติกลุ่มหน่วยงาน</span>
-        </a>
       </div>
     </header>
 
@@ -483,90 +478,116 @@
            ======================================================== -->
       <section id="view-case-detail" class="space-y-4 hidden">
         
-        <!-- Case Top Bar: Navigation + Core Action Hub + Quick Topic Tabs (Integrated at Very Top, WCAG 2.2 AAA Standard) -->
-        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs divide-y divide-slate-100 overflow-hidden">
-          <!-- Row 1: Case Identification & Primary Global Actions -->
-          <div class="p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div class="flex items-center justify-between sm:justify-start gap-2.5 flex-wrap">
-              <div class="flex items-center gap-2">
-                <button onclick="switchView('case-list')" class="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-900 font-semibold text-xs transition-colors inline-flex items-center gap-1.5 min-h-[44px] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden" title="ย้อนกลับไปค้นหาเคส">
-                  <i data-lucide="arrow-left" class="w-4 h-4 text-slate-700"></i>
-                  <span class="hidden sm:inline">กลับไปค้นหา</span>
-                  <span class="sm:hidden">กลับ</span>
-                </button>
-                
-                <div class="h-5 w-px bg-slate-200 mx-1 hidden sm:block"></div>
-
-                <span class="font-mono-code font-bold text-slate-900 text-xs sm:text-sm" id="detail-ticket-id">#2026-3U3734</span>
-              </div>
-
-              <!-- Status Badge: High contrast WCAG 2.2 AAA (amber-950 on amber-100 is >9.5:1 ratio) -->
-              <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-950 border border-amber-300 flex items-center gap-1.5 flex-shrink-0 min-h-[32px] shadow-2xs">
-                <span class="w-2 h-2 rounded-full bg-amber-600 animate-pulse" aria-hidden="true"></span>
-                <span>สถานะ: กำลังดำเนินการ (ส่งต่อ)</span>
-              </span>
-            </div>
-
-            <!-- Action Hub Top Controls -->
-            <div class="flex items-center gap-2 justify-end pt-1 sm:pt-0 border-t border-slate-100 sm:border-0">
-              <!-- Edit Mode Trigger Button (Min-h 44px for AAA Touch Target) -->
-              <button id="btn-start-edit-mode" onclick="handleStartEditMode()" class="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-all shadow-xs min-h-[44px] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-800 focus-visible:outline-hidden">
-                <i data-lucide="edit-3" class="w-4 h-4"></i>
-                <span>แก้ไขข้อมูล</span>
+        <!-- CARD 1: TOP NAVIGATION MENU BAR (matching organizations.html) -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-3 sm:px-5 sm:py-3.5 shadow-2xs">
+          
+          <!-- DESKTOP / TABLET VIEW: Left Case Title/Status + Right-aligned Clean Tabs (Icons, No Numbers) -->
+          <div class="hidden md:flex items-center justify-between gap-4 w-full">
+            <!-- Left: Back Button + Case Info & Icon -->
+            <div class="flex items-center gap-2.5 min-w-0">
+              <button onclick="switchView('case-list')"
+                class="px-2.5 sm:px-3 py-1.5 rounded-xl border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 font-semibold text-xs whitespace-nowrap flex-shrink-0 shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1.5"
+                title="ย้อนกลับไปค้นหาเคส">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>ย้อนกลับ</span>
               </button>
 
-              <!-- Read-only link (Min-h 44px, High Contrast Blue-900 on Blue-50) -->
-              <a href="https://c.traffy.in.th/2026-3U3734?p=4123" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl border border-blue-300 bg-blue-50/90 hover:bg-blue-100 text-blue-900 font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-700 focus-visible:outline-hidden" title="ดูอย่างเดียว ห้ามปรับสถานะ">
-                <i data-lucide="external-link" class="w-4 h-4 text-blue-700"></i>
-                <span>Read-Only</span>
-              </a>
-            </div>
-          </div>
+              <div class="h-4 w-px bg-slate-200 flex-shrink-0"></div>
 
-          <!-- Row 2: Top Quick Navigation Tabs (Prioritized by Importance, No Numbers, min-h 44px WCAG AAA) -->
-          <div class="px-3 sm:px-4 py-2 bg-slate-50/75 flex items-center justify-between gap-2" role="navigation" aria-label="หมวดหมู่รายละเอียดเคส">
-            <!-- Mobile Selector -->
-            <div class="md:hidden w-full">
-              <label for="case-mobile-tab-selector" class="sr-only">เลือกดูข้อมูล</label>
-              <select id="case-mobile-tab-selector" onchange="switchCaseTab(this.value)" class="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-blue-600 min-h-[44px] cursor-pointer">
-                <option value="all">ทั้งหมด</option>
-                <option value="timeline">ไทม์ไลน์และรูปภาพ</option>
-                <option value="orgs">หน่วยงานที่รับเรื่อง</option>
-                <option value="comments">ประวัติการคุยกัน</option>
-                <option value="ai">บทวิเคราะห์ AI</option>
-              </select>
+              <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
+                title="จัดการเคสเรื่องแจ้ง">
+                <i data-lucide="file-text" class="w-4 h-4"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="text-xs sm:text-sm font-bold text-slate-900 leading-tight block truncate">จัดการข้อมูลเคสเรื่องแจ้ง</span>
+                <span class="text-[10.5px] text-slate-400 font-normal">เลือกเมนูเพื่อดูหรือจัดการข้อมูล</span>
+              </div>
             </div>
 
-            <!-- Desktop Tabs (Clean, No Numbers, Priority-Ordered) -->
-            <div class="hidden md:flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full" role="tablist" aria-label="เลือกดูข้อมูล">
-              <button type="button" onclick="switchCaseTab('all')" id="btn-case-tab-all" role="tab" aria-selected="true" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-bold bg-slate-900 text-white transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden shadow-xs">
+            <!-- Right: Tab Navigation Bar (Icons + Clean Text matching organizations.html) -->
+            <div class="inline-flex items-center gap-1 sm:gap-1.5 p-1 bg-slate-50/90 rounded-xl border border-slate-200/70 overflow-x-auto no-scrollbar flex-shrink-0" role="tablist" aria-label="เลือกดูข้อมูล">
+              <button type="button" onclick="switchCaseTab('all')" id="btn-case-tab-all" role="tab" aria-selected="true"
+                class="case-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
                 <span>ทั้งหมด</span>
               </button>
-              <button type="button" onclick="switchCaseTab('timeline')" id="btn-case-tab-timeline" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-                <i data-lucide="git-commit" class="w-3.5 h-3.5 text-slate-600"></i>
+              <button type="button" onclick="switchCaseTab('timeline')" id="btn-case-tab-timeline" role="tab" aria-selected="false"
+                class="case-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="git-commit" class="w-3.5 h-3.5"></i>
                 <span>ไทม์ไลน์และรูปภาพ</span>
               </button>
-              <button type="button" onclick="switchCaseTab('orgs')" id="btn-case-tab-orgs" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-                <i data-lucide="network" class="w-3.5 h-3.5 text-slate-600"></i>
+              <button type="button" onclick="switchCaseTab('orgs')" id="btn-case-tab-orgs" role="tab" aria-selected="false"
+                class="case-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="network" class="w-3.5 h-3.5"></i>
                 <span>หน่วยงานที่รับเรื่อง</span>
               </button>
-              <button type="button" onclick="switchCaseTab('comments')" id="btn-case-tab-comments" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-                <i data-lucide="messages-square" class="w-3.5 h-3.5 text-slate-600"></i>
+              <button type="button" onclick="switchCaseTab('comments')" id="btn-case-tab-comments" role="tab" aria-selected="false"
+                class="case-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="messages-square" class="w-3.5 h-3.5"></i>
                 <span>ประวัติการคุยกัน</span>
               </button>
-              <button type="button" onclick="switchCaseTab('ai')" id="btn-case-tab-ai" role="tab" aria-selected="false" class="case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-200/80 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <button type="button" onclick="switchCaseTab('ai')" id="btn-case-tab-ai" role="tab" aria-selected="false"
+                class="case-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-500"></i>
                 <span>บทวิเคราะห์ AI</span>
               </button>
             </div>
           </div>
+
+          <!-- MOBILE RESPONSIVE VIEW: Back Button + Case Icon on Left + Full-width Dropdown Select -->
+          <div class="flex md:hidden items-center gap-2 w-full">
+            <button onclick="switchView('case-list')"
+              class="w-8 h-8 rounded-lg border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 shadow-2xs transition-colors cursor-pointer"
+              title="ย้อนกลับ">
+              <i data-lucide="arrow-left" class="w-4 h-4 text-blue-600"></i>
+            </button>
+            <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs">
+              <i data-lucide="file-text" class="w-4 h-4"></i>
+            </div>
+            <!-- Custom Responsive Tab Dropdown with Lucide Icons -->
+            <div class="relative flex-1 min-w-0" id="case-mobile-tab-dropdown-wrapper">
+              <button type="button" onclick="toggleCaseMobileTabDropdown(event)" id="case-mobile-tab-trigger"
+                class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-lg px-3 py-2 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span id="case-mobile-tab-current-icon" class="text-blue-600 flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                  </span>
+                  <span id="case-mobile-tab-current-label" class="truncate">ทั้งหมด</span>
+                </div>
+                <i data-lucide="chevron-down" id="case-mobile-tab-chevron" class="w-4 h-4 text-slate-500 transition-transform flex-shrink-0"></i>
+              </button>
+              
+              <div id="case-mobile-tab-menu" class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
+                <button type="button" onclick="selectCaseMobileTab('all')" class="case-mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer" data-tab="all">
+                  <span class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i></span>
+                  <span class="flex-1 truncate">ทั้งหมด</span>
+                </button>
+                <button type="button" onclick="selectCaseMobileTab('timeline')" class="case-mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="timeline">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="git-commit" class="w-3.5 h-3.5"></i></span>
+                  <span class="flex-1 truncate">ไทม์ไลน์และรูปภาพ</span>
+                </button>
+                <button type="button" onclick="selectCaseMobileTab('orgs')" class="case-mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="orgs">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="network" class="w-3.5 h-3.5"></i></span>
+                  <span class="flex-1 truncate">หน่วยงานที่รับเรื่อง</span>
+                </button>
+                <button type="button" onclick="selectCaseMobileTab('comments')" class="case-mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="comments">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="messages-square" class="w-3.5 h-3.5"></i></span>
+                  <span class="flex-1 truncate">ประวัติการคุยกัน</span>
+                </button>
+                <button type="button" onclick="selectCaseMobileTab('ai')" class="case-mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="ai">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i></span>
+                  <span class="flex-1 truncate">บทวิเคราะห์ AI</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- ========================================================
              STICKY EDIT MODE BANNER (Appears when isDetailEditMode === true)
              ======================================================== -->
-        <div id="edit-mode-banner" class="hidden bg-white text-slate-900 p-3 sm:p-4 rounded-2xl border-2 border-blue-500 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-3 animate-in fade-in duration-150">
+        <div id="edit-mode-banner" class="hidden bg-white text-slate-900 p-3 sm:p-4 rounded-2xl border-2 border-blue-500 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-3 animate-in fade-in duration-150" role="alert" aria-live="polite">
           <div class="flex items-center gap-2.5 sm:gap-3">
             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold flex-shrink-0 border border-blue-200">
               <i data-lucide="edit-3" class="w-4 h-4"></i>
@@ -583,18 +604,74 @@
           </div>
 
           <div class="flex items-center gap-2 self-stretch md:self-center justify-end flex-shrink-0 pt-2 md:pt-0 border-t border-slate-100 md:border-0">
-            <button onclick="handleCancelEditMode()" class="flex-1 md:flex-initial px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors min-h-[36px] sm:min-h-[38px]">
+            <button onclick="handleCancelEditMode()" class="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs transition-colors min-h-[44px] cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-700 focus-visible:outline-hidden">
               ยกเลิก
             </button>
-            <button onclick="handleSaveEditMode()" class="flex-1 md:flex-initial px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 min-h-[36px] sm:min-h-[38px]">
-              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            <button onclick="handleSaveEditMode()" class="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white font-bold text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 min-h-[44px] cursor-pointer focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:outline-hidden">
+              <i data-lucide="check" class="w-4 h-4"></i>
               <span>บันทึกการแก้ไข</span>
             </button>
           </div>
         </div>
 
-        <!-- Case Primary Headline + Compact Location & Reporter Strip -->
-        <div id="section-case-info" class="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs scroll-mt-16">
+        <!-- Case Primary Headline + Compact Location & Reporter Strip (Clean, Zero Redundancy) -->
+        <div id="section-case-info" class="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-2xs space-y-4 sm:space-y-5 scroll-mt-16">
+          
+          <!-- Single Unified Case Meta & Actions Bar -->
+          <div class="border-b border-slate-100 pb-3 sm:pb-3.5 space-y-2.5 sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:gap-4">
+            
+            <!-- Left Group: Natural cohesive metadata strip (no extreme gaps, compact & balanced) -->
+            <div class="flex items-center gap-2 sm:gap-2.5 flex-wrap min-w-0">
+              
+              <!-- Ticket ID & Copy Button -->
+              <div class="inline-flex items-center gap-1.5 flex-shrink-0">
+                <span class="font-mono-code font-bold text-slate-800 text-xs sm:text-sm tracking-tight select-all" id="detail-ticket-id">#2026-3U3734</span>
+                <button type="button" onclick="copyTicketId()" class="p-1 rounded-md border border-slate-200/90 hover:border-slate-300 hover:bg-slate-50 text-slate-400 hover:text-slate-700 transition shadow-2xs cursor-pointer flex items-center justify-center flex-shrink-0" title="คัดลอกรหัสเคส" id="btn-copy-ticket-id" aria-label="คัดลอกรหัสเคส">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+
+              <!-- Status Badge -->
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-200 shadow-2xs flex-shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" aria-hidden="true"></span>
+                <span>กำลังดำเนินการ (ส่งต่อ)</span>
+              </span>
+
+              <span class="text-slate-300 hidden sm:inline">•</span>
+
+              <!-- Category Tag -->
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200/80 flex-shrink-0">
+                <i data-lucide="tag" class="w-3 h-3 text-blue-500"></i>
+                <span>ความสะอาด</span>
+                <span class="text-[10.5px] text-slate-400 font-normal hidden sm:inline">(เดิม: ทางเท้า)</span>
+              </span>
+
+              <span class="text-slate-300">•</span>
+
+              <!-- Timestamp -->
+              <span class="inline-flex items-center gap-1 text-slate-500 font-medium text-xs flex-shrink-0">
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>8 ก.ค. 2026, 19:31 น.</span>
+              </span>
+
+            </div>
+
+            <!-- Right Group: Action Buttons (Equal-width 50/50 on Mobile, compact on Desktop) -->
+            <div class="flex items-center gap-2 flex-shrink-0 pt-1 sm:pt-0">
+              <button type="button" id="btn-start-edit-mode" onclick="handleStartEditMode()"
+                class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 sm:py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600 focus-visible:outline-hidden">
+                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                <span>แก้ไขข้อมูล</span>
+              </button>
+              <a href="https://c.traffy.in.th/2026-3U3734?p=4123" target="_blank" rel="noopener noreferrer"
+                class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 sm:py-1.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs transition-colors whitespace-nowrap focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600 focus-visible:outline-hidden"
+                title="ดูอย่างเดียว ห้ามปรับสถานะ">
+                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>Read-Only</span>
+              </a>
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-5 items-start">
             
             <!-- Left: Current Issue Photo + Problem Text (8 cols) -->
@@ -635,27 +712,9 @@
               </div>
 
               <!-- Problem Details -->
-              <div class="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
-                <!-- Meta Row: Date & Categorization (Clean & Standard Typography) -->
-                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap text-xs">
-                  <span class="inline-flex items-center gap-1 text-slate-500 font-medium text-[11px] sm:text-xs">
-                    <i data-lucide="calendar" class="w-3 h-3 text-slate-400"></i>
-                    <span>8 ก.ค. 2026, 19:31 น.</span>
-                  </span>
-                  
-                  <span class="text-slate-200 hidden sm:inline">|</span>
-                  
-                  <div class="inline-flex items-center gap-1 flex-wrap">
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200/80">
-                      <i data-lucide="tag" class="w-2.5 h-2.5 text-blue-500"></i>
-                      <span>ความสะอาด</span>
-                    </span>
-                    <span class="text-[10.5px] text-slate-400 font-normal">(เดิม: ทางเท้า)</span>
-                  </div>
-                </div>
-
+              <div class="flex-1 min-w-0 space-y-2">
                 <!-- Headline -->
-                <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                   ฟิวแจ้งทดสอบ 8กรก 2 | by line
                 </h1>
 
@@ -1404,8 +1463,15 @@
     </div>
   </div>
 
+  <!-- SCROLL TO TOP FLOATING BUTTON (Visible ONLY when scrolled down in case detail) -->
+  <button id="btn-scroll-top" onclick="scrollToTop()"
+    class="hidden fixed bottom-6 right-6 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-md hover:shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none translate-y-3 cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600 active:scale-95"
+    title="เลื่อนขึ้นด้านบน" aria-label="เลื่อนขึ้นด้านบน">
+    <i data-lucide="arrow-up" class="w-5 h-5 sm:w-5.5 sm:h-5.5 stroke-[2.2]"></i>
+  </button>
+
   <!-- TOAST NOTIFICATION -->
-  <div id="toast-box" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium flex items-center gap-2.5 border border-slate-800">
+  <div id="toast-box" role="status" aria-live="polite" class="fixed bottom-20 right-5 sm:bottom-22 sm:right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium flex items-center gap-2.5 border border-slate-800">
     <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
     <span id="toast-message">เรียบร้อย</span>
     <button onclick="dismissToastNow()" class="ml-2 text-slate-400 hover:text-white text-xs underline p-0.5 pointer-events-auto" aria-label="ปิดการแจ้งเตือน">ปิด</button>
@@ -2321,14 +2387,59 @@
       }
     }
 
-    function copyToClipboard(text) {
+    function copyTicketId() {
+      const idEl = document.getElementById('detail-ticket-id');
+      const fullText = idEl ? idEl.innerText.trim() : (caseData?.id || '2026-3U3734');
+      const cleanId = fullText.replace(/^#/, '');
+
+      const applyFeedback = () => {
+        const btn = document.getElementById('btn-copy-ticket-id');
+        if (btn) {
+          btn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>';
+          btn.classList.add('border-emerald-300', 'bg-emerald-50');
+          if (window.lucide) lucide.createIcons();
+          setTimeout(() => {
+            btn.innerHTML = '<i data-lucide="copy" class="w-3.5 h-3.5 text-slate-400"></i>';
+            btn.classList.remove('border-emerald-300', 'bg-emerald-50');
+            if (window.lucide) lucide.createIcons();
+          }, 1500);
+        }
+        showToast(`คัดลอกรหัสเคส ${cleanId} เรียบร้อยแล้ว`);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(cleanId).then(applyFeedback).catch(() => {
+          fallbackCopyText(cleanId, applyFeedback);
+        });
+      } else {
+        fallbackCopyText(cleanId, applyFeedback);
+      }
+    }
+
+    function fallbackCopyText(text, callback) {
       const tempInput = document.createElement('input');
       tempInput.value = text;
       document.body.appendChild(tempInput);
       tempInput.select();
-      document.execCommand('copy');
+      try {
+        document.execCommand('copy');
+        if (callback) callback();
+      } catch (err) {
+        showToast('ไม่สามารถคัดลอกข้อความได้');
+      }
       document.body.removeChild(tempInput);
-      showToast('คัดลอกข้อความแล้ว');
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('คัดลอกข้อความแล้ว');
+        }).catch(() => {
+          fallbackCopyText(text, () => showToast('คัดลอกข้อความแล้ว'));
+        });
+      } else {
+        fallbackCopyText(text, () => showToast('คัดลอกข้อความแล้ว'));
+      }
     }
 
     let aiDeepOpen = false;
@@ -2402,6 +2513,46 @@
 
     let currentCaseActiveTab = 'all';
 
+    const caseTabMeta = {
+      all: { label: 'ทั้งหมด', icon: 'layout-grid' },
+      timeline: { label: 'ไทม์ไลน์และรูปภาพ', icon: 'git-commit' },
+      orgs: { label: 'หน่วยงานที่รับเรื่อง', icon: 'network' },
+      comments: { label: 'ประวัติการคุยกัน', icon: 'messages-square' },
+      ai: { label: 'บทวิเคราะห์ AI', icon: 'sparkles' }
+    };
+
+    function toggleCaseMobileTabDropdown(e) {
+      if (e) {
+        e.stopPropagation();
+      }
+      const menu = document.getElementById('case-mobile-tab-menu');
+      const chevron = document.getElementById('case-mobile-tab-chevron');
+      if (menu) {
+        menu.classList.toggle('hidden');
+        if (chevron) {
+          chevron.classList.toggle('rotate-180');
+        }
+      }
+    }
+
+    function selectCaseMobileTab(tabId) {
+      switchCaseTab(tabId);
+      const menu = document.getElementById('case-mobile-tab-menu');
+      const chevron = document.getElementById('case-mobile-tab-chevron');
+      if (menu) menu.classList.add('hidden');
+      if (chevron) chevron.classList.remove('rotate-180');
+    }
+
+    document.addEventListener('click', function(e) {
+      const wrapper = document.getElementById('case-mobile-tab-dropdown-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        const menu = document.getElementById('case-mobile-tab-menu');
+        const chevron = document.getElementById('case-mobile-tab-chevron');
+        if (menu) menu.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-180');
+      }
+    });
+
     function switchCaseTab(tabKey) {
       currentCaseActiveTab = tabKey;
       const tabKeys = ['all', 'timeline', 'orgs', 'comments', 'ai'];
@@ -2417,18 +2568,37 @@
         const btn = document.getElementById(`btn-case-tab-${key}`);
         if (!btn) return;
         if (key === tabKey) {
-          btn.className = 'case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-bold bg-slate-900 text-white transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden shadow-xs';
+          btn.className = 'case-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 hover:text-white';
           btn.setAttribute('aria-selected', 'true');
         } else {
-          btn.className = 'case-tab-btn min-h-[44px] py-2 px-3.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-hidden';
+          btn.className = 'case-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5';
           btn.setAttribute('aria-selected', 'false');
         }
       });
 
-      // 2. Sync Mobile Dropdown Selector
-      const mobileSelector = document.getElementById('case-mobile-tab-selector');
-      if (mobileSelector && mobileSelector.value !== tabKey) {
-        mobileSelector.value = tabKey;
+      const activeBtn = document.getElementById(`btn-case-tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+
+      // 2. Sync Mobile Dropdown Selector & Items
+      if (typeof caseTabMeta !== 'undefined' && caseTabMeta[tabKey]) {
+        const currentMeta = caseTabMeta[tabKey];
+        const currentIcon = document.getElementById('case-mobile-tab-current-icon');
+        const currentLabel = document.getElementById('case-mobile-tab-current-label');
+        if (currentIcon) currentIcon.innerHTML = `<i data-lucide="${currentMeta.icon}" class="w-4 h-4"></i>`;
+        if (currentLabel) currentLabel.textContent = currentMeta.label;
+        document.querySelectorAll('.case-mobile-tab-item').forEach(btn => {
+          const isCurrent = btn.getAttribute('data-tab') === tabKey;
+          const iconSpan = btn.querySelector('span');
+          if (isCurrent) {
+            btn.className = 'case-mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer';
+            if (iconSpan) iconSpan.className = 'w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0';
+          } else {
+            btn.className = 'case-mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer';
+            if (iconSpan) iconSpan.className = 'w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0';
+          }
+        });
       }
 
       // 3. Toggle Visibility of Panels
@@ -2443,6 +2613,28 @@
           panel.classList.remove('animate-fadeIn');
         }
       });
+
+      // 4. Smoothly scroll directly to the selected section so user immediately sees the content
+      if (tabKey === 'all') {
+        const container = document.getElementById('content-container');
+        if (container) {
+          container.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else {
+        const targetId = panelMap[tabKey];
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          setTimeout(() => {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            targetEl.classList.add('ring-2', 'ring-blue-500/50', 'transition-all');
+            setTimeout(() => {
+              targetEl.classList.remove('ring-2', 'ring-blue-500/50');
+            }, 1200);
+          }, 60);
+        }
+      }
 
       lucide.createIcons();
     }
@@ -2459,10 +2651,60 @@
         document.getElementById('view-case-detail').classList.remove('hidden');
         document.getElementById('breadcrumb-title').textContent = 'รายละเอียดเคส';
         switchCaseTab('all');
+        const container = document.getElementById('content-container');
+        if (container) container.scrollTo({ top: 0, behavior: 'instant' });
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
+      updateScrollTopButtonVisibility();
       lucide.createIcons();
     }
+
+    // Scroll-To-Top Floating Button Logic
+    function scrollToTop() {
+      const container = document.getElementById('content-container');
+      if (container) {
+        container.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    function updateScrollTopButtonVisibility() {
+      const btn = document.getElementById('btn-scroll-top');
+      if (!btn) return;
+      const caseDetail = document.getElementById('view-case-detail');
+      const isDetailView = caseDetail && !caseDetail.classList.contains('hidden');
+
+      if (!isDetailView) {
+        btn.classList.add('hidden', 'opacity-0', 'pointer-events-none', 'translate-y-3');
+        btn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        return;
+      }
+
+      const container = document.getElementById('content-container');
+      const currentScroll = Math.max(container ? container.scrollTop : 0, window.scrollY || 0);
+
+      // Only show when the user has actually scrolled down more than 280px
+      if (currentScroll > 280) {
+        btn.classList.remove('hidden', 'opacity-0', 'pointer-events-none', 'translate-y-3');
+        btn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      } else {
+        btn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+        btn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      }
+    }
+
+    // Listen to scroll events on both #content-container and window
+    const contentScrollContainer = document.getElementById('content-container');
+    if (contentScrollContainer) {
+      contentScrollContainer.addEventListener('scroll', updateScrollTopButtonVisibility, { passive: true });
+    }
+    window.addEventListener('scroll', updateScrollTopButtonVisibility, { passive: true });
 
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
