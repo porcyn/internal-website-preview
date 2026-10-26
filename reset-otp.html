@@ -79,24 +79,12 @@
     }
     .font-mono-code {
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-feature-settings: "tnum" 1, "zero" 1;
     }
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #e2e8f0;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #cbd5e1;
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-    /* REAL PROJECT SIDEBAR STYLES */
     .real-sidebar {
       width: var(--sidebar-width);
       height: 100vh;
@@ -108,6 +96,7 @@
       padding: 16px 12px;
       overflow-y: auto;
       flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .real-user-card {
       padding: 12px;
@@ -128,14 +117,8 @@
       transition: background 0.15s, color 0.15s;
       cursor: pointer;
     }
-    .real-menu-item:hover {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
-    .real-menu-active {
-      background: #111827 !important;
-      color: #ffffff !important;
-    }
+    .real-menu-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-menu-active { background: #111827 !important; color: #ffffff !important; }
     .real-group-header {
       display: flex;
       align-items: center;
@@ -167,12 +150,8 @@
       transition: background 0.15s, color 0.15s;
       cursor: pointer;
     }
-    .real-nested-item:hover {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
+    .real-nested-item:hover { background: #f1f5f9; color: #0f172a; }
 
-    /* REAL PROJECT TOPBAR STYLES */
     .real-topbar {
       height: var(--topbar-height);
       background: #ffffff;
@@ -183,242 +162,500 @@
       padding: 0 var(--page-padding);
       flex-shrink: 0;
     }
-    .real-topbar-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 36px;
-      padding: 0 14px;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
-      background: #ffffff;
-      color: #334155;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .real-topbar-btn:hover {
-      border-color: #cbd5e1;
-      background: #f8fafc;
-      color: #0f172a;
-    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .real-sidebar {
-      width: var(--sidebar-width);
-      height: 100vh;
-      background: #ffffff;
-      border-right: 1px solid #e2e8f0;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px 12px;
-      overflow-y: auto;
-      flex-shrink: 0;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    /* Hide number input spinners */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
 
     @media (max-width: 767px) {
       .real-sidebar {
         position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
+        top: 0; left: 0; bottom: 0;
         z-index: 50;
-        width: 280px;
-        max-width: 84vw;
+        width: 280px; max-width: 84vw;
         height: 100vh;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
         transform: translateX(-100%);
       }
-      .real-sidebar.sidebar-open {
-        transform: translateX(0) !important;
-      }
-      .real-topbar {
-        padding: 0 var(--page-padding);
-        height: var(--topbar-height);
-      }
+      .real-sidebar.sidebar-open { transform: translateX(0) !important; }
+      .real-topbar { padding: 0 var(--page-padding); height: var(--topbar-height); }
     }
   </style>
 </head>
 <body class="flex h-screen overflow-hidden text-xs">
 
-  <!-- 1. SIDEBAR NAVIGATION -->
-    <!-- Mobile Drawer Backdrop -->
+  <!-- Mobile Drawer Backdrop -->
   <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
 
-  <!-- Main Sidebar (Pinned on Desktop, Slide-over Drawer on Mobile) -->
+  <!-- Main Sidebar -->
   <aside id="main-sidebar" class="real-sidebar select-none">
     
     <!-- User Card -->
     <div class="real-user-card">
       <div class="flex items-center gap-2.5">
-        <img
-          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-          alt="User Profile"
-          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
-        />
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
         <div class="flex-1 min-w-0">
           <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
           <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
         </div>
-        <!-- Close button on Mobile Drawer -->
         <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
-        <!-- Logout on Desktop -->
         <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
-
-      <!-- Badges -->
       <div class="flex flex-wrap gap-1 mt-2">
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">
-          ADMIN
-        </span>
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">
-          EDITOR
-        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
       </div>
     </div>
 
     <!-- Navigation Menu Items -->
-            <nav class="flex flex-col gap-0.5">
-      <!-- 1. จัดการหน่วยงาน -->
-      <a href="./organizations.html" class="real-menu-item ">
+    <nav class="flex flex-col gap-0.5">
+      <a href="./organizations.html" class="real-menu-item">
         <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการหน่วยงาน</span>
       </a>
 
       <!-- 2. จัดการ Case -->
-      <a href="./cases.html" class="real-menu-item mt-1 ">
+      <a href="./cases.html" class="real-menu-item mt-1">
         <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการ Case</span>
       </a>
 
-      <!-- 3. Reset OTP -->
-      <a href="./reset-otp.html" class="real-menu-item mt-1 real-menu-active">
+      <!-- Reset OTP (ACTIVE) -->
+      <a href="./reset-otp.html" class="real-menu-item real-menu-active mt-1">
         <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Reset OTP</span>
       </a>
 
-      <!-- 4. Flex Message -->
-      <a href="./flex-message.html" class="real-menu-item mt-1 ">
+      <a href="./flex-message.html" class="real-menu-item mt-1">
         <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Flex Message</span>
       </a>
 
-      <!-- 5. รายงานและสถิติ (Group with Children: สถิติ Rich Menu) -->
       <div class="flex flex-col gap-1 mt-1">
         <div class="real-group-header">
           <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">รายงานและสถิติ</span>
         </div>
         <div class="real-children-group">
-          <a href="./richmenu-stats.html" class="real-nested-item ">
+          <a href="./richmenu-stats.html" class="real-nested-item">
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
           </a>
         </div>
       </div>
 
-      <!-- 6. จัดการผู้ใช้ -->
-      <a href="./users.html" class="real-menu-item mt-1 ">
+      <a href="./users.html" class="real-menu-item mt-1">
         <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการผู้ใช้</span>
       </a>
 
-      <!-- 7. FAQ -->
-      <a href="./faq.html" class="real-menu-item mt-1 ">
+      <a href="./faq.html" class="real-menu-item mt-1">
         <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">FAQ</span>
       </a>
     </nav>
   </aside>
 
-  <!-- 2. MAIN CONTENT AREA -->
-  <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
+  <main class="flex-1 flex flex-col min-w-0 bg-slate-50 overflow-hidden relative">
     
     <!-- Topbar Header -->
-    <header class="real-topbar">
-      <!-- Left: Mobile Hamburger + Breadcrumb -->
+    <header class="real-topbar bg-white/80 backdrop-blur-md sticky top-0 z-20 shadow-sm">
       <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
         <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-        <span class="text-slate-400 font-medium">Traffy Backstage</span>
+        <span class="text-slate-400 font-medium whitespace-nowrap">Traffy Backstage</span>
         <span class="text-slate-300">/</span>
-        <span class="font-bold text-slate-800">Reset OTP</span>
-      </div>
-
-      <div class="flex items-center gap-2.5">
-        <a href="#stats" onclick="showToast('สถิติกลุ่มหน่วยงาน'); return false;" class="real-topbar-btn whitespace-nowrap !h-8 sm:!h-9 !px-2.5 sm:!px-3.5 text-xs inline-flex items-center gap-1.5">
-          <i data-lucide="chart-column" class="w-4 h-4 text-slate-600"></i>
-          <span>สถิติกลุ่มหน่วยงาน</span>
-        </a>
+        <span class="font-bold text-slate-800 truncate">Reset OTP</span>
       </div>
     </header>
 
-    <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
+    <!-- Scrollable Body -->
     <div class="flex-1 overflow-y-auto" id="content-container">
-      <div class="w-full max-w-[1536px] mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
+
+      <!-- Merged Design: Input & Preview (Design 2) + History Table (Design 1) -->
+      <div class="w-full max-w-[1536px] mx-auto space-y-6 animate-[fadeIn_0.3s_ease]">
         
-        <!-- Empty Placeholder Visual -->
-        <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3 shadow-2xs">
-          <i data-lucide="layout-template" class="w-6 h-6 text-slate-400"></i>
+        <!-- ROW 1: Form & Preview -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+          
+          <!-- Left: Main Form -->
+          <div class="md:col-span-3 bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 bg-slate-900 text-white rounded-lg flex items-center justify-center"><i data-lucide="key-round" class="w-4 h-4"></i></div>
+              ปลดล็อค / รีเซ็ต OTP
+            </h2>
+            <p class="text-slate-500 mb-5 text-xs sm:text-sm">ค้นหาเบอร์โทรศัพท์เพื่อรีเซ็ตสถานะการล็อคอินเข้าสู่ระบบ</p>
+
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์เจ้าหน้าที่</label>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input type="text" id="input-phone" placeholder="กรอกเบอร์โทรศัพท์ 10 หลัก" maxlength="10" oninput="formatPhoneInput(this); simulateUserSearch(this.value);" onkeypress="handleEnter(event)" class="w-full sm:flex-1 px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-mono-code text-slate-900 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none transition-all placeholder:text-slate-400">
+              <button onclick="validateAndOpenModal()" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer shadow-xs flex-shrink-0">
+                <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+                <span>รีเซ็ต OTP</span>
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> ระบบจะค้นหาข้อมูลให้อัตโนมัติเมื่อกรอกครบ 10 หลัก</p>
+          </div>
+
+          <!-- Right: Verification Mockup -->
+          <div class="md:col-span-2 bg-slate-50 p-5 sm:p-6 rounded-3xl border border-slate-200/80 flex flex-col justify-center">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">ข้อมูลบัญชีผู้ใช้ (Account Preview)</h3>
+            
+            <!-- Skeleton State -->
+            <div id="user-skeleton" class="space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-200 rounded-full animate-pulse"></div>
+                <div class="space-y-2 flex-1">
+                  <div class="h-3 bg-slate-200 rounded w-2/3 animate-pulse"></div>
+                  <div class="h-2 bg-slate-200 rounded w-1/2 animate-pulse"></div>
+                </div>
+              </div>
+              <div class="p-3 border border-slate-200 border-dashed rounded-xl bg-white/50 text-center text-slate-400 text-xs mt-2">
+                รอการกรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก...
+              </div>
+            </div>
+
+            <!-- Found User State (Hidden by default) -->
+            <div id="user-found" class="hidden">
+              <div class="flex items-center gap-3 mb-4">
+                <img src="https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff" class="w-10 h-10 rounded-full border border-slate-200">
+                <div>
+                  <div class="font-bold text-slate-900 text-sm">Somchai Admin</div>
+                  <div class="text-[10px] text-slate-500 font-mono-code">ID: 884921</div>
+                </div>
+              </div>
+              <div class="space-y-2 text-xs">
+                <div class="flex justify-between pb-2 border-b border-slate-200/50"><span class="text-slate-500">หน่วยงาน:</span><span class="font-medium text-slate-900">Traffy @ ITS Lab</span></div>
+                <div class="flex justify-between pb-2 border-b border-slate-200/50"><span class="text-slate-500">สถานะ OTP:</span><span class="font-bold text-amber-600">Locked</span></div>
+              </div>
+            </div>
+
+          </div>
         </div>
-        
-        <h2 class="text-sm font-bold text-slate-800">Reset OTP (รอเพื่อนแปะโค้ด)</h2>
-        <p class="text-xs text-slate-400 mt-1 max-w-md">หน้าโล่งเปล่าๆ พร้อมสำหรับให้เพื่อนนำโค้ด UI มาแปะแทนที่ในส่วนนี้ได้ทันที</p>
-        
-        <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-mono-code">
-          <i data-lucide="code" class="w-3.5 h-3.5 text-blue-500"></i>
-          <span>&lt;!-- วางโค้ด UI ของหน้านี้ใน #content-container --&gt;</span>
+
+        <!-- ROW 2: History Log (Responsive List View - No Horizontal Scroll on Mobile) -->
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 flex items-center justify-between gap-2 bg-slate-50/50">
+            <div class="flex items-center gap-2">
+              <i data-lucide="history" class="w-4 h-4 text-slate-500"></i>
+              <h3 class="font-bold text-slate-800 text-xs sm:text-sm">ประวัติการรีเซ็ตล่าสุด (วันนี้)</h3>
+            </div>
+            <span id="history-count-badge" class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-bold">
+              3 รายการ
+            </span>
+          </div>
+
+          <!-- History List Feed (No horizontal scroll, full-width responsive items) -->
+          <div id="history-list" class="divide-y divide-slate-100">
+            <!-- Item 1 -->
+            <div class="history-item p-3.5 sm:p-4 hover:bg-slate-50/70 transition-colors flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-100/80 shadow-2xs">
+                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-mono-code font-bold text-slate-900 text-xs sm:text-sm tracking-wide">081-xxx-9932</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60 inline-flex items-center gap-1 sm:hidden">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>สำเร็จ
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5 flex-wrap">
+                    <span class="text-slate-600 font-medium">Chayanid (Admin)</span>
+                    <span>•</span>
+                    <span class="flex items-center gap-1 text-slate-500">
+                      <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
+                      14:23 น.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold border border-emerald-200/60 inline-flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  สำเร็จ
+                </span>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="history-item p-3.5 sm:p-4 hover:bg-slate-50/70 transition-colors flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-100/80 shadow-2xs">
+                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-mono-code font-bold text-slate-900 text-xs sm:text-sm tracking-wide">095-xxx-1120</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60 inline-flex items-center gap-1 sm:hidden">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>สำเร็จ
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5 flex-wrap">
+                    <span class="text-slate-600 font-medium">Chayanid (Admin)</span>
+                    <span>•</span>
+                    <span class="flex items-center gap-1 text-slate-500">
+                      <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
+                      11:05 น.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold border border-emerald-200/60 inline-flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  สำเร็จ
+                </span>
+              </div>
+            </div>
+
+            <!-- Item 3 (Failed) -->
+            <div class="history-item p-3.5 sm:p-4 hover:bg-slate-50/70 transition-colors flex items-center justify-between gap-3 opacity-80">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0 border border-rose-100/80 shadow-2xs">
+                  <i data-lucide="shield-x" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-mono-code font-bold text-slate-500 text-xs sm:text-sm tracking-wide">089-xxx-0000</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200/60 inline-flex items-center gap-1 sm:hidden">
+                      <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>ล้มเหลว
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5 flex-wrap">
+                    <span class="text-slate-500 font-medium">System</span>
+                    <span>•</span>
+                    <span class="flex items-center gap-1 text-slate-400">
+                      <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
+                      09:12 น.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+                <span class="px-2.5 py-1 bg-rose-50 text-rose-700 rounded-lg text-xs font-bold border border-rose-200/60 inline-flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                  ล้มเหลว
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
   </main>
 
+  <!-- Reset Confirmation Modal -->
+  <div id="resetModal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeResetModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 w-full max-w-sm mx-4 relative z-10 text-center opacity-0 transform scale-95 transition-all" id="modalContent">
+      
+      <button onclick="closeResetModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors outline-none">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-16 h-16 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mx-auto mb-4 border-4 border-amber-100">
+        <i data-lucide="shield-alert" class="w-7 h-7"></i>
+      </div>
+      
+      <h3 class="text-xl font-bold text-slate-900 mb-2">ยืนยันการรีเซ็ต OTP</h3>
+      <p class="text-sm text-slate-500 mb-5">คุณต้องการรีเซ็ต OTP ให้กับเบอร์นี้ใช่หรือไม่?</p>
+      
+      <!-- Target Phone -->
+      <div class="py-3 bg-slate-50 rounded-xl border border-slate-200 mb-6">
+        <span class="text-2xl font-mono-code text-slate-900 font-bold tracking-widest" id="displayPhone">
+          0812345678
+        </span>
+      </div>
+      
+      <!-- Actions -->
+      <div class="flex gap-3">
+        <button onclick="closeResetModal()" class="flex-1 py-3 rounded-xl font-semibold text-white bg-rose-600 hover:bg-rose-700 transition-colors text-sm whitespace-nowrap shadow-xs">
+          ยกเลิก
+        </button>
+        <button onclick="confirmReset()" class="flex-1 py-3 rounded-xl font-semibold text-white bg-slate-900 hover:bg-slate-800 shadow-lg shadow-slate-900/20 transition-all active:scale-95 text-sm whitespace-nowrap">
+          ยืนยันการรีเซ็ต
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Box -->
   <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
-    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-slate-800">
-      <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
+    <div id="toast-bg" class="bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 text-sm font-medium border border-slate-800">
+      <i id="toast-icon" data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
       <span id="toast-message">แจ้งเตือน</span>
     </div>
   </div>
 
   <script>
-    function toggleMobileSidebar() {
-      const sidebar = document.getElementById('main-sidebar');
-      const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      if (!sidebar || !backdrop) return;
-      const isOpen = sidebar.classList.contains('sidebar-open');
-      if (isOpen) {
-        closeMobileSidebar();
+    lucide.createIcons();
+
+    // Input Formatting (Only Numbers, Max 10)
+    function formatPhoneInput(inputElement) {
+      // Remove any non-numeric characters
+      inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
+    }
+
+    // Mockup logic to show User Card Preview
+    function simulateUserSearch(value) {
+      const skeleton = document.getElementById('user-skeleton');
+      const found = document.getElementById('user-found');
+      if(value.length === 10) {
+        skeleton.classList.add('hidden');
+        found.classList.remove('hidden');
       } else {
-        sidebar.classList.add('sidebar-open');
-        backdrop.classList.remove('hidden');
+        skeleton.classList.remove('hidden');
+        found.classList.add('hidden');
       }
     }
 
-    function closeMobileSidebar() {
-      const sidebar = document.getElementById('main-sidebar');
-      const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      if (sidebar) sidebar.classList.remove('sidebar-open');
-      if (backdrop) backdrop.classList.add('hidden');
+    function handleEnter(e) {
+      if (e.key === 'Enter') {
+        validateAndOpenModal();
+      }
     }
 
-    lucide.createIcons();
+    function validateAndOpenModal() {
+      const phoneInput = document.getElementById('input-phone');
+      const phone = phoneInput.value.trim();
+      
+      if (!phone || phone.length < 10) {
+        showToast('กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก', 'error');
+        phoneInput.focus();
+        return;
+      }
+      
+      document.getElementById('displayPhone').textContent = phone;
+      
+      const modal = document.getElementById('resetModal');
+      const content = document.getElementById('modalContent');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      
+      requestAnimationFrame(() => {
+        content.classList.remove('modal-leave', 'opacity-0', 'scale-95');
+        content.classList.add('modal-enter', 'opacity-100', 'scale-100');
+      });
+    }
 
+    function closeResetModal() {
+      const modal = document.getElementById('resetModal');
+      const content = document.getElementById('modalContent');
+      
+      content.classList.remove('modal-enter', 'opacity-100', 'scale-100');
+      content.classList.add('opacity-0', 'scale-95');
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }, 200);
+    }
+
+    let historyCount = 3;
+
+    function formatMaskedPhone(phone) {
+      const clean = phone.replace(/\D/g, '');
+      if (clean.length === 10) {
+        return `${clean.slice(0, 3)}-xxx-${clean.slice(6)}`;
+      }
+      return phone;
+    }
+
+    function addHistoryItem(rawPhone) {
+      const historyList = document.getElementById('history-list');
+      if (!historyList) return;
+
+      const masked = formatMaskedPhone(rawPhone);
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} น.`;
+
+      const itemEl = document.createElement('div');
+      itemEl.className = 'history-item p-3.5 sm:p-4 hover:bg-slate-50/70 transition-all duration-700 bg-emerald-50/60 border-l-4 border-emerald-500 flex items-center justify-between gap-3 animate-[fadeIn_0.3s_ease]';
+      itemEl.innerHTML = `
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 border border-emerald-200 shadow-2xs">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-mono-code font-bold text-slate-900 text-xs sm:text-sm tracking-wide">${masked}</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60 inline-flex items-center gap-1 sm:hidden">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>สำเร็จ
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-blue-50 text-blue-700 border border-blue-200/70">เพิ่งดำเนินการ</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5 flex-wrap">
+              <span class="text-slate-600 font-medium">Chayanid (Admin)</span>
+              <span>•</span>
+              <span class="flex items-center gap-1 text-slate-500">
+                <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
+                ${timeStr}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+          <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold border border-emerald-200/60 inline-flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            สำเร็จ
+          </span>
+        </div>
+      `;
+
+      historyList.insertBefore(itemEl, historyList.firstChild);
+
+      setTimeout(() => {
+        itemEl.classList.remove('bg-emerald-50/60', 'border-l-4', 'border-emerald-500');
+      }, 3000);
+
+      historyCount++;
+      const badge = document.getElementById('history-count-badge');
+      if (badge) badge.textContent = `${historyCount} รายการ`;
+
+      lucide.createIcons();
+    }
+
+    function confirmReset() {
+      const phone = document.getElementById('displayPhone').textContent.trim();
+      closeResetModal();
+      
+      setTimeout(() => {
+        showToast(`รีเซ็ต OTP สำหรับ ${phone} สำเร็จแล้ว`, 'success');
+        addHistoryItem(phone);
+        document.getElementById('input-phone').value = ''; // Clear input
+        simulateUserSearch(''); // Reset the user mock view back to skeleton
+      }, 300);
+    }
+
+    // Toast System
     let toastTimer = null;
-    function showToast(msg) {
+    function showToast(msg, type = 'success') {
       const toast = document.getElementById('toast-box');
       const msgEl = document.getElementById('toast-message');
-      if (!toast || !msgEl) return;
-
+      const toastIcon = document.getElementById('toast-icon');
+      
       msgEl.textContent = msg;
+      
+      if (type === 'error') {
+        toastIcon.innerHTML = `<path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>`;
+        toastIcon.className = 'w-5 h-5 text-rose-400';
+      } else {
+        toastIcon.innerHTML = `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>`;
+        toastIcon.className = 'w-5 h-5 text-emerald-400';
+      }
+
       toast.classList.remove('translate-y-20', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
 
@@ -426,7 +663,19 @@
       toastTimer = setTimeout(() => {
         toast.classList.add('translate-y-20', 'opacity-0');
         toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2200);
+      }, 3000);
+    }
+
+    // Mobile Sidebar
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (sidebar.classList.contains('sidebar-open')) closeMobileSidebar();
+      else { sidebar.classList.add('sidebar-open'); backdrop.classList.remove('hidden'); }
+    }
+    function closeMobileSidebar() {
+      document.getElementById('main-sidebar').classList.remove('sidebar-open');
+      document.getElementById('mobile-sidebar-backdrop').classList.add('hidden');
     }
   </script>
 </body>
