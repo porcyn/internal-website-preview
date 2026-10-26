@@ -615,84 +615,97 @@
             </div>
           </div>
 
-          <!-- MOBILE RESPONSIVE VIEW: Single Row (Back Button + Org Icon + Tab Dropdown matching screenshot) -->
-          <div class="flex md:hidden items-center gap-2 w-full">
-            <button onclick="backToSearch()"
-              class="w-8 h-8 rounded-lg border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 shadow-2xs transition-colors cursor-pointer"
-              title="ย้อนกลับ">
-              <i data-lucide="arrow-left" class="w-4 h-4 text-blue-600"></i>
-            </button>
-            <div
-              class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
-              title="หน่วยงาน">
-              <i data-lucide="building-2" class="w-4 h-4"></i>
+          <!-- MOBILE RESPONSIVE VIEW: Menu Row + Org Info Row Below (Matching User Choice) -->
+          <div class="flex md:hidden flex-col gap-2.5 w-full">
+            <!-- Row 1: Single Row Menu (Back Button + Org Icon + Tab Dropdown matching screenshot) -->
+            <div class="flex items-center gap-2 w-full">
+              <button onclick="backToSearch()"
+                class="w-8 h-8 rounded-lg border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 shadow-2xs transition-colors cursor-pointer"
+                title="ย้อนกลับ">
+                <i data-lucide="arrow-left" class="w-4 h-4 text-blue-600"></i>
+              </button>
+              <div
+                class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
+                title="หน่วยงาน">
+                <i data-lucide="building-2" class="w-4 h-4"></i>
+              </div>
+
+              <!-- Custom Responsive Tab Dropdown with Lucide Icons (flex-1 to fill the remaining row) -->
+              <div class="relative flex-1 min-w-0" id="mobile-tab-dropdown-wrapper">
+                <button type="button" onclick="toggleMobileTabDropdown(event)" id="mobile-tab-trigger"
+                  class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span id="mobile-tab-current-icon"
+                      class="text-blue-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </span>
+                    <span id="mobile-tab-current-label" class="truncate">ข้อมูลทั่วไป</span>
+                  </div>
+                  <i data-lucide="chevron-down" id="mobile-tab-chevron"
+                    class="w-4 h-4 text-slate-500 transition-transform flex-shrink-0"></i>
+                </button>
+
+                <div id="mobile-tab-menu"
+                  class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
+                  <button type="button" onclick="selectMobileTab('general')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
+                    data-tab="general">
+                    <span
+                      class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">ข้อมูลทั่วไป</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('account')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="account">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="users" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">สมาชิก</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('area')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="area">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="map-pin" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">พื้นที่ดูแล</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('qr')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="qr">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="qr-code" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">QR Code</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('permission')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="permission">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="shield-check" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">สิทธิ์</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('stats')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="stats">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="chart-column" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">สถิติ</span>
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <!-- Custom Responsive Tab Dropdown with Lucide Icons (flex-1 to fill the remaining row) -->
-            <div class="relative flex-1 min-w-0" id="mobile-tab-dropdown-wrapper">
-              <button type="button" onclick="toggleMobileTabDropdown(event)" id="mobile-tab-trigger"
-                class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span id="mobile-tab-current-icon"
-                    class="text-blue-600 flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="file-text" class="w-4 h-4"></i>
-                  </span>
-                  <span id="mobile-tab-current-label" class="truncate">ข้อมูลทั่วไป</span>
-                </div>
-                <i data-lucide="chevron-down" id="mobile-tab-chevron"
-                  class="w-4 h-4 text-slate-500 transition-transform flex-shrink-0"></i>
-              </button>
-
-              <div id="mobile-tab-menu"
-                class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
-                <button type="button" onclick="selectMobileTab('general')"
-                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
-                  data-tab="general">
-                  <span
-                    class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i
-                      data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
-                  <span class="flex-1 truncate">ข้อมูลทั่วไป</span>
-                </button>
-                <button type="button" onclick="selectMobileTab('account')"
-                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-tab="account">
-                  <span
-                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                      data-lucide="users" class="w-3.5 h-3.5"></i></span>
-                  <span class="flex-1 truncate">สมาชิก</span>
-                </button>
-                <button type="button" onclick="selectMobileTab('area')"
-                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-tab="area">
-                  <span
-                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                      data-lucide="map-pin" class="w-3.5 h-3.5"></i></span>
-                  <span class="flex-1 truncate">พื้นที่ดูแล</span>
-                </button>
-                <button type="button" onclick="selectMobileTab('qr')"
-                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-tab="qr">
-                  <span
-                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                      data-lucide="qr-code" class="w-3.5 h-3.5"></i></span>
-                  <span class="flex-1 truncate">QR Code</span>
-                </button>
-                <button type="button" onclick="selectMobileTab('permission')"
-                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-tab="permission">
-                  <span
-                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                      data-lucide="shield-check" class="w-3.5 h-3.5"></i></span>
-                  <span class="flex-1 truncate">สิทธิ์</span>
-                </button>
-                <button type="button" onclick="selectMobileTab('stats')"
-                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-tab="stats">
-                  <span
-                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                      data-lucide="chart-column" class="w-3.5 h-3.5"></i></span>
-                  <span class="flex-1 truncate">สถิติ</span>
-                </button>
+            <!-- Row 2: Org Info & ID Below Menu Bar -->
+            <div class="flex items-center justify-between px-1 pt-2 border-t border-slate-100 min-w-0">
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold text-slate-900 leading-tight block truncate">รายละเอียดหน่วยงาน</span>
+                <span id="mobile-header-selected-org-name"
+                  class="text-[11px] text-slate-500 font-medium truncate block">Traffy @ ITS Lab2 <span
+                    class="text-slate-400 font-mono">(ID: 151)</span></span>
               </div>
             </div>
           </div>
@@ -3007,6 +3020,15 @@
       if (headerName) headerName.textContent = newName;
       const headerDesc = document.getElementById('header-org-desc');
       if (headerDesc) headerDesc.textContent = newDesc || '-';
+
+      const headerOrgSub = document.getElementById('header-selected-org-name');
+      if (headerOrgSub) {
+        headerOrgSub.innerHTML = `${newName} <span class="text-slate-400 font-mono">(ID: 151)</span>`;
+      }
+      const mobileHeaderOrgSub = document.getElementById('mobile-header-selected-org-name');
+      if (mobileHeaderOrgSub) {
+        mobileHeaderOrgSub.innerHTML = `${newName} <span class="text-slate-400 font-mono">(ID: 151)</span>`;
+      }
 
       // Commit logo change
       initialGeneralLogo = currentGeneralLogo;
