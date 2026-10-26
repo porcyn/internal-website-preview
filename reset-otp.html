@@ -706,28 +706,49 @@
 
     // Scroll to Top
     function scrollToTop() {
-      const scrollEl = document.getElementById('content-container') || window;
-      scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+      const scrollEl = document.getElementById('content-container');
+      if (scrollEl) scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    const btnScrollTop = document.getElementById('btn-scroll-top');
-    const scrollTarget = document.getElementById('content-container');
-    if (scrollTarget) {
-      scrollTarget.addEventListener('scroll', () => {
-        if (scrollTarget.scrollTop > 150) {
-          btnScrollTop.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
-          btnScrollTop.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    function initScrollToTop() {
+      const btn = document.getElementById('btn-scroll-top');
+      const scrollTarget = document.getElementById('content-container');
+      if (!btn) return;
+
+      const handleScroll = () => {
+        const targetScroll = scrollTarget ? scrollTarget.scrollTop : 0;
+        const winScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const currentScroll = Math.max(targetScroll, winScroll);
+
+        if (currentScroll > 100) {
+          btn.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+          btn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
         } else {
-          btnScrollTop.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
-          btnScrollTop.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          btn.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+          btn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
         }
-      });
+      };
+
+      if (scrollTarget) {
+        scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
+      }
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+    }
+
+    // Initialize after DOM loads
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScrollToTop);
+    } else {
+      initScrollToTop();
     }
   </script>
 
   <!-- Scroll to Top Button (Exact design matching image) -->
   <button id="btn-scroll-top" onclick="scrollToTop()"
-    class="fixed bottom-6 right-6 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-[#4a3b32] shadow-xl border border-slate-200/90 flex items-center justify-center cursor-pointer transition-all duration-300 opacity-0 translate-y-3 pointer-events-none hover:bg-slate-50 hover:scale-105 active:scale-95"
+    class="fixed bottom-6 right-6 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-[#4a3b32] shadow-xl border border-slate-200/90 flex items-center justify-center cursor-pointer transition-all duration-300 opacity-0 translate-y-3 pointer-events-none hover:bg-slate-50 hover:scale-105 active:scale-95"
     title="เลื่อนไปด้านบน">
     <i data-lucide="arrow-up" class="w-5 h-5 stroke-[2.5] text-[#4a3b32]"></i>
   </button>

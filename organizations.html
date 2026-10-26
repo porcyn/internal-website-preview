@@ -47,13 +47,16 @@
       }
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
 
     html {
       -webkit-text-size-adjust: 100%;
     }
+
     body {
       margin: 0;
       min-width: var(--page-min-width);
@@ -94,6 +97,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.75rem;
     }
+
     @media (max-width: 380px) {
       .form-col-pair {
         grid-template-columns: 1fr;
@@ -223,17 +227,19 @@
       padding: var(--page-padding) !important;
       box-sizing: border-box;
     }
+
     .dashboard-body,
-    #content-container > div,
-    #content-container > section,
-    #main-scroll-container > div,
-    #main-scroll-container > section {
+    #content-container>div,
+    #content-container>section,
+    #main-scroll-container>div,
+    #main-scroll-container>section {
       width: 100%;
       max-width: var(--content-max-width);
       margin-left: auto;
       margin-right: auto;
     }
-    #main-scroll-container > div#view-search {
+
+    #main-scroll-container>div#view-search {
       width: 100%;
       max-width: var(--content-max-width);
       margin-left: auto;
@@ -253,9 +259,17 @@
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
         transform: translateX(-100%);
       }
-      .real-sidebar.sidebar-open { transform: translateX(0) !important; }
-      .real-topbar { padding: 0 var(--page-padding); height: var(--topbar-height); }
+
+      .real-sidebar.sidebar-open {
+        transform: translateX(0) !important;
+      }
+
+      .real-topbar {
+        padding: 0 var(--page-padding);
+        height: var(--topbar-height);
+      }
     }
+
     .real-topbar-btn {
       display: flex;
       align-items: center;
@@ -272,6 +286,7 @@
       text-decoration: none;
       transition: all 0.15s;
     }
+
     .real-topbar-btn:hover {
       border-color: #cbd5e1;
       background: #f8fafc;
@@ -374,13 +389,17 @@
     <header class="real-topbar">
       <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
         <button type="button" onclick="toggleMobileSidebar()"
-          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-lg flex-shrink-0" title="เปิดเมนูนำทาง">
+          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-lg flex-shrink-0"
+          title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
         <span class="text-slate-400 font-medium whitespace-nowrap hidden sm:inline">จัดการหน่วยงาน</span>
         <span class="text-slate-300 hidden sm:inline">/</span>
-        <span id="topbar-breadcrumb" class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">ค้นหาหน่วยงาน</span>
-        <span id="topbar-org-id" class="hidden px-2 sm:px-2.5 py-0.5 sm:py-1 bg-blue-50 text-blue-700 rounded-lg text-[11px] sm:text-xs font-mono-code font-bold border border-blue-200 whitespace-nowrap flex-shrink-0">ID: 151</span>
+        <span id="topbar-breadcrumb"
+          class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">ค้นหาหน่วยงาน</span>
+        <span id="topbar-org-id"
+          class="hidden px-2 sm:px-2.5 py-0.5 sm:py-1 bg-blue-50 text-blue-700 rounded-lg text-[11px] sm:text-xs font-mono-code font-bold border border-blue-200 whitespace-nowrap flex-shrink-0">ID:
+          151</span>
       </div>
 
       <div id="topbar-action-right" class="hidden items-center gap-1.5 sm:gap-2 flex-shrink-0">
@@ -394,12 +413,14 @@
         <!-- Main Directory Card -->
         <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 space-y-6">
           <div class="flex items-center gap-3.5 pb-4 border-b border-slate-100">
-            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div
+              class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
               <i data-lucide="building-2" class="w-5 h-5 sm:w-6 sm:h-6"></i>
             </div>
             <div>
               <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ค้นหาหน่วยงาน</h1>
-              <p class="text-xs text-slate-500 mt-0.5">ค้นหาด้วยชื่อหน่วยงาน หรือรหัส Group ID เพื่อตรวจสอบและแก้ไขข้อมูล</p>
+              <p class="text-xs text-slate-500 mt-0.5">ค้นหาด้วยชื่อหน่วยงาน หรือรหัส Group ID
+                เพื่อตรวจสอบและแก้ไขข้อมูล</p>
             </div>
           </div>
 
@@ -438,11 +459,14 @@
               <div onclick="selectOrganization('151', 'Traffy @ ITS Lab2')"
                 class="p-3.5 rounded-2xl border border-slate-200 hover:border-slate-400 hover:shadow-xs bg-slate-50/40 hover:bg-white transition-all cursor-pointer flex items-center justify-between group">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-1 flex-shrink-0 shadow-2xs">
-                    <img src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png" class="w-full h-full object-contain">
+                  <div
+                    class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-1 flex-shrink-0 shadow-2xs">
+                    <img src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png"
+                      class="w-full h-full object-contain">
                   </div>
                   <div>
-                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">Traffy @ ITS Lab2</div>
+                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">Traffy @
+                      ITS Lab2</div>
                     <div class="text-[10px] text-slate-500 flex items-center gap-2 mt-0.5">
                       <span class="font-mono-code font-semibold text-slate-700">ID: 151</span>
                       <span>•</span>
@@ -450,18 +474,21 @@
                     </div>
                   </div>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                <i data-lucide="chevron-right"
+                  class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
               </div>
 
               <!-- Org 2: เทศบาลนครนนทบุรี -->
               <div onclick="selectOrganization('102', 'เทศบาลนครนนทบุรี')"
                 class="p-3.5 rounded-2xl border border-slate-200 hover:border-slate-400 hover:shadow-xs bg-slate-50/40 hover:bg-white transition-all cursor-pointer flex items-center justify-between group">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  <div
+                    class="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
                     นน
                   </div>
                   <div>
-                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">เทศบาลนครนนทบุรี</div>
+                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">
+                      เทศบาลนครนนทบุรี</div>
                     <div class="text-[10px] text-slate-500 flex items-center gap-2 mt-0.5">
                       <span class="font-mono-code font-semibold text-slate-700">ID: 102</span>
                       <span>•</span>
@@ -469,18 +496,21 @@
                     </div>
                   </div>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                <i data-lucide="chevron-right"
+                  class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
               </div>
 
               <!-- Org 3: สำนักงานเขตปทุมวัน -->
               <div onclick="selectOrganization('88', 'สำนักงานเขตปทุมวัน')"
                 class="p-3.5 rounded-2xl border border-slate-200 hover:border-slate-400 hover:shadow-xs bg-slate-50/40 hover:bg-white transition-all cursor-pointer flex items-center justify-between group">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  <div
+                    class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
                     ปว
                   </div>
                   <div>
-                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">สำนักงานเขตปทุมวัน</div>
+                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">
+                      สำนักงานเขตปทุมวัน</div>
                     <div class="text-[10px] text-slate-500 flex items-center gap-2 mt-0.5">
                       <span class="font-mono-code font-semibold text-slate-700">ID: 88</span>
                       <span>•</span>
@@ -488,18 +518,21 @@
                     </div>
                   </div>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                <i data-lucide="chevron-right"
+                  class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
               </div>
 
               <!-- Org 4: อบต.บางกรวย -->
               <div onclick="selectOrganization('64', 'อบต.บางกรวย')"
                 class="p-3.5 rounded-2xl border border-slate-200 hover:border-slate-400 hover:shadow-xs bg-slate-50/40 hover:bg-white transition-all cursor-pointer flex items-center justify-between group">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-purple-50 border border-purple-200 text-purple-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  <div
+                    class="w-9 h-9 rounded-xl bg-purple-50 border border-purple-200 text-purple-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
                     บก
                   </div>
                   <div>
-                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">อบต.บางกรวย</div>
+                    <div class="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors">
+                      อบต.บางกรวย</div>
                     <div class="text-[10px] text-slate-500 flex items-center gap-2 mt-0.5">
                       <span class="font-mono-code font-semibold text-slate-700">ID: 64</span>
                       <span>•</span>
@@ -507,7 +540,8 @@
                     </div>
                   </div>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                <i data-lucide="chevron-right"
+                  class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
               </div>
             </div>
           </div>
@@ -520,7 +554,7 @@
 
         <!-- CARD 1: TOP NAVIGATION MENU BAR (Org Title on Left + Right-aligned Clean Tabs matching cases.html) -->
         <div class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-3 sm:px-5 sm:py-3.5 shadow-2xs">
-          
+
           <!-- DESKTOP / TABLET VIEW: Left Org Icon/Title + Right-aligned Clean Tabs (Icons, No Numbers) -->
           <div class="hidden md:flex items-center justify-between gap-4 w-full">
             <!-- Left: Back Button + Org Info & Icon -->
@@ -534,18 +568,23 @@
 
               <div class="h-4 w-px bg-slate-200 flex-shrink-0"></div>
 
-              <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
+              <div
+                class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
                 title="จัดการหน่วยงาน">
                 <i data-lucide="building-2" class="w-4 h-4"></i>
               </div>
               <div class="min-w-0">
-                <span class="text-xs sm:text-sm font-bold text-slate-900 leading-tight block truncate">รายละเอียดหน่วยงาน</span>
-                <span id="header-selected-org-name" class="text-[11px] sm:text-xs text-slate-500 font-medium truncate block">Traffy @ ITS Lab2 <span class="text-slate-400 font-mono">(ID: 151)</span></span>
+                <span
+                  class="text-xs sm:text-sm font-bold text-slate-900 leading-tight block truncate">รายละเอียดหน่วยงาน</span>
+                <span id="header-selected-org-name"
+                  class="text-[11px] sm:text-xs text-slate-500 font-medium truncate block">Traffy @ ITS Lab2 <span
+                    class="text-slate-400 font-mono">(ID: 151)</span></span>
               </div>
             </div>
 
             <!-- Right: Tab Navigation Bar (Icons + Clean Text, No Numbers, matching cases.html) -->
-            <div class="inline-flex items-center gap-1 sm:gap-1.5 p-1 bg-slate-50/90 rounded-xl border border-slate-200/70 overflow-x-auto no-scrollbar flex-shrink-0">
+            <div
+              class="inline-flex items-center gap-1 sm:gap-1.5 p-1 bg-slate-50/90 rounded-xl border border-slate-200/70 overflow-x-auto no-scrollbar flex-shrink-0">
               <button onclick="switchTab('general')" id="btn-tab-general"
                 class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
@@ -579,59 +618,82 @@
             </div>
           </div>
 
-          <!-- MOBILE RESPONSIVE VIEW: Back Button + Organization Title/Name on Top + Full-width Dropdown Select below -->
-          <div class="flex md:hidden flex-col gap-2.5 w-full">
-            <div class="flex items-center gap-2 w-full">
-              <button onclick="backToSearch()"
-                class="w-8 h-8 rounded-lg border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 shadow-2xs transition-colors cursor-pointer"
-                title="ย้อนกลับ">
-                <i data-lucide="arrow-left" class="w-4 h-4 text-blue-600"></i>
-              </button>
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs">
-                <i data-lucide="building-2" class="w-4 h-4"></i>
-              </div>
-              <div class="min-w-0 flex-1">
-                <span class="text-xs font-bold text-slate-900 leading-tight block truncate">รายละเอียดหน่วยงาน</span>
-                <span id="mobile-header-selected-org-name" class="text-[10.5px] text-slate-500 font-medium truncate block">Traffy @ ITS Lab2 <span class="text-slate-400 font-mono">(ID: 151)</span></span>
-              </div>
+          <!-- MOBILE RESPONSIVE VIEW: Single Row (Back Button + Org Icon + Tab Dropdown matching screenshot) -->
+          <div class="flex md:hidden items-center gap-2 w-full">
+            <button onclick="backToSearch()"
+              class="w-8 h-8 rounded-lg border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 shadow-2xs transition-colors cursor-pointer"
+              title="ย้อนกลับ">
+              <i data-lucide="arrow-left" class="w-4 h-4 text-blue-600"></i>
+            </button>
+            <div
+              class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
+              title="หน่วยงาน">
+              <i data-lucide="building-2" class="w-4 h-4"></i>
             </div>
 
-            <!-- Custom Responsive Tab Dropdown with Lucide Icons -->
-            <div class="relative w-full" id="mobile-tab-dropdown-wrapper">
+            <!-- Custom Responsive Tab Dropdown with Lucide Icons (flex-1 to fill the remaining row) -->
+            <div class="relative flex-1 min-w-0" id="mobile-tab-dropdown-wrapper">
               <button type="button" onclick="toggleMobileTabDropdown(event)" id="mobile-tab-trigger"
-                class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-lg px-3 py-2 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
+                class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
                 <div class="flex items-center gap-2 min-w-0">
-                  <span id="mobile-tab-current-icon" class="text-blue-600 flex items-center justify-center flex-shrink-0">
+                  <span id="mobile-tab-current-icon"
+                    class="text-blue-600 flex items-center justify-center flex-shrink-0">
                     <i data-lucide="file-text" class="w-4 h-4"></i>
                   </span>
                   <span id="mobile-tab-current-label" class="truncate">ข้อมูลทั่วไป</span>
                 </div>
-                <i data-lucide="chevron-down" id="mobile-tab-chevron" class="w-4 h-4 text-slate-500 transition-transform flex-shrink-0"></i>
+                <i data-lucide="chevron-down" id="mobile-tab-chevron"
+                  class="w-4 h-4 text-slate-500 transition-transform flex-shrink-0"></i>
               </button>
-              
-              <div id="mobile-tab-menu" class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
-                <button type="button" onclick="selectMobileTab('general')" class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer" data-tab="general">
-                  <span class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
+
+              <div id="mobile-tab-menu"
+                class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
+                <button type="button" onclick="selectMobileTab('general')"
+                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
+                  data-tab="general">
+                  <span
+                    class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i
+                      data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
                   <span class="flex-1 truncate">ข้อมูลทั่วไป</span>
                 </button>
-                <button type="button" onclick="selectMobileTab('account')" class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="account">
-                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="users" class="w-3.5 h-3.5"></i></span>
+                <button type="button" onclick="selectMobileTab('account')"
+                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-tab="account">
+                  <span
+                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                      data-lucide="users" class="w-3.5 h-3.5"></i></span>
                   <span class="flex-1 truncate">สมาชิก</span>
                 </button>
-                <button type="button" onclick="selectMobileTab('area')" class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="area">
-                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></span>
+                <button type="button" onclick="selectMobileTab('area')"
+                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-tab="area">
+                  <span
+                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                      data-lucide="map-pin" class="w-3.5 h-3.5"></i></span>
                   <span class="flex-1 truncate">พื้นที่ดูแล</span>
                 </button>
-                <button type="button" onclick="selectMobileTab('qr')" class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="qr">
-                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="qr-code" class="w-3.5 h-3.5"></i></span>
+                <button type="button" onclick="selectMobileTab('qr')"
+                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-tab="qr">
+                  <span
+                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                      data-lucide="qr-code" class="w-3.5 h-3.5"></i></span>
                   <span class="flex-1 truncate">QR Code</span>
                 </button>
-                <button type="button" onclick="selectMobileTab('permission')" class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="permission">
-                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i></span>
+                <button type="button" onclick="selectMobileTab('permission')"
+                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-tab="permission">
+                  <span
+                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                      data-lucide="shield-check" class="w-3.5 h-3.5"></i></span>
                   <span class="flex-1 truncate">สิทธิ์</span>
                 </button>
-                <button type="button" onclick="selectMobileTab('stats')" class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer" data-tab="stats">
-                  <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="chart-column" class="w-3.5 h-3.5"></i></span>
+                <button type="button" onclick="selectMobileTab('stats')"
+                  class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-tab="stats">
+                  <span
+                    class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                      data-lucide="chart-column" class="w-3.5 h-3.5"></i></span>
                   <span class="flex-1 truncate">สถิติ</span>
                 </button>
               </div>
@@ -641,16 +703,18 @@
         </div>
 
         <!-- CARD 2: MAIN CONTENT CONTAINER (การ์ดเนื้อหาแยกต่างหาก มี overflow-hidden ป้องกันเนื้อหาแตก) -->
-        <div class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-4 sm:p-7 shadow-2xs overflow-hidden max-w-full">
+        <div
+          class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-4 sm:p-7 shadow-2xs overflow-hidden max-w-full">
 
           <!-- TAB 1: ข้อมูลทั่วไป (ตรงตามรูปที่ 1 และเนื้อหาครบตามรูปที่ 2) -->
           <div id="content-general" class="org-tab-content active space-y-5">
-            
+
             <!-- Header Row: Standardized across all 6 tabs -->
             <div class="border-b border-slate-100 pb-3 space-y-1.5">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
                     <i data-lucide="building-2" class="w-4 h-4"></i>
                   </div>
                   <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">ข้อมูลทั่วไปของหน่วยงาน</h2>
@@ -675,7 +739,8 @@
               <div class="flex items-center gap-1.5 text-[10.5px] text-slate-400 pl-0 sm:pl-10 tracking-tight">
                 <span>สร้าง: <span class="text-slate-600 font-medium">2018-10-05 09:59:23</span></span>
                 <span class="text-slate-300">•</span>
-                <span>อัปเดต: <span id="display-general-updated-on" class="text-slate-600 font-medium">2026-09-28 11:19:11</span></span>
+                <span>อัปเดต: <span id="display-general-updated-on" class="text-slate-600 font-medium">2026-09-28
+                    11:19:11</span></span>
               </div>
             </div>
 
@@ -686,7 +751,8 @@
               <div class="md:col-span-3 space-y-2">
                 <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 shadow-2xs space-y-3">
                   <div class="flex items-center gap-2 pb-2.5 border-b border-slate-200/80">
-                    <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
+                    <div
+                      class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
                       <i data-lucide="image" class="w-3.5 h-3.5"></i>
                     </div>
                     <span class="text-xs sm:text-sm font-bold text-slate-800">โลโก้หน่วยงาน</span>
@@ -694,14 +760,16 @@
                   <div class="flex flex-row md:flex-col items-center justify-center gap-3.5 pt-1">
                     <div onclick="triggerLogoSelect()" id="box-logo-preview"
                       class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white p-2 border border-slate-200 shadow-2xs flex items-center justify-center overflow-hidden flex-shrink-0 group cursor-default">
-                      <img id="display-org-logo" src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png"
+                      <img id="display-org-logo"
+                        src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png"
                         alt="Org Logo" class="w-full h-full object-contain transition-transform group-hover:scale-105">
                       <div id="logo-overlay"
                         class="absolute inset-0 bg-slate-900/50 backdrop-blur-[1px] rounded-2xl hidden items-center justify-center text-white text-[10px] font-semibold transition-all">
                         <i data-lucide="camera" class="w-5 h-5 text-white"></i>
                       </div>
                     </div>
-                    <input type="file" id="input-logo-file" accept="image/*" class="hidden" onchange="handleLogoUpload(this)">
+                    <input type="file" id="input-logo-file" accept="image/*" class="hidden"
+                      onchange="handleLogoUpload(this)">
                     <button type="button" id="btn-change-logo" onclick="triggerLogoSelect()" disabled
                       class="text-xs font-semibold text-slate-400 cursor-not-allowed transition-colors">
                       เปลี่ยนรูปโลโก้
@@ -714,38 +782,46 @@
               <div class="md:col-span-9 space-y-3">
 
                 <!-- ก้อนที่ 1: ข้อมูลทั่วไปและการติดต่อ -->
-                <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
+                <div
+                  class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
                   <button type="button" onclick="toggleGeneralGroup('group-general-1')"
                     class="w-full flex items-center justify-between p-3.5 sm:p-4 text-left transition-colors hover:bg-slate-100/70 cursor-pointer focus:outline-none">
                     <div class="flex items-center gap-2.5 min-w-0">
-                      <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
+                      <div
+                        class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
                         <i data-lucide="building-2" class="w-4 h-4"></i>
                       </div>
                       <div class="min-w-0">
-                        <span class="text-xs sm:text-sm font-bold text-slate-800 block truncate">ข้อมูลหน่วยงานและการติดต่อ</span>
-                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ชื่อหน่วยงาน, รายละเอียด, เบอร์โทรของสำนักงาน</span>
+                        <span
+                          class="text-xs sm:text-sm font-bold text-slate-800 block truncate">ข้อมูลหน่วยงานและการติดต่อ</span>
+                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ชื่อหน่วยงาน,
+                          รายละเอียด, เบอร์โทรของสำนักงาน</span>
                       </div>
                     </div>
-                    <div id="chevron-group-general-1" class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
+                    <div id="chevron-group-general-1"
+                      class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
                       <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                     </div>
                   </button>
 
-                  <div id="group-general-1" class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
+                  <div id="group-general-1"
+                    class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
                     <!-- 1. ชื่อหน่วยงาน + รายละเอียด (ไม่บังคับ) -->
                     <div class="form-col-pair">
                       <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">
                           ชื่อหน่วยงาน <span class="text-rose-500">*</span>
                         </label>
-                        <input type="text" id="field-name" value="Traffy @ ITS Lab2" disabled oninput="checkGeneralChanges()"
+                        <input type="text" id="field-name" value="Traffy @ ITS Lab2" disabled
+                          oninput="checkGeneralChanges()"
                           class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                       </div>
                       <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">
                           รายละเอียด (ไม่บังคับ)
                         </label>
-                        <input type="text" id="field-desc" placeholder="ระบุรายละเอียด..." value="" disabled oninput="checkGeneralChanges()"
+                        <input type="text" id="field-desc" placeholder="ระบุรายละเอียด..." value="" disabled
+                          oninput="checkGeneralChanges()"
                           class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                       </div>
                     </div>
@@ -762,31 +838,38 @@
                 </div>
 
                 <!-- ก้อนที่ 2: สถานที่ตั้งและพิกัดสำนักงาน -->
-                <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
+                <div
+                  class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
                   <button type="button" onclick="toggleGeneralGroup('group-general-2')"
                     class="w-full flex items-center justify-between p-3.5 sm:p-4 text-left transition-colors hover:bg-slate-100/70 cursor-pointer focus:outline-none">
                     <div class="flex items-center gap-2.5 min-w-0">
-                      <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
+                      <div
+                        class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
                         <i data-lucide="map-pin" class="w-4 h-4"></i>
                       </div>
                       <div class="min-w-0">
-                        <span class="text-xs sm:text-sm font-bold text-slate-800 block truncate">สถานที่ตั้งและพิกัดสำนักงาน</span>
-                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ที่อยู่สำนักงาน, จังหวัด, พิกัดตำแหน่ง GPS</span>
+                        <span
+                          class="text-xs sm:text-sm font-bold text-slate-800 block truncate">สถานที่ตั้งและพิกัดสำนักงาน</span>
+                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ที่อยู่สำนักงาน,
+                          จังหวัด, พิกัดตำแหน่ง GPS</span>
                       </div>
                     </div>
-                    <div id="chevron-group-general-2" class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
+                    <div id="chevron-group-general-2"
+                      class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
                       <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                     </div>
                   </button>
 
-                  <div id="group-general-2" class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
+                  <div id="group-general-2"
+                    class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
                     <!-- 3. ที่อยู่สำนักงาน + จังหวัด (ไม่ซ้ำซ้อน) -->
                     <div class="form-col-pair">
                       <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">
                           ที่อยู่สำนักงาน
                         </label>
-                        <input type="text" id="field-address" value="ตำบลคลองหนึ่ง อำเภอคลองหลวง" disabled oninput="checkGeneralChanges()"
+                        <input type="text" id="field-address" value="ตำบลคลองหนึ่ง อำเภอคลองหลวง" disabled
+                          oninput="checkGeneralChanges()"
                           class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                       </div>
                       <div>
@@ -809,31 +892,38 @@
                           <i data-lucide="external-link" class="w-3 h-3"></i><span>เปิด Google Maps</span>
                         </a>
                       </div>
-                      <input type="text" id="field-coords" value="14.07778588, 100.60131311" disabled oninput="checkGeneralChanges()"
+                      <input type="text" id="field-coords" value="14.07778588, 100.60131311" disabled
+                        oninput="checkGeneralChanges()"
                         class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                     </div>
                   </div>
                 </div>
 
                 <!-- ก้อนที่ 3: ประเภทหน่วยงานและการรับเรื่อง -->
-                <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
+                <div
+                  class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
                   <button type="button" onclick="toggleGeneralGroup('group-general-3')"
                     class="w-full flex items-center justify-between p-3.5 sm:p-4 text-left transition-colors hover:bg-slate-100/70 cursor-pointer focus:outline-none">
                     <div class="flex items-center gap-2.5 min-w-0">
-                      <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
+                      <div
+                        class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
                         <i data-lucide="layers" class="w-4 h-4"></i>
                       </div>
                       <div class="min-w-0">
-                        <span class="text-xs sm:text-sm font-bold text-slate-800 block truncate">ประเภทหน่วยงานและการรับเรื่อง</span>
-                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ประเภทหน่วยงาน, การใช้งาน, หมวดหมู่ปัญหา, Tags</span>
+                        <span
+                          class="text-xs sm:text-sm font-bold text-slate-800 block truncate">ประเภทหน่วยงานและการรับเรื่อง</span>
+                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ประเภทหน่วยงาน,
+                          การใช้งาน, หมวดหมู่ปัญหา, Tags</span>
                       </div>
                     </div>
-                    <div id="chevron-group-general-3" class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
+                    <div id="chevron-group-general-3"
+                      class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
                       <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                     </div>
                   </button>
 
-                  <div id="group-general-3" class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
+                  <div id="group-general-3"
+                    class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
                     <!-- 5. ประเภทหน่วยงาน + ประเภทการใช้งาน -->
                     <div class="form-col-pair">
                       <div>
@@ -849,7 +939,8 @@
                             <option>อบต.</option>
                             <option>โรงพยาบาล / มหาวิทยาลัย</option>
                           </select>
-                          <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                          <div
+                            class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
                             <i data-lucide="chevron-down" class="w-4 h-4"></i>
                           </div>
                         </div>
@@ -876,7 +967,8 @@
                         <label class="block text-xs font-semibold text-slate-700 mb-1">
                           แท็กหน่วยงาน (Tags)
                         </label>
-                        <input type="text" id="field-tags" value="{test_invite}" disabled oninput="checkGeneralChanges()"
+                        <input type="text" id="field-tags" value="{test_invite}" disabled
+                          oninput="checkGeneralChanges()"
                           class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                       </div>
                     </div>
@@ -884,38 +976,46 @@
                 </div>
 
                 <!-- ก้อนที่ 4: การตั้งค่าระบบและการส่งต่อ -->
-                <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
+                <div
+                  class="rounded-2xl border border-slate-200/90 bg-slate-50/70 shadow-2xs overflow-hidden transition-all duration-200">
                   <button type="button" onclick="toggleGeneralGroup('group-general-4')"
                     class="w-full flex items-center justify-between p-3.5 sm:p-4 text-left transition-colors hover:bg-slate-100/70 cursor-pointer focus:outline-none">
                     <div class="flex items-center gap-2.5 min-w-0">
-                      <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
+                      <div
+                        class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 flex-shrink-0">
                         <i data-lucide="settings-2" class="w-4 h-4"></i>
                       </div>
                       <div class="min-w-0">
-                        <span class="text-xs sm:text-sm font-bold text-slate-800 block truncate">การตั้งค่าระบบและการส่งต่อ</span>
-                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ประเภทแท็ก, ล็อกส่งต่อเฉพาะ, ลำดับแชทบอท, สถานะการซ่อน</span>
+                        <span
+                          class="text-xs sm:text-sm font-bold text-slate-800 block truncate">การตั้งค่าระบบและการส่งต่อ</span>
+                        <span class="text-[10.5px] text-slate-400 font-normal hidden sm:block truncate">ประเภทแท็ก,
+                          ล็อกส่งต่อเฉพาะ, ลำดับแชทบอท, สถานะการซ่อน</span>
                       </div>
                     </div>
-                    <div id="chevron-group-general-4" class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
+                    <div id="chevron-group-general-4"
+                      class="w-6 h-6 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-slate-500 transition-transform duration-200 flex-shrink-0 ml-2">
                       <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                     </div>
                   </button>
 
-                  <div id="group-general-4" class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
+                  <div id="group-general-4"
+                    class="hidden px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 space-y-3.5 border-t border-slate-200/80">
                     <!-- 7. ประเภทแท็ก + ล็อกส่งต่อเฉพาะ -->
                     <div class="form-col-pair">
                       <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">
                           ประเภทแท็ก
                         </label>
-                        <input type="text" id="field-tag-type" value="chg-profile-only" disabled oninput="checkGeneralChanges()"
+                        <input type="text" id="field-tag-type" value="chg-profile-only" disabled
+                          oninput="checkGeneralChanges()"
                           class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                       </div>
                       <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">
                           ล็อกส่งต่อเฉพาะ
                         </label>
-                        <input type="text" id="field-hierarchy" value='{"Traffy @ ITS Lab2"}' disabled oninput="checkGeneralChanges()"
+                        <input type="text" id="field-hierarchy" value='{"Traffy @ ITS Lab2"}' disabled
+                          oninput="checkGeneralChanges()"
                           class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                       </div>
                     </div>
@@ -926,7 +1026,8 @@
                         <label class="block text-xs font-semibold text-slate-700 mb-1">
                           ลำดับในแชทบอท
                         </label>
-                        <input type="text" id="field-index-g" placeholder="ปล่อยว่างได้" value="" disabled oninput="checkGeneralChanges()"
+                        <input type="text" id="field-index-g" placeholder="ปล่อยว่างได้" value="" disabled
+                          oninput="checkGeneralChanges()"
                           class="general-input w-full bg-white border border-slate-200 shadow-2xs rounded-xl px-3.5 py-2 text-xs font-mono-code text-slate-800 cursor-not-allowed transition-all focus:outline-none focus:ring-1 focus:ring-slate-900">
                       </div>
                       <div>
@@ -967,7 +1068,8 @@
             <div class="border-b border-slate-100 pb-3 space-y-1.5">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
                     <i data-lucide="users" class="w-4 h-4"></i>
                   </div>
                   <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">สมาชิกและรหัสเชิญเข้าร่วม</h2>
@@ -978,7 +1080,8 @@
                   <span>สร้างรหัสใหม่</span>
                 </button>
               </div>
-              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">สร้างรหัสสำหรับให้ Admin หรือ Staff เข้าร่วม และจัดการรายชื่อสมาชิกในหน่วยงาน</p>
+              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">สร้างรหัสสำหรับให้ Admin
+                หรือ Staff เข้าร่วม และจัดการรายชื่อสมาชิกในหน่วยงาน</p>
             </div>
 
             <!-- Alert Box (Hidden by default) -->
@@ -991,10 +1094,13 @@
             <!-- 2 Code Cards (STAFF CODE & ADMIN CODE) - Full Width Grid Matching Design -->
             <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <!-- Staff Code Card -->
-              <div class="bg-white p-4 sm:px-6 sm:py-4.5 rounded-2xl border border-slate-200/90 shadow-2xs flex items-center justify-between">
+              <div
+                class="bg-white p-4 sm:px-6 sm:py-4.5 rounded-2xl border border-slate-200/90 shadow-2xs flex items-center justify-between">
                 <div>
-                  <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">STAFF CODE</span>
-                  <div class="text-xl sm:text-2xl font-bold text-blue-600 font-mono-code tracking-tight" id="display-staff-code">7bwfd2</div>
+                  <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">STAFF
+                    CODE</span>
+                  <div class="text-xl sm:text-2xl font-bold text-blue-600 font-mono-code tracking-tight"
+                    id="display-staff-code">7bwfd2</div>
                 </div>
                 <button type="button" onclick="copyCode('7bwfd2')"
                   class="p-2.5 sm:p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-400 hover:text-slate-700 transition shadow-2xs cursor-pointer flex items-center justify-center flex-shrink-0"
@@ -1004,10 +1110,13 @@
               </div>
 
               <!-- Admin Code Card -->
-              <div class="bg-white p-4 sm:px-6 sm:py-4.5 rounded-2xl border border-slate-200/90 shadow-2xs flex items-center justify-between">
+              <div
+                class="bg-white p-4 sm:px-6 sm:py-4.5 rounded-2xl border border-slate-200/90 shadow-2xs flex items-center justify-between">
                 <div>
-                  <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">ADMIN CODE</span>
-                  <div class="text-xl sm:text-2xl font-bold text-rose-600 font-mono-code tracking-tight" id="display-admin-code">ncyda3</div>
+                  <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">ADMIN
+                    CODE</span>
+                  <div class="text-xl sm:text-2xl font-bold text-rose-600 font-mono-code tracking-tight"
+                    id="display-admin-code">ncyda3</div>
                 </div>
                 <button type="button" onclick="copyCode('ncyda3')"
                   class="p-2.5 sm:p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-400 hover:text-slate-700 transition shadow-2xs cursor-pointer flex items-center justify-center flex-shrink-0"
@@ -1023,7 +1132,8 @@
                 <div class="flex items-center gap-2">
                   <h3 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">รายชื่อสมาชิก</h3>
                   <span id="member-total-badge"
-                    class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-800 text-xs font-bold whitespace-nowrap">29 คน</span>
+                    class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-800 text-xs font-bold whitespace-nowrap">29
+                    คน</span>
                 </div>
 
                 <!-- Desktop Search Bar -->
@@ -1088,10 +1198,12 @@
             <div class="border-b border-slate-100 pb-3 space-y-1.5">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
                     <i data-lucide="map-pin" class="w-4 h-4"></i>
                   </div>
-                  <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">การจัดการพื้นที่ดูแล (Group Coverage)</h2>
+                  <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">การจัดการพื้นที่ดูแล (Group
+                    Coverage)</h2>
                 </div>
                 <div class="flex items-center gap-1.5 flex-shrink-0">
                   <button type="button" id="btn-edit-area" onclick="toggleEditArea(true)"
@@ -1106,7 +1218,8 @@
                   </button>
                 </div>
               </div>
-              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">กำหนดขอบเขตความรับผิดชอบ และรัศมีการดูแลของหน่วยงาน</p>
+              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">กำหนดขอบเขตความรับผิดชอบ
+                และรัศมีการดูแลของหน่วยงาน</p>
             </div>
 
             <div class="space-y-4">
@@ -1116,7 +1229,8 @@
                 <label id="label-mode-radius" onclick="toggleAreaMode('radius')"
                   class="p-3 sm:p-4 rounded-2xl border-2 border-slate-900 bg-slate-50/70 flex items-start gap-2.5 sm:gap-3.5 cursor-pointer transition-all">
                   <input type="radio" name="area_mode" id="radio-mode-radius" value="radius" checked
-                    class="area-input accent-slate-900 w-4 h-4 cursor-pointer mt-0.5 flex-shrink-0" onchange="toggleAreaMode('radius')">
+                    class="area-input accent-slate-900 w-4 h-4 cursor-pointer mt-0.5 flex-shrink-0"
+                    onchange="toggleAreaMode('radius')">
                   <div class="space-y-0.5 min-w-0">
                     <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 truncate">
                       <i data-lucide="disc" class="w-3.5 h-3.5 text-slate-700 flex-shrink-0"></i>
@@ -1146,15 +1260,19 @@
               </div>
 
               <!-- PANEL 1: การตั้งค่ารัศมี (radius_km) -->
-              <div id="box-radius-settings" class="p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-200/90 space-y-3">
+              <div id="box-radius-settings"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-200/90 space-y-3">
                 <div class="border-b border-slate-200/60 pb-2.5 space-y-1">
                   <div class="flex items-center justify-between gap-2">
                     <label class="block text-xs font-bold text-slate-800">ระยะรัศมีครอบคลุม (radius_km)</label>
-                    <span class="text-xs font-bold text-blue-600 font-mono-code px-2.5 py-1 bg-white border border-slate-200 rounded-lg flex-shrink-0 shadow-2xs" id="radius-preview-text">
+                    <span
+                      class="text-xs font-bold text-blue-600 font-mono-code px-2.5 py-1 bg-white border border-slate-200 rounded-lg flex-shrink-0 shadow-2xs"
+                      id="radius-preview-text">
                       300 เมตร
                     </span>
                   </div>
-                  <p class="text-[10.5px] sm:text-[11px] text-slate-500 font-medium leading-relaxed">* ถ้าดูแลแบบพื้นที่ ให้กรอกรัศมี 0.01 กม. ทิ้งไว้</p>
+                  <p class="text-[10.5px] sm:text-[11px] text-slate-500 font-medium leading-relaxed">* ถ้าดูแลแบบพื้นที่
+                    ให้กรอกรัศมี 0.01 กม. ทิ้งไว้</p>
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -1166,7 +1284,8 @@
               </div>
 
               <!-- PANEL 2: การดูแลแบบพื้นที่ (ตาราง voice_fonduegroupcoverage) -->
-              <div id="box-polygon-settings" class="p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-200/90 space-y-3.5 hidden">
+              <div id="box-polygon-settings"
+                class="p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-200/90 space-y-3.5 hidden">
                 <div class="border-b border-slate-200/60 pb-2.5 space-y-1">
                   <div class="flex items-center justify-between gap-2">
                     <h3 class="text-xs font-bold text-slate-800 truncate flex-1 min-w-0">
@@ -1180,22 +1299,28 @@
                       <span class="hidden sm:inline">กดดูพื้นที่รับผิดชอบได้ที่นี่</span>
                     </button>
                   </div>
-                  <p class="text-[11px] text-slate-500">สำหรับหน่วยงาน group_id = 151 ที่ดูแลระดับ ตำบล / อำเภอ / จังหวัด</p>
+                  <p class="text-[11px] text-slate-500">สำหรับหน่วยงาน group_id = 151 ที่ดูแลระดับ ตำบล / อำเภอ /
+                    จังหวัด</p>
                 </div>
 
                 <div class="space-y-2">
-                  <div class="p-3 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between text-xs">
+                  <div
+                    class="p-3 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between text-xs">
                     <div class="flex items-center gap-3">
-                      <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                      <div
+                        class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
                         <i data-lucide="check" class="w-4 h-4"></i>
                       </div>
                       <div>
                         <div class="font-semibold text-slate-900">ตำบลคลองหนึ่ง, อำเภอคลองหลวง, จังหวัดปทุมธานี</div>
-                        <div class="text-[10.5px] text-slate-500 font-mono-code">รหัสพื้นที่: 130201 • ครอบคลุมทั้งตำบล</div>
+                        <div class="text-[10.5px] text-slate-500 font-mono-code">รหัสพื้นที่: 130201 • ครอบคลุมทั้งตำบล
+                        </div>
                       </div>
                     </div>
-                    <button onclick="if(isEditingArea) { showToast('ลบพื้นที่รับผิดชอบ'); } else { showToast('กรุณากดแก้ไขพื้นที่ก่อนทำรายการ', 'danger'); }"
-                      class="text-slate-400 hover:text-rose-500 p-1.5 transition-colors cursor-pointer" title="ลบพื้นที่">
+                    <button
+                      onclick="if(isEditingArea) { showToast('ลบพื้นที่รับผิดชอบ'); } else { showToast('กรุณากดแก้ไขพื้นที่ก่อนทำรายการ', 'danger'); }"
+                      class="text-slate-400 hover:text-rose-500 p-1.5 transition-colors cursor-pointer"
+                      title="ลบพื้นที่">
                       <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                   </div>
@@ -1225,10 +1350,12 @@
             <div class="border-b border-slate-100 pb-3 space-y-1.5">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
                     <i data-lucide="qr-code" class="w-4 h-4"></i>
                   </div>
-                  <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">QR Code รับแจ้งเหตุ (2 จุดบริการ)</h2>
+                  <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">QR Code รับแจ้งเหตุ (2 จุดบริการ)
+                  </h2>
                 </div>
                 <button onclick="showToast('เพิ่มจุด QR ใหม่สำเร็จ')"
                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-[11px] sm:text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap flex-shrink-0">
@@ -1236,7 +1363,8 @@
                   <span>สร้าง QR ใหม่</span>
                 </button>
               </div>
-              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">กดขยายดูภาพขนาดใหญ่ แก้ไขข้อมูลจุดบริการ หรือดาวน์โหลดไฟล์ภาพ QR Code</p>
+              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">กดขยายดูภาพขนาดใหญ่
+                แก้ไขข้อมูลจุดบริการ หรือดาวน์โหลดไฟล์ภาพ QR Code</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -1245,32 +1373,40 @@
                 class="bg-white rounded-3xl p-4 border border-slate-200/90 shadow-2xs space-y-3 flex flex-col justify-between hover:border-slate-300 transition-all">
                 <div class="space-y-3">
                   <div class="flex items-center justify-between text-[10px] font-mono-code text-slate-400">
-                    <span class="font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-md text-[10.5px]">ID: #1</span>
+                    <span class="font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-md text-[10.5px]">ID:
+                      #1</span>
                     <!-- Action round buttons matching Picture 2: Expand & Edit -->
                     <div class="flex items-center gap-1.5">
-                      <button type="button" onclick="openQrZoomModal('ID: #1', document.getElementById('qr-title-1').textContent, document.getElementById('qr-url-1').textContent)"
-                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer" title="ขยายรูป QR Code">
+                      <button type="button"
+                        onclick="openQrZoomModal('ID: #1', document.getElementById('qr-title-1').textContent, document.getElementById('qr-url-1').textContent)"
+                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                        title="ขยายรูป QR Code">
                         <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
                       </button>
-                      <button type="button" onclick="openQrEditModal('1', document.getElementById('qr-title-1').textContent, document.getElementById('qr-url-1').textContent)"
-                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer" title="แก้ไขข้อมูล QR Code">
+                      <button type="button"
+                        onclick="openQrEditModal('1', document.getElementById('qr-title-1').textContent, document.getElementById('qr-url-1').textContent)"
+                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                        title="แก้ไขข้อมูล QR Code">
                         <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                       </button>
                     </div>
                   </div>
                   <div
                     class="w-28 h-28 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center cursor-pointer group relative overflow-hidden"
-                    onclick="openQrZoomModal('ID: #1', document.getElementById('qr-title-1').textContent, document.getElementById('qr-url-1').textContent)" title="คลิกเพื่อขยาย">
+                    onclick="openQrZoomModal('ID: #1', document.getElementById('qr-title-1').textContent, document.getElementById('qr-url-1').textContent)"
+                    title="คลิกเพื่อขยาย">
                     <img id="qr-img-1"
                       src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151"
                       class="w-full h-full object-contain">
-                    <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-2xl">
+                    <div
+                      class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-2xl">
                       <i data-lucide="maximize-2" class="w-5 h-5 text-white drop-shadow"></i>
                     </div>
                   </div>
                   <div class="text-center space-y-0.5">
                     <div id="qr-title-1" class="font-bold text-slate-900 text-xs">QR หลัก (จุดรับแจ้งหน้าสำนักงาน)</div>
-                    <div id="qr-url-1" class="text-[10px] text-slate-400 font-mono-code truncate">https://traffy.in.th/org/151</div>
+                    <div id="qr-url-1" class="text-[10px] text-slate-400 font-mono-code truncate">
+                      https://traffy.in.th/org/151</div>
                   </div>
                 </div>
                 <div class="grid grid-cols-2 gap-1.5 pt-2 border-t border-slate-100 text-xs">
@@ -1278,7 +1414,8 @@
                     class="py-1.5 px-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-[11px] flex items-center justify-center gap-1 cursor-pointer">
                     <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-400"></i><span>คัดลอกลิงก์</span>
                   </button>
-                  <button onclick="downloadQrImage('https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + encodeURIComponent(document.getElementById('qr-url-1').textContent), 'QR_Main_Org151.png')"
+                  <button
+                    onclick="downloadQrImage('https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + encodeURIComponent(document.getElementById('qr-url-1').textContent), 'QR_Main_Org151.png')"
                     class="py-1.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-[11px] flex items-center justify-center gap-1 shadow-2xs cursor-pointer">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i><span>ดาวน์โหลด</span>
                   </button>
@@ -1290,32 +1427,40 @@
                 class="bg-white rounded-3xl p-4 border border-slate-200/90 shadow-2xs space-y-3 flex flex-col justify-between hover:border-slate-300 transition-all">
                 <div class="space-y-3">
                   <div class="flex items-center justify-between text-[10px] font-mono-code text-slate-400">
-                    <span class="font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-md text-[10.5px]">ID: #2</span>
+                    <span class="font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-md text-[10.5px]">ID:
+                      #2</span>
                     <!-- Action round buttons matching Picture 2: Expand & Edit -->
                     <div class="flex items-center gap-1.5">
-                      <button type="button" onclick="openQrZoomModal('ID: #2', document.getElementById('qr-title-2').textContent, document.getElementById('qr-url-2').textContent)"
-                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer" title="ขยายรูป QR Code">
+                      <button type="button"
+                        onclick="openQrZoomModal('ID: #2', document.getElementById('qr-title-2').textContent, document.getElementById('qr-url-2').textContent)"
+                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                        title="ขยายรูป QR Code">
                         <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
                       </button>
-                      <button type="button" onclick="openQrEditModal('2', document.getElementById('qr-title-2').textContent, document.getElementById('qr-url-2').textContent)"
-                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer" title="แก้ไขข้อมูล QR Code">
+                      <button type="button"
+                        onclick="openQrEditModal('2', document.getElementById('qr-title-2').textContent, document.getElementById('qr-url-2').textContent)"
+                        class="w-7 h-7 rounded-full border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                        title="แก้ไขข้อมูล QR Code">
                         <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                       </button>
                     </div>
                   </div>
                   <div
                     class="w-28 h-28 mx-auto bg-slate-50 rounded-2xl border border-slate-100 p-2 flex items-center justify-center cursor-pointer group relative overflow-hidden"
-                    onclick="openQrZoomModal('ID: #2', document.getElementById('qr-title-2').textContent, document.getElementById('qr-url-2').textContent)" title="คลิกเพื่อขยาย">
+                    onclick="openQrZoomModal('ID: #2', document.getElementById('qr-title-2').textContent, document.getElementById('qr-url-2').textContent)"
+                    title="คลิกเพื่อขยาย">
                     <img id="qr-img-2"
                       src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://traffy.in.th/org/151/gate"
                       class="w-full h-full object-contain">
-                    <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-2xl">
+                    <div
+                      class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-2xl">
                       <i data-lucide="maximize-2" class="w-5 h-5 text-white drop-shadow"></i>
                     </div>
                   </div>
                   <div class="text-center space-y-0.5">
                     <div id="qr-title-2" class="font-bold text-slate-900 text-xs">QR ประตูทางเข้า-ออกอาคาร</div>
-                    <div id="qr-url-2" class="text-[10px] text-slate-400 font-mono-code truncate">https://traffy.in.th/org/151/gate</div>
+                    <div id="qr-url-2" class="text-[10px] text-slate-400 font-mono-code truncate">
+                      https://traffy.in.th/org/151/gate</div>
                   </div>
                 </div>
                 <div class="grid grid-cols-2 gap-1.5 pt-2 border-t border-slate-100 text-xs">
@@ -1323,7 +1468,8 @@
                     class="py-1.5 px-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium text-[11px] flex items-center justify-center gap-1 cursor-pointer">
                     <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-400"></i><span>คัดลอกลิงก์</span>
                   </button>
-                  <button onclick="downloadQrImage('https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + encodeURIComponent(document.getElementById('qr-url-2').textContent), 'QR_Gate_Org151.png')"
+                  <button
+                    onclick="downloadQrImage('https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + encodeURIComponent(document.getElementById('qr-url-2').textContent), 'QR_Gate_Org151.png')"
                     class="py-1.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-[11px] flex items-center justify-center gap-1 shadow-2xs cursor-pointer">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i><span>ดาวน์โหลด</span>
                   </button>
@@ -1338,7 +1484,8 @@
             <div class="border-b border-slate-100 pb-3 space-y-1.5">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
                     <i data-lucide="shield-check" class="w-4 h-4"></i>
                   </div>
                   <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">กำหนดสิทธิ์และการแสดงผล</h2>
@@ -1356,7 +1503,8 @@
                   </button>
                 </div>
               </div>
-              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">ควบคุมสิทธิ์การแสดงผล การส่งต่อ และการมองเห็นของหน่วยงาน</p>
+              <p class="text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10 truncate min-w-0">ควบคุมสิทธิ์การแสดงผล
+                การส่งต่อ และการมองเห็นของหน่วยงาน</p>
             </div>
 
             <div class="space-y-4">
@@ -1411,7 +1559,8 @@
                 </div>
 
                 <div class="pt-1">
-                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">จำกัดจำนวนหมุดในแผนที่สาธารณะ</label>
+                  <label
+                    class="block text-[11px] font-semibold text-slate-700 mb-1">จำกัดจำนวนหมุดในแผนที่สาธารณะ</label>
                   <input type="text" id="perm-map-limit" placeholder="ไม่ระบุ = แสดงทั้งหมด" readonly
                     class="perm-input w-full sm:w-72 bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-mono-code text-slate-800 shadow-2xs transition-all focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900">
                 </div>
@@ -1435,7 +1584,8 @@
                       <div id="perm-official-pill"
                         class="w-9 h-5 bg-slate-900 rounded-full transition-colors relative flex-shrink-0 cursor-default">
                         <div id="perm-official-knob"
-                          class="w-4 h-4 bg-white rounded-full transition-transform transform translate-x-4 absolute top-0.5 left-0.5 shadow-2xs"></div>
+                          class="w-4 h-4 bg-white rounded-full transition-transform transform translate-x-4 absolute top-0.5 left-0.5 shadow-2xs">
+                        </div>
                       </div>
                       <input type="checkbox" id="perm-official" checked class="hidden">
                     </div>
@@ -1445,7 +1595,8 @@
                   </div>
 
                   <!-- ฝั่งขวา: ส่งต่อเรื่องเฉพาะในเครือข่าย -->
-                  <div class="p-2.5 sm:p-3.5 rounded-xl border border-slate-200 bg-white shadow-2xs flex flex-col justify-between space-y-2 min-w-0">
+                  <div
+                    class="p-2.5 sm:p-3.5 rounded-xl border border-slate-200 bg-white shadow-2xs flex flex-col justify-between space-y-2 min-w-0">
                     <div>
                       <span class="font-bold text-slate-900 text-xs block truncate">ส่งต่อเรื่องในเครือข่าย</span>
                       <span class="text-[10.5px] text-slate-500 block">จำกัดกลุ่มเป้าหมายหรือเครือข่ายส่งต่อ</span>
@@ -1466,11 +1617,14 @@
                     <h3 class="text-xs font-bold text-rose-900 whitespace-nowrap">การระงับหรือซ่อนหน่วยงาน</h3>
                   </div>
                   <div class="flex items-center gap-2 flex-shrink-0">
-                    <span class="px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[10.5px] font-bold bg-emerald-100 text-emerald-800 whitespace-nowrap">🟢 ใช้งานปกติ</span>
+                    <span
+                      class="px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[10.5px] font-bold bg-emerald-100 text-emerald-800 whitespace-nowrap">🟢
+                      ใช้งานปกติ</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between gap-2 text-xs text-rose-800">
-                  <p class="text-[10.5px] sm:text-[11px] leading-relaxed truncate">เมื่อซ่อนจะไม่ปรากฏในการค้นหาและไม่รับเรื่องใหม่</p>
+                  <p class="text-[10.5px] sm:text-[11px] leading-relaxed truncate">
+                    เมื่อซ่อนจะไม่ปรากฏในการค้นหาและไม่รับเรื่องใหม่</p>
                   <button type="button" onclick="showToast('ต้องการยืนยันการซ่อนหน่วยงานหรือไม่?', 'danger')"
                     class="bg-rose-600 hover:bg-rose-700 text-white px-3 sm:px-4 py-1.5 rounded-xl text-[11px] sm:text-xs font-medium whitespace-nowrap shadow-2xs transition-colors flex-shrink-0 cursor-pointer">
                     ซ่อนหน่วยงาน
@@ -1501,19 +1655,23 @@
             <div class="border-b border-slate-100 pb-3 space-y-1.5">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold flex-shrink-0 border border-blue-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold flex-shrink-0 border border-blue-100">
                     <i data-lucide="chart-column" class="w-4 h-4"></i>
                   </div>
                   <h2 class="text-xs sm:text-base font-bold text-slate-900 truncate">สถิติและภาพรวมการดำเนินงาน</h2>
                 </div>
-                <span class="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap shadow-2xs">
+                <span
+                  class="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap shadow-2xs">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                   <span class="font-semibold">สถานะกลุ่ม: ปกติ (Active)</span>
                 </span>
               </div>
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10">
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10.5px] sm:text-xs text-slate-500 pl-0 sm:pl-10">
                 <p class="truncate min-w-0">ภาพรวมตัวชี้วัดประสิทธิภาพ ประวัติเรื่องแจ้ง และระยะเวลาแก้ไขของหน่วยงาน</p>
-                <div class="flex items-center gap-1.5 text-[10.5px] text-slate-400 font-mono-code flex-shrink-0 self-start sm:self-auto">
+                <div
+                  class="flex items-center gap-1.5 text-[10.5px] text-slate-400 font-mono-code flex-shrink-0 self-start sm:self-auto">
                   <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400"></i>
                   <span>อัปเดตล่าสุด: <span class="text-slate-600 font-medium">2026-10-19 17:29:58</span></span>
                 </div>
@@ -1523,10 +1681,12 @@
             <!-- KEY KPI METRICS (4 Clean Cards with Color Accents) -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               <!-- KPI 1: เรื่องแจ้งทั้งหมด -->
-              <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-blue-200 transition-all flex flex-col justify-between space-y-2">
+              <div
+                class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-blue-200 transition-all flex flex-col justify-between space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-xs font-semibold text-slate-500">เรื่องแจ้งทั้งหมด</span>
-                  <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
                     <i data-lucide="inbox" class="w-4 h-4"></i>
                   </div>
                 </div>
@@ -1539,29 +1699,35 @@
               </div>
 
               <!-- KPI 2: คะแนนความพึงพอใจ -->
-              <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-amber-200 transition-all flex flex-col justify-between space-y-2">
+              <div
+                class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-amber-200 transition-all flex flex-col justify-between space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-xs font-semibold text-slate-500">คะแนนความพึงพอใจ</span>
-                  <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
                     <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-500"></i>
                   </div>
                 </div>
                 <div>
                   <div class="flex items-baseline gap-1.5">
-                    <span class="text-2xl sm:text-3xl font-bold text-amber-600 font-mono-code tracking-tight">3.12</span>
+                    <span
+                      class="text-2xl sm:text-3xl font-bold text-amber-600 font-mono-code tracking-tight">3.12</span>
                     <span class="text-xs text-slate-400 font-mono-code">/ 5.0</span>
                   </div>
                   <div class="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
-                    <span>จากผู้ประเมิน</span> <strong class="text-slate-700 font-mono-code font-semibold">455 โหวต</strong>
+                    <span>จากผู้ประเมิน</span> <strong class="text-slate-700 font-mono-code font-semibold">455
+                      โหวต</strong>
                   </div>
                 </div>
               </div>
 
               <!-- KPI 3: บุคลากรในระบบ -->
-              <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-purple-200 transition-all flex flex-col justify-between space-y-2">
+              <div
+                class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-purple-200 transition-all flex flex-col justify-between space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-xs font-semibold text-slate-500">บุคลากรในระบบ</span>
-                  <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
                     <i data-lucide="users" class="w-4 h-4"></i>
                   </div>
                 </div>
@@ -1579,15 +1745,18 @@
               </div>
 
               <!-- KPI 4: คะแนนเจ้าหน้าที่ -->
-              <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-emerald-200 transition-all flex flex-col justify-between space-y-2">
+              <div
+                class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-emerald-200 transition-all flex flex-col justify-between space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-xs font-semibold text-slate-500">คะแนนเจ้าหน้าที่</span>
-                  <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
+                  <div
+                    class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
                     <i data-lucide="award" class="w-4 h-4"></i>
                   </div>
                 </div>
                 <div>
-                  <div class="text-2xl sm:text-3xl font-bold text-emerald-700 font-mono-code tracking-tight">15,030</div>
+                  <div class="text-2xl sm:text-3xl font-bold text-emerald-700 font-mono-code tracking-tight">15,030
+                  </div>
                   <div class="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
                     <span class="text-emerald-600 font-semibold">แต้มสะสมรวม</span> จากการแก้ปัญหา
                   </div>
@@ -1598,27 +1767,35 @@
             <!-- PIPELINE STATUS & DURATION ROW -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
               <!-- Post State Pipeline (8 cols) -->
-              <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-4">
+              <div
+                class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3 gap-2">
                   <div class="flex items-center gap-2 min-w-0 flex-1">
                     <i data-lucide="git-pull-request" class="w-4 h-4 text-blue-600 flex-shrink-0"></i>
-                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">สถานะเรื่องแจ้ง (Pipeline Summary)</h3>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">สถานะเรื่องแจ้ง (Pipeline Summary)
+                    </h3>
                   </div>
                   <button type="button" onclick="toggleDetailedState()" id="btn-toggle-state-detail"
                     class="px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200/80 text-[11px] sm:text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap flex-shrink-0 shadow-2xs">
                     <span id="text-toggle-state-detail">ดูแจกแจงละเอียด (18 สถานะ)</span>
-                    <i data-lucide="chevron-down" id="icon-toggle-state-detail" class="w-3.5 h-3.5 transition-transform duration-200 flex-shrink-0"></i>
+                    <i data-lucide="chevron-down" id="icon-toggle-state-detail"
+                      class="w-3.5 h-3.5 transition-transform duration-200 flex-shrink-0"></i>
                   </button>
                 </div>
 
                 <!-- Progress Visual Bar -->
                 <div class="space-y-1.5">
                   <div class="w-full h-3.5 bg-slate-100 rounded-full overflow-hidden flex shadow-inner gap-0.5 p-0.5">
-                    <div class="bg-amber-400 h-full rounded-l-full transition-all duration-500" style="width: 54.3%;" title="รอรับเรื่อง 54.3% (2,395 เรื่อง)"></div>
-                    <div class="bg-blue-500 h-full transition-all duration-500" style="width: 14.2%;" title="กำลังดำเนินการ 14.2% (628 เรื่อง)"></div>
-                    <div class="bg-indigo-500 h-full transition-all duration-500" style="width: 2.6%;" title="ติดตามเรื่อง 2.6% (113 เรื่อง)"></div>
-                    <div class="bg-emerald-500 h-full transition-all duration-500" style="width: 25.0%;" title="เสร็จสิ้น 25.0% (1,102 เรื่อง)"></div>
-                    <div class="bg-slate-400 h-full rounded-r-full transition-all duration-500" style="width: 3.9%;" title="ไม่เกี่ยวข้อง 3.9% (174 เรื่อง)"></div>
+                    <div class="bg-amber-400 h-full rounded-l-full transition-all duration-500" style="width: 54.3%;"
+                      title="รอรับเรื่อง 54.3% (2,395 เรื่อง)"></div>
+                    <div class="bg-blue-500 h-full transition-all duration-500" style="width: 14.2%;"
+                      title="กำลังดำเนินการ 14.2% (628 เรื่อง)"></div>
+                    <div class="bg-indigo-500 h-full transition-all duration-500" style="width: 2.6%;"
+                      title="ติดตามเรื่อง 2.6% (113 เรื่อง)"></div>
+                    <div class="bg-emerald-500 h-full transition-all duration-500" style="width: 25.0%;"
+                      title="เสร็จสิ้น 25.0% (1,102 เรื่อง)"></div>
+                    <div class="bg-slate-400 h-full rounded-r-full transition-all duration-500" style="width: 3.9%;"
+                      title="ไม่เกี่ยวข้อง 3.9% (174 เรื่อง)"></div>
                   </div>
                   <div class="flex items-center justify-between text-[10.5px] text-slate-400 px-0.5">
                     <span>รอรับเรื่อง (54.3%)</span>
@@ -1628,27 +1805,32 @@
 
                 <!-- Status Metric Badges: Clear, colorful, large digits -->
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center font-mono-code">
-                  <div class="p-3 rounded-xl bg-amber-50/80 border border-amber-200/70 hover:bg-amber-50 transition-colors">
+                  <div
+                    class="p-3 rounded-xl bg-amber-50/80 border border-amber-200/70 hover:bg-amber-50 transition-colors">
                     <span class="text-[10.5px] text-amber-700 block font-sans font-semibold mb-0.5">รอรับเรื่อง</span>
                     <span class="font-bold text-amber-900 text-lg">2,395</span>
                     <span class="text-[10px] text-amber-600 block font-sans font-medium">54.3%</span>
                   </div>
-                  <div class="p-3 rounded-xl bg-blue-50/80 border border-blue-200/70 hover:bg-blue-50 transition-colors">
+                  <div
+                    class="p-3 rounded-xl bg-blue-50/80 border border-blue-200/70 hover:bg-blue-50 transition-colors">
                     <span class="text-[10.5px] text-blue-700 block font-sans font-semibold mb-0.5">กำลังดำเนินการ</span>
                     <span class="font-bold text-blue-900 text-lg">628</span>
                     <span class="text-[10px] text-blue-600 block font-sans font-medium">14.2%</span>
                   </div>
-                  <div class="p-3 rounded-xl bg-indigo-50/80 border border-indigo-200/70 hover:bg-indigo-50 transition-colors">
+                  <div
+                    class="p-3 rounded-xl bg-indigo-50/80 border border-indigo-200/70 hover:bg-indigo-50 transition-colors">
                     <span class="text-[10.5px] text-indigo-700 block font-sans font-semibold mb-0.5">ติดตามเรื่อง</span>
                     <span class="font-bold text-indigo-900 text-lg">113</span>
                     <span class="text-[10px] text-indigo-600 block font-sans font-medium">2.6%</span>
                   </div>
-                  <div class="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/70 hover:bg-emerald-50 transition-colors">
+                  <div
+                    class="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/70 hover:bg-emerald-50 transition-colors">
                     <span class="text-[10.5px] text-emerald-700 block font-sans font-semibold mb-0.5">เสร็จสิ้น</span>
                     <span class="font-bold text-emerald-900 text-lg">1,102</span>
                     <span class="text-[10px] text-emerald-600 block font-sans font-medium">25.0%</span>
                   </div>
-                  <div class="p-3 rounded-xl bg-slate-100/80 border border-slate-200/70 hover:bg-slate-100 transition-colors col-span-2 sm:col-span-1">
+                  <div
+                    class="p-3 rounded-xl bg-slate-100/80 border border-slate-200/70 hover:bg-slate-100 transition-colors col-span-2 sm:col-span-1">
                     <span class="text-[10.5px] text-slate-600 block font-sans font-semibold mb-0.5">ไม่เกี่ยวข้อง</span>
                     <span class="font-bold text-slate-800 text-lg">174</span>
                     <span class="text-[10px] text-slate-500 block font-sans font-medium">3.9%</span>
@@ -1661,11 +1843,13 @@
                     แจกแจงสถานะย่อยทั้งหมด (18 ค่าในระบบ):
                   </div>
                   <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 font-mono-code text-xs">
-                    <div class="p-2 rounded-xl bg-amber-50/60 border border-amber-100 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-amber-50/60 border border-amber-100 flex items-center justify-between">
                       <span class="font-sans text-amber-800 font-medium text-[11px]">รอรับเรื่อง:</span>
                       <span class="font-bold text-amber-900">2,395</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-emerald-50/60 border border-emerald-100 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-emerald-50/60 border border-emerald-100 flex items-center justify-between">
                       <span class="font-sans text-emerald-800 font-medium text-[11px]">เสร็จสิ้น:</span>
                       <span class="font-bold text-emerald-900">1,102</span>
                     </div>
@@ -1673,51 +1857,63 @@
                       <span class="font-sans text-blue-800 font-medium text-[11px]">กำลังดำเนินการ:</span>
                       <span class="font-bold text-blue-900">321</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">ส่งต่อ (ใหม่):</span>
                       <span class="font-bold text-slate-900">246</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">ไม่เกี่ยวข้อง:</span>
                       <span class="font-bold text-slate-900">174</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-center justify-between">
                       <span class="font-sans text-indigo-800 font-medium text-[11px]">ติดตามเรื่อง:</span>
                       <span class="font-bold text-indigo-900">113</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">รับเรื่อง:</span>
                       <span class="font-bold text-slate-900">15</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">ศึกษาปัญหา:</span>
                       <span class="font-bold text-slate-900">13</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">จัดทำนโยบาย:</span>
                       <span class="font-bold text-slate-900">11</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">จัดซื้อจัดจ้าง:</span>
                       <span class="font-bold text-slate-900">9</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">ของบประมาณ:</span>
                       <span class="font-bold text-slate-900">5</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">สถานะทดสอบระบบ:</span>
                       <span class="font-bold text-slate-900">4</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">ขั้นตอนทางกฎหมาย:</span>
                       <span class="font-bold text-slate-900">2</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">ตัวเปลี่ยน App:</span>
                       <span class="font-bold text-slate-900">2</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div
+                      class="p-2 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
                       <span class="font-sans text-slate-700 text-[11px]">เสร็จสิ้น (2):</span>
                       <span class="font-bold text-slate-900">1</span>
                     </div>
@@ -1726,7 +1922,8 @@
               </div>
 
               <!-- Duration Breakdown (4 cols) -->
-              <div class="lg:col-span-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs flex flex-col justify-between space-y-4">
+              <div
+                class="lg:col-span-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-2xs flex flex-col justify-between space-y-4">
                 <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
                   <div class="flex items-center gap-2">
                     <i data-lucide="timer" class="w-4 h-4 text-slate-600"></i>
@@ -1737,9 +1934,11 @@
 
                 <div class="space-y-2.5">
                   <!-- Median Card (Most Important) -->
-                  <div class="p-3.5 bg-blue-50/80 border border-blue-200/80 rounded-2xl flex items-center justify-between text-blue-950">
+                  <div
+                    class="p-3.5 bg-blue-50/80 border border-blue-200/80 rounded-2xl flex items-center justify-between text-blue-950">
                     <div class="flex items-center gap-2.5">
-                      <div class="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
+                      <div
+                        class="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
                         <i data-lucide="clock-3" class="w-4 h-4"></i>
                       </div>
                       <div>
@@ -1769,8 +1968,10 @@
                   </div>
                 </div>
 
-                <div class="pt-3 text-[10.5px] text-slate-400 font-mono-code flex justify-between items-center border-t border-slate-100">
-                  <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i> จังหวัด: ปทุมธานี</span>
+                <div
+                  class="pt-3 text-[10.5px] text-slate-400 font-mono-code flex justify-between items-center border-t border-slate-100">
+                  <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
+                    จังหวัด: ปทุมธานี</span>
                   <span>พิกัด: 14.07, 100.60</span>
                 </div>
               </div>
@@ -1781,15 +1982,18 @@
               <div class="flex items-center justify-between border-b border-slate-100 pb-3 gap-2">
                 <div class="flex items-center gap-2 min-w-0 flex-1">
                   <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600 flex-shrink-0"></i>
-                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">หมวดหมู่ปัญหาหลัก (Top 5 Categories)</h3>
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">หมวดหมู่ปัญหาหลัก (Top 5 Categories)
+                  </h3>
                 </div>
                 <button type="button" onclick="toggleAllProblemTypes()" id="btn-toggle-problems"
                   class="px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200/80 text-[11px] sm:text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap flex-shrink-0 shadow-2xs">
                   <span id="text-toggle-problems">ดูหมวดหมู่อื่นๆ ทั้งหมด (+29 หมวด)</span>
-                  <i data-lucide="chevron-down" id="icon-toggle-problems" class="w-3.5 h-3.5 transition-transform duration-200 flex-shrink-0"></i>
+                  <i data-lucide="chevron-down" id="icon-toggle-problems"
+                    class="w-3.5 h-3.5 transition-transform duration-200 flex-shrink-0"></i>
                 </button>
               </div>
-              <p class="text-[11px] sm:text-xs text-slate-500">จากเรื่องแจ้งทั้งหมด 34 หมวดหมู่ (5 อันดับแรกที่มีการแจ้งเรื่องสูงสุด)</p>
+              <p class="text-[11px] sm:text-xs text-slate-500">จากเรื่องแจ้งทั้งหมด 34 หมวดหมู่ (5
+                อันดับแรกที่มีการแจ้งเรื่องสูงสุด)</p>
 
               <!-- Top 5 Ranked Visual Bars -->
               <div class="space-y-3">
@@ -1797,16 +2001,19 @@
                 <div class="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1.5">
                   <div class="flex items-center justify-between text-xs font-medium">
                     <div class="flex items-center gap-2">
-                      <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-700 font-mono-code font-bold text-[10px] flex items-center justify-center">1</span>
+                      <span
+                        class="w-5 h-5 rounded-md bg-blue-100 text-blue-700 font-mono-code font-bold text-[10px] flex items-center justify-center">1</span>
                       <span class="font-bold text-slate-800">อื่นๆ</span>
                     </div>
                     <div class="font-mono-code flex items-center gap-2 text-xs">
                       <span class="font-bold text-slate-900">2,282 เรื่อง</span>
-                      <span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold text-[10.5px]">51.7%</span>
+                      <span
+                        class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold text-[10.5px]">51.7%</span>
                     </div>
                   </div>
                   <div class="w-full h-2 bg-slate-200/70 rounded-full overflow-hidden">
-                    <div class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 51.7%;"></div>
+                    <div class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 51.7%;">
+                    </div>
                   </div>
                 </div>
 
@@ -1814,16 +2021,19 @@
                 <div class="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1.5">
                   <div class="flex items-center justify-between text-xs font-medium">
                     <div class="flex items-center gap-2">
-                      <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 font-mono-code font-bold text-[10px] flex items-center justify-center">2</span>
+                      <span
+                        class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 font-mono-code font-bold text-[10px] flex items-center justify-center">2</span>
                       <span class="font-bold text-slate-800">ความสะอาด</span>
                     </div>
                     <div class="font-mono-code flex items-center gap-2 text-xs">
                       <span class="font-bold text-slate-900">572 เรื่อง</span>
-                      <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-[10.5px]">13.0%</span>
+                      <span
+                        class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-[10.5px]">13.0%</span>
                     </div>
                   </div>
                   <div class="w-full h-2 bg-slate-200/70 rounded-full overflow-hidden">
-                    <div class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 13.0%;"></div>
+                    <div class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 13.0%;">
+                    </div>
                   </div>
                 </div>
 
@@ -1831,16 +2041,19 @@
                 <div class="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1.5">
                   <div class="flex items-center justify-between text-xs font-medium">
                     <div class="flex items-center gap-2">
-                      <span class="w-5 h-5 rounded-md bg-amber-100 text-amber-700 font-mono-code font-bold text-[10px] flex items-center justify-center">3</span>
+                      <span
+                        class="w-5 h-5 rounded-md bg-amber-100 text-amber-700 font-mono-code font-bold text-[10px] flex items-center justify-center">3</span>
                       <span class="font-bold text-slate-800">ไฟฟ้า</span>
                     </div>
                     <div class="font-mono-code flex items-center gap-2 text-xs">
                       <span class="font-bold text-slate-900">329 เรื่อง</span>
-                      <span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 font-semibold text-[10.5px]">7.5%</span>
+                      <span
+                        class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 font-semibold text-[10.5px]">7.5%</span>
                     </div>
                   </div>
                   <div class="w-full h-2 bg-slate-200/70 rounded-full overflow-hidden">
-                    <div class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 7.5%;"></div>
+                    <div class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 7.5%;">
+                    </div>
                   </div>
                 </div>
 
@@ -1848,16 +2061,19 @@
                 <div class="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1.5">
                   <div class="flex items-center justify-between text-xs font-medium">
                     <div class="flex items-center gap-2">
-                      <span class="w-5 h-5 rounded-md bg-purple-100 text-purple-700 font-mono-code font-bold text-[10px] flex items-center justify-center">4</span>
+                      <span
+                        class="w-5 h-5 rounded-md bg-purple-100 text-purple-700 font-mono-code font-bold text-[10px] flex items-center justify-center">4</span>
                       <span class="font-bold text-slate-800">อาคารสถานที่</span>
                     </div>
                     <div class="font-mono-code flex items-center gap-2 text-xs">
                       <span class="font-bold text-slate-900">276 เรื่อง</span>
-                      <span class="px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 font-semibold text-[10.5px]">6.3%</span>
+                      <span
+                        class="px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 font-semibold text-[10.5px]">6.3%</span>
                     </div>
                   </div>
                   <div class="w-full h-2 bg-slate-200/70 rounded-full overflow-hidden">
-                    <div class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 6.3%;"></div>
+                    <div class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 6.3%;">
+                    </div>
                   </div>
                 </div>
 
@@ -1865,16 +2081,19 @@
                 <div class="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-1.5">
                   <div class="flex items-center justify-between text-xs font-medium">
                     <div class="flex items-center gap-2">
-                      <span class="w-5 h-5 rounded-md bg-orange-100 text-orange-700 font-mono-code font-bold text-[10px] flex items-center justify-center">5</span>
+                      <span
+                        class="w-5 h-5 rounded-md bg-orange-100 text-orange-700 font-mono-code font-bold text-[10px] flex items-center justify-center">5</span>
                       <span class="font-bold text-slate-800">ฝุ่นควัน & PM2.5</span>
                     </div>
                     <div class="font-mono-code flex items-center gap-2 text-xs">
                       <span class="font-bold text-slate-900">191 เรื่อง</span>
-                      <span class="px-2 py-0.5 rounded-full bg-orange-50 text-orange-700 font-semibold text-[10.5px]">4.3%</span>
+                      <span
+                        class="px-2 py-0.5 rounded-full bg-orange-50 text-orange-700 font-semibold text-[10.5px]">4.3%</span>
                     </div>
                   </div>
                   <div class="w-full h-2 bg-slate-200/70 rounded-full overflow-hidden">
-                    <div class="bg-orange-500 h-full rounded-full transition-all duration-500" style="width: 4.3%;"></div>
+                    <div class="bg-orange-500 h-full rounded-full transition-all duration-500" style="width: 4.3%;">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1886,121 +2105,179 @@
                   <span class="text-[11px] text-slate-400">เรียงตามจำนวนเรื่องแจ้ง</span>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 font-mono-code text-xs">
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ทางเท้า</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">142</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">142</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ถนน</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">134</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">134</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ความปลอดภัย</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">75</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">75</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">น้ำท่วม</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">55</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">55</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">สัตว์</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">45</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">45</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ประปา</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">39</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">39</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ผิดกฎจราจร</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">37</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">37</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">เสียง</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">23</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">23</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ต้นไม้</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">21</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">21</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ขึ้นทะเบียน & สำรวจ</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">19</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">19</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ขอความช่วยเหลือ</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">15</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">15</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">สุขภาพ & บัตรทอง</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">11</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">11</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ผู้พิการ & วีลแชร์</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">9</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">9</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ขอใช้บริการ</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">8</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">8</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ปั๊มซม</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">8</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">8</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ทุจริต</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">6</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">6</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">สายสื่อสาร</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">6</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">6</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">สถานบันเทิง</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">4</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">4</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">แท็กซี่ / รถเมล์</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">4</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">4</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ควันดำ</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">4</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">4</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">คนเร่ร่อน</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ยาเสพติด</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">หาบเร่แผงลอย</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">อุบัติเหตุ</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">3</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ป้าย</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">2</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">2</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">ภัยออนไลน์</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">2</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">2</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">คุ้มครองผู้บริโภค</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">2</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">2</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">บริจาค / ช่วยเหลือ</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">1</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">1</span>
                   </div>
-                  <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
+                  <div
+                    class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center hover:bg-slate-100/70 transition-colors">
                     <span class="font-sans text-slate-700 text-[11.5px]">โรงเรียน</span>
-                    <span class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">1</span>
+                    <span
+                      class="font-bold text-slate-900 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[11px]">1</span>
                   </div>
                 </div>
               </div>
@@ -2028,8 +2305,9 @@
 
     <!-- Modal Content -->
     <div class="flex min-h-full items-center justify-center p-3 sm:p-4">
-      <div class="relative w-full max-w-md bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 overflow-hidden transform transition-all p-4 sm:p-5 space-y-3 max-h-[85vh] overflow-y-auto">
-        
+      <div
+        class="relative w-full max-w-md bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 overflow-hidden transform transition-all p-4 sm:p-5 space-y-3 max-h-[85vh] overflow-y-auto">
+
         <!-- Header: Avatar + Name + Close Button -->
         <div class="flex items-center justify-between gap-3 pb-2.5 border-b border-slate-100">
           <div class="flex items-center gap-3 min-w-0">
@@ -2038,13 +2316,15 @@
             </div>
             <div class="min-w-0">
               <div class="flex items-center gap-2">
-                <h3 id="modal-member-name" class="text-sm sm:text-base font-bold text-slate-900 leading-tight truncate">ชื่อสมาชิก</h3>
+                <h3 id="modal-member-name" class="text-sm sm:text-base font-bold text-slate-900 leading-tight truncate">
+                  ชื่อสมาชิก</h3>
                 <span id="modal-member-role-badge" class="flex-shrink-0"></span>
               </div>
               <p id="modal-member-subname" class="text-[11px] text-slate-500 truncate mt-0.5"></p>
             </div>
           </div>
-          <button type="button" onclick="closeMemberModal()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0">
+          <button type="button" onclick="closeMemberModal()"
+            class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0">
             <i data-lucide="x" class="w-3.5 h-3.5"></i>
           </button>
         </div>
@@ -2057,7 +2337,8 @@
             <div class="grid grid-cols-2 gap-1.5 sm:gap-2">
               <div class="p-2 bg-slate-50/80 rounded-xl border border-slate-100">
                 <span class="text-[9.5px] text-slate-500 block truncate">เบอร์โทรศัพท์กลาง</span>
-                <span id="modal-field-phone" class="font-bold text-slate-800 font-mono-code text-[11px] truncate block">-</span>
+                <span id="modal-field-phone"
+                  class="font-bold text-slate-800 font-mono-code text-[11px] truncate block">-</span>
               </div>
               <div class="p-2 bg-slate-50/80 rounded-xl border border-slate-100">
                 <span class="text-[9.5px] text-slate-500 block truncate">อีเมลกลาง</span>
@@ -2069,14 +2350,16 @@
               </div>
               <div class="p-2 bg-slate-50/80 rounded-xl border border-slate-100">
                 <span class="text-[9.5px] text-slate-500 block truncate">เบอร์ในกลุ่ม</span>
-                <span id="modal-field-group-phone" class="font-mono-code text-slate-800 truncate block text-[11px]">-</span>
+                <span id="modal-field-group-phone"
+                  class="font-mono-code text-slate-800 truncate block text-[11px]">-</span>
               </div>
             </div>
           </div>
 
           <!-- Section 2: Roles & System IDs -->
           <div>
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">ข้อมูลสิทธิ์และระบบ</span>
+            <span
+              class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">ข้อมูลสิทธิ์และระบบ</span>
             <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
               <div class="p-2 bg-slate-50/80 rounded-xl border border-slate-100">
                 <span class="text-[9.5px] text-slate-500 block">ID แถว</span>
@@ -2088,10 +2371,12 @@
               </div>
               <div class="p-2 bg-slate-50/80 rounded-xl border border-slate-100">
                 <span class="text-[9.5px] text-slate-500 block">สิทธิ์ที่ขอ</span>
-                <span id="modal-field-request-role" class="font-semibold text-slate-800 truncate block text-[11px]">-</span>
+                <span id="modal-field-request-role"
+                  class="font-semibold text-slate-800 truncate block text-[11px]">-</span>
               </div>
             </div>
-            <div class="p-2 bg-slate-50/80 rounded-xl border border-slate-100 mt-1.5 flex items-center justify-between text-[11px]">
+            <div
+              class="p-2 bg-slate-50/80 rounded-xl border border-slate-100 mt-1.5 flex items-center justify-between text-[11px]">
               <span class="text-[9.5px] text-slate-500">แก้ไขโดย (updated_by_user_id)</span>
               <span id="modal-field-updated-by" class="font-mono-code text-slate-700 font-medium">-</span>
             </div>
@@ -2121,31 +2406,39 @@
   <div id="modal-qr-zoom" class="hidden fixed inset-0 z-50 overflow-y-auto">
     <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity" onclick="closeQrZoomModal()"></div>
     <div class="flex min-h-full items-center justify-center p-4">
-      <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all p-6 space-y-4">
-        
+      <div
+        class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all p-6 space-y-4">
+
         <!-- Header -->
         <div class="flex items-start justify-between gap-3 pb-3 border-b border-slate-100">
           <div>
             <div class="flex items-center gap-2">
-              <span id="modal-qr-zoom-id" class="font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md text-[10.5px] font-mono-code">ID: #1</span>
-              <h3 id="modal-qr-zoom-title" class="text-sm font-bold text-slate-900 leading-tight">QR หลัก (จุดรับแจ้งหน้าสำนักงาน)</h3>
+              <span id="modal-qr-zoom-id"
+                class="font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md text-[10.5px] font-mono-code">ID:
+                #1</span>
+              <h3 id="modal-qr-zoom-title" class="text-sm font-bold text-slate-900 leading-tight">QR หลัก
+                (จุดรับแจ้งหน้าสำนักงาน)</h3>
             </div>
             <p class="text-[11px] text-slate-400 mt-1">สแกนเพื่อเข้าสู่หน้าแบบฟอร์มรับแจ้งเหตุของหน่วยงาน</p>
           </div>
-          <button type="button" onclick="closeQrZoomModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0">
+          <button type="button" onclick="closeQrZoomModal()"
+            class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
 
         <!-- Big QR Image -->
-        <div class="w-64 h-64 mx-auto bg-slate-50 rounded-2xl border border-slate-200 p-4 flex items-center justify-center shadow-inner">
+        <div
+          class="w-64 h-64 mx-auto bg-slate-50 rounded-2xl border border-slate-200 p-4 flex items-center justify-center shadow-inner">
           <img id="modal-qr-zoom-img" src="" alt="QR Code Large" class="w-full h-full object-contain">
         </div>
 
         <!-- URL Link Bar -->
-        <div class="flex items-center justify-between gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs">
+        <div
+          class="flex items-center justify-between gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs">
           <span id="modal-qr-zoom-url" class="font-mono-code text-[11px] text-slate-600 truncate"></span>
-          <button type="button" id="modal-qr-zoom-btn-copy" onclick="copyCode(document.getElementById('modal-qr-zoom-url').textContent)"
+          <button type="button" id="modal-qr-zoom-btn-copy"
+            onclick="copyCode(document.getElementById('modal-qr-zoom-url').textContent)"
             class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px] font-medium flex items-center gap-1 cursor-pointer flex-shrink-0">
             <i data-lucide="copy" class="w-3 h-3 text-slate-400"></i>
             <span>คัดลอก</span>
@@ -2173,12 +2466,14 @@
   <div id="modal-qr-edit" class="hidden fixed inset-0 z-50 overflow-y-auto">
     <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity" onclick="closeQrEditModal()"></div>
     <div class="flex min-h-full items-center justify-center p-4">
-      <div class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all p-6 space-y-4">
-        
+      <div
+        class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all p-6 space-y-4">
+
         <!-- Header -->
         <div class="flex items-start justify-between gap-3 pb-3 border-b border-slate-100">
           <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold flex-shrink-0">
+            <div
+              class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold flex-shrink-0">
               <i data-lucide="edit-3" class="w-4 h-4"></i>
             </div>
             <div>
@@ -2186,7 +2481,8 @@
               <p class="text-[11px] text-slate-400 mt-0.5">ปรับปรุงชื่อจุดบริการหรือลิงก์ปลายทาง</p>
             </div>
           </div>
-          <button type="button" onclick="closeQrEditModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0">
+          <button type="button" onclick="closeQrEditModal()"
+            class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
@@ -2529,7 +2825,7 @@
       if (input.files && input.files[0]) {
         const file = input.files[0];
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           const img = document.getElementById('display-org-logo');
           if (img) img.src = e.target.result;
           currentGeneralLogo = e.target.result;
@@ -2762,7 +3058,7 @@
       document.getElementById('view-search').classList.add('hidden');
       document.getElementById('view-dashboard').classList.remove('hidden');
       document.getElementById('topbar-breadcrumb').textContent = orgName;
-      
+
       const headerOrgSub = document.getElementById('header-selected-org-name');
       if (headerOrgSub) {
         headerOrgSub.innerHTML = `${orgName} <span class="text-slate-400 font-mono">(ID: ${orgId})</span>`;
@@ -2771,7 +3067,7 @@
       if (mobileHeaderOrgSub) {
         mobileHeaderOrgSub.innerHTML = `${orgName} <span class="text-slate-400 font-mono">(ID: ${orgId})</span>`;
       }
-      
+
       const topbarId = document.getElementById('topbar-org-id');
       if (topbarId) {
         topbarId.textContent = `ID: ${orgId}`;
@@ -2792,7 +3088,7 @@
       document.getElementById('view-dashboard').classList.add('hidden');
       document.getElementById('view-search').classList.remove('hidden');
       document.getElementById('topbar-breadcrumb').textContent = 'ค้นหาหน่วยงาน';
-      
+
       const topbarId = document.getElementById('topbar-org-id');
       if (topbarId) {
         topbarId.classList.add('hidden');
@@ -2803,7 +3099,7 @@
       lucide.createIcons();
     }
 
-    
+
     const tabMeta = {
       general: { label: 'ข้อมูลทั่วไป', icon: 'file-text' },
       account: { label: 'สมาชิก', icon: 'users' },
@@ -2835,7 +3131,7 @@
       if (chevron) chevron.classList.remove('rotate-180');
     }
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       const wrapper = document.getElementById('mobile-tab-dropdown-wrapper');
       if (wrapper && !wrapper.contains(e.target)) {
         const menu = document.getElementById('mobile-tab-menu');
@@ -2847,7 +3143,7 @@
 
     function switchTab(tabId) {
       document.querySelectorAll('.org-tab-content').forEach(c => c.classList.remove('active'));
-      
+
       const tabIds = ['general', 'account', 'area', 'qr', 'permission', 'stats'];
       tabIds.forEach(id => {
         const btn = document.getElementById('btn-tab-' + id);
@@ -3412,28 +3708,49 @@
 
     // Scroll to Top
     function scrollToTop() {
-      const scrollEl = document.getElementById('main-scroll-container') || window;
-      scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+      const scrollEl = document.getElementById('main-scroll-container');
+      if (scrollEl) scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    const btnScrollTop = document.getElementById('btn-scroll-top');
-    const scrollTarget = document.getElementById('main-scroll-container');
-    if (scrollTarget) {
-      scrollTarget.addEventListener('scroll', () => {
-        if (scrollTarget.scrollTop > 150) {
-          btnScrollTop.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
-          btnScrollTop.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    function initScrollToTop() {
+      const btn = document.getElementById('btn-scroll-top');
+      const scrollTarget = document.getElementById('main-scroll-container');
+      if (!btn) return;
+
+      const handleScroll = () => {
+        const targetScroll = scrollTarget ? scrollTarget.scrollTop : 0;
+        const winScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const currentScroll = Math.max(targetScroll, winScroll);
+
+        if (currentScroll > 100) {
+          btn.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+          btn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
         } else {
-          btnScrollTop.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
-          btnScrollTop.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          btn.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+          btn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
         }
-      });
+      };
+
+      if (scrollTarget) {
+        scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
+      }
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+    }
+
+    // Initialize after DOM loads
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScrollToTop);
+    } else {
+      initScrollToTop();
     }
   </script>
 
   <!-- Scroll to Top Button (Exact design matching image) -->
   <button id="btn-scroll-top" onclick="scrollToTop()"
-    class="fixed bottom-6 right-6 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-[#4a3b32] shadow-xl border border-slate-200/90 flex items-center justify-center cursor-pointer transition-all duration-300 opacity-0 translate-y-3 pointer-events-none hover:bg-slate-50 hover:scale-105 active:scale-95"
+    class="fixed bottom-6 right-6 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-[#4a3b32] shadow-xl border border-slate-200/90 flex items-center justify-center cursor-pointer transition-all duration-300 opacity-0 translate-y-3 pointer-events-none hover:bg-slate-50 hover:scale-105 active:scale-95"
     title="เลื่อนไปด้านบน">
     <i data-lucide="arrow-up" class="w-5 h-5 stroke-[2.5] text-[#4a3b32]"></i>
   </button>
