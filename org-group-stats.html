@@ -99,7 +99,7 @@
       <h1 class="m-0 text-base md:text-lg font-semibold text-slate-900 truncate">สถิติกลุ่มหน่วยงาน</h1>
       <span class="ml-auto hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200 whitespace-nowrap">
         <i data-lucide="flask-conical" class="w-3 h-3"></i>
-        Mock · ข้อมูลจริง snapshot <span id="snapshot-date"></span>
+        Mock v3 · ข้อมูลจริง snapshot <span id="snapshot-date"></span>
       </span>
     </header>
 
@@ -128,7 +128,7 @@
                 <span id="view-year" class="text-[15px] font-semibold text-slate-900"></span>
                 <button type="button" id="year-next" onclick="shiftViewYear(1)" class="w-[30px] h-[30px] flex items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed" aria-label="ปีถัดไป"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
               </div>
-              <div id="month-grid" class="grid grid-cols-3 gap-1.5" onmouseleave="setHoveredMonth(null)"></div>
+              <div id="month-grid" class="grid grid-cols-3 gap-1.5" onclick="handleMonthGridClick(event)" onmouseleave="setHoveredMonth(null)"></div>
               <p id="month-hint" class="mt-2.5 mb-0 text-xs text-slate-500 text-center"></p>
             </div>
           </div>
@@ -309,7 +309,7 @@
       document.getElementById("year-next").disabled = viewYear >= Number(maxMonth.slice(0, 4));
       document.getElementById("month-grid").innerHTML = THAI_MONTHS_SHORT.map((label, index) => {
         const ym = `${viewYear}-${String(index + 1).padStart(2, "0")}`;
-        return `<button type="button" data-ym="${ym}" class="relative h-9 rounded-lg bg-slate-50 text-slate-700 text-[13px] hover:bg-slate-200 disabled:bg-transparent disabled:text-slate-300 disabled:cursor-not-allowed ${available.has(ym) ? "month-has-data" : ""}" onclick="selectMonth('${ym}')" onmouseenter="setHoveredMonth('${ym}')" ${ym > maxMonth ? "disabled" : ""}>${label}</button>`;
+        return `<button type="button" data-ym="${ym}" class="relative h-9 rounded-lg bg-slate-50 text-slate-700 text-[13px] hover:bg-slate-200 disabled:bg-transparent disabled:text-slate-300 disabled:cursor-not-allowed ${available.has(ym) ? "month-has-data" : ""}" onmouseenter="setHoveredMonth('${ym}')" ${ym > maxMonth ? "disabled" : ""}>${label}</button>`;
       }).join("");
       paintMonthGrid();
     }
@@ -317,7 +317,9 @@
     function paintMonthGrid() {
       const { anchor, hovered } = pickerState;
       const [rangeFrom, rangeTo] = anchor ? [anchor, hovered ?? anchor].sort() : [pickerState.from, pickerState.to];
-      document.getElementById("month-hint").textContent = anchor ? "เลือกเดือนสิ้นสุด" : "เลือกเดือนเริ่มต้น";
+      document.getElementById("month-hint").textContent = anchor
+        ? "กดอีกเดือนเพื่อเลือกเป็นช่วง หรือกดข้างนอกเพื่อใช้เดือนนี้"
+        : "กดเดือนที่ต้องการ";
       document.querySelectorAll("#month-grid [data-ym]").forEach((button) => {
         const ym = button.dataset.ym;
         const isEdge = ym === rangeFrom || ym === rangeTo;
@@ -347,10 +349,13 @@
       pickerState.hovered = ym;
       paintMonthGrid();
     }
-    // first click picks the start month, second click the end; the same month twice selects one month
+    // first click applies that single month right away; a second click widens it into a range
     function selectMonth(ym) {
       if (!pickerState.anchor) {
         pickerState.anchor = ym;
+        pickerState.from = ym;
+        pickerState.to = ym;
+        renderMonthly();
         paintMonthGrid();
         return;
       }
@@ -359,6 +364,10 @@
       pickerState.hovered = null;
       closeMonthPicker();
       renderMonthly();
+    }
+    function handleMonthGridClick(event) {
+      const button = event.target.closest("[data-ym]");
+      if (button && !button.disabled) selectMonth(button.dataset.ym);
     }
     document.addEventListener("pointerdown", (event) => {
       if (pickerState.open && !document.getElementById("month-picker").contains(event.target)) closeMonthPicker();
