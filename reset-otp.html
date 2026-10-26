@@ -183,6 +183,27 @@
       .real-sidebar.sidebar-open { transform: translateX(0) !important; }
       .real-topbar { padding: 0 var(--page-padding); height: var(--topbar-height); }
     }
+    .real-topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
   </style>
 </head>
 <body class="flex h-screen overflow-hidden text-xs">
@@ -273,6 +294,13 @@
         <span class="text-slate-400 font-medium whitespace-nowrap">Traffy Backstage</span>
         <span class="text-slate-300">/</span>
         <span class="font-bold text-slate-800 truncate">Reset OTP</span>
+      </div>
+
+      <div class="flex items-center gap-2.5 flex-shrink-0">
+        <a href="./org-group-stats.html" class="real-topbar-btn whitespace-nowrap !h-8 sm:!h-9 !px-2.5 sm:!px-3.5 text-xs inline-flex items-center gap-1.5">
+          <i data-lucide="chart-column" class="w-4 h-4 text-slate-600"></i>
+          <span>สถิติกลุ่มหน่วยงาน</span>
+        </a>
       </div>
     </header>
 
