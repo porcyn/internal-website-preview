@@ -364,7 +364,7 @@
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
           </a>
           <a href="./org-group-stats.html" class="real-nested-item">
-            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+            <span class="flex-1 truncate">สถิติหน่วยงาน</span>
           </a>
         </div>
       </div>
@@ -397,9 +397,6 @@
         <span class="text-slate-300 hidden sm:inline">/</span>
         <span id="topbar-breadcrumb"
           class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">ค้นหาหน่วยงาน</span>
-        <span id="topbar-org-id"
-          class="hidden px-2 sm:px-2.5 py-0.5 sm:py-1 bg-blue-50 text-blue-700 rounded-lg text-[11px] sm:text-xs font-mono-code font-bold border border-blue-200 whitespace-nowrap flex-shrink-0">ID:
-          151</span>
       </div>
 
       <div id="topbar-action-right" class="hidden items-center gap-1.5 sm:gap-2 flex-shrink-0">
@@ -3010,8 +3007,6 @@
       if (headerName) headerName.textContent = newName;
       const headerDesc = document.getElementById('header-org-desc');
       if (headerDesc) headerDesc.textContent = newDesc || '-';
-      const breadcrumb = document.getElementById('topbar-breadcrumb');
-      if (breadcrumb) breadcrumb.textContent = newName;
 
       // Commit logo change
       initialGeneralLogo = currentGeneralLogo;
@@ -3057,7 +3052,7 @@
       }
       document.getElementById('view-search').classList.add('hidden');
       document.getElementById('view-dashboard').classList.remove('hidden');
-      document.getElementById('topbar-breadcrumb').textContent = orgName;
+      document.getElementById('topbar-breadcrumb').textContent = 'รายละเอียดหน่วยงาน';
 
       const headerOrgSub = document.getElementById('header-selected-org-name');
       if (headerOrgSub) {
@@ -3066,12 +3061,6 @@
       const mobileHeaderOrgSub = document.getElementById('mobile-header-selected-org-name');
       if (mobileHeaderOrgSub) {
         mobileHeaderOrgSub.innerHTML = `${orgName} <span class="text-slate-400 font-mono">(ID: ${orgId})</span>`;
-      }
-
-      const topbarId = document.getElementById('topbar-org-id');
-      if (topbarId) {
-        topbarId.textContent = `ID: ${orgId}`;
-        topbarId.classList.remove('hidden');
       }
 
       document.getElementById('topbar-action-right').classList.remove('hidden');
