@@ -256,6 +256,27 @@
       .real-sidebar.sidebar-open { transform: translateX(0) !important; }
       .real-topbar { padding: 0 var(--page-padding); height: var(--topbar-height); }
     }
+    .real-topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
   </style>
 </head>
 
@@ -327,6 +348,9 @@
           <a href="./richmenu-stats.html" class="real-nested-item">
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
           </a>
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
         </div>
       </div>
 
@@ -358,6 +382,7 @@
         <span id="topbar-breadcrumb" class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">ค้นหาหน่วยงาน</span>
         <span id="topbar-org-id" class="hidden px-2 sm:px-2.5 py-0.5 sm:py-1 bg-blue-50 text-blue-700 rounded-lg text-[11px] sm:text-xs font-mono-code font-bold border border-blue-200 whitespace-nowrap flex-shrink-0">ID: 151</span>
       </div>
+
       <div id="topbar-action-right" class="hidden items-center gap-1.5 sm:gap-2 flex-shrink-0">
       </div>
     </header>

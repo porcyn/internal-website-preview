@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สถิติกลุ่มหน่วยงาน - Traffy Fondue Internal Website</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Noto Sans Thai -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /*
+      Breakpoints (WCAG 1.4.10 & Internal Website Standard):
+        mobile   ≤ 767px    tablet 768–1023px    desktop ≥ 1024px
+    */
+    :root {
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 32px;
+      --topbar-height: 64px;
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root { --page-padding: 24px; }
+    }
+    @media (max-width: 767px) {
+      :root { --page-padding: 16px; --topbar-height: 56px; }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 9999px; }
+
+    .stats-header {
+      height: var(--topbar-height);
+      padding: 0 max(var(--page-padding), calc((100% - var(--content-max-width)) / 2 + var(--page-padding)));
+    }
+    .stats-body {
+      max-width: var(--content-max-width);
+      padding: var(--page-padding);
+    }
+    @media (min-width: 1024px) {
+      .stats-page { height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+      .stats-body { flex: 1; min-height: 0; }
+      .stats-body .provinces { min-height: 0; }
+    }
+    @media (max-width: 1023px) {
+      .stats-body .provinces { height: 80vh; height: 80dvh; }
+    }
+
+    /* sticky name column while the wide table scrolls sideways */
+    .data-table th:first-child, .data-table td:first-child { position: sticky; left: 0; border-right: 1px solid #f1f5f9; }
+    .data-table th:first-child { z-index: 2; }
+    .data-table td:first-child { z-index: 1; background: #fff; }
+    .data-table tbody tr:hover td { background: #f8fafc; }
+
+    .tone-all { --tone: #111827; --tone-soft: #f1f5f9; }
+    .tone-complete { --tone: #5bc26a; --tone-soft: #f0faf1; }
+    .tone-partial { --tone: #4b5563; --tone-soft: #f3f4f6; }
+    .tone-pending { --tone: #ee7d38; --tone-soft: #fff4ec; }
+    .filter-option:hover { background: var(--tone-soft); }
+    .filter-option.is-active { border-color: var(--tone); box-shadow: inset 0 0 0 1px var(--tone); background: var(--tone-soft); }
+    .filter-check { background: var(--tone); }
+    .tone-dot { background: var(--tone); }
+
+    .month-in-range { background: #e2e8f0 !important; color: #0f172a; }
+    .month-selected { background: #111827 !important; color: #fff !important; }
+    .month-has-data::after {
+      content: ""; position: absolute; bottom: 4px; left: 50%; width: 4px; height: 4px;
+      border-radius: 50%; background: #2563eb; transform: translateX(-50%);
+    }
+    .month-selected.month-has-data::after { background: #fff; }
+
+    @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } }
+    .toast { animation: toast-in 0.2s ease-out; }
+  </style>
+</head>
+<body>
+  <div class="stats-page">
+    <header class="stats-header sticky top-0 z-20 flex items-center gap-3 sm:gap-4 border-b border-slate-200 bg-white flex-shrink-0">
+      <a href="./index.html" onclick="return goBack()" class="flex items-center justify-center gap-1.5 h-9 w-9 md:w-auto md:px-3 border border-slate-200 rounded-[10px] bg-white text-slate-700 text-sm font-medium hover:bg-slate-100 flex-shrink-0" aria-label="กลับ">
+        <i data-lucide="arrow-left" class="w-[18px] h-[18px]"></i>
+        <span class="hidden md:inline">กลับ</span>
+      </a>
+      <h1 class="m-0 text-base md:text-lg font-semibold text-slate-900 truncate">สถิติกลุ่มหน่วยงาน</h1>
+      <span class="ml-auto hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200 whitespace-nowrap">
+        <i data-lucide="flask-conical" class="w-3 h-3"></i>
+        Mock v4 · ข้อมูลจริง snapshot <span id="snapshot-date"></span>
+      </span>
+    </header>
+
+    <main class="stats-body w-full mx-auto grid gap-4 grid-cols-1 lg:grid-cols-[minmax(300px,340px)_minmax(0,1fr)] lg:grid-rows-[auto_minmax(0,1fr)]">
+      <!-- ภาพรวมทั้งระบบ -->
+      <section class="lg:col-span-2 p-4 border border-slate-200 rounded-2xl bg-white">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 mb-3">
+          <h2 class="m-0 text-[15px] font-semibold text-slate-900">ภาพรวมทั้งระบบ</h2>
+          <span id="overall-updated" class="text-xs text-slate-400"></span>
+        </div>
+        <div id="overall-tiles" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+      </section>
+
+      <!-- สถิติรายเดือน -->
+      <section class="flex flex-col min-h-0 p-4 border border-slate-200 rounded-2xl bg-white">
+        <div class="flex items-center justify-between gap-3 mb-3">
+          <h2 class="m-0 text-[15px] font-semibold text-slate-900">สถิติรายเดือน</h2>
+          <div class="relative" id="month-picker">
+            <button type="button" id="month-trigger" onclick="toggleMonthPicker()" class="flex items-center gap-1.5 h-[34px] px-3 border border-slate-200 rounded-[10px] bg-white text-slate-700 text-sm font-medium whitespace-nowrap hover:bg-slate-50">
+              <i data-lucide="calendar-days" class="w-4 h-4"></i>
+              <span id="month-label"></span>
+            </button>
+            <div id="month-popover" class="hidden absolute top-[calc(100%+6px)] right-0 z-30 w-[248px] p-3 border border-slate-200 rounded-xl bg-white shadow-[0_10px_30px_rgba(15,23,42,0.12)]" role="dialog" aria-label="เลือกช่วงเดือน">
+              <div class="grid grid-cols-2 gap-1 p-1 mb-2.5 rounded-[10px] bg-slate-100" role="tablist" aria-label="รูปแบบการเลือก">
+                <button type="button" role="tab" id="mode-single" onclick="setPickerMode('single')" class="h-8 rounded-lg text-[13px] font-medium">เดือน</button>
+                <button type="button" role="tab" id="mode-range" onclick="setPickerMode('range')" class="h-8 rounded-lg text-[13px] font-medium">ช่วงเดือน</button>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <button type="button" id="year-prev" onclick="shiftViewYear(-1)" class="w-[30px] h-[30px] flex items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed" aria-label="ปีก่อนหน้า"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                <span id="view-year" class="text-[15px] font-semibold text-slate-900"></span>
+                <button type="button" id="year-next" onclick="shiftViewYear(1)" class="w-[30px] h-[30px] flex items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed" aria-label="ปีถัดไป"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+              </div>
+              <div id="month-grid" class="grid grid-cols-3 gap-1.5" onclick="handleMonthGridClick(event)" onmouseleave="setHoveredMonth(null)"></div>
+              <p id="month-hint" class="mt-2.5 mb-0 text-xs text-slate-500 text-center"></p>
+            </div>
+          </div>
+        </div>
+        <p id="monthly-coverage" class="hidden mt-0 mb-2 text-xs text-amber-700"></p>
+        <div id="monthly-tiles" class="flex-1 min-h-0 overflow-y-auto grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] lg:flex lg:flex-col gap-2"></div>
+      </section>
+
+      <!-- สุขภาพรายจังหวัด -->
+      <section class="provinces flex flex-col p-4 border border-slate-200 rounded-2xl bg-white">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+          <h2 class="m-0 text-[15px] font-semibold text-slate-900">สุขภาพรายจังหวัด</h2>
+          <span id="provinces-updated" class="text-xs text-slate-400"></span>
+        </div>
+        <div class="flex flex-wrap items-end justify-between gap-3 my-3">
+          <div id="usage-filter" class="flex flex-wrap gap-2 w-full md:w-auto" role="radiogroup" aria-label="กรองตามสถานะการใช้งาน"></div>
+          <label class="flex items-center gap-1.5 w-full md:w-[220px] h-9 px-2.5 border border-slate-200 rounded-[10px] text-slate-400 focus-within:border-slate-400">
+            <i data-lucide="search" class="w-4 h-4"></i>
+            <input id="province-search" type="search" placeholder="ค้นหาจังหวัด" oninput="renderProvinceTable()" class="w-full border-0 outline-none bg-transparent text-slate-900 text-sm">
+          </label>
+        </div>
+        <div class="flex-1 min-h-0 overflow-auto border border-slate-100 rounded-xl">
+          <table class="data-table w-full min-w-[900px] border-separate border-spacing-0 text-sm">
+            <thead id="province-head"></thead>
+            <tbody id="province-body"></tbody>
+          </table>
+          <p id="province-empty" class="hidden m-0 p-6 text-sm text-slate-500 text-center">ไม่พบจังหวัดที่ค้นหา</p>
+        </div>
+        <p class="mt-2 mb-0 text-xs text-slate-400">
+          <i data-lucide="info" class="inline w-3.5 h-3.5 -mt-0.5"></i>
+          Mock นี้กดดูรายละเอียดได้ 3 จังหวัด: <span id="mock-provinces"></span>
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-root"></div>
+
+  <script>
+    const DATA = {"overall":{"updated_at":"2026-10-12T10:12:20.933826Z","stats_data":[{"alltime_created":79543,"alltime_post_finish":2251256,"alltime_used":5139}]},"monthly":{"updated_at":"2026-10-12T10:21:57.413964Z","stats_data":[{"created":298,"date":"2026-01","members":1813,"post_finish":36245,"post_new":43292,"used":8},{"created":228,"date":"2026-02","members":1421,"post_finish":33980,"post_new":42436,"used":3},{"created":968,"date":"2026-03","members":3112,"post_finish":40167,"post_new":49586,"used":10},{"created":214,"date":"2026-04","members":1157,"post_finish":34545,"post_new":49075,"used":6},{"created":2181,"date":"2026-05","members":3258,"post_finish":35488,"post_new":51393,"used":10},{"created":1075,"date":"2026-06","members":2004,"post_finish":35772,"post_new":51973,"used":36},{"created":207,"date":"2026-07","members":785,"post_finish":36828,"post_new":66680,"used":71},{"created":36559,"date":"2026-08","members":3420,"post_finish":37288,"post_new":50939,"used":36},{"created":443,"date":"2026-09","members":3139,"post_finish":44689,"post_new":67719,"used":6},{"created":105,"date":"2026-10","members":658,"post_finish":20369,"post_new":28929,"used":8}]},"provinces":{"updated_at":"2026-10-25T20:01:28.041837Z","stats_data":[{"finish_percentage":87.08,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":60759,"median_finish_time_sec":2959226,"province_name":"นครราชสีมา","total_agencies":420,"total_messages":19522,"usage_status":"complete"},{"finish_percentage":80.93,"last_activity":"2026-10-26T02:58:23.740996","median_accept_time_sec":37350,"median_finish_time_sec":611894,"province_name":"กรุงเทพมหานคร","total_agencies":626,"total_messages":1528576,"usage_status":"complete"},{"finish_percentage":77.21,"last_activity":"2026-10-26T00:45:18.206049","median_accept_time_sec":29078,"median_finish_time_sec":356652,"province_name":"สระบุรี","total_agencies":171,"total_messages":14558,"usage_status":"complete"},{"finish_percentage":75.68,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":180605,"median_finish_time_sec":269816,"province_name":"สงขลา","total_agencies":163,"total_messages":12345,"usage_status":"partial"},{"finish_percentage":74.88,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":10418,"median_finish_time_sec":240464,"province_name":"เพชรบูรณ์","total_agencies":233,"total_messages":9057,"usage_status":"complete"},{"finish_percentage":73.67,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":25882,"median_finish_time_sec":497992,"province_name":"สิงห์บุรี","total_agencies":123,"total_messages":6567,"usage_status":"complete"},{"finish_percentage":72,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":12702,"median_finish_time_sec":328343,"province_name":"ยโสธร","total_agencies":200,"total_messages":6650,"usage_status":"complete"},{"finish_percentage":70.87,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":13690,"median_finish_time_sec":285334,"province_name":"ลำพูน","total_agencies":106,"total_messages":9700,"usage_status":"complete"},{"finish_percentage":69.76,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":13110,"median_finish_time_sec":194813,"province_name":"แพร่","total_agencies":94,"total_messages":6022,"usage_status":"partial"},{"finish_percentage":69.23,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":17670,"median_finish_time_sec":365629,"province_name":"ตาก","total_agencies":126,"total_messages":5505,"usage_status":"complete"},{"finish_percentage":68.32,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":48859,"median_finish_time_sec":345167,"province_name":"ลำปาง","total_agencies":241,"total_messages":11197,"usage_status":"complete"},{"finish_percentage":68.08,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":19445,"median_finish_time_sec":245080,"province_name":"น่าน","total_agencies":224,"total_messages":7065,"usage_status":"complete"},{"finish_percentage":68.07,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":40645,"median_finish_time_sec":597258,"province_name":"พิษณุโลก","total_agencies":113,"total_messages":9351,"usage_status":"partial"},{"finish_percentage":67.16,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":48312,"median_finish_time_sec":416890,"province_name":"พะเยา","total_agencies":166,"total_messages":8906,"usage_status":"complete"},{"finish_percentage":65.32,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":6704,"median_finish_time_sec":310869,"province_name":"หนองคาย","total_agencies":184,"total_messages":4654,"usage_status":"complete"},{"finish_percentage":64.55,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":32541,"median_finish_time_sec":225217,"province_name":"อุดรธานี","total_agencies":251,"total_messages":8463,"usage_status":"complete"},{"finish_percentage":63.17,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":11965,"median_finish_time_sec":317038,"province_name":"เชียงราย","total_agencies":293,"total_messages":10122,"usage_status":"complete"},{"finish_percentage":63.12,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":6418,"median_finish_time_sec":70271,"province_name":"ราชบุรี","total_agencies":123,"total_messages":6298,"usage_status":"partial"},{"finish_percentage":63.05,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":2896,"median_finish_time_sec":53693,"province_name":"อุทัยธานี","total_agencies":73,"total_messages":4341,"usage_status":"pending_training"},{"finish_percentage":62.36,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":45961,"median_finish_time_sec":606531,"province_name":"เชียงใหม่","total_agencies":275,"total_messages":25654,"usage_status":"complete"},{"finish_percentage":61.57,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":23051,"median_finish_time_sec":270255,"province_name":"ตราด","total_agencies":133,"total_messages":5129,"usage_status":"complete"},{"finish_percentage":61.17,"last_activity":"2026-10-26T01:48:18.135375","median_accept_time_sec":68911,"median_finish_time_sec":1149237,"province_name":"ภูเก็ต","total_agencies":125,"total_messages":26059,"usage_status":"complete"},{"finish_percentage":61.12,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":13268,"median_finish_time_sec":251801,"province_name":"หนองบัวลำภู","total_agencies":149,"total_messages":4470,"usage_status":"complete"},{"finish_percentage":59.29,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":44860,"median_finish_time_sec":424391,"province_name":"พระนครศรีอยุธยา","total_agencies":250,"total_messages":6792,"usage_status":"complete"},{"finish_percentage":57.49,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":4785,"median_finish_time_sec":284117,"province_name":"พิจิตร","total_agencies":115,"total_messages":4079,"usage_status":"partial"},{"finish_percentage":57.45,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":74405,"median_finish_time_sec":1125746,"province_name":"นครปฐม","total_agencies":217,"total_messages":7335,"usage_status":"complete"},{"finish_percentage":57.2,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":43348,"median_finish_time_sec":488428,"province_name":"กาฬสินธุ์","total_agencies":222,"total_messages":4734,"usage_status":"complete"},{"finish_percentage":57.1,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":76384,"median_finish_time_sec":1389128,"province_name":"สุราษฎร์ธานี","total_agencies":158,"total_messages":5907,"usage_status":"partial"},{"finish_percentage":56.77,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":39150,"median_finish_time_sec":451345,"province_name":"ตรัง","total_agencies":153,"total_messages":6289,"usage_status":"complete"},{"finish_percentage":56.47,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":24112,"median_finish_time_sec":338053,"province_name":"สุพรรณบุรี","total_agencies":210,"total_messages":4335,"usage_status":"complete"},{"finish_percentage":56.34,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":57328,"median_finish_time_sec":484782,"province_name":"ปราจีนบุรี","total_agencies":78,"total_messages":4892,"usage_status":"complete"},{"finish_percentage":55.84,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":13433,"median_finish_time_sec":180236,"province_name":"นครสวรรค์","total_agencies":226,"total_messages":9303,"usage_status":"complete"},{"finish_percentage":55.81,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":56094,"median_finish_time_sec":478429,"province_name":"สมุทรสาคร","total_agencies":119,"total_messages":7691,"usage_status":"complete"},{"finish_percentage":55.22,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":6852,"median_finish_time_sec":425613,"province_name":"บุรีรัมย์","total_agencies":233,"total_messages":3919,"usage_status":"partial"},{"finish_percentage":54.78,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":26954,"median_finish_time_sec":322677,"province_name":"ร้อยเอ็ด","total_agencies":224,"total_messages":3806,"usage_status":"partial"},{"finish_percentage":54.55,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":15189,"median_finish_time_sec":240348,"province_name":"นครพนม","total_agencies":192,"total_messages":5366,"usage_status":"complete"},{"finish_percentage":53.7,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":21718,"median_finish_time_sec":461552,"province_name":"แม่ฮ่องสอน","total_agencies":58,"total_messages":3300,"usage_status":"partial"},{"finish_percentage":52.92,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":21369,"median_finish_time_sec":226670,"province_name":"สุโขทัย","total_agencies":101,"total_messages":3326,"usage_status":"partial"},{"finish_percentage":52.75,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":7572,"median_finish_time_sec":337555,"province_name":"กำแพงเพชร","total_agencies":103,"total_messages":4656,"usage_status":"partial"},{"finish_percentage":52.74,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":8464,"median_finish_time_sec":386200,"province_name":"เลย","total_agencies":118,"total_messages":3847,"usage_status":"partial"},{"finish_percentage":52.71,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":10581,"median_finish_time_sec":252405,"province_name":"กาญจนบุรี","total_agencies":136,"total_messages":3493,"usage_status":"partial"},{"finish_percentage":52.18,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":103226,"median_finish_time_sec":1637550,"province_name":"นนทบุรี","total_agencies":121,"total_messages":29275,"usage_status":"complete"},{"finish_percentage":52.16,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":43798,"median_finish_time_sec":484134,"province_name":"บึงกาฬ","total_agencies":68,"total_messages":3035,"usage_status":"partial"},{"finish_percentage":51.67,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":14502,"median_finish_time_sec":352432,"province_name":"มหาสารคาม","total_agencies":218,"total_messages":3764,"usage_status":"complete"},{"finish_percentage":51.67,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":37552,"median_finish_time_sec":606374,"province_name":"ขอนแก่น","total_agencies":319,"total_messages":7950,"usage_status":"complete"},{"finish_percentage":51.43,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":10723,"median_finish_time_sec":252876,"province_name":"ลพบุรี","total_agencies":138,"total_messages":4367,"usage_status":"partial"},{"finish_percentage":50.95,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":56373,"median_finish_time_sec":679444,"province_name":"สมุทรปราการ","total_agencies":121,"total_messages":34536,"usage_status":"complete"},{"finish_percentage":50.26,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":29128,"median_finish_time_sec":509889,"province_name":"จันทบุรี","total_agencies":93,"total_messages":3432,"usage_status":"partial"},{"finish_percentage":50.26,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":46295,"median_finish_time_sec":598838,"province_name":"สระแก้ว","total_agencies":76,"total_messages":3114,"usage_status":"partial"},{"finish_percentage":49.49,"last_activity":"2026-10-26T01:14:28.244036","median_accept_time_sec":41006,"median_finish_time_sec":552194,"province_name":"ระยอง","total_agencies":134,"total_messages":12343,"usage_status":"complete"},{"finish_percentage":49.48,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":29683,"median_finish_time_sec":385159,"province_name":"ระนอง","total_agencies":136,"total_messages":3248,"usage_status":"complete"},{"finish_percentage":49.47,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":16069,"median_finish_time_sec":342470,"province_name":"อุตรดิตถ์","total_agencies":135,"total_messages":3697,"usage_status":"complete"},{"finish_percentage":48.18,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":40711,"median_finish_time_sec":590172,"province_name":"สมุทรสงคราม","total_agencies":91,"total_messages":2972,"usage_status":"complete"},{"finish_percentage":46.98,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":27024,"median_finish_time_sec":447151,"province_name":"ชัยภูมิ","total_agencies":165,"total_messages":3216,"usage_status":"pending_training"},{"finish_percentage":46.65,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":34418,"median_finish_time_sec":461407,"province_name":"ศรีสะเกษ","total_agencies":240,"total_messages":3115,"usage_status":"partial"},{"finish_percentage":46.47,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":37483,"median_finish_time_sec":426757,"province_name":"สกลนคร","total_agencies":160,"total_messages":3090,"usage_status":"pending_training"},{"finish_percentage":46.22,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":44316,"median_finish_time_sec":655068,"province_name":"สุรินทร์","total_agencies":191,"total_messages":3801,"usage_status":"partial"},{"finish_percentage":45.99,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":27693,"median_finish_time_sec":418523,"province_name":"นราธิวาส","total_agencies":192,"total_messages":3040,"usage_status":"complete"},{"finish_percentage":45.19,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":32411,"median_finish_time_sec":484345,"province_name":"นครนายก","total_agencies":130,"total_messages":2795,"usage_status":"partial"},{"finish_percentage":44.59,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":32365,"median_finish_time_sec":504801,"province_name":"ชัยนาท","total_agencies":70,"total_messages":2615,"usage_status":"partial"},{"finish_percentage":44.58,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":52787,"median_finish_time_sec":520355,"province_name":"อุบลราชธานี","total_agencies":265,"total_messages":7475,"usage_status":"complete"},{"finish_percentage":44.42,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":36296,"median_finish_time_sec":543151,"province_name":"ปัตตานี","total_agencies":127,"total_messages":2571,"usage_status":"partial"},{"finish_percentage":44.28,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":25894,"median_finish_time_sec":407112,"province_name":"ฉะเชิงเทรา","total_agencies":214,"total_messages":3744,"usage_status":"partial"},{"finish_percentage":44.09,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":33157,"median_finish_time_sec":551650,"province_name":"อ่างทอง","total_agencies":73,"total_messages":2529,"usage_status":"partial"},{"finish_percentage":44.05,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":37534,"median_finish_time_sec":591923,"province_name":"สตูล","total_agencies":50,"total_messages":2506,"usage_status":"partial"},{"finish_percentage":44.04,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":39245,"median_finish_time_sec":586686,"province_name":"กระบี่","total_agencies":72,"total_messages":2727,"usage_status":"partial"},{"finish_percentage":43.66,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":34366,"median_finish_time_sec":583881,"province_name":"มุกดาหาร","total_agencies":63,"total_messages":2538,"usage_status":"partial"},{"finish_percentage":43.55,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":33567,"median_finish_time_sec":540097,"province_name":"ยะลา","total_agencies":73,"total_messages":2542,"usage_status":"partial"},{"finish_percentage":43.54,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":34856,"median_finish_time_sec":548284,"province_name":"อำนาจเจริญ","total_agencies":72,"total_messages":2540,"usage_status":"partial"},{"finish_percentage":43.42,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":37173,"median_finish_time_sec":570728,"province_name":"พัทลุง","total_agencies":86,"total_messages":2605,"usage_status":"partial"},{"finish_percentage":43.35,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":40719,"median_finish_time_sec":504801,"province_name":"ชุมพร","total_agencies":88,"total_messages":2844,"usage_status":"partial"},{"finish_percentage":42.47,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":24097,"median_finish_time_sec":373892,"province_name":"เพชรบุรี","total_agencies":94,"total_messages":3930,"usage_status":"partial"},{"finish_percentage":40.97,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":37534,"median_finish_time_sec":575958,"province_name":"ประจวบคีรีขันธ์","total_agencies":70,"total_messages":2729,"usage_status":"partial"},{"finish_percentage":40.47,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":35313,"median_finish_time_sec":537978,"province_name":"นครศรีธรรมราช","total_agencies":209,"total_messages":2879,"usage_status":"partial"},{"finish_percentage":40.05,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":38568,"median_finish_time_sec":590172,"province_name":"พังงา","total_agencies":61,"total_messages":2639,"usage_status":"partial"},{"finish_percentage":26.01,"last_activity":"2026-10-26T00:31:27.98273","median_accept_time_sec":40396,"median_finish_time_sec":667311,"province_name":"ชลบุรี","total_agencies":110,"total_messages":7613,"usage_status":"partial"},{"finish_percentage":23.75,"last_activity":"2026-10-26T02:49:28.912642","median_accept_time_sec":36601,"median_finish_time_sec":600554,"province_name":"ปทุมธานี","total_agencies":73,"total_messages":7241,"usage_status":"partial"}]}};
+    const DETAIL_PROVINCES = ["กรุงเทพมหานคร","สระบุรี","นครราชสีมา"];
+
+    const USAGE_STATUS = {
+      complete: { label: "ครบทุกหน่วยราชการ", tone: "complete" },
+      partial: { label: "ใช้งานบางพื้นที่", tone: "partial" },
+      pending_training: { label: "รอการอบรม", tone: "pending" },
+    };
+    const THAI_MONTHS_SHORT = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+    const MIN_YEAR = 2017;
+
+    const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const formatNumber = (value) => (value == null ? "—" : value.toLocaleString("en-US"));
+    const formatThaiDateTime = (iso) => (iso ? new Date(iso).toLocaleString("th-TH", { dateStyle: "medium", timeStyle: "short" }) : "—");
+    const toYearMonth = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    function formatDuration(seconds) {
+      if (seconds == null) return "—";
+      const minutes = seconds / 60;
+      if (minutes < 60) return `${minutes.toFixed(2)} นาที`;
+      const hours = minutes / 60;
+      if (hours < 48) return `${hours.toFixed(2)} ชม.`;
+      return `${(hours / 24).toFixed(2)} วัน`;
+    }
+    function formatThaiMonth(yearMonth) {
+      const [year, month] = yearMonth.split("-").map(Number);
+      return `${THAI_MONTHS_SHORT[month - 1]} ${year + 543}`;
+    }
+    function formatThaiMonthRange(from, to) {
+      if (from === to) return formatThaiMonth(from);
+      const [fromYear, fromMonth] = from.split("-").map(Number);
+      if (fromYear === Number(to.slice(0, 4))) return `${THAI_MONTHS_SHORT[fromMonth - 1]} – ${formatThaiMonth(to)}`;
+      return `${formatThaiMonth(from)} – ${formatThaiMonth(to)}`;
+    }
+    function shiftMonth(yearMonth, delta) {
+      const [year, month] = yearMonth.split("-").map(Number);
+      return toYearMonth(new Date(year, month - 1 + delta, 1));
+    }
+    function countMonths(from, to) {
+      const [fy, fm] = from.split("-").map(Number);
+      const [ty, tm] = to.split("-").map(Number);
+      return (ty - fy) * 12 + tm - fm + 1;
+    }
+    const provinceUrl = (name) => `./org-group-stats-province.html?province=${encodeURIComponent(name)}`;
+
+    function showToast(message) {
+      const root = document.getElementById("toast-root");
+      root.innerHTML = `<div class="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl bg-slate-900 text-white text-sm shadow-lg max-w-[90vw]">${escapeHtml(message)}</div>`;
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => (root.innerHTML = ""), 2600);
+    }
+
+    function goBack() {
+      if (history.length > 1 && document.referrer) {
+        history.back();
+        return false;
+      }
+      return true;
+    }
+
+    function statTile({ label, value, previous, upIsGood, compact, deltaLabel = "จากเดือนก่อน" }) {
+      const change = value != null && previous ? ((value - previous) / previous) * 100 : null;
+      let delta = "";
+      if (change != null) {
+        const tone = upIsGood == null || change === 0 ? "text-slate-500" : (change > 0) === upIsGood ? "text-[#0a7a0a]" : "text-[#b42318]";
+        const icon = change >= 0 ? "arrow-up-right" : "arrow-down-right";
+        delta = `<p class="flex items-center justify-end gap-0.5 mt-0.5 mb-0 text-xs ${tone}"><i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${Math.abs(change).toFixed(1)}% ${escapeHtml(deltaLabel)}</p>`;
+      }
+      return `
+        <div class="${compact ? "px-3.5 py-2.5" : "px-4 py-3.5"} border border-slate-100 rounded-xl bg-slate-50">
+          <p class="m-0 text-[13px] text-slate-500">${escapeHtml(label)}</p>
+          <p class="m-0 ${compact ? "text-[22px]" : "text-[28px]"} font-semibold leading-tight text-slate-900 text-right tabular-nums">${formatNumber(value)}</p>
+          ${delta}
+        </div>`;
+    }
+
+    /* ---------- ภาพรวม ---------- */
+    function renderOverall() {
+      const summary = DATA.overall.stats_data[0];
+      document.getElementById("overall-updated").textContent = `อัปเดต ${formatThaiDateTime(DATA.overall.updated_at)}`;
+      document.getElementById("overall-tiles").innerHTML = [
+        { key: "alltime_created", label: "หน่วยงานในระบบ" },
+        { key: "alltime_used", label: "หน่วยงานที่มีการใช้งาน" },
+        { key: "alltime_post_finish", label: "เรื่องที่แก้ไขเสร็จสิ้น" },
+      ].map(({ key, label }) => statTile({ label, value: summary[key] })).join("");
+    }
+
+    /* ---------- สถิติรายเดือน (เลือกช่วงเดือนได้) ---------- */
+    const MONTHLY_FIELDS = [
+      { key: "created", label: "หน่วยงานสร้างใหม่", upIsGood: true },
+      { key: "used", label: "หน่วยงานเริ่มใช้งาน", upIsGood: true },
+      { key: "members", label: "เจ้าหน้าที่เพิ่มใหม่", upIsGood: true },
+      { key: "post_new", label: "เรื่องแจ้งใหม่", upIsGood: null },
+      { key: "post_finish", label: "เรื่องที่แก้ไขเสร็จสิ้น", upIsGood: true },
+    ];
+    const monthlyRows = DATA.monthly.stats_data;
+    const latestMonth = monthlyRows.at(-1)?.date ?? toYearMonth(new Date());
+    const maxMonth = toYearMonth(new Date());
+    const pickerState = { from: latestMonth, to: latestMonth, open: false, mode: "single", viewYear: Number(latestMonth.slice(0, 4)), anchor: null, hovered: null };
+
+    // the API only has per-month rows, so a range is the sum of the months inside it
+    function sumRange(from, to) {
+      const inRange = monthlyRows.filter((row) => row.date >= from && row.date <= to);
+      const totals = Object.fromEntries(MONTHLY_FIELDS.map(({ key }) => [key, inRange.reduce((sum, row) => sum + (row[key] ?? 0), 0)]));
+      return { months: inRange.length, totals };
+    }
+
+    function renderMonthly() {
+      const { from, to } = pickerState;
+      document.getElementById("month-label").textContent = formatThaiMonthRange(from, to);
+      const span = countMonths(from, to);
+      const previousFrom = shiftMonth(from, -span);
+      const previousTo = shiftMonth(from, -1);
+      const current = sumRange(from, to);
+      const previous = sumRange(previousFrom, previousTo);
+      const comparable = previous.months === span;
+      const deltaLabel = span === 1 ? "จากเดือนก่อน" : `จาก ${formatThaiMonthRange(previousFrom, previousTo)}`;
+
+      const coverage = document.getElementById("monthly-coverage");
+      coverage.classList.toggle("hidden", !(current.months && current.months < span));
+      coverage.textContent = `มีข้อมูล ${current.months} จาก ${span} เดือน`;
+
+      const tiles = document.getElementById("monthly-tiles");
+      if (!current.months) {
+        tiles.innerHTML = `<p class="m-0 px-2 py-6 text-sm text-slate-500 text-center col-span-full">ยังไม่มีข้อมูลของ ${formatThaiMonthRange(from, to)} (มีข้อมูลตั้งแต่ ${formatThaiMonth(monthlyRows[0].date)})</p>`;
+      } else {
+        tiles.innerHTML = MONTHLY_FIELDS.map(({ key, label, upIsGood }) =>
+          statTile({ label, value: current.totals[key], previous: comparable ? previous.totals[key] : null, upIsGood, compact: true, deltaLabel }),
+        ).join("");
+      }
+      lucide.createIcons();
+    }
+
+    // builds the buttons once per open/year change; hovering only repaints classes so the button under the cursor is never replaced mid-click
+    function renderMonthGrid() {
+      const { viewYear } = pickerState;
+      const available = new Set(monthlyRows.map((row) => row.date));
+      document.getElementById("view-year").textContent = viewYear + 543;
+      document.getElementById("year-prev").disabled = viewYear <= MIN_YEAR;
+      document.getElementById("year-next").disabled = viewYear >= Number(maxMonth.slice(0, 4));
+      document.getElementById("month-grid").innerHTML = THAI_MONTHS_SHORT.map((label, index) => {
+        const ym = `${viewYear}-${String(index + 1).padStart(2, "0")}`;
+        return `<button type="button" data-ym="${ym}" class="relative h-9 rounded-lg bg-slate-50 text-slate-700 text-[13px] hover:bg-slate-200 disabled:bg-transparent disabled:text-slate-300 disabled:cursor-not-allowed ${available.has(ym) ? "month-has-data" : ""}" onmouseenter="setHoveredMonth('${ym}')" ${ym > maxMonth ? "disabled" : ""}>${label}</button>`;
+      }).join("");
+      paintMonthGrid();
+    }
+
+    function paintMonthGrid() {
+      const { anchor, hovered, mode } = pickerState;
+      const [rangeFrom, rangeTo] = anchor ? [anchor, hovered ?? anchor].sort() : [pickerState.from, pickerState.to];
+      document.getElementById("month-hint").textContent =
+        mode === "single" ? "เลือกเดือนที่ต้องการ" : anchor ? "เลือกเดือนสิ้นสุด" : "เลือกเดือนเริ่มต้น";
+      ["single", "range"].forEach((key) => {
+        const tab = document.getElementById(`mode-${key}`);
+        const active = key === mode;
+        tab.setAttribute("aria-selected", String(active));
+        tab.className = `h-8 rounded-lg text-[13px] font-medium ${active ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"}`;
+      });
+      document.querySelectorAll("#month-grid [data-ym]").forEach((button) => {
+        const ym = button.dataset.ym;
+        const isEdge = ym === rangeFrom || ym === rangeTo;
+        button.classList.toggle("month-selected", isEdge);
+        button.classList.toggle("month-in-range", !isEdge && ym > rangeFrom && ym < rangeTo);
+        button.setAttribute("aria-pressed", String(ym >= rangeFrom && ym <= rangeTo));
+      });
+    }
+
+    function toggleMonthPicker() {
+      pickerState.open = !pickerState.open;
+      pickerState.anchor = null;
+      pickerState.hovered = null;
+      pickerState.mode = pickerState.from === pickerState.to ? "single" : "range";
+      pickerState.viewYear = Number(pickerState.to.slice(0, 4));
+      document.getElementById("month-popover").classList.toggle("hidden", !pickerState.open);
+      if (pickerState.open) renderMonthGrid();
+    }
+    function closeMonthPicker() {
+      pickerState.open = false;
+      document.getElementById("month-popover").classList.add("hidden");
+    }
+    function shiftViewYear(delta) {
+      pickerState.viewYear += delta;
+      renderMonthGrid();
+    }
+    function setHoveredMonth(ym) {
+      if (pickerState.mode !== "range" || !pickerState.anchor) return;
+      pickerState.hovered = ym;
+      paintMonthGrid();
+    }
+    function setPickerMode(mode) {
+      pickerState.mode = mode;
+      pickerState.anchor = null;
+      pickerState.hovered = null;
+      paintMonthGrid();
+    }
+    // "เดือน" applies one click and closes; "ช่วงเดือน" takes a start click then an end click
+    function selectMonth(ym) {
+      if (pickerState.mode === "single" || pickerState.anchor) {
+        [pickerState.from, pickerState.to] = [pickerState.anchor ?? ym, ym].sort();
+        pickerState.anchor = null;
+        pickerState.hovered = null;
+        closeMonthPicker();
+        renderMonthly();
+        return;
+      }
+      pickerState.anchor = ym;
+      paintMonthGrid();
+    }
+    function handleMonthGridClick(event) {
+      const button = event.target.closest("[data-ym]");
+      if (button && !button.disabled) selectMonth(button.dataset.ym);
+    }
+    document.addEventListener("pointerdown", (event) => {
+      if (pickerState.open && !document.getElementById("month-picker").contains(event.target)) closeMonthPicker();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMonthPicker();
+    });
+
+    /* ---------- สุขภาพรายจังหวัด ---------- */
+    const provinceRows = DATA.provinces.stats_data;
+    const tableState = { status: "all", sort: { key: "finish_percentage", desc: true } };
+    const PROVINCE_COLUMNS = [
+      { key: "province_name", label: "จังหวัด" },
+      { key: "usage_status", label: "สถานะการใช้งาน" },
+      { key: "total_agencies", label: "หน่วยงาน", numeric: true },
+      { key: "total_messages", label: "เรื่องแจ้ง", numeric: true },
+      { key: "finish_percentage", label: "ดำเนินการเสร็จ" },
+      { key: "median_accept_time_sec", label: "รับเรื่อง (Median)", numeric: true },
+      { key: "median_finish_time_sec", label: "แก้เสร็จ (Median)", numeric: true },
+    ];
+
+    function usageBadge(status) {
+      const { label, tone } = USAGE_STATUS[status] ?? { label: status, tone: "all" };
+      return `<span class="tone-${tone} inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-medium whitespace-nowrap"><span class="tone-dot w-1.5 h-1.5 rounded-full"></span>${escapeHtml(label)}</span>`;
+    }
+
+    function finishMeter(percent) {
+      if (percent == null) return `<span class="text-slate-400">—</span>`;
+      const health = percent >= 75
+        ? { fill: "#0ca30c", track: "#dcf5dc", label: "ดี", icon: "circle-check" }
+        : percent >= 50
+          ? { fill: "#fab219", track: "#fef1d2", label: "พอใช้", icon: "triangle-alert" }
+          : { fill: "#d03b3b", track: "#f8dddd", label: "ต้องติดตาม", icon: "circle-alert" };
+      return `
+        <div class="grid grid-cols-[56px_minmax(64px,1fr)_84px] items-center gap-2" title="ดำเนินการเสร็จ ${percent}% (${health.label})">
+          <span class="text-[13px] font-semibold text-slate-900 text-right tabular-nums">${percent.toFixed(2)}%</span>
+          <span class="h-1.5 rounded-full overflow-hidden" style="background:${health.track}"><span class="block h-full rounded-full" style="width:${Math.min(percent, 100)}%;background:${health.fill}"></span></span>
+          <span class="flex items-center gap-1 text-xs text-slate-700 whitespace-nowrap"><i data-lucide="${health.icon}" class="w-3.5 h-3.5" style="color:${health.fill}"></i>${health.label}</span>
+        </div>`;
+    }
+
+    function renderUsageFilter() {
+      const summarize = (rows) => ({ provinces: rows.length, agencies: rows.reduce((sum, row) => sum + (row.total_agencies ?? 0), 0) });
+      const options = [
+        { key: "all", label: "ทุกจังหวัด", tone: "all", ...summarize(provinceRows) },
+        ...Object.entries(USAGE_STATUS).map(([key, { label, tone }]) => ({ key, label, tone, ...summarize(provinceRows.filter((row) => row.usage_status === key)) })),
+      ];
+      document.getElementById("usage-filter").innerHTML = options.map(({ key, label, tone, provinces, agencies }) => {
+        const active = tableState.status === key;
+        return `
+          <button type="button" role="radio" aria-checked="${active}" onclick="setUsageFilter('${key}')"
+            class="filter-option tone-${tone} ${active ? "is-active" : ""} relative grid flex-[1_1_calc(50%-4px)] md:flex-none md:min-w-[128px] px-3 py-2 border border-slate-200 rounded-[10px] bg-white text-left transition-colors">
+            <span class="flex items-center gap-1.5 text-xs ${active ? "text-slate-700 pr-5" : "text-slate-500"}">
+              ${key !== "all" ? `<span class="tone-dot w-2 h-2 rounded-full"></span>` : ""}${escapeHtml(label)}
+            </span>
+            <span class="text-base font-semibold text-slate-900">${provinces} จังหวัด</span>
+            <span class="text-[11px] text-slate-400">${formatNumber(agencies)} หน่วยงาน</span>
+            ${active ? `<span class="filter-check absolute top-2 right-2 w-4 h-4 grid place-items-center rounded-full text-white text-[10px] font-bold leading-none">✓</span>` : ""}
+          </button>`;
+      }).join("");
+    }
+
+    function setUsageFilter(key) {
+      tableState.status = key;
+      renderUsageFilter();
+      renderProvinceTable();
+    }
+
+    function sortProvinces(key) {
+      const prev = tableState.sort;
+      tableState.sort = { key, desc: prev.key === key ? !prev.desc : key !== "province_name" };
+      renderProvinceTable();
+    }
+
+    function compareRows(a, b, { key, desc }) {
+      if (a[key] == null) return 1;
+      if (b[key] == null) return -1;
+      const result = typeof a[key] === "string" ? a[key].localeCompare(b[key], "th") : a[key] - b[key];
+      return desc ? -result : result;
+    }
+
+    function openProvince(name) {
+      if (DETAIL_PROVINCES.includes(name)) window.location.href = provinceUrl(name);
+      else showToast(`Mock นี้มีรายละเอียดเฉพาะ ${DETAIL_PROVINCES.join(", ")}`);
+    }
+
+    function renderProvinceTable() {
+      const { sort, status } = tableState;
+      const keyword = document.getElementById("province-search").value.trim();
+      const rows = provinceRows
+        .filter((row) => (status === "all" || row.usage_status === status) && row.province_name.includes(keyword))
+        .sort((a, b) => compareRows(a, b, sort));
+
+      document.getElementById("province-head").innerHTML = `<tr>${PROVINCE_COLUMNS.map(({ key, label, numeric }) => `
+        <th class="sticky top-0 z-[1] p-0 border-b border-slate-200 bg-slate-50 text-slate-500 text-xs font-semibold whitespace-nowrap ${numeric ? "text-right" : "text-left"}">
+          <button type="button" onclick="sortProvinces('${key}')" class="w-full flex items-center gap-1 px-3 py-2.5 hover:text-slate-900 ${numeric ? "justify-end" : ""}">
+            ${label}${sort.key === key ? `<i data-lucide="${sort.desc ? "arrow-down" : "arrow-up"}" class="w-3 h-3"></i>` : ""}
+          </button>
+        </th>`).join("")}<th class="sticky top-0 border-b border-slate-200 bg-slate-50"></th></tr>`;
+
+      document.getElementById("province-body").innerHTML = rows.map((row) => {
+        const hasDetail = DETAIL_PROVINCES.includes(row.province_name);
+        const td = "px-3 py-2 border-b border-slate-100 text-slate-700 whitespace-nowrap";
+        return `
+          <tr class="cursor-pointer group" onclick="openProvince('${escapeHtml(row.province_name)}')">
+            <td class="${td} font-semibold"><span class="text-slate-900 ${hasDetail ? "group-hover:text-blue-600 group-hover:underline" : ""}">${escapeHtml(row.province_name)}</span></td>
+            <td class="${td}">${usageBadge(row.usage_status)}</td>
+            <td class="${td} text-right tabular-nums">${formatNumber(row.total_agencies)}</td>
+            <td class="${td} text-right tabular-nums">${formatNumber(row.total_messages)}</td>
+            <td class="${td}">${finishMeter(row.finish_percentage)}</td>
+            <td class="${td} text-right tabular-nums">${formatDuration(row.median_accept_time_sec)}</td>
+            <td class="${td} text-right tabular-nums">${formatDuration(row.median_finish_time_sec)}</td>
+            <td class="${td} w-px pl-0 ${hasDetail ? "text-slate-400 group-hover:text-slate-600" : "text-slate-200"}"><i data-lucide="chevron-right" class="w-4 h-4"></i></td>
+          </tr>`;
+      }).join("");
+      document.getElementById("province-empty").classList.toggle("hidden", rows.length > 0);
+      lucide.createIcons();
+    }
+
+    document.getElementById("snapshot-date").textContent = formatThaiDateTime(DATA.provinces.updated_at);
+    document.getElementById("provinces-updated").textContent = `อัปเดต ${formatThaiDateTime(DATA.provinces.updated_at)}`;
+    document.getElementById("mock-provinces").innerHTML = DETAIL_PROVINCES.map((name) => `<a class="text-blue-600 hover:underline" href="${provinceUrl(name)}">${escapeHtml(name)}</a>`).join(", ");
+    renderOverall();
+    renderMonthly();
+    renderUsageFilter();
+    renderProvinceTable();
+    lucide.createIcons();
+  </script>
+</body>
+</html>

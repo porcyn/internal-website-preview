@@ -183,6 +183,27 @@
       .real-sidebar.sidebar-open { transform: translateX(0) !important; }
       .real-topbar { padding: 0 var(--page-padding); height: var(--topbar-height); }
     }
+    .real-topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
   </style>
 </head>
 <body class="flex h-screen overflow-hidden text-xs">
@@ -247,6 +268,9 @@
           <a href="./richmenu-stats.html" class="real-nested-item">
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
           </a>
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
         </div>
       </div>
 
@@ -274,6 +298,8 @@
         <span class="text-slate-300">/</span>
         <span class="font-bold text-slate-800 truncate">Reset OTP</span>
       </div>
+
+
     </header>
 
     <!-- Scrollable Body -->

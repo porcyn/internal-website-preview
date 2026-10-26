@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flex Message - Traffy Fondue Internal Website</title>
+  <title>จัดการ Flex Message - Traffy Fondue Console</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,15 +12,9 @@
   <!-- Google Fonts: Noto Sans Thai & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /*
-      Breakpoints (WCAG 1.4.10 & Internal Website Standard):
-        mobile   ≤ 767px    @media (max-width: 767px)
-        tablet   768–1023px @media (min-width: 768px) and (max-width: 1023px)
-        desktop  ≥ 1024px   @media (min-width: 1024px)
-    */
     :root {
       --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       --page-min-width: 320px;
@@ -35,20 +29,6 @@
       :root {
         --page-padding: 24px;
       }
-    }
-
-        /* DashboardLayout Content Container */
-    #content-container {
-      padding: var(--page-padding) !important;
-      box-sizing: border-box;
-    }
-    .dashboard-body,
-    #content-container > div,
-    #content-container > section {
-      width: 100%;
-      max-width: var(--content-max-width);
-      margin-left: auto;
-      margin-right: auto;
     }
 
     @media (max-width: 767px) {
@@ -66,10 +46,13 @@
       -webkit-text-size-adjust: 100%;
     }
 
+    body, button, input, select, textarea, table, th, td {
+      font-family: var(--font-family) !important;
+    }
+
     body {
       margin: 0;
       min-width: var(--page-min-width);
-      font-family: var(--font-family);
       background-color: #f8fafc;
       color: #0f172a;
       line-height: 1.5;
@@ -77,10 +60,79 @@
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-    .font-mono-code {
-      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    .font-mono-code, code, pre {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
       font-feature-settings: "tnum" 1, "zero" 1;
     }
+
+    /* REAL PROJECT TOPBAR STYLES */
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--page-padding);
+      flex-shrink: 0;
+    }
+    .real-topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* DashboardLayout Content Container */
+    #content-container {
+      padding: var(--page-padding) !important;
+      box-sizing: border-box;
+    }
+    .dashboard-body,
+    #content-container > div,
+    #content-container > section {
+      width: 100%;
+      max-width: var(--content-max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Code Studio Synchronized Line Numbers */
+    .line-number-gutter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.5rem;
+      user-select: none;
+      background-color: #090d16;
+      color: #64748b;
+      border-right: 1px solid #1e293b;
+      text-align: right;
+      padding: 1rem 0.6rem 1rem 0.25rem;
+      width: 52px;
+      overflow: hidden;
+    }
+    .code-textarea {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.5rem;
+      tab-size: 2;
+    }
+    /* Scrollbars */
     ::-webkit-scrollbar {
       width: 5px;
       height: 5px;
@@ -95,6 +147,16 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #cbd5e1;
     }
+    /* LINE Chat Background Simulation */
+    .line-stage-bg {
+      background-color: #7a8fa1;
+      background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.25) 1.2px, transparent 1.2px);
+      background-size: 16px 16px;
+    }
+    .chat-bubble-shadow {
+      box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.22), 0 2px 6px -1px rgba(15, 23, 42, 0.12);
+    }
 
     /* REAL PROJECT SIDEBAR STYLES */
     .real-sidebar {
@@ -108,6 +170,7 @@
       padding: 16px 12px;
       overflow-y: auto;
       flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .real-user-card {
       padding: 12px;
@@ -172,53 +235,6 @@
       color: #0f172a;
     }
 
-    /* REAL PROJECT TOPBAR STYLES */
-    .real-topbar {
-      height: var(--topbar-height);
-      background: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 var(--page-padding);
-      flex-shrink: 0;
-    }
-    .real-topbar-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 36px;
-      padding: 0 14px;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
-      background: #ffffff;
-      color: #334155;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .real-topbar-btn:hover {
-      border-color: #cbd5e1;
-      background: #f8fafc;
-      color: #0f172a;
-    }
-
-    .real-sidebar {
-      width: var(--sidebar-width);
-      height: 100vh;
-      background: #ffffff;
-      border-right: 1px solid #e2e8f0;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px 12px;
-      overflow-y: auto;
-      flex-shrink: 0;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
     @media (max-width: 767px) {
       .real-sidebar {
         position: fixed;
@@ -242,13 +258,15 @@
     }
   </style>
 </head>
-<body class="flex h-screen overflow-hidden text-xs">
+<body class="flex flex-col md:flex-row h-screen overflow-hidden text-xs">
 
-  <!-- 1. SIDEBAR NAVIGATION -->
-    <!-- Mobile Drawer Backdrop -->
+  <!-- ========================================================
+       1. SIDEBAR NAVIGATION & MOBILE BACKDROP
+       ======================================================== -->
+  <!-- Mobile Drawer Backdrop -->
   <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
 
-  <!-- Main Sidebar (Pinned on Desktop, Slide-over Drawer on Mobile) -->
+  <!-- Main Sidebar -->
   <aside id="main-sidebar" class="real-sidebar select-none">
     
     <!-- User Card -->
@@ -256,19 +274,19 @@
       <div class="flex items-center gap-2.5">
         <img
           src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-          alt="User Profile"
+          alt="รูปโปรไฟล์ Chayanid"
           class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
         />
         <div class="flex-1 min-w-0">
           <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
-          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+          <p class="m-0 text-xs text-slate-500 truncate font-mono-code">chayanid@nectec.or.th</p>
         </div>
         <!-- Close button on Mobile Drawer -->
         <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
         <!-- Logout on Desktop -->
-        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+        <button type="button" onclick="showToast('ออกจากระบบเรียบร้อย')" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ" aria-label="ออกจากระบบ">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
@@ -285,27 +303,27 @@
     </div>
 
     <!-- Navigation Menu Items -->
-            <nav class="flex flex-col gap-0.5">
+    <nav class="flex flex-col gap-0.5 flex-1" aria-label="แถบเมนูหลัก">
       <!-- 1. จัดการหน่วยงาน -->
-      <a href="./organizations.html" class="real-menu-item ">
+      <a href="./organizations.html" class="real-menu-item">
         <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการหน่วยงาน</span>
       </a>
 
       <!-- 2. จัดการ Case -->
-      <a href="./cases.html" class="real-menu-item mt-1 ">
+      <a href="./cases.html" class="real-menu-item mt-1">
         <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการ Case</span>
       </a>
 
       <!-- 3. Reset OTP -->
-      <a href="./reset-otp.html" class="real-menu-item mt-1 ">
+      <a href="./reset-otp.html" class="real-menu-item mt-1">
         <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Reset OTP</span>
       </a>
 
-      <!-- 4. Flex Message -->
-      <a href="./flex-message.html" class="real-menu-item mt-1 real-menu-active">
+      <!-- 4. Flex Message (ACTIVE) -->
+      <a href="./flex-message.html" class="real-menu-item mt-1 real-menu-active" aria-current="page">
         <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">Flex Message</span>
       </a>
@@ -317,27 +335,32 @@
           <span class="flex-1 truncate">รายงานและสถิติ</span>
         </div>
         <div class="real-children-group">
-          <a href="./richmenu-stats.html" class="real-nested-item ">
+          <a href="./richmenu-stats.html" class="real-nested-item">
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
           </a>
         </div>
       </div>
 
       <!-- 6. จัดการผู้ใช้ -->
-      <a href="./users.html" class="real-menu-item mt-1 ">
+      <a href="./users.html" class="real-menu-item mt-1">
         <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการผู้ใช้</span>
       </a>
 
       <!-- 7. FAQ -->
-      <a href="./faq.html" class="real-menu-item mt-1 ">
+      <a href="./faq.html" class="real-menu-item mt-1">
         <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">FAQ</span>
       </a>
     </nav>
   </aside>
 
-  <!-- 2. MAIN CONTENT AREA -->
+  <!-- ========================================================
+       2. MAIN CONTENT AREA: CLEAN & MODERN FLEX STUDIO
+       ======================================================== -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
     
     <!-- Topbar Header -->
@@ -347,39 +370,496 @@
         <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-        <span class="text-slate-400 font-medium">Traffy Backstage</span>
-        <span class="text-slate-300">/</span>
-        <span class="font-bold text-slate-800">Flex Message</span>
+        <span class="text-slate-400 font-medium hidden sm:inline">Traffy Backstage</span>
+        <span class="text-slate-300 hidden sm:inline">/</span>
+        <span class="font-bold text-slate-800 truncate">ระบบจัดการ Flex Message</span>
       </div>
 
-      <div class="flex items-center gap-2.5">
-        <a href="#stats" onclick="showToast('สถิติกลุ่มหน่วยงาน'); return false;" class="real-topbar-btn whitespace-nowrap !h-8 sm:!h-9 !px-2.5 sm:!px-3.5 text-xs inline-flex items-center gap-1.5">
-          <i data-lucide="chart-column" class="w-4 h-4 text-slate-600"></i>
-          <span>สถิติกลุ่มหน่วยงาน</span>
-        </a>
-      </div>
+
     </header>
 
-    <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
+    <!-- Scrollable Workspace Body -->
     <div class="flex-1 overflow-y-auto" id="content-container">
-      <div class="w-full max-w-[1536px] mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
-        
-        <!-- Empty Placeholder Visual -->
-        <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3 shadow-2xs">
-          <i data-lucide="layout-template" class="w-6 h-6 text-slate-400"></i>
+      <div class="w-full max-w-[1536px] mx-auto space-y-6">
+
+        <!-- PAGE HERO & ACTION HUB -->
+        <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100 shadow-2xs">
+              <i data-lucide="message-square" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h1 class="text-sm sm:text-base font-bold text-slate-900">
+                จัดการ Flex Message
+              </h1>
+              <p class="text-xs text-slate-500 mt-0.5">
+                คลังเทมเพลตและจัดการข้อความตอบกลับอัตโนมัติบน LINE Chatbot ของระบบ Traffy Fondue
+              </p>
+            </div>
+          </div>
+
+          <!-- PRIMARY ACTION: Create Button -->
+          <div class="flex items-center gap-2.5 flex-shrink-0 w-full sm:w-auto">
+            <button onclick="openCreateModal()" class="w-full sm:w-auto justify-center bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs font-medium transition-all shadow-xs flex items-center gap-2" aria-label="สร้าง Flex Message ใหม่">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>สร้าง Flex Message ใหม่</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- CONTROLS & FILTER BAR -->
+        <section class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3.5">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+            
+            <!-- Search Input with Keyboard Indicator (Hidden ⌘K on mobile to prevent overlap) -->
+            <div class="relative flex-1 w-full lg:max-w-xl">
+              <label for="search-input" class="sr-only">ค้นหาเทมเพลต Flex Message ตามชื่อหรือคำอธิบาย</label>
+              <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="ค้นหาชื่อเทมเพลต เช่น ช่างชุมชน, แรงงาน, หรือรหัส #ID..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 pl-9 pr-3.5 sm:pr-12 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 transition-all">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+              <span class="hidden sm:inline-block absolute right-3 top-2.5 text-[10px] font-mono-code text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">⌘K</span>
+            </div>
+
+            <!-- View Mode & Summary Badge (Responsive wrap) -->
+            <div class="flex items-center justify-between sm:justify-end gap-2 w-full lg:w-auto flex-shrink-0">
+              <span class="text-xs text-slate-500 font-medium">มุมมอง:</span>
+              
+              <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200">
+                <button onclick="setViewMode('grid')" id="btn-view-grid" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-2xs flex items-center gap-1.5 transition-all" title="มุมมองการ์ด (Visual Cards)">
+                  <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-slate-800"></i>
+                  <span>การ์ด</span>
+                </button>
+                <button onclick="setViewMode('table')" id="btn-view-table" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition-all" title="มุมมองตารางกะทัดรัด (Compact Table)">
+                  <i data-lucide="list" class="w-3.5 h-3.5 text-slate-600"></i>
+                  <span>ตาราง</span>
+                </button>
+              </div>
+
+              <div id="template-count-badge" class="px-3 py-1.5 rounded-xl bg-slate-50 text-slate-600 font-medium text-xs border border-slate-200 flex items-center">
+                6 รายการ
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter Chips -->
+          <div class="flex items-center gap-2 flex-wrap pt-2 border-t border-slate-100" role="group" aria-label="กรองประเภทข้อความ Flex">
+            <span class="text-xs text-slate-500 font-medium mr-1">หมวดหมู่:</span>
+            <button onclick="filterByType('all', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-900 text-white shadow-2xs transition-all">ทั้งหมด</button>
+            <button onclick="filterByType('bubble', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">Bubble (กล่องเดี่ยว)</button>
+            <button onclick="filterByType('carousel', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">Carousel (สไลด์)</button>
+            <button onclick="filterByType('quickreply', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">มี Quick Reply</button>
+          </div>
+        </section>
+
+        <!-- VIEW 1: MODERN GRID VIEW -->
+        <div id="container-grid-view">
+          <div id="templates-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+            <!-- Populated dynamically via JS -->
+          </div>
         </div>
-        
-        <h2 class="text-sm font-bold text-slate-800">Flex Message (รอเพื่อนแปะโค้ด)</h2>
-        <p class="text-xs text-slate-400 mt-1 max-w-md">หน้าโล่งเปล่าๆ พร้อมสำหรับให้เพื่อนนำโค้ด UI มาแปะแทนที่ในส่วนนี้ได้ทันที</p>
-        
-        <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-mono-code">
-          <i data-lucide="code" class="w-3.5 h-3.5 text-blue-500"></i>
-          <span>&lt;!-- วางโค้ด UI ของหน้านี้ใน #content-container --&gt;</span>
+
+        <!-- VIEW 2: COMPACT ACCESSIBLE TABLE VIEW (Fully Responsive) -->
+        <div id="container-table-view" class="hidden bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-700 text-xs font-semibold">
+                  <th scope="col" class="py-3 px-3 sm:px-4 font-mono-code text-slate-400 w-14 hidden sm:table-cell">ID</th>
+                  <th scope="col" class="py-3 px-3 sm:px-4 w-16 sm:w-20">ภาพตัวอย่าง</th>
+                  <th scope="col" class="py-3 px-3 sm:px-4 w-24 hidden sm:table-cell">ประเภท</th>
+                  <th scope="col" class="py-3 px-3 sm:px-4">ชื่อเทมเพลต / รายละเอียด</th>
+                  <th scope="col" class="py-3 px-3 sm:px-4 w-32 hidden md:table-cell">Quick Reply</th>
+                  <th scope="col" class="py-3 px-3 sm:px-4 w-36 hidden lg:table-cell">ปรับปรุงล่าสุด</th>
+                  <th scope="col" class="py-3 px-3 sm:px-4 text-right w-24 sm:w-28">การจัดการ</th>
+                </tr>
+              </thead>
+              <tbody id="templates-table-body" class="divide-y divide-slate-100">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden p-12 text-center bg-white rounded-2xl border border-slate-200 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-500 mx-auto flex items-center justify-center">
+            <i data-lucide="search-x" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">ไม่พบเทมเพลตที่ตรงกับคำค้นหา</h3>
+            <p class="text-xs text-slate-500 mt-0.5">ลองตรวจสอบคำสะกด หรือคลิกปุ่มด้านล่างเพื่อล้างตัวกรอง</p>
+          </div>
+          <button onclick="clearSearch()" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-medium hover:bg-slate-800 transition-colors shadow-2xs">
+            แสดงรายการทั้งหมด
+          </button>
         </div>
 
       </div>
     </div>
   </main>
+
+  <!-- ========================================================
+       3. MODAL 1: CREATE / EDITOR MODAL (Clean Split-View)
+       ======================================================== -->
+  <div id="flex-editor-modal" role="dialog" aria-modal="true" aria-labelledby="modal-main-title" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl w-full max-w-7xl h-[92vh] max-h-[920px] flex flex-col shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Modal Top Header -->
+      <div class="h-16 px-4 sm:px-6 bg-white border-b border-slate-200 flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100 shadow-2xs">
+            <i data-lucide="code-2" class="w-5 h-5"></i>
+          </div>
+          <div class="min-w-0">
+            <h2 id="modal-main-title" class="font-bold text-slate-900 text-sm truncate">แก้ไข Flex Message</h2>
+            <p class="text-xs text-slate-500 truncate font-mono-code" id="modal-subtitle">ID: 1 • Real-time Live Preview & LINE Engine</p>
+          </div>
+        </div>
+
+        <!-- Top Header Controls & Validation Status -->
+        <div class="flex items-center gap-2">
+          <!-- Real-time Validation Pill Badge -->
+          <div id="modal-validation-pill" class="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200" role="status" aria-live="polite">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span id="validation-pill-text">Valid LINE Schema</span>
+          </div>
+
+          <!-- Deep-link button to Official LINE Flex Simulator -->
+          <button type="button" onclick="openLineSimulator()" class="px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors flex items-center gap-1.5" title="ส่งออก JSON และเปิดใน LINE Official Simulator">
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span class="hidden sm:inline">LINE Simulator</span>
+          </button>
+
+          <!-- Delete from inside editor (if editing existing) -->
+          <button id="btn-delete-in-modal" onclick="promptDeleteCurrent()" class="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 transition-colors flex-shrink-0" title="ลบเทมเพลตนี้" aria-label="ลบเทมเพลตนี้">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Close Modal -->
+          <button onclick="closeEditorModal()" class="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors" title="ปิดหน้าต่าง [Esc]" aria-label="ปิดหน้าต่างแก้ไข">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Split-View: Left Realistic Mobile Chat / Right Code Studio) -->
+      <div class="flex-1 flex flex-col lg:flex-row min-h-0 overflow-hidden bg-slate-50">
+        
+        <!-- LEFT PANEL: Realistic Mobile Preview with LINE Theme -->
+        <div class="w-full lg:w-5/12 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-100 overflow-hidden">
+          
+          <!-- Simulated Phone Top Bar with Zoom Controls -->
+          <div class="h-10 px-4 bg-white border-b border-slate-200 flex items-center justify-between text-xs text-slate-600 flex-shrink-0">
+            <div class="flex items-center gap-2 font-medium">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5 text-slate-500"></i>
+              <span>LINE Chat Live View</span>
+            </div>
+            
+            <!-- Zoom scale toggles (Default 100%) -->
+            <div class="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+              <button type="button" onclick="setPreviewZoom(0.72)" id="btn-zoom-72" class="px-2 py-0.5 text-[11px] font-medium text-slate-600 hover:text-slate-900">Fit</button>
+              <button type="button" onclick="setPreviewZoom(0.88)" id="btn-zoom-88" class="px-2 py-0.5 text-[11px] font-medium text-slate-600 hover:text-slate-900">88%</button>
+              <button type="button" onclick="setPreviewZoom(1.0)" id="btn-zoom-100" class="px-2 py-0.5 text-[11px] font-semibold rounded bg-white text-slate-900 shadow-2xs">100%</button>
+            </div>
+            
+            <span id="preview-type-indicator" class="font-mono-code font-semibold text-slate-700 uppercase text-[11px]">BUBBLE</span>
+          </div>
+
+          <!-- Stage Container: รองรับข้อมูลยาวๆ และเลื่อนดูได้ครบถ้วนจากบนลงล่าง -->
+          <div class="flex-1 overflow-y-auto p-4 sm:p-6 line-stage-bg flex flex-col items-center justify-start min-h-0">
+            <!-- Simulated Mobile Shell -->
+            <div class="w-full max-w-[340px] bg-transparent transition-transform duration-200 origin-top flex flex-col items-center my-2 pb-6" id="live-preview-target">
+              <!-- Live Flex Card Rendered Here -->
+            </div>
+          </div>
+
+          <!-- Quick Reply Container (Simulated at bottom of chat) -->
+          <div id="preview-quickreply-container" class="p-2.5 bg-slate-100/90 border-t border-slate-200 flex items-center gap-2 overflow-x-auto min-h-[44px]">
+            <!-- Rendered Quick Replies -->
+          </div>
+        </div>
+
+        <!-- RIGHT PANEL: Studio Controls, Metadata & Code Editor -->
+        <div class="w-full lg:w-7/12 flex flex-col bg-white overflow-hidden">
+          
+          <!-- Metadata Fields -->
+          <div class="p-4 border-b border-slate-200 bg-white space-y-3 flex-shrink-0">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="input-flex-name" class="block text-xs font-medium text-slate-700 mb-1">
+                  ชื่อเทมเพลต <span class="text-rose-500 font-bold">*</span>
+                </label>
+                <input type="text" id="input-flex-name" oninput="validateFlexName()" placeholder="ระบุชื่อเทมเพลต เช่น ช่างชุมชน..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 font-medium">
+              </div>
+              <div>
+                <label for="input-flex-comment" class="block text-xs font-medium text-slate-700 mb-1">
+                  คำอธิบาย
+                </label>
+                <input type="text" id="input-flex-comment" placeholder="เช่น ข้อความเมนูบริการซ่อมสร้าง..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400">
+              </div>
+            </div>
+
+            <!-- Mode Selector & Code Utility Toolbar -->
+            <div class="flex items-center justify-between pt-1 flex-wrap gap-2">
+              <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs" role="tablist" aria-label="โหมดการแก้ไขเทมเพลต">
+                <button type="button" onclick="switchEditorTab('scratch')" id="tab-scratch-btn" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-2xs" role="tab" aria-selected="true" aria-controls="tab-content-scratch">
+                  💻 Code Editor
+                </button>
+                <button type="button" onclick="switchEditorTab('gallery')" id="tab-gallery-btn" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900" role="tab" aria-selected="false" aria-controls="tab-content-gallery">
+                  🎨 Template Gallery
+                </button>
+              </div>
+
+              <!-- Undo / Redo & Prettify controls -->
+              <div class="flex items-center gap-1.5">
+                <button onclick="handleUndo()" id="btn-undo" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed" title="Undo [Ctrl+Z]" aria-label="เลิกทำโค้ดล่าสุด">
+                  <i data-lucide="undo-2" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="handleRedo()" id="btn-redo" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed" title="Redo [Ctrl+Y]" aria-label="ทำซ้ำโค้ดล่าสุด">
+                  <i data-lucide="redo-2" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="formatJsonCode()" class="px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1.5" title="จัดระเบียบโครงสร้าง JSON">
+                  <i data-lucide="align-left" class="w-3.5 h-3.5 text-slate-500"></i>
+                  <span>จัดระเบียบ JSON</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB CONTENT 1: Code Editor & Snippet Insertion -->
+          <div id="tab-content-scratch" role="tabpanel" aria-labelledby="tab-scratch-btn" class="flex-1 flex flex-col min-h-0 overflow-hidden">
+            
+            <!-- Accessible Snippet Toolbar -->
+            <div class="px-3 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-1.5 overflow-x-auto flex-shrink-0" role="toolbar" aria-label="แถบแทรก Snippet">
+              <span class="text-xs font-medium text-slate-500 mr-1 flex-shrink-0">แทรก Snippet:</span>
+              <button type="button" onclick="insertSnippet('carousel')" class="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 flex-shrink-0 shadow-2xs">+ Carousel</button>
+              <button type="button" onclick="insertSnippet('bubble')" class="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 flex-shrink-0 shadow-2xs">+ Bubble</button>
+              <button type="button" onclick="insertSnippet('text')" class="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 flex-shrink-0 shadow-2xs">+ Text</button>
+              <button type="button" onclick="insertSnippet('button')" class="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 flex-shrink-0 shadow-2xs">+ Button</button>
+              <button type="button" onclick="insertSnippet('image')" class="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 flex-shrink-0 shadow-2xs">+ Image</button>
+              <button type="button" onclick="insertSnippet('row')" class="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 flex-shrink-0 shadow-2xs">+ Row</button>
+              <button type="button" onclick="insertSnippet('separator')" class="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 flex-shrink-0 shadow-2xs">+ Separator</button>
+            </div>
+
+            <!-- Code Textarea Area with Synchronized Line Numbers -->
+            <div class="flex-1 relative flex min-h-0 bg-[#0f172a] overflow-hidden">
+              <label for="json-code-textarea" class="sr-only">โค้ด JSON ของ Flex Message</label>
+              <!-- Line Numbers Gutter -->
+              <div id="editor-line-gutter" class="line-number-gutter flex-shrink-0" aria-hidden="true">1</div>
+              <!-- Code Textarea -->
+              <textarea id="json-code-textarea" onscroll="syncGutterScroll()" oninput="handleJsonInput(this.value)" onkeyup="updateCursorPosition()" onclick="updateCursorPosition()" spellcheck="false" class="code-textarea flex-1 p-4 bg-[#0f172a] text-slate-100 font-mono-code text-xs leading-6 resize-none focus:outline-none focus:ring-1 focus:ring-blue-500 overflow-y-auto selection:bg-blue-600/30"></textarea>
+            </div>
+
+            <!-- Editor Status Footer: Line/Col Counter -->
+            <div class="h-7 px-4 bg-[#0b1120] border-t border-slate-800 text-[11px] font-mono-code text-slate-400 flex items-center justify-between flex-shrink-0">
+              <div class="flex items-center gap-3">
+                <span id="cursor-pos-indicator">บรรทัด: 1, คอลัมน์: 1</span>
+                <span>•</span>
+                <span id="total-lines-indicator">ทั้งหมด 1 บรรทัด</span>
+              </div>
+              <span class="text-slate-500">JSON Syntax Engine</span>
+            </div>
+
+            <!-- Real-time Error Bar -->
+            <div id="editor-error-box" class="hidden p-3 bg-rose-50 border-t border-rose-200 text-xs text-rose-800 flex items-start gap-2.5 flex-shrink-0" role="alert" aria-live="assertive">
+              <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5"></i>
+              <div class="min-w-0">
+                <span class="font-bold">ตรวจพบข้อผิดพลาด:</span>
+                <span id="editor-error-text" class="font-mono-code ml-1 font-semibold">Syntax error</span>
+                <div id="editor-error-hint" class="text-[11px] text-rose-700 mt-0.5 font-mono-code">โปรดตรวจสอบเครื่องหมายปีกกาหรือคอมมา</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB CONTENT 2: Template Gallery -->
+          <div id="tab-content-gallery" role="tabpanel" aria-labelledby="tab-gallery-btn" class="flex-1 p-4 overflow-y-auto hidden space-y-3">
+            <p class="text-xs text-slate-500 font-medium">เลือกเทมเพลตมาตรฐานเพื่อโหลดโครงสร้าง JSON เข้าสู่ Editor อัตโนมัติ:</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="gallery-container">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Modal Bottom Action Bar -->
+          <div class="p-3.5 bg-white border-t border-slate-200 flex items-center justify-between flex-shrink-0">
+            <span class="text-xs text-slate-400 font-mono-code">
+              Ctrl+Z (Undo) • Ctrl+Y (Redo)
+            </span>
+
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="closeEditorModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-medium transition-colors">
+                ยกเลิก
+              </button>
+              <!-- Primary Save Action Button -->
+              <button type="button" id="btn-save-flex" onclick="openFinalizeSaveModal()" disabled class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed disabled:pointer-events-none disabled:shadow-none text-white text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="check" class="w-4 h-4"></i>
+                <span id="save-button-label">บันทึกเทมเพลต</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       4. MODAL 2: FINALIZE SAVING & AUDIT NOTE MODAL
+       ======================================================== -->
+  <div id="finalize-save-modal" role="dialog" aria-modal="true" aria-labelledby="finalize-title" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-[60] hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl border border-slate-200 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+            <i data-lucide="history" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 id="finalize-title" class="font-bold text-slate-900 text-sm">ยืนยันการบันทึก & บันทึก Audit Log</h3>
+            <p class="text-xs text-slate-500">ระบบจำเป็นต้องจัดเก็บประวัติว่ามีการปรับปรุงเรื่องใดในเวอร์ชันนี้</p>
+          </div>
+        </div>
+        <button onclick="closeFinalizeModal()" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors" title="ปิดหน้าต่าง" aria-label="ปิดหน้าต่างยืนยันการบันทึก">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Overview of changes -->
+      <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 font-medium">ชื่อเทมเพลต:</span>
+          <span class="font-semibold text-slate-800 font-mono-code" id="audit-preview-name">Welcome Message</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 font-medium">คำอธิบาย:</span>
+          <span class="text-slate-700 truncate max-w-[240px]" id="audit-preview-comment">ข้อความต้อนรับ</span>
+        </div>
+      </div>
+
+      <!-- Quick Preset Chips -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-medium text-slate-700">เลือกเหตุผลด่วน (Change Presets):</label>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" onclick="setAuditPreset('แก้ไขสีปุ่มและคอนทราสต์ตัวอักษร')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 text-xs font-medium transition-colors">แก้สีปุ่ม/คอนทราสต์</button>
+          <button type="button" onclick="setAuditPreset('เพิ่มปุ่มลิงก์และอัปเดต URL ปลายทาง')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 text-xs font-medium transition-colors">เพิ่มปุ่มลิงก์</button>
+          <button type="button" onclick="setAuditPreset('ปรับแก้คำและข้อความประชาสัมพันธ์ใหม่')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 text-xs font-medium transition-colors">ปรับแก้ข้อความ</button>
+          <button type="button" onclick="setAuditPreset('เปลี่ยนภาพ Hero Banner ส่วนหัว')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 text-xs font-medium transition-colors">เปลี่ยนภาพ Banner</button>
+        </div>
+      </div>
+
+      <!-- What Change Required Field -->
+      <div class="space-y-1.5">
+        <label for="input-what-change" class="text-xs font-medium text-slate-700 flex items-center justify-between">
+          <span>รายละเอียดการเปลี่ยนแปลง (What Change) <span class="text-rose-600 font-bold">*จำเป็น</span>:</span>
+          <span class="text-[11px] text-slate-400 font-mono-code">Snapshot Audit</span>
+        </label>
+        <textarea id="input-what-change" rows="3" oninput="handleAuditNoteInput(this.value)" placeholder="ระบุสิ่งที่แก้ไข เช่น แก้ไขสีปุ่มให้ตรงกับแบรนด์ และเปลี่ยนขนาดฟอนต์หัวข้อ..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 font-medium"></textarea>
+        <div id="audit-error-notice" class="hidden text-xs text-rose-600 font-medium flex items-center gap-1">
+          <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-600"></i>
+          <span>กรุณาระบุรายละเอียดการเปลี่ยนแปลงก่อนกดยืนยัน</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+        <button type="button" onclick="closeFinalizeModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+          ย้อนกลับ
+        </button>
+        <button type="button" onclick="commitSaveFlexMessage()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition-all shadow-xs flex items-center gap-1.5">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>ยืนยันและบันทึกข้อมูล</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       5. MODAL 3: DELETE CONFIRMATION MODAL
+       ======================================================== -->
+  <div id="delete-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-[70] hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 space-y-4 text-center animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 border border-rose-100 mx-auto flex items-center justify-center">
+        <i data-lucide="trash-2" class="w-5 h-5 text-rose-600"></i>
+      </div>
+
+      <div>
+        <h3 id="delete-dialog-title" class="font-bold text-slate-900 text-sm sm:text-base">ยืนยันการลบเทมเพลต?</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+          คุณกำลังจะลบเทมเพลต <span id="delete-target-title" class="font-semibold text-slate-800 font-mono-code">"Welcome Message"</span> ข้อมูลนี้จะถูกนำออกจากระบบ
+        </p>
+      </div>
+
+      <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 font-medium text-left flex items-start gap-2">
+        <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5"></i>
+        <span>การกระทำนี้ไม่สามารถยกเลิกได้ และระบบจะบันทึกประวัติ Admin ผู้ทำการลบ</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2 pt-1">
+        <button type="button" onclick="closeDeleteModal()" class="flex-1 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+          ยกเลิก
+        </button>
+        <button type="button" onclick="confirmExecuteDelete()" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium transition-all shadow-xs">
+          ยืนยันการลบ
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       5.1 MODAL 4: IMAGE PREVIEW & LIGHTBOX MODAL
+       ======================================================== -->
+  <div id="image-preview-modal" role="dialog" aria-modal="true" aria-labelledby="image-preview-title" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[80] hidden flex items-center justify-center p-3 sm:p-6 transition-all">
+    <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Lightbox Header -->
+      <div class="h-14 px-4 sm:px-6 bg-white border-b border-slate-200 flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span id="image-preview-badge" class="px-2 py-0.5 rounded text-[11px] font-mono-code font-semibold bg-blue-50 text-blue-700 border border-blue-200">#1 BUBBLE</span>
+          <div class="min-w-0">
+            <h3 id="image-preview-title" class="font-bold text-slate-900 text-xs sm:text-sm truncate">รูปภาพตัวอย่าง Flex Message</h3>
+            <p id="image-preview-subtitle" class="text-[11px] text-slate-500 truncate hidden sm:block">คลิกดูภาพขยายขนาดเต็ม</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Button open image in new tab -->
+          <a id="image-preview-external-link" href="#" target="_blank" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium inline-flex items-center gap-1.5 transition-colors" title="เปิดรูปต้นฉบับในแท็บใหม่">
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span class="hidden sm:inline">เปิดภาพเต็ม</span>
+          </a>
+
+          <!-- Button edit template -->
+          <button id="image-preview-edit-btn" type="button" onclick="editFromImageModal()" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium inline-flex items-center gap-1.5 transition-all shadow-2xs">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5 text-white"></i>
+            <span class="hidden sm:inline">แก้ไข Flex</span>
+          </button>
+
+          <!-- Close Modal Button -->
+          <button type="button" onclick="closeImagePreviewModal()" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors ml-1" title="ปิดหน้าต่าง (Esc)">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Lightbox Main Canvas -->
+      <div class="flex-1 overflow-auto p-4 sm:p-6 bg-slate-900/95 flex items-center justify-center relative min-h-[340px]" onclick="if(event.target === this) closeImagePreviewModal()">
+        <div id="image-preview-content" class="max-w-full max-h-full flex items-center justify-center">
+          <!-- Populated dynamically via JS: <img> or rendered mock -->
+        </div>
+      </div>
+
+      <!-- Lightbox Footer Info -->
+      <div class="px-4 py-2.5 bg-white border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+        <span id="image-preview-dimensions" class="font-mono-code text-[11px] truncate max-w-xs sm:max-w-md">รูปภาพ Flex Message</span>
+        <span class="text-[11px] text-slate-400">กดปุ่ม Esc หรือคลิกพื้นหลังเพื่อปิด</span>
+      </div>
+
+    </div>
+  </div>
 
   <!-- Toast Notification Box -->
   <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
@@ -389,7 +869,712 @@
     </div>
   </div>
 
+  <!-- ========================================================
+       6. JAVASCRIPT APPLICATION CORE & RENDERING ENGINE
+       ======================================================== -->
   <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Default Pre-loaded Flex Templates (Enhanced WCAG AAA Contrast Colors)
+    let flexTemplates = [
+      {
+        id: 1,
+        flex_name: "เมนูบริการซ่อมสร้าง (ช่างชุมชน)",
+        comment: "Image Hotspot 8 หมวดหมู่ (จักรยานยนต์, รถยนต์, ไฟฟ้า, การแพทย์ ฯลฯ)",
+        updated_on: "2026-10-22 17:30:00",
+        quick_reply: null,
+        flex_data: JSON.stringify({
+          type: "bubble",
+          size: "giga",
+          body: {
+            type: "box",
+            layout: "vertical",
+            paddingAll: "0px",
+            contents: [
+              {
+                type: "image",
+                url: "https://storage.googleapis.com/traffy_public_bucket/chat-bot-img/chatbot-icon/Flex_menu_%E0%B8%8B%E0%B9%88%E0%B8%AD%E0%B8%A1%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87.png?v=2",
+                size: "full",
+                aspectRatio: "1024:1536",
+                aspectMode: "cover"
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "16.1%",
+                offsetStart: "2.1%",
+                width: "47.2%",
+                height: "17.9%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "จักรยานยนต์",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":1,\"type_name\":\"#ซ่อมจักรยานยนต์\"}}",
+                  displayText: "ซ่อมจักรยานยนต์"
+                }
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "16.1%",
+                offsetStart: "51.1%",
+                width: "47.2%",
+                height: "17.9%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "รถยนต์",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":2,\"type_name\":\"#ซ่อมรถยนต์\"}}",
+                  displayText: "ซ่อมรถยนต์"
+                }
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "35.5%",
+                offsetStart: "2.1%",
+                width: "47.2%",
+                height: "18.8%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "ไฟฟ้าขนาดเล็ก",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":3,\"type_name\":\"#ซ่อมเครื่องใช้ไฟฟ้าขนาดเล็ก\"}}",
+                  displayText: "ซ่อมเครื่องใช้ไฟฟ้าขนาดเล็ก"
+                }
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "35.5%",
+                offsetStart: "51.1%",
+                width: "47.2%",
+                height: "18.8%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "ไฟฟ้าขนาดใหญ่",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":4,\"type_name\":\"#ซ่อมเครื่องใช้ไฟฟ้าขนาดใหญ่\"}}",
+                  displayText: "ซ่อมเครื่องใช้ไฟฟ้าขนาดใหญ่"
+                }
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "55.5%",
+                offsetStart: "2.1%",
+                width: "47.2%",
+                height: "17.8%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "ระบบไฟฟ้า",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":5,\"type_name\":\"#ซ่อมระบบไฟฟ้าในครัวเรือน\"}}",
+                  displayText: "ซ่อมระบบไฟฟ้าในครัวเรือน"
+                }
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "55.5%",
+                offsetStart: "51.1%",
+                width: "47.2%",
+                height: "17.8%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "การแพทย์",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":6,\"type_name\":\"#ซ่อมบริการทางการแพทย์และสาธารณสุข\"}}",
+                  displayText: "ซ่อมบริการทางการแพทย์และสาธารณสุข"
+                }
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "74.7%",
+                offsetStart: "2.1%",
+                width: "47.2%",
+                height: "21.6%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "อาหารและเครื่องดื่ม",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":7,\"type_name\":\"#บริการอาหารและเครื่องดื่ม\"}}",
+                  displayText: "บริการอาหารและเครื่องดื่ม"
+                }
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                offsetTop: "74.7%",
+                offsetStart: "51.1%",
+                width: "47.2%",
+                height: "21.6%",
+                contents: [],
+                action: {
+                  type: "postback",
+                  label: "อื่น ๆ",
+                  data: "{\"para\":\"repair-req-desc\",\"selected-value\":{\"type\":8,\"type_name\":\"#อื่นๆ\"}}",
+                  displayText: "อื่น ๆ"
+                }
+              }
+            ]
+          }
+        }, null, 2)
+      },
+      {
+        id: 2,
+        flex_name: "กระทรวงศึกษาธิการ - แจ้งเหตุสถานศึกษา",
+        comment: "MOE Safety Center - ตาราง Hotspot รับแจ้งภัย 8 ด้าน",
+        updated_on: "2026-10-22 16:15:00",
+        quick_reply: null,
+        flex_data: JSON.stringify({
+          type: "bubble",
+          size: "giga",
+          body: {
+            type: "box",
+            layout: "vertical",
+            paddingAll: "0px",
+            contents: [
+              {
+                type: "image",
+                url: "https://storage.googleapis.com/traffy_public_bucket/chat-bot-img/bkk/Ministry%20of%20Education.png",
+                size: "full",
+                aspectMode: "fit",
+                aspectRatio: "2:3"
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                contents: [
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [],
+                    height: "2%"
+                  },
+                  {
+                    type: "box",
+                    layout: "horizontal",
+                    height: "24%",
+                    contents: [
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#การคุกคามทางเพศ\"}}",
+                          displayText: "การคุกคามทางเพศ"
+                        }
+                      },
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#ผู้บริหารกระทำผิด\"}}",
+                          displayText: "ผู้บริหารกระทำผิด"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    type: "box",
+                    layout: "horizontal",
+                    height: "23%",
+                    contents: [
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#ด้านสิทธิ\"}}",
+                          displayText: "ภัยด้านสิทธิ"
+                        }
+                      },
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#ความรุนแรงและการละเมิด\"}}",
+                          displayText: "ภัยความรุนแรง"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    type: "box",
+                    layout: "horizontal",
+                    height: "21%",
+                    contents: [
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#สุขภาพและพฤติกรรมเสี่ยง\"}}",
+                          displayText: "ภัยสุขภาพและพฤติกรรมเสี่ยง"
+                        }
+                      },
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#ออนไลน์และไซเบอร์\"}}",
+                          displayText: "ภัยออนไลน์และไซเบอร์"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    type: "box",
+                    layout: "horizontal",
+                    height: "20%",
+                    contents: [
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#สังคมและสภาพแวดล้อม\"}}",
+                          displayText: "ภัยสังคมและสภาพแวดล้อม"
+                        }
+                      },
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [],
+                        width: "50%",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"traffy-edu-req-desc\",\"selected-value\":{\"type_name\":\"#อุบัติเหตุและเหตุฉุกเฉิน\"}}",
+                          displayText: "ภัยอุบัติเหตุและเหตุฉุกเฉิน"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }, null, 2)
+      },
+      {
+        id: 3,
+        flex_name: "คุ้มครองแรงงาน - Traffy Workers",
+        comment: "ระบบรับแจ้งปัญหาแรงงาน 6 ด้าน (ไม่ได้ค่าจ้าง, เลิกจ้าง, ประกันสังคม ฯลฯ)",
+        updated_on: "2026-10-22 18:20:00",
+        quick_reply: null,
+        flex_data: JSON.stringify({
+          type: "bubble",
+          size: "giga",
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "image",
+                url: "https://storage.googleapis.com/traffy_public_bucket/chat-bot-img/bkk/messageImage_1787196864551.jpg",
+                size: "full",
+                aspectMode: "cover",
+                aspectRatio: "2048:2743",
+                gravity: "top"
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                contents: [
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [],
+                    position: "absolute",
+                    offsetTop: "4%",
+                    offsetStart: "4%",
+                    width: "45%",
+                    height: "25%",
+                    action: {
+                      type: "postback",
+                      data: "{\"para\":\"traffy-workers-req-desc\",\"selected-value\":{\"type_name\":\"#ไม่ได้ค่าจ้าง\"}}",
+                      label: "ไม่ได้ค่าจ้าง",
+                      displayText: "ไม่ได้ค่าจ้าง"
+                    }
+                  },
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [],
+                    position: "absolute",
+                    offsetTop: "4%",
+                    offsetStart: "51%",
+                    width: "44%",
+                    height: "25%",
+                    action: {
+                      type: "postback",
+                      data: "{\"para\":\"traffy-workers-req-desc\",\"selected-value\":{\"type_name\":\"#ถูกเลิกจ้าง\"}}",
+                      label: "ถูกเลิกจ้าง",
+                      displayText: "ถูกเลิกจ้าง"
+                    }
+                  },
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [],
+                    position: "absolute",
+                    offsetTop: "30%",
+                    offsetStart: "4%",
+                    width: "45%",
+                    height: "25%",
+                    action: {
+                      type: "postback",
+                      data: "{\"para\":\"traffy-workers-req-desc\",\"selected-value\":{\"type_name\":\"#ประกันสังคม\"}}",
+                      label: "ประกันสังคม",
+                      displayText: "ประกันสังคม"
+                    }
+                  },
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [],
+                    position: "absolute",
+                    offsetTop: "30%",
+                    offsetStart: "51%",
+                    width: "44%",
+                    height: "25%",
+                    action: {
+                      type: "postback",
+                      data: "{\"para\":\"traffy-workers-req-desc\",\"selected-value\":{\"type_name\":\"#ความปลอดภัยและอุบัติเหตุจากงาน\"}}",
+                      label: "ความปลอดภัยและอุบัติเหตุจากงาน",
+                      displayText: "ความปลอดภัยและอุบัติเหตุจากงาน"
+                    }
+                  },
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [],
+                    position: "absolute",
+                    offsetTop: "56%",
+                    offsetStart: "4%",
+                    width: "45%",
+                    height: "25%",
+                    action: {
+                      type: "postback",
+                      data: "{\"para\":\"traffy-workers-req-desc\",\"selected-value\":{\"type_name\":\"#แจ้งเบาะแส\"}}",
+                      label: "แจ้งเบาะแส",
+                      displayText: "แจ้งเบาะแส"
+                    }
+                  },
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [],
+                    position: "absolute",
+                    offsetTop: "56%",
+                    offsetStart: "51%",
+                    width: "44%",
+                    height: "25%",
+                    action: {
+                      type: "postback",
+                      data: "{\"para\":\"traffy-workers-req-desc\",\"selected-value\":{\"type_name\":\"#เรื่องอื่นๆ\"}}",
+                      label: "เรื่องอื่น ๆ",
+                      displayText: "เรื่องอื่น ๆ"
+                    }
+                  }
+                ],
+                position: "absolute",
+                offsetTop: "0px",
+                offsetBottom: "0px",
+                offsetStart: "0px",
+                offsetEnd: "0px",
+                paddingAll: "0px"
+              }
+            ],
+            paddingAll: "0px"
+          }
+        }, null, 2)
+      },
+      {
+        id: 4,
+        flex_name: "สำนักงาน ก.พ.ร. (OPDC) - เสนอไอเดียถึงรัฐ",
+        comment: "ลิงก์และปุ่มรับฟังความคิดเห็นเพื่อร่วมพัฒนาประเทศ (OPDC Menu)",
+        updated_on: "2026-10-22 18:10:00",
+        quick_reply: null,
+        flex_data: JSON.stringify({
+          type: "bubble",
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "image",
+                url: "https://storage.googleapis.com/traffy_public_bucket/traffy_public_bucket/chat-bot-img/Fondue/aa72e3dd6387ac8c6dd058876b8cf40b.webp",
+                size: "full",
+                aspectMode: "cover",
+                aspectRatio: "1:1.77",
+                gravity: "top"
+              },
+              {
+                type: "box",
+                layout: "vertical",
+                contents: [
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [
+                      {
+                        type: "button",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"go-to\",\"selected-value\":{\"stateName\":\"opdc-menu\",\"eventType\":\"postback\",\"postbackData\":\"project-opdc\"}}",
+                          label: " ",
+                          displayText: "เสนอไอเดียถึงรัฐ ร่วมกันพัฒนาประเทศ"
+                        },
+                        height: "md",
+                        style: "link",
+                        flex: 1
+                      }
+                    ],
+                    position: "absolute",
+                    offsetTop: "5.5%",
+                    offsetStart: "8.2%",
+                    offsetEnd: "8.2%",
+                    height: "22.7%",
+                    paddingAll: "0px"
+                  },
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [
+                      {
+                        type: "button",
+                        action: {
+                          type: "uri",
+                          uri: "https://eoffice.opdc.go.th/l/fe8ee32c",
+                          label: " "
+                        },
+                        height: "md",
+                        style: "link",
+                        flex: 1
+                      }
+                    ],
+                    position: "absolute",
+                    offsetTop: "30.5%",
+                    offsetStart: "7.9%",
+                    offsetEnd: "7.9%",
+                    height: "23.1%",
+                    paddingAll: "0px"
+                  },
+                  {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [
+                      {
+                        type: "button",
+                        action: {
+                          type: "postback",
+                          data: "{\"para\":\"go-to\",\"selected-value\":{\"stateName\":\"cancel-go-to-standby\",\"eventType\":\"postback\",\"postbackData\":\"cancel-go-to-standby\"}}",
+                          label: "                    ",
+                          displayText: "กลับสู่เมนูหลัก"
+                        },
+                        height: "sm",
+                        style: "link",
+                        flex: 1
+                      }
+                    ],
+                    position: "absolute",
+                    offsetBottom: "5px",
+                    offsetStart: "0px",
+                    offsetEnd: "0px",
+                    height: "9%",
+                    paddingAll: "0px"
+                  }
+                ],
+                position: "absolute",
+                offsetTop: "0px",
+                offsetBottom: "0px",
+                offsetStart: "0px",
+                offsetEnd: "0px",
+                paddingAll: "0px"
+              }
+            ],
+            paddingAll: "0px"
+          }
+        }, null, 2)
+      },
+      {
+        id: 5,
+        flex_name: "Welcome Message - ประชาชน",
+        comment: "ข้อความต้อนรับผู้แจ้งเรื่องใหม่ผ่าน LINE Fondue Bot",
+        updated_on: "2026-10-21 15:45:00",
+        quick_reply: JSON.stringify({
+          items: [
+            { type: "action", action: { type: "message", label: "แจ้งปัญหาใหม่", text: "แจ้งปัญหาใหม่" } },
+            { type: "action", action: { type: "message", label: "ตรวจสอบสถานะ", text: "ตรวจสอบสถานะ" } }
+          ]
+        }, null, 2),
+        flex_data: JSON.stringify({
+          type: "bubble",
+          header: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              { type: "text", text: "TRAFFY FONDUE", weight: "bold", color: "#14532d", size: "sm" },
+              { type: "text", text: "ยินดีต้อนรับสู่ระบบรับเรื่องร้องเรียน", weight: "bold", size: "lg", margin: "md", wrap: true }
+            ]
+          },
+          hero: {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=600&auto=format&fit=crop&q=60",
+            size: "full",
+            aspectRatio: "20:13",
+            aspectMode: "cover"
+          },
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              { type: "text", text: "ท่านสามารถส่งข้อมูล ภาพถ่าย และพิกัดสถานที่ เพื่อให้เจ้าหน้าที่เข้าแก้ไขปัญหาได้อย่างรวดเร็ว", wrap: true, color: "#1e293b", size: "sm" },
+              { type: "separator", margin: "lg" },
+              {
+                type: "box",
+                layout: "horizontal",
+                margin: "md",
+                contents: [
+                  { type: "text", text: "สถานะระบบ:", size: "xs", color: "#334155" },
+                  { type: "text", text: "พร้อมให้บริการ 24 ชม.", size: "xs", color: "#14532d", weight: "bold", align: "end" }
+                ]
+              }
+            ]
+          },
+          footer: {
+            type: "box",
+            layout: "vertical",
+            spacing: "sm",
+            contents: [
+              { type: "button", style: "primary", color: "#0f172a", action: { type: "uri", label: "เริ่มแจ้งเรื่องร้องเรียน", uri: "https://line.me" } }
+            ]
+          }
+        }, null, 2)
+      },
+      {
+        id: 6,
+        flex_name: "Service Carousel Showcase",
+        comment: "Carousel แสดงหมวดหมู่งานบริการยอดนิยม 2 สไลด์",
+        updated_on: "2026-10-18 09:15:40",
+        quick_reply: null,
+        flex_data: JSON.stringify({
+          type: "carousel",
+          contents: [
+            {
+              type: "bubble",
+              size: "kilo",
+              header: { type: "box", layout: "vertical", contents: [{ type: "text", text: "ปัญหาทางเท้า", weight: "bold", size: "sm" }] },
+              body: { type: "box", layout: "vertical", contents: [{ type: "text", text: "กระเบื้องแตก หลุม หรือสิ่งกีดขวาง", size: "xs", color: "#334155", wrap: true }] },
+              footer: { type: "box", layout: "vertical", contents: [{ type: "button", style: "primary", color: "#0f172a", action: { type: "message", label: "แจ้งเรื่องนี้", text: "แจ้งทางเท้า" } }] }
+            },
+            {
+              type: "bubble",
+              size: "kilo",
+              header: { type: "box", layout: "vertical", contents: [{ type: "text", text: "ไฟฟ้าส่องสว่าง", weight: "bold", size: "sm" }] },
+              body: { type: "box", layout: "vertical", contents: [{ type: "text", text: "ไฟทางดับ ทางมืด เสี่ยงต่อความปลอดภัย", size: "xs", color: "#334155", wrap: true }] },
+              footer: { type: "box", layout: "vertical", contents: [{ type: "button", style: "primary", color: "#0f172a", action: { type: "message", label: "แจ้งเรื่องนี้", text: "แจ้งไฟดับ" } }] }
+            }
+          ]
+        }, null, 2)
+      }
+    ];
+
+    // Standard Preset Gallery Templates
+    const GALLERY_TEMPLATES = [
+      {
+        title: "เมนูบริการซ่อมสร้าง (ช่างชุมชน)",
+        desc: "Image Hotspot 8 หมวดหมู่ (จักรยานยนต์, รถยนต์, ไฟฟ้า, การแพทย์ ฯลฯ)",
+        json: JSON.parse(flexTemplates[0].flex_data)
+      },
+      {
+        title: "กระทรวงศึกษาธิการ - แจ้งเหตุสถานศึกษา",
+        desc: "MOE Safety Center - ตาราง Hotspot รับแจ้งภัย 8 ด้าน",
+        json: JSON.parse(flexTemplates[1].flex_data)
+      },
+      {
+        title: "คุ้มครองแรงงาน - Traffy Workers",
+        desc: "Hotspot รับแจ้งปัญหาแรงงาน 6 ด้าน (ค่าจ้าง, เลิกจ้าง, ประกันสังคม ฯลฯ)",
+        json: JSON.parse(flexTemplates[2].flex_data)
+      },
+      {
+        title: "สำนักงาน ก.พ.ร. (OPDC) - เสนอไอเดียถึงรัฐ",
+        desc: "แบนเนอร์ปุ่ม Overlay ลิงก์ตรงร่วมเสนอไอเดียพัฒนาประเทศ",
+        json: JSON.parse(flexTemplates[3].flex_data)
+      },
+      {
+        title: "การ์ดรับเรื่อง (Success Alert)",
+        desc: "Bubble การ์ดสีเขียวแจ้งผลสำเร็จพร้อมปุ่มกดดูรายละเอียด",
+        json: {
+          type: "bubble",
+          header: { type: "box", layout: "vertical", contents: [{ type: "text", text: "รับเรื่องเรียบร้อย", weight: "bold", color: "#14532d", size: "md" }] },
+          body: { type: "box", layout: "vertical", contents: [{ type: "text", text: "เจ้าหน้าที่ได้รับข้อมูลแล้ว และจะเร่งประสานหน่วยงาน", size: "sm", wrap: true, color: "#1e293b" }] },
+          footer: { type: "box", layout: "vertical", contents: [{ type: "button", style: "primary", color: "#0f172a", action: { type: "uri", label: "ตรวจสอบสถานะ", uri: "https://traffy.in.th" } }] }
+        }
+      },
+      {
+        title: "การ์ดแบบมีภาพ Hero + รายละเอียด",
+        desc: "Bubble มาตรฐานพร้อมรูปภาพ Banner ด้านบน และปุ่มติดต่อ",
+        json: {
+          type: "bubble",
+          hero: { type: "image", url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&auto=format&fit=crop&q=60", size: "full", aspectRatio: "20:13", aspectMode: "cover" },
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              { type: "text", text: "กิจกรรมจิตอาสาพัฒนาเมือง", weight: "bold", size: "md" },
+              { type: "text", text: "ขอเชิญร่วมตรวจสอบและส่งเรื่องแจ้งปัญหาในพื้นที่ของท่าน", size: "xs", color: "#334155", margin: "sm", wrap: true }
+            ]
+          },
+          footer: { type: "box", layout: "vertical", contents: [{ type: "button", style: "primary", color: "#0f172a", action: { type: "uri", label: "ลงทะเบียน", uri: "https://traffy.in.th" } }] }
+        }
+      }
+    ];
+
+    // State Variables
+    let currentViewMode = 'grid'; // 'grid' | 'table'
+    let currentEditingId = null;  // null = create new
+    let undoStack = [];
+    let redoStack = [];
+    let debounceTimer = null;
+    let deleteTargetId = null;
+    let previewZoomLevel = 1.0;
+    let lastActiveElement = null;
+    let activeFocusTrapHandler = null;
+
+    // Mobile Sidebar Drawer
     function toggleMobileSidebar() {
       const sidebar = document.getElementById('main-sidebar');
       const backdrop = document.getElementById('mobile-sidebar-backdrop');
@@ -410,24 +1595,1127 @@
       if (backdrop) backdrop.classList.add('hidden');
     }
 
-    lucide.createIcons();
+    // WCAG 2.1.2 & 2.4.3 Focus Trap Management
+    function trapFocusInModal(modalElement) {
+      lastActiveElement = document.activeElement;
+      const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+      const focusableElements = Array.from(modalElement.querySelectorAll(focusableSelector)).filter(el => !el.disabled && el.offsetParent !== null);
+      
+      if (focusableElements.length > 0) {
+        focusableElements[0].focus();
+      }
 
-    let toastTimer = null;
+      if (activeFocusTrapHandler) {
+        document.removeEventListener('keydown', activeFocusTrapHandler);
+      }
+
+      activeFocusTrapHandler = function (e) {
+        if (e.key !== 'Tab') return;
+        const currentFocusables = Array.from(modalElement.querySelectorAll(focusableSelector)).filter(el => !el.disabled && el.offsetParent !== null);
+        if (currentFocusables.length === 0) return;
+
+        const firstElement = currentFocusables[0];
+        const lastElement = currentFocusables[currentFocusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      };
+
+      document.addEventListener('keydown', activeFocusTrapHandler);
+    }
+
+    function releaseFocusTrap() {
+      if (activeFocusTrapHandler) {
+        document.removeEventListener('keydown', activeFocusTrapHandler);
+        activeFocusTrapHandler = null;
+      }
+      if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+        lastActiveElement.focus();
+      }
+    }
+
+    // Code Studio Line Numbers & Scroll Synchronization
+    function updateLineNumbers(text) {
+      const lineGutter = document.getElementById('editor-line-gutter');
+      const linesTotalEl = document.getElementById('total-lines-indicator');
+      if (!lineGutter) return;
+
+      const lines = text.split('\n');
+      const count = lines.length;
+      let gutterHtml = '';
+      for (let i = 1; i <= count; i++) {
+        gutterHtml += `<div>${i}</div>`;
+      }
+      lineGutter.innerHTML = gutterHtml;
+      if (linesTotalEl) {
+        linesTotalEl.textContent = `ทั้งหมด ${count} บรรทัด`;
+      }
+    }
+
+    function syncGutterScroll() {
+      const textarea = document.getElementById('json-code-textarea');
+      const gutter = document.getElementById('editor-line-gutter');
+      if (textarea && gutter) {
+        gutter.scrollTop = textarea.scrollTop;
+      }
+    }
+
+    function updateCursorPosition() {
+      const textarea = document.getElementById('json-code-textarea');
+      const indicator = document.getElementById('cursor-pos-indicator');
+      if (!textarea || !indicator) return;
+
+      const pos = textarea.selectionStart;
+      const textUntilCursor = textarea.value.substring(0, pos);
+      const lines = textUntilCursor.split('\n');
+      const lineNum = lines.length;
+      const colNum = lines[lines.length - 1].length + 1;
+
+      indicator.textContent = `บรรทัด: ${lineNum}, คอลัมน์: ${colNum}`;
+    }
+
+    // Zoom Controls
+    function setPreviewZoom(scale) {
+      previewZoomLevel = scale;
+      const target = document.getElementById('live-preview-target');
+      if (target) {
+        target.style.transform = `scale(${scale})`;
+        target.style.transformOrigin = 'top center';
+      }
+      ['btn-zoom-72', 'btn-zoom-88', 'btn-zoom-100'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.className = "px-2 py-1 text-[11px] font-semibold text-slate-700 hover:text-slate-900";
+      });
+      if (scale === 0.72) document.getElementById('btn-zoom-72').className = "px-2 py-1 text-[11px] font-bold rounded bg-white text-slate-900 shadow-2xs";
+      if (scale === 0.88) document.getElementById('btn-zoom-88').className = "px-2 py-1 text-[11px] font-bold rounded bg-white text-slate-900 shadow-2xs";
+      if (scale === 1.0) document.getElementById('btn-zoom-100').className = "px-2 py-1 text-[11px] font-bold rounded bg-white text-slate-900 shadow-2xs";
+    }
+
+    // LINE Official Simulator Deep-Link
+    function openLineSimulator() {
+      const textarea = document.getElementById('json-code-textarea');
+      if (!textarea) return;
+
+      // Copy JSON to clipboard
+      const temp = document.createElement('textarea');
+      temp.value = textarea.value;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+
+      showToast('คัดลอก JSON แล้ว กำลังเปิด LINE Official Flex Simulator...');
+      window.open('https://developers.line.biz/flex-simulator/', '_blank');
+    }
+
+    // 1. Initial Render & View Switcher
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      const gridBtn = document.getElementById('btn-view-grid');
+      const tableBtn = document.getElementById('btn-view-table');
+      const gridContainer = document.getElementById('container-grid-view');
+      const tableContainer = document.getElementById('container-table-view');
+
+      if (mode === 'grid') {
+        gridContainer.classList.remove('hidden');
+        tableContainer.classList.add('hidden');
+        gridBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-2xs flex items-center gap-1.5 transition-all";
+        tableBtn.className = "px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition-all";
+      } else {
+        gridContainer.classList.add('hidden');
+        tableContainer.classList.remove('hidden');
+        tableBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-2xs flex items-center gap-1.5 transition-all";
+        gridBtn.className = "px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition-all";
+      }
+      renderTemplatesList(flexTemplates);
+    }
+
+    function renderTemplatesList(items) {
+      const emptyState = document.getElementById('empty-state');
+      const countBadge = document.getElementById('template-count-badge');
+      if (countBadge) countBadge.textContent = `${items.length} รายการ`;
+
+      if (items.length === 0) {
+        document.getElementById('templates-grid').innerHTML = '';
+        document.getElementById('templates-table-body').innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      renderGridView(items);
+      renderTableView(items);
+      lucide.createIcons();
+    }
+
+    // Render Grid View Cards
+    function renderGridView(items) {
+      const grid = document.getElementById('templates-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      items.forEach(item => {
+        let parsed = null;
+        try { parsed = JSON.parse(item.flex_data); } catch(e) {}
+        const isCarousel = parsed?.type === 'carousel';
+        const hasQuickReply = !!item.quick_reply;
+
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl border border-slate-200/90 hover:border-slate-300 shadow-2xs hover:shadow-md transition-all flex flex-col overflow-hidden";
+
+        card.innerHTML = `
+          <!-- Card Header & Meta -->
+          <div class="p-4 border-b border-slate-100 flex items-start justify-between gap-3 bg-white">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold ${
+                  isCarousel ? 'bg-purple-50 text-purple-700 border border-purple-200/80' : 'bg-blue-50 text-blue-700 border border-blue-200/80'
+                }">${isCarousel ? 'Carousel' : 'Bubble'}</span>
+                
+                ${hasQuickReply ? '<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Quick Reply</span>' : ''}
+                
+                <span class="text-xs text-slate-400 font-mono-code">#${item.id}</span>
+              </div>
+              <h2 class="text-sm font-bold text-slate-900 mt-2 truncate leading-snug" title="${item.flex_name}">${item.flex_name}</h2>
+              <p class="text-xs text-slate-500 truncate mt-0.5">${item.comment || 'ไม่มีคำอธิบาย'}</p>
+            </div>
+
+            <!-- Delete Quick Action -->
+            <button onclick="promptDeleteTemplate(${item.id})" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors flex-shrink-0" title="ลบเทมเพลต #${item.id}" aria-label="ลบเทมเพลต ${item.flex_name}">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Scaled Live Preview Container (Simulated LINE Chat Canvas) -->
+          <div onclick="openImagePreviewModal(${item.id})" class="h-80 p-4 line-stage-bg flex items-center justify-center overflow-hidden relative select-none cursor-pointer group" title="คลิกเพื่อดูรูปภาพขยายขนาดเต็ม">
+            <div class="transform scale-[0.54] origin-center w-full max-w-[340px] pointer-events-none chat-bubble-shadow flex justify-center group-hover:scale-[0.57] transition-transform duration-200">
+              ${renderFlexToHtml(parsed)}
+            </div>
+            <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center pointer-events-none">
+              <span class="opacity-0 group-hover:opacity-100 transition-opacity px-2.5 py-1 rounded-lg bg-slate-900/80 text-white text-xs font-medium flex items-center gap-1.5 shadow-lg backdrop-blur-xs">
+                <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i>
+                <span>คลิกดูขยาย</span>
+              </span>
+            </div>
+            <span class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-md bg-slate-900/70 text-white text-[10px] font-mono-code font-medium backdrop-blur-xs">Live Mock</span>
+          </div>
+
+          <!-- Card Footer & Actions -->
+          <div class="p-3 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="text-[11px] text-slate-500 truncate max-w-[130px]" title="ปรับปรุงล่าสุด: ${item.updated_on}">
+              ${item.updated_on.split(' ')[0]}
+            </span>
+
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <!-- Copy JSON Button -->
+              <button onclick="copyFlexJson(${item.id})" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 text-xs font-medium transition-colors flex items-center gap-1" title="คัดลอก JSON โครงสร้าง">
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i>
+                <span>คัดลอก</span>
+              </button>
+
+              <!-- Edit Button -->
+              <button onclick="openEditorModal(${item.id})" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition-all shadow-2xs flex items-center gap-1.5" aria-label="แก้ไขเทมเพลต ${item.flex_name}">
+                <i data-lucide="edit-3" class="w-3.5 h-3.5 text-white"></i>
+                <span>แก้ไข</span>
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Helper to recursively find image URL in Flex JSON
+    function extractFlexImage(flexData) {
+      try {
+        const data = typeof flexData === 'string' ? JSON.parse(flexData) : flexData;
+        let foundUrl = null;
+        function search(node) {
+          if (!node || foundUrl) return;
+          if (node.type === 'image' && node.url) {
+            foundUrl = node.url;
+            return;
+          }
+          if (node.hero && node.hero.type === 'image' && node.hero.url) {
+            foundUrl = node.hero.url;
+            return;
+          }
+          if (Array.isArray(node)) {
+            for (let i = 0; i < node.length; i++) {
+              search(node[i]);
+              if (foundUrl) break;
+            }
+          } else if (typeof node === 'object') {
+            for (const key of Object.keys(node)) {
+              search(node[key]);
+              if (foundUrl) break;
+            }
+          }
+        }
+        search(data);
+        return foundUrl;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    // Render Compact Table View (with Image Thumbnail and Click-to-Enlarge)
+    function renderTableView(items) {
+      const tbody = document.getElementById('templates-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      items.forEach(item => {
+        let parsed = null;
+        try { parsed = JSON.parse(item.flex_data); } catch(e) {}
+        const isCarousel = parsed?.type === 'carousel';
+        const hasQuickReply = !!item.quick_reply;
+        const imgUrl = extractFlexImage(parsed);
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/80 transition-colors border-b border-slate-100";
+        tr.innerHTML = `
+          <!-- 1. ID: hidden on mobile (< sm) -->
+          <td class="py-3 px-3 sm:px-4 font-mono-code text-slate-400 text-xs hidden sm:table-cell">#${item.id}</td>
+
+          <!-- 2. ภาพตัวอย่าง: always visible -->
+          <td class="py-2.5 px-3 sm:px-4">
+            <button type="button" onclick="openImagePreviewModal(${item.id})" class="group relative w-12 h-14 sm:w-14 sm:h-16 rounded-xl overflow-hidden border border-slate-200/90 bg-slate-100 flex items-center justify-center hover:border-blue-400 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30 cursor-pointer flex-shrink-0" title="คลิกเพื่อดูรูปภาพขยายขนาดเต็ม">
+              ${imgUrl ? `
+                <img src="${imgUrl}" alt="${item.flex_name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" onerror="this.onerror=null; this.src='https://placehold.co/120x160/e2e8f0/1e293b?text=Flex';">
+                <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/30 transition-colors flex items-center justify-center">
+                  <i data-lucide="zoom-in" class="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow"></i>
+                </div>
+              ` : `
+                <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 group-hover:text-blue-600 bg-slate-50">
+                  <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                  <span class="text-[9px] mt-0.5 font-medium">ดูพรีวิว</span>
+                </div>
+              `}
+            </button>
+          </td>
+
+          <!-- 3. ประเภท: hidden on mobile (< sm) -->
+          <td class="py-3 px-3 sm:px-4 hidden sm:table-cell">
+            <span class="px-2 py-0.5 rounded text-[11px] font-semibold ${
+              isCarousel ? 'bg-purple-50 text-purple-700 border border-purple-200/80' : 'bg-blue-50 text-blue-700 border border-blue-200/80'
+            }">${isCarousel ? 'Carousel' : 'Bubble'}</span>
+          </td>
+
+          <!-- 4. ชื่อเทมเพลต / รายละเอียด: shows inline tags & date on mobile -->
+          <td class="py-2.5 sm:py-3 px-3 sm:px-4">
+            <!-- Mobile-only inline tags: #ID + Type + Quick Reply -->
+            <div class="flex items-center gap-1.5 sm:hidden mb-1 flex-wrap">
+              <span class="font-mono-code text-[11px] text-slate-400 font-semibold">#${item.id}</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold ${
+                isCarousel ? 'bg-purple-50 text-purple-700 border border-purple-200/80' : 'bg-blue-50 text-blue-700 border border-blue-200/80'
+              }">${isCarousel ? 'Carousel' : 'Bubble'}</span>
+              ${hasQuickReply ? '<span class="text-emerald-700 font-medium text-[10px] bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Quick Reply</span>' : ''}
+            </div>
+
+            <div class="font-semibold text-slate-900 text-xs sm:text-sm line-clamp-1 sm:truncate max-w-[200px] sm:max-w-sm" title="${item.flex_name}">${item.flex_name}</div>
+            <div class="text-[11px] text-slate-500 line-clamp-1 sm:truncate max-w-[200px] sm:max-w-sm mt-0.5">${item.comment || '-'}</div>
+
+            <!-- Mobile-only timestamp -->
+            <div class="sm:hidden text-[10px] text-slate-400 mt-1 flex items-center gap-1 font-mono-code">
+              <i data-lucide="clock" class="w-2.5 h-2.5"></i>
+              <span>${item.updated_on.split(' ')[0]}</span>
+            </div>
+          </td>
+
+          <!-- 5. Quick Reply: hidden on mobile (< md) -->
+          <td class="py-3 px-3 sm:px-4 hidden md:table-cell">
+            ${hasQuickReply ? '<span class="text-emerald-700 font-medium text-[11px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">มี Quick Reply</span>' : '<span class="text-slate-400">-</span>'}
+          </td>
+
+          <!-- 6. ปรับปรุงล่าสุด: hidden on mobile/tablet (< lg) -->
+          <td class="py-3 px-3 sm:px-4 text-slate-500 text-xs hidden lg:table-cell font-mono-code">${item.updated_on}</td>
+
+          <!-- 7. การจัดการ -->
+          <td class="py-3 px-3 sm:px-4 text-right">
+            <div class="flex items-center justify-end gap-1 sm:gap-1.5">
+              <button onclick="copyFlexJson(${item.id})" class="hidden sm:inline-flex p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="คัดลอก JSON">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="openEditorModal(${item.id})" class="px-2.5 py-1.5 sm:px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium inline-flex items-center gap-1 shadow-2xs">
+                <i data-lucide="edit-3" class="w-3.5 h-3.5 text-white"></i>
+                <span>แก้ไข</span>
+              </button>
+              <button onclick="promptDeleteTemplate(${item.id})" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors" title="ลบเทมเพลต" aria-label="ลบ">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Modal 4: Image Preview & Lightbox Functions
+    let currentPreviewId = null;
+
+    function openImagePreviewModal(id) {
+      const item = flexTemplates.find(x => x.id === id);
+      if (!item) return;
+
+      currentPreviewId = id;
+      let parsed = null;
+      try { parsed = JSON.parse(item.flex_data); } catch(e) {}
+      const isCarousel = parsed?.type === 'carousel';
+      const imgUrl = extractFlexImage(parsed);
+
+      document.getElementById('image-preview-badge').textContent = `#${item.id} ${isCarousel ? 'CAROUSEL' : 'BUBBLE'}`;
+      document.getElementById('image-preview-badge').className = `px-2 py-0.5 rounded text-[11px] font-mono-code font-semibold ${isCarousel ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-blue-50 text-blue-700 border border-blue-200'}`;
+      document.getElementById('image-preview-title').textContent = item.flex_name;
+      document.getElementById('image-preview-subtitle').textContent = item.comment || 'ไม่มีคำอธิบายเพิ่มเติม';
+
+      const contentBox = document.getElementById('image-preview-content');
+      const extLink = document.getElementById('image-preview-external-link');
+      const dimText = document.getElementById('image-preview-dimensions');
+
+      if (imgUrl) {
+        contentBox.innerHTML = `
+          <div class="relative max-h-[72vh] flex items-center justify-center p-2">
+            <img src="${imgUrl}" alt="${item.flex_name}" class="max-h-[72vh] max-w-full w-auto h-auto rounded-xl shadow-2xl object-contain border border-slate-700/60 transition-transform duration-200" onerror="this.src='https://placehold.co/600x800/e2e8f0/1e293b?text=Image+Unavailable'">
+          </div>
+        `;
+        extLink.href = imgUrl;
+        extLink.classList.remove('hidden');
+        dimText.textContent = `แหล่งที่มารูปภาพ: ${imgUrl.split('/').pop().split('?')[0]}`;
+      } else {
+        contentBox.innerHTML = `
+          <div class="p-6 line-stage-bg rounded-2xl shadow-2xl flex items-center justify-center max-h-[72vh] overflow-y-auto max-w-[380px] w-full">
+            <div class="w-full chat-bubble-shadow">
+              ${renderFlexToHtml(parsed)}
+            </div>
+          </div>
+        `;
+        extLink.classList.add('hidden');
+        dimText.textContent = `โครงสร้าง Flex Message (ไม่มีแท็กรูปภาพตรง)`;
+      }
+
+      const modal = document.getElementById('image-preview-modal');
+      modal.classList.remove('hidden');
+      trapFocusInModal(modal);
+      lucide.createIcons();
+    }
+
+    function closeImagePreviewModal() {
+      const modal = document.getElementById('image-preview-modal');
+      if (modal) modal.classList.add('hidden');
+      currentPreviewId = null;
+      releaseFocusTrap();
+    }
+
+    function editFromImageModal() {
+      const id = currentPreviewId;
+      closeImagePreviewModal();
+      if (id) {
+        openEditorModal(id);
+      }
+    }
+
+    // 2. Custom Flex Rendering Engine (WCAG AAA Contrast >= 7:1)
+    function renderFlexToHtml(node) {
+      if (!node) return '<div class="p-4 bg-white rounded-xl text-xs text-slate-700 font-medium">ไม่มีข้อมูล JSON</div>';
+
+      if (node.type === 'carousel') {
+        const bubbles = node.contents || [];
+        return `
+          <div class="flex gap-3 overflow-x-auto pb-1 max-w-full">
+            ${bubbles.map(b => renderFlexBubble(b)).join('')}
+          </div>
+        `;
+      } else if (node.type === 'bubble') {
+        return renderFlexBubble(node);
+      }
+      return '<div class="p-4 bg-white rounded-xl text-xs text-slate-700 font-medium">รูปแบบไม่รองรับ</div>';
+    }
+
+    function renderFlexBubble(bubble) {
+      if (!bubble) return '';
+      let sizeClass = 'max-w-[300px]';
+      if (bubble.size === 'kilo') sizeClass = 'max-w-[260px]';
+      else if (bubble.size === 'mega') sizeClass = 'max-w-[300px]';
+      else if (bubble.size === 'giga') sizeClass = 'max-w-[340px]';
+
+      let headerHtml = '';
+      if (bubble.header) {
+        headerHtml = `<div class="p-4 pb-2 border-b border-slate-100">${renderFlexBox(bubble.header)}</div>`;
+      }
+
+      let heroHtml = '';
+      if (bubble.hero) {
+        heroHtml = `
+          <div class="w-full overflow-hidden bg-slate-100">
+            <img src="${bubble.hero.url || 'https://placehold.co/400x260/e2e8f0/1e293b?text=Hero+Image'}" alt="ภาพประกอบ Flex" class="w-full object-cover max-h-48" onerror="this.src='https://placehold.co/400x260/e2e8f0/1e293b?text=No+Image'">
+          </div>
+        `;
+      }
+
+      let bodyHtml = '';
+      if (bubble.body) {
+        const bodyPad = bubble.body.paddingAll === '0px' ? 'p-0' : 'p-4';
+        bodyHtml = `<div class="${bodyPad} relative overflow-hidden">${renderFlexBox(bubble.body)}</div>`;
+      }
+
+      let footerHtml = '';
+      if (bubble.footer) {
+        footerHtml = `<div class="p-3.5 bg-slate-50/90 border-t border-slate-100">${renderFlexBox(bubble.footer)}</div>`;
+      }
+
+      return `
+        <div class="w-full ${sizeClass} bg-white rounded-[18px] shadow-lg border border-slate-200/90 overflow-hidden text-slate-900 flex flex-col flex-shrink-0 relative">
+          ${headerHtml}
+          ${heroHtml}
+          ${bodyHtml}
+          ${footerHtml}
+        </div>
+      `;
+    }
+
+    function renderFlexBox(box) {
+      if (!box || !box.contents) return '';
+      const isHorizontal = box.layout === 'horizontal';
+      const spacingClass = box.spacing === 'md' ? 'gap-3' : (box.spacing === 'lg' ? 'gap-4' : (box.spacing ? 'gap-1.5' : ''));
+      const flexDir = isHorizontal ? 'flex-row items-center justify-between' : 'flex-col';
+
+      // Inline styles for absolute positioning and dimensions
+      const styles = [];
+      if (box.position === 'absolute') {
+        styles.push('position: absolute');
+        if (box.offsetTop !== undefined) styles.push(`top: ${box.offsetTop}`);
+        if (box.offsetStart !== undefined) styles.push(`left: ${box.offsetStart}`);
+        if (box.offsetEnd !== undefined) styles.push(`right: ${box.offsetEnd}`);
+        if (box.offsetBottom !== undefined) styles.push(`bottom: ${box.offsetBottom}`);
+      }
+      if (box.width) styles.push(`width: ${box.width}`);
+      if (box.height) styles.push(`height: ${box.height}`);
+      if (box.backgroundColor) styles.push(`background-color: ${box.backgroundColor}`);
+      const styleAttr = styles.length > 0 ? `style="${styles.join('; ')}"` : '';
+
+      let actionAttrs = '';
+      let interactiveClasses = '';
+      if (box.action) {
+        const actionText = box.action.displayText || box.action.label || 'Action';
+        const safeText = actionText.replace(/"/g, '&quot;').replace(/'/g, "\\'");
+        actionAttrs = `onclick="event.stopPropagation(); showToast('เลือก: ${safeText}')" title="${actionText}" role="button" tabindex="0"`;
+        interactiveClasses = 'cursor-pointer hover:bg-blue-500/15 border border-transparent hover:border-blue-400/50 rounded transition-all';
+      }
+
+      const inner = box.contents.map(item => {
+        if (item.type === 'image') {
+          const imgStyles = [];
+          if (item.aspectRatio) {
+            imgStyles.push(`aspect-ratio: ${item.aspectRatio.replace(':', '/')}`);
+          }
+          const style = imgStyles.length > 0 ? `style="${imgStyles.join('; ')}"` : '';
+          const fitMode = item.aspectMode === 'fit' ? 'object-contain' : 'object-cover';
+          return `<img src="${item.url}" alt="Flex image" class="w-full ${fitMode} block select-none pointer-events-none" ${style} onerror="this.src='https://placehold.co/400x600/e2e8f0/1e293b?text=Image+Unavailable'">`;
+        }
+        if (item.type === 'text') {
+          const weight = item.weight === 'bold' ? 'font-bold text-slate-950' : 'text-slate-800 font-medium';
+          const size = item.size === 'lg' ? 'text-base' : (item.size === 'sm' ? 'text-xs' : (item.size === 'xs' ? 'text-[11px]' : 'text-sm'));
+          
+          let colorValue = item.color;
+          if (colorValue === '#1DB446' || colorValue === '#16a34a') colorValue = '#14532d'; // AAA green
+          if (colorValue === '#d97706') colorValue = '#78350f'; // AAA amber
+          if (colorValue === '#64748b' || colorValue === '#475569') colorValue = '#1e293b'; // AAA dark slate
+          
+          const colorStyle = colorValue ? `style="color: ${colorValue}"` : '';
+          return `<div class="${weight} ${size} leading-snug" ${colorStyle}>${item.text || ''}</div>`;
+        }
+        if (item.type === 'separator') {
+          return '<div class="w-full h-px bg-slate-300 my-1"></div>';
+        }
+        if (item.type === 'button') {
+          const isPrimary = item.style === 'primary';
+          const isLink = item.style === 'link';
+          const btnColor = item.color || '#0f172a';
+          const rawLabel = item.action?.label !== undefined ? item.action.label : '';
+          const displayTxt = item.action?.displayText || rawLabel.trim() || 'ปุ่มกด';
+          const labelHtml = rawLabel.trim() ? rawLabel : (isLink ? '' : displayTxt);
+          const safeActionText = (item.action?.displayText || item.action?.label || 'Action').replace(/"/g, '&quot;').replace(/'/g, "\\'");
+
+          if (item.action?.uri) {
+            return `
+              <a href="${item.action.uri}" target="_blank" style="${isPrimary ? `background-color: ${btnColor}; color: white;` : (isLink ? 'background: transparent;' : `border: 2px solid ${btnColor}; color: ${btnColor};`)}" class="w-full h-full min-h-[36px] py-1.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center transition-all text-center ${isLink ? 'hover:bg-blue-500/15 border border-transparent hover:border-blue-400/50' : 'hover:opacity-90'}" title="${displayTxt}">
+                ${labelHtml}
+              </a>
+            `;
+          } else {
+            return `
+              <button type="button" onclick="event.stopPropagation(); showToast('เลือก: ${safeActionText}')" style="${isPrimary ? `background-color: ${btnColor}; color: white;` : (isLink ? 'background: transparent;' : `border: 2px solid ${btnColor}; color: ${btnColor};`)}" class="w-full h-full min-h-[36px] py-1.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center transition-all text-center ${isLink ? 'hover:bg-blue-500/15 border border-transparent hover:border-blue-400/50' : 'hover:opacity-90'}" title="${displayTxt}">
+                ${labelHtml}
+              </button>
+            `;
+          }
+        }
+        if (item.type === 'box') {
+          return renderFlexBox(item);
+        }
+        return '';
+      }).join('');
+
+      return `<div class="flex ${flexDir} ${spacingClass} ${interactiveClasses}" ${styleAttr} ${actionAttrs}>${inner}</div>`;
+    }
+
+    // 3. Search and Type Filter Logic
+    function handleSearch(query) {
+      const q = query.trim().toLowerCase();
+      const filtered = flexTemplates.filter(t => 
+        t.flex_name.toLowerCase().includes(q) || 
+        (t.comment && t.comment.toLowerCase().includes(q)) ||
+        t.id.toString() === q
+      );
+      renderTemplatesList(filtered);
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('search-input');
+      if (input) input.value = '';
+      renderTemplatesList(flexTemplates);
+    }
+
+    function filterByType(type, btnElement) {
+      document.querySelectorAll('.filter-chip').forEach(b => {
+        b.className = "filter-chip px-3.5 py-1.5 rounded-xl text-xs font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all";
+      });
+      btnElement.className = "filter-chip px-3.5 py-1.5 rounded-xl text-xs font-medium bg-slate-900 text-white shadow-2xs transition-all";
+
+      if (type === 'all') {
+        renderTemplatesList(flexTemplates);
+      } else if (type === 'quickreply') {
+        const filtered = flexTemplates.filter(t => !!t.quick_reply);
+        renderTemplatesList(filtered);
+      } else {
+        const filtered = flexTemplates.filter(t => {
+          try {
+            const data = JSON.parse(t.flex_data);
+            return data.type === type;
+          } catch(e) { return false; }
+        });
+        renderTemplatesList(filtered);
+      }
+    }
+
+    // 4. Modal Open/Close Logic with Focus Trap
+    let isJsonValid = true;
+
+    function validateSaveButton() {
+      const nameInput = document.getElementById('input-flex-name');
+      const saveBtn = document.getElementById('btn-save-flex');
+      if (!saveBtn) return;
+      const isNameValid = nameInput ? (nameInput.value.trim().length > 0) : false;
+      saveBtn.disabled = !(isNameValid && isJsonValid);
+    }
+
+    function validateFlexName() {
+      validateSaveButton();
+    }
+
+    function openCreateModal() {
+      currentEditingId = null;
+      document.getElementById('modal-main-title').textContent = "สร้าง Flex Message ใหม่";
+      document.getElementById('modal-subtitle').textContent = "โหมด Code Editor หรือเลือกจาก Template Gallery";
+      document.getElementById('input-flex-name').value = "";
+      document.getElementById('input-flex-comment').value = "";
+      document.getElementById('btn-delete-in-modal').classList.add('hidden');
+      document.getElementById('save-button-label').textContent = "สร้างเทมเพลต";
+      validateFlexName();
+
+      // Blank starter template: เริ่มต้นแบบสะอาด ไม่ค้างเทมเพลตเดิม
+      const blankStarterJson = JSON.stringify({
+        type: "bubble",
+        body: {
+          type: "box",
+          layout: "vertical",
+          contents: [
+            {
+              type: "text",
+              text: "ข้อความ Flex Message ใหม่",
+              weight: "bold",
+              size: "md"
+            },
+            {
+              type: "text",
+              text: "ระบุข้อความหรือแทรก Snippet ได้จากแถบเครื่องมือด้านบน หรือเลือกโครงสร้างจาก Template Gallery",
+              size: "xs",
+              color: "#334155",
+              margin: "sm",
+              wrap: true
+            }
+          ]
+        }
+      }, null, 2);
+
+      setEditorContent(blankStarterJson);
+      renderQuickReplyPreview(null);
+      switchEditorTab('scratch');
+      populateGallery();
+
+      const modal = document.getElementById('flex-editor-modal');
+      modal.classList.remove('hidden');
+      trapFocusInModal(modal);
+      setPreviewZoom(1.0);
+      lucide.createIcons();
+    }
+
+    function openEditorModal(templateId) {
+      const t = flexTemplates.find(x => x.id === templateId);
+      if (!t) return;
+
+      currentEditingId = templateId;
+      document.getElementById('modal-main-title').textContent = `แก้ไข: ${t.flex_name}`;
+      document.getElementById('modal-subtitle').textContent = `ID: ${t.id} • ปรับปรุงล่าสุด: ${t.updated_on}`;
+      document.getElementById('input-flex-name').value = t.flex_name;
+      document.getElementById('input-flex-comment').value = t.comment || '';
+      document.getElementById('btn-delete-in-modal').classList.remove('hidden');
+      document.getElementById('save-button-label').textContent = "บันทึกการแก้ไข";
+      validateFlexName();
+
+      setEditorContent(t.flex_data);
+      renderQuickReplyPreview(t.quick_reply);
+      switchEditorTab('scratch');
+      populateGallery();
+
+      const modal = document.getElementById('flex-editor-modal');
+      modal.classList.remove('hidden');
+      trapFocusInModal(modal);
+      setPreviewZoom(1.0);
+      lucide.createIcons();
+    }
+
+    function closeEditorModal() {
+      document.getElementById('flex-editor-modal').classList.add('hidden');
+      releaseFocusTrap();
+    }
+
+    // 5. Code Editor & Live Validation Engine
+    function setEditorContent(codeStr) {
+      const textarea = document.getElementById('json-code-textarea');
+      textarea.value = codeStr;
+      undoStack = [codeStr];
+      redoStack = [];
+      updateUndoRedoButtons();
+      updateLineNumbers(codeStr);
+      updateCursorPosition();
+      handleJsonInput(codeStr);
+    }
+
+    function handleJsonInput(value) {
+      const errorBox = document.getElementById('editor-error-box');
+      const errorText = document.getElementById('editor-error-text');
+      const errorHint = document.getElementById('editor-error-hint');
+      const pill = document.getElementById('modal-validation-pill');
+      const pillText = document.getElementById('validation-pill-text');
+      const saveBtn = document.getElementById('btn-save-flex');
+
+      updateLineNumbers(value);
+
+      // STAGE 1: Local JSON Syntax Check
+      try {
+        const parsed = JSON.parse(value);
+        errorBox.classList.add('hidden');
+
+        // Update Live Mobile Mock
+        document.getElementById('live-preview-target').innerHTML = renderFlexToHtml(parsed);
+        document.getElementById('preview-type-indicator').textContent = parsed.type || 'UNKNOWN';
+
+        // STAGE 2: Remote LINE Push Validation Check (Debounced 600ms)
+        pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-blue-50 text-blue-700 border border-blue-200";
+        pillText.textContent = "Checking...";
+        isJsonValid = false;
+        validateSaveButton();
+
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          if (parsed.type !== 'bubble' && parsed.type !== 'carousel') {
+            pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200";
+            pillText.textContent = "Invalid Schema";
+            errorBox.classList.remove('hidden');
+            errorText.textContent = "spec.contents: Root type must be 'bubble' or 'carousel'";
+            errorHint.textContent = "ประเภทข้อมูลหลัก (Root) ของ LINE Flex Message ต้องเป็น bubble หรือ carousel เท่านั้น";
+            isJsonValid = false;
+            validateSaveButton();
+          } else {
+            pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200";
+            pillText.textContent = "Valid LINE Schema";
+            isJsonValid = true;
+            validateSaveButton();
+          }
+          lucide.createIcons();
+        }, 600);
+
+      } catch (err) {
+        errorBox.classList.remove('hidden');
+        errorText.textContent = err.message;
+
+        const posMatch = err.message.match(/position\s+(\d+)/);
+        if (posMatch) {
+          const charIndex = parseInt(posMatch[1], 10);
+          const linesBefore = value.substring(0, charIndex).split('\n');
+          errorHint.textContent = `ตำแหน่งที่ผิดพลาดอยู่ประมาณบรรทัดที่ ${linesBefore.length} (คอลัมน์ที่ ${linesBefore[linesBefore.length - 1].length + 1})`;
+        } else {
+          errorHint.textContent = "โปรดตรวจสอบไวยากรณ์ JSON เช่น เครื่องหมายคำพูดคู่ (\"), ปีกกาเปิด/ปิด {}, หรือเครื่องหมายคอมมา";
+        }
+
+        pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200";
+        pillText.textContent = "JSON Syntax Error";
+        isJsonValid = false;
+        validateSaveButton();
+        lucide.createIcons();
+      }
+    }
+
+    function renderQuickReplyPreview(qrJsonStr) {
+      const container = document.getElementById('preview-quickreply-container');
+      if (!container) return;
+
+      if (!qrJsonStr) {
+        container.innerHTML = '<span class="text-xs text-slate-500 font-mono-code font-medium">ไม่มี Quick Reply สำหรับข้อความนี้</span>';
+        return;
+      }
+
+      try {
+        const qr = JSON.parse(qrJsonStr);
+        const items = qr.items || [];
+        container.innerHTML = items.map(it => `
+          <div class="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-medium shadow-2xs whitespace-nowrap">
+            ${it.action?.label || 'Action'}
+          </div>
+        `).join('');
+      } catch(e) {
+        container.innerHTML = '<span class="text-xs text-rose-600 font-mono-code font-medium">Quick Reply ผิดรูปแบบ</span>';
+      }
+    }
+
+    // Snippets Bar Insertion
+    function insertSnippet(type) {
+      const textarea = document.getElementById('json-code-textarea');
+      let snippetObj = {};
+
+      if (type === 'bubble') {
+        snippetObj = { type: "bubble", header: { type: "box", layout: "vertical", contents: [{ type: "text", text: "New Bubble Header" }] } };
+      } else if (type === 'carousel') {
+        snippetObj = { type: "carousel", contents: [{ type: "bubble", body: { type: "box", layout: "vertical", contents: [{ type: "text", text: "Slide 1" }] } }] };
+      } else if (type === 'text') {
+        snippetObj = { type: "text", text: "ข้อความตัวอย่างใหม่", size: "sm", color: "#1e293b", wrap: true };
+      } else if (type === 'button') {
+        snippetObj = { type: "button", style: "primary", color: "#0f172a", action: { type: "uri", label: "กดที่นี่", uri: "https://traffy.in.th" } };
+      } else if (type === 'image') {
+        snippetObj = { type: "image", url: "https://placehold.co/400x260/e2e8f0/1e293b?text=Sample+Image", size: "full", aspectRatio: "20:13" };
+      } else if (type === 'row') {
+        snippetObj = { type: "box", layout: "horizontal", contents: [{ type: "text", text: "หัวข้อ:" }, { type: "text", text: "ค่าข้อมูล", align: "end", weight: "bold" }] };
+      } else if (type === 'separator') {
+        snippetObj = { type: "separator", margin: "md" };
+      }
+
+      const snippetStr = JSON.stringify(snippetObj, null, 2);
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+
+      saveStateForUndo(text);
+      textarea.value = text.substring(0, start) + snippetStr + text.substring(end);
+      textarea.focus();
+      handleJsonInput(textarea.value);
+    }
+
+    // Undo / Redo Mechanism
+    function saveStateForUndo(val) {
+      undoStack.push(val);
+      if (undoStack.length > 20) undoStack.shift();
+      redoStack = [];
+      updateUndoRedoButtons();
+    }
+
+    function handleUndo() {
+      if (undoStack.length === 0) return;
+      const textarea = document.getElementById('json-code-textarea');
+      redoStack.push(textarea.value);
+      const prev = undoStack.pop();
+      textarea.value = prev;
+      handleJsonInput(prev);
+      updateUndoRedoButtons();
+    }
+
+    function handleRedo() {
+      if (redoStack.length === 0) return;
+      const textarea = document.getElementById('json-code-textarea');
+      undoStack.push(textarea.value);
+      const next = redoStack.pop();
+      textarea.value = next;
+      handleJsonInput(next);
+      updateUndoRedoButtons();
+    }
+
+    function updateUndoRedoButtons() {
+      document.getElementById('btn-undo').disabled = (undoStack.length === 0);
+      document.getElementById('btn-redo').disabled = (redoStack.length === 0);
+    }
+
+    function formatJsonCode() {
+      const textarea = document.getElementById('json-code-textarea');
+      try {
+        const obj = JSON.parse(textarea.value);
+        saveStateForUndo(textarea.value);
+        textarea.value = JSON.stringify(obj, null, 2);
+        handleJsonInput(textarea.value);
+        showToast('จัดระเบียบ JSON สำเร็จ');
+      } catch(e) {
+        showToast('ไม่สามารถจัดระเบียบได้เนื่องจาก Syntax ผิดพลาด');
+      }
+    }
+
+    // Switch Tabs in Modal (ARIA controls)
+    function switchEditorTab(tab) {
+      const scratchTab = document.getElementById('tab-content-scratch');
+      const galleryTab = document.getElementById('tab-content-gallery');
+      const scratchBtn = document.getElementById('tab-scratch-btn');
+      const galleryBtn = document.getElementById('tab-gallery-btn');
+
+      if (tab === 'scratch') {
+        scratchTab.classList.remove('hidden');
+        galleryTab.classList.add('hidden');
+        scratchBtn.setAttribute('aria-selected', 'true');
+        galleryBtn.setAttribute('aria-selected', 'false');
+        scratchBtn.className = "px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-900 shadow-2xs border border-slate-200/60";
+        galleryBtn.className = "px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900";
+      } else {
+        scratchTab.classList.add('hidden');
+        galleryTab.classList.remove('hidden');
+        scratchBtn.setAttribute('aria-selected', 'false');
+        galleryBtn.setAttribute('aria-selected', 'true');
+        galleryBtn.className = "px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-900 shadow-2xs border border-slate-200/60";
+        scratchBtn.className = "px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900";
+      }
+    }
+
+    function populateGallery() {
+      const container = document.getElementById('gallery-container');
+      if (!container) return;
+
+      container.innerHTML = GALLERY_TEMPLATES.map((g, idx) => `
+        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-2 hover:border-slate-300 transition-colors">
+          <h4 class="font-medium text-slate-900 text-xs">${g.title}</h4>
+          <p class="text-[11px] text-slate-500 leading-relaxed">${g.desc}</p>
+          <button onclick="useGalleryTemplate(${idx})" class="w-full py-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 transition-colors shadow-2xs">
+            โหลดโครงสร้างนี้
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function useGalleryTemplate(idx) {
+      const t = GALLERY_TEMPLATES[idx];
+      setEditorContent(JSON.stringify(t.json, null, 2));
+      switchEditorTab('scratch');
+      showToast(`โหลดเทมเพลต "${t.title}" แล้ว`);
+    }
+
+    // 6. Audit Trail & Finalize Saving Logic
+    function openFinalizeSaveModal() {
+      const name = document.getElementById('input-flex-name').value.trim();
+      const comment = document.getElementById('input-flex-comment').value.trim();
+
+      if (!name) {
+        showToast('กรุณาระบุชื่อเทมเพลต');
+        document.getElementById('input-flex-name').focus();
+        return;
+      }
+
+      document.getElementById('audit-preview-name').textContent = name;
+      document.getElementById('audit-preview-comment').textContent = comment || 'ไม่มีคำอธิบาย';
+      document.getElementById('input-what-change').value = '';
+      document.getElementById('audit-error-notice').classList.add('hidden');
+      
+      const modal = document.getElementById('finalize-save-modal');
+      modal.classList.remove('hidden');
+      trapFocusInModal(modal);
+      lucide.createIcons();
+    }
+
+    function closeFinalizeModal() {
+      document.getElementById('finalize-save-modal').classList.add('hidden');
+      const editorModal = document.getElementById('flex-editor-modal');
+      if (!editorModal.classList.contains('hidden')) {
+        trapFocusInModal(editorModal);
+      } else {
+        releaseFocusTrap();
+      }
+    }
+
+    function handleAuditNoteInput(val) {
+      if (val.trim()) {
+        document.getElementById('audit-error-notice').classList.add('hidden');
+      }
+    }
+
+    function setAuditPreset(text) {
+      document.getElementById('input-what-change').value = text;
+      document.getElementById('audit-error-notice').classList.add('hidden');
+    }
+
+    function commitSaveFlexMessage() {
+      const whatChange = document.getElementById('input-what-change').value.trim();
+      if (!whatChange) {
+        document.getElementById('audit-error-notice').classList.remove('hidden');
+        document.getElementById('input-what-change').focus();
+        return;
+      }
+
+      const name = document.getElementById('input-flex-name').value.trim();
+      const comment = document.getElementById('input-flex-comment').value.trim();
+      const code = document.getElementById('json-code-textarea').value.trim();
+      const now = new Date();
+      const timestamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+
+      if (currentEditingId) {
+        const item = flexTemplates.find(x => x.id === currentEditingId);
+        if (item) {
+          item.flex_name = name;
+          item.comment = comment;
+          item.flex_data = code;
+          item.updated_on = timestamp;
+          showToast(`บันทึกการแก้ไข "${name}" สำเร็จ`);
+        }
+      } else {
+        const newId = flexTemplates.length > 0 ? Math.max(...flexTemplates.map(x => x.id)) + 1 : 1;
+        flexTemplates.unshift({
+          id: newId,
+          flex_name: name,
+          comment: comment,
+          flex_data: code,
+          quick_reply: null,
+          updated_on: timestamp
+        });
+        showToast(`สร้างเทมเพลตใหม่ #${newId} สำเร็จ`);
+      }
+
+      closeFinalizeModal();
+      closeEditorModal();
+      renderTemplatesList(flexTemplates);
+    }
+
+    // 7. Delete Logic
+    function promptDeleteTemplate(id) {
+      const item = flexTemplates.find(x => x.id === id);
+      if (!item) return;
+
+      deleteTargetId = id;
+      document.getElementById('delete-target-title').textContent = `"${item.flex_name}" (#${item.id})`;
+      const modal = document.getElementById('delete-confirm-modal');
+      modal.classList.remove('hidden');
+      trapFocusInModal(modal);
+      lucide.createIcons();
+    }
+
+    function promptDeleteCurrent() {
+      if (currentEditingId) {
+        promptDeleteTemplate(currentEditingId);
+      }
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('delete-confirm-modal').classList.add('hidden');
+      deleteTargetId = null;
+      releaseFocusTrap();
+    }
+
+    function confirmExecuteDelete() {
+      if (!deleteTargetId) return;
+
+      const idx = flexTemplates.findIndex(x => x.id === deleteTargetId);
+      if (idx !== -1) {
+        const deleted = flexTemplates.splice(idx, 1)[0];
+        showToast(`ลบเทมเพลต "${deleted.flex_name}" เรียบร้อยแล้ว`);
+      }
+
+      closeDeleteModal();
+      closeEditorModal();
+      renderTemplatesList(flexTemplates);
+    }
+
+    // 8. Clipboard Copy
+    function copyFlexJson(id) {
+      const item = flexTemplates.find(x => x.id === id);
+      if (!item) return;
+
+      const temp = document.createElement('textarea');
+      temp.value = item.flex_data;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+
+      showToast(`คัดลอก JSON ของ #${item.id} แล้ว`);
+    }
+
+    // 9. Toast Notification
+    let toastTimeout = null;
     function showToast(msg) {
       const toast = document.getElementById('toast-box');
       const msgEl = document.getElementById('toast-message');
       if (!toast || !msgEl) return;
 
       msgEl.textContent = msg;
-      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.remove('translate-y-28', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
 
-      if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-        toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2200);
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        hideToast();
+      }, 3500);
     }
+
+    function hideToast() {
+      const toast = document.getElementById('toast-box');
+      if (!toast) return;
+      toast.classList.add('translate-y-28', 'opacity-0');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }
+
+    // Keyboard Shortcuts (Esc to close modals, ⌘K to search)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const imageModal = document.getElementById('image-preview-modal');
+        const finalizeModal = document.getElementById('finalize-save-modal');
+        const deleteModal = document.getElementById('delete-confirm-modal');
+        const editorModal = document.getElementById('flex-editor-modal');
+
+        if (imageModal && !imageModal.classList.contains('hidden')) {
+          closeImagePreviewModal();
+        } else if (!finalizeModal.classList.contains('hidden')) {
+          closeFinalizeModal();
+        } else if (!deleteModal.classList.contains('hidden')) {
+          closeDeleteModal();
+        } else if (!editorModal.classList.contains('hidden')) {
+          closeEditorModal();
+        }
+      }
+
+      // ⌘K or Ctrl+K to focus search input
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+          e.preventDefault();
+          searchInput.focus();
+        }
+      }
+    });
+
+    // Initial Render
+    renderTemplatesList(flexTemplates);
   </script>
 </body>
 </html>
