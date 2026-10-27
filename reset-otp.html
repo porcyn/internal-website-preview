@@ -786,7 +786,7 @@
       
       <!-- Actions -->
       <div class="flex gap-3">
-        <button onclick="closeResetModal()" class="flex-1 py-3 rounded-xl font-semibold text-[#6b473d] bg-[#eedcd5] hover:bg-[#e4cfc7] border border-[#dfc3b9] transition-all text-sm whitespace-nowrap shadow-xs cursor-pointer active:scale-95">
+        <button onclick="closeResetModal()" class="flex-1 py-3 rounded-xl font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all text-sm whitespace-nowrap shadow-xs cursor-pointer active:scale-95">
           ยกเลิก
         </button>
         <button onclick="confirmReset()" class="flex-1 py-3 rounded-xl font-semibold text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-600/25 transition-all active:scale-95 text-sm whitespace-nowrap cursor-pointer">
@@ -809,7 +809,6 @@
 
     // Input Formatting (Only Numbers, Max 10)
     function formatPhoneInput(inputElement) {
-      // Remove any non-numeric characters
       inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
     }
 
@@ -939,12 +938,11 @@
       setTimeout(() => {
         showToast(`รีเซ็ต OTP สำหรับ ${phone} สำเร็จแล้ว`, 'success');
         addHistoryItem(phone);
-        document.getElementById('input-phone').value = ''; // Clear input
-        simulateUserSearch(''); // Reset the user mock view back to skeleton
+        document.getElementById('input-phone').value = '';
+        simulateUserSearch('');
       }, 300);
     }
 
-    // Toast System
     let toastTimer = null;
     function showToast(msg, type = 'success') {
       const toast = document.getElementById('toast-box');
@@ -971,7 +969,6 @@
       }, 3000);
     }
 
-    // Mobile Sidebar
     function toggleMobileSidebar() {
       const sidebar = document.getElementById('main-sidebar');
       const backdrop = document.getElementById('mobile-sidebar-backdrop');
@@ -983,7 +980,6 @@
       document.getElementById('mobile-sidebar-backdrop').classList.add('hidden');
     }
 
-    // Scroll to Top
     function scrollToTop() {
       const scrollEl = document.getElementById('content-container');
       if (scrollEl) scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1017,7 +1013,6 @@
       handleScroll();
     }
 
-    // Initialize after DOM loads
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         initScrollToTop();
