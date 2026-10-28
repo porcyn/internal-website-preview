@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สร้างบัญชีทางการ + ผูกผังองค์กร - Traffy Fondue Internal Website</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Noto Sans Thai & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 24px;
+      --sidebar-width: 260px;
+      --sidebar-collapsed-width: 72px;
+      --topbar-height: 64px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root {
+        --page-padding: 20px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --page-padding: 12px;
+        --topbar-height: 56px;
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+
+    /* REAL PROJECT SIDEBAR STYLES */
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .real-user-card {
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+
+    .real-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+
+    .real-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .real-children-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
+    }
+
+    .real-nested-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+
+    .real-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .real-nested-active {
+      background: #0f172a !important;
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+
+    /* REAL PROJECT TOPBAR STYLES */
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--page-padding);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 767px) {
+      .real-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 280px;
+        max-width: 84vw;
+        height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transform: translateX(-100%);
+      }
+
+      .real-sidebar.sidebar-open {
+        transform: translateX(0) !important;
+      }
+
+      .real-topbar {
+        padding: 0 var(--page-padding);
+        height: var(--topbar-height);
+      }
+    }
+  </style>
+</head>
+
+<body class="flex h-screen overflow-hidden text-xs">
+
+  <!-- 1. SIDEBAR NAVIGATION -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()"
+    class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+
+  <aside id="main-sidebar" class="real-sidebar select-none">
+    <!-- User Card -->
+    <div class="real-user-card">
+      <div class="flex items-center gap-2.5">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <button type="button" onclick="closeMobileSidebar()"
+          class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors"
+          title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <button type="button"
+          class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors"
+          title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span
+          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
+        <span
+          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex flex-col gap-0.5">
+      <!-- 1. จัดการหน่วยงาน -->
+      <a href="./organizations.html" class="real-menu-item">
+        <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+      </a>
+
+      <!-- 2. จัดการ Case -->
+      <a href="./cases.html" class="real-menu-item mt-1">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <!-- 3. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item mt-1">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
+
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+      <!-- 5. รายงานและสถิติ -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">รายงานและสถิติ</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./richmenu-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติหน่วยงาน</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. บัญชี / สร้างหน่วยงาน (ACTIVE GROUP) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header text-slate-900 font-semibold">
+          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0 text-blue-600"></i>
+          <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./create-official-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
+          </a>
+          <a href="./create-org-chart.html" class="real-nested-item real-nested-active">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 7. จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1">
+        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- 8. FAQ -->
+      <a href="./faq.html" class="real-menu-item mt-1">
+        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- 2. MAIN CONTENT AREA -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
+
+    <!-- Topbar Header -->
+    <header class="real-topbar">
+      <!-- Left: Mobile Hamburger + Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+        <button type="button" onclick="toggleMobileSidebar()"
+          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0"
+          title="เปิดเมนูนำทาง">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <span class="text-slate-400 font-medium">บัญชี / สร้างหน่วยงาน</span>
+        <span class="text-slate-300">/</span>
+        <span class="font-bold text-slate-800">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+        <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">Visual Org Builder</span>
+      </div>
+
+      <!-- Right Actions: Fullscreen Open + Single Account Link -->
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <a href="./create-official-account.html"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-colors cursor-pointer whitespace-nowrap">
+          <i data-lucide="building" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span class="hidden sm:inline">สร้างบัญชีเดี่ยว</span>
+        </a>
+        <a href="./org-chart-creation/index.html" target="_blank"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap active:scale-95"
+          title="เปิด Visual Org Builder ในแท็บใหม่">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <span>เปิดเต็มจอ</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Embedded Application Container -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden p-2 sm:p-4">
+      <div class="w-full h-full bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden flex flex-col relative">
+        
+        <!-- Quick App Info Bar -->
+        <div class="px-4 py-2 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between text-xs text-slate-600 flex-shrink-0">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="font-bold text-slate-900 truncate">ระบบสร้างบัญชีทางการแบบผูกผังองค์กร (org-chart-creation)</span>
+            <span class="text-slate-400 hidden md:inline">|</span>
+            <span class="text-[11px] text-slate-500 hidden md:inline">รองรับการอัปโหลดไฟล์ Excel / Google Sheet และลากเส้นผังองค์กรแบบอัตโนมัติ</span>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button onclick="reloadIframe()" class="p-1 text-slate-500 hover:text-slate-800 hover:bg-slate-200/60 rounded-md transition-colors" title="รีเฟรชผัง">
+              <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Embedded Iframe running org-chart-creation -->
+        <iframe id="org-chart-iframe" src="./org-chart-creation/index.html"
+          class="w-full flex-1 border-0 bg-white" title="สร้างบัญชีทางการ + ผูกผังองค์กร"></iframe>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Mobile Sidebar
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (sidebar.classList.contains('sidebar-open')) closeMobileSidebar();
+      else { sidebar.classList.add('sidebar-open'); backdrop.classList.remove('hidden'); }
+    }
+    function closeMobileSidebar() {
+      document.getElementById('main-sidebar').classList.remove('sidebar-open');
+      document.getElementById('mobile-sidebar-backdrop').classList.add('hidden');
+    }
+
+    function reloadIframe() {
+      const frame = document.getElementById('org-chart-iframe');
+      if (frame) {
+        frame.src = frame.src;
+      }
+    }
+  </script>
+</body>
+
+</html>
