@@ -319,28 +319,13 @@
         <span class="text-slate-400 font-medium">บัญชี / สร้างหน่วยงาน</span>
         <span class="text-slate-300">/</span>
         <span class="font-bold text-slate-800">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
-        <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">Visual Org Builder</span>
-      </div>
-
-      <!-- Right Actions: Fullscreen Open + Single Account Link -->
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <a href="./create-official-account.html"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-colors cursor-pointer whitespace-nowrap">
-          <i data-lucide="building" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span class="hidden sm:inline">สร้างบัญชีเดี่ยว</span>
-        </a>
-        <button onclick="toggleAppFullscreen()" id="fs-btn" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap active:scale-95" title="ขยายพื้นที่ทำงานเต็มจอ"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i><span id="fs-text">ขยายเต็มจอ</span></button>
       </div>
     </header>
 
-    <!-- Embedded Application Container -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-hidden p-2 sm:p-4">
-      <div class="w-full h-full bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden flex flex-col relative">
-        
-        <!-- Embedded Iframe running org-chart-creation -->
-        <iframe id="org-chart-iframe" src="./org-chart-creation/index.html"
-          class="w-full flex-1 border-0 bg-white" title="สร้างบัญชีทางการ + ผูกผังองค์กร"></iframe>
-      </div>
+    <!-- Embedded Application Container (Self-contained in this repo, fills full page) -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <iframe id="org-chart-iframe" src="./org-chart-creation/index.html"
+        class="w-full h-full border-0 bg-white" title="สร้างบัญชีทางการ + ผูกผังองค์กร"></iframe>
     </div>
   </main>
 
@@ -358,27 +343,6 @@
     function closeMobileSidebar() {
       document.getElementById('main-sidebar').classList.remove('sidebar-open');
       document.getElementById('mobile-sidebar-backdrop').classList.add('hidden');
-    }
-
-    function toggleAppFullscreen() {
-      const container = document.getElementById('org-chart-iframe')?.parentElement;
-      if (!container) return;
-      if (!document.fullscreenElement) {
-        if (container.requestFullscreen) container.requestFullscreen();
-      } else {
-        if (document.exitFullscreen) document.exitFullscreen();
-      }
-    }
-    document.addEventListener('fullscreenchange', () => {
-      const text = document.getElementById('fs-text');
-      if (text) text.textContent = document.fullscreenElement ? 'ย่อหน้าจอ' : 'ขยายเต็มจอ';
-    });
-    
-    function reloadIframe() {
-      const frame = document.getElementById('org-chart-iframe');
-      if (frame) {
-        frame.src = frame.src;
-      }
     }
   </script>
 </body>
