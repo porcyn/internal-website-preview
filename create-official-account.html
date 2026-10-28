@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>สร้างบัญชีทางการ - Traffy Fondue Internal Website</title>
-
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
@@ -13,92 +12,29 @@
   <!-- Google Fonts: Noto Sans Thai & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      --page-min-width: 320px;
-      --content-max-width: 1536px;
-      --page-padding: 32px;
       --sidebar-width: 260px;
-      --sidebar-collapsed-width: 72px;
       --topbar-height: 64px;
     }
-
-    @media (min-width: 768px) and (max-width: 1023px) {
-      :root {
-        --page-padding: 24px;
-      }
-    }
-
-    #content-container {
-      padding: var(--page-padding) !important;
-      box-sizing: border-box;
-    }
-
-    .dashboard-body,
-    #content-container>div,
-    #content-container>section {
-      width: 100%;
-      max-width: var(--content-max-width);
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    @media (max-width: 767px) {
-      :root {
-        --page-padding: 16px;
-        --topbar-height: 56px;
-      }
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      -webkit-text-size-adjust: 100%;
-    }
-
     body {
-      margin: 0;
-      min-width: var(--page-min-width);
       font-family: var(--font-family);
+      margin: 0;
       background-color: #f8fafc;
-      color: #0f172a;
-      line-height: 1.5;
+      color: #1e293b;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
     }
-
     .font-mono-code {
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-feature-settings: "tnum" 1, "zero" 1;
     }
-
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #e2e8f0;
-      border-radius: 9999px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #cbd5e1;
-    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
 
     /* REAL PROJECT SIDEBAR STYLES */
     .real-sidebar {
@@ -114,158 +50,88 @@
       flex-shrink: 0;
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .real-user-card {
       padding: 12px;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       background: #f8fafc;
     }
-
     .real-menu-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      border-radius: 10px;
-      color: #334155;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: 10px;
+      color: #334155; font-size: 14px; font-weight: 500;
+      text-decoration: none; transition: background 0.15s, color 0.15s; cursor: pointer;
     }
-
-    .real-menu-item:hover {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
-
-    .real-menu-active {
-      background: #111827 !important;
-      color: #ffffff !important;
-    }
-
+    .real-menu-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-menu-active { background: #111827 !important; color: #ffffff !important; }
+    
     .real-group-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0;
-      padding: 9px 12px;
-      border-radius: 10px;
-      color: #334155;
-      font-size: 14px;
-      font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      margin: 0; padding: 9px 12px; border-radius: 10px;
+      color: #334155; font-size: 14px; font-weight: 500;
     }
-
     .real-children-group {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      margin-left: 20px;
-      padding-left: 8px;
-      border-left: 1px solid #e2e8f0;
+      display: flex; flex-direction: column; gap: 2px;
+      margin-left: 20px; padding-left: 8px; border-left: 1px solid #e2e8f0;
     }
-
     .real-nested-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 7px 12px;
-      font-size: 13px;
-      border-radius: 10px;
-      color: #334155;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 12px; font-size: 13px; border-radius: 10px;
+      color: #334155; text-decoration: none; transition: background 0.15s, color 0.15s; cursor: pointer;
     }
-
-    .real-nested-item:hover {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
-
-    .real-nested-active {
-      background: #0f172a !important;
-      color: #ffffff !important;
-      font-weight: 600;
-    }
+    .real-nested-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-nested-active { font-weight: 700; color: #0f172a; }
 
     /* REAL PROJECT TOPBAR STYLES */
     .real-topbar {
-      height: var(--topbar-height);
-      background: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 var(--page-padding);
-      flex-shrink: 0;
+      height: var(--topbar-height); background: #ffffff; border-bottom: 1px solid #e2e8f0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 24px; flex-shrink: 0;
     }
 
     @media (max-width: 767px) {
       .real-sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        z-index: 50;
-        width: 280px;
-        max-width: 84vw;
-        height: 100vh;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        transform: translateX(-100%);
+        position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
+        width: 280px; max-width: 84vw; height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); transform: translateX(-100%);
       }
-
-      .real-sidebar.sidebar-open {
-        transform: translateX(0) !important;
-      }
-
-      .real-topbar {
-        padding: 0 var(--page-padding);
-        height: var(--topbar-height);
-      }
+      .real-sidebar.sidebar-open { transform: translateX(0) !important; }
+      .real-topbar { padding: 0 12px; height: 54px; }
     }
   </style>
 </head>
-
 <body class="flex h-screen overflow-hidden text-xs">
 
-  <!-- 1. SIDEBAR NAVIGATION -->
-  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()"
-    class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
 
+  <!-- Main Sidebar -->
   <aside id="main-sidebar" class="real-sidebar select-none">
+    
     <!-- User Card -->
     <div class="real-user-card">
       <div class="flex items-center gap-2.5">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-          alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
         <div class="flex-1 min-w-0">
           <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
           <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
         </div>
-        <button type="button" onclick="closeMobileSidebar()"
-          class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors"
-          title="ปิดเมนู">
+        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
-        <button type="button"
-          class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors"
-          title="ออกจากระบบ">
+        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
       <div class="flex flex-wrap gap-1 mt-2">
-        <span
-          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
-        <span
-          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
       </div>
     </div>
 
     <!-- Navigation Menu Items -->
     <nav class="flex flex-col gap-0.5">
+      
       <!-- 1. จัดการหน่วยงาน -->
       <a href="./organizations.html" class="real-menu-item">
         <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
@@ -306,14 +172,14 @@
         </div>
       </div>
 
-      <!-- 6. บัญชี / สร้างหน่วยงาน (ACTIVE GROUP) -->
+      <!-- บัญชี / สร้างหน่วยงาน -->
       <div class="flex flex-col gap-1 mt-1">
-        <div class="real-group-header text-slate-900 font-semibold">
-          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0 text-blue-600"></i>
+        <div class="real-group-header">
+          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
         </div>
         <div class="real-children-group">
-          <a href="./create-official-account.html" class="real-nested-item real-nested-active">
+          <a href="./create-official-account.html" class="real-nested-item real-nested-active bg-slate-100 font-bold">
             <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
           </a>
           <a href="./create-org-chart.html" class="real-nested-item">
@@ -322,459 +188,288 @@
         </div>
       </div>
 
-      <!-- 7. จัดการผู้ใช้ -->
+      <!-- จัดการผู้ใช้ -->
       <a href="./users.html" class="real-menu-item mt-1">
         <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการผู้ใช้</span>
       </a>
 
-      <!-- 8. FAQ -->
+      <!-- 7. FAQ -->
       <a href="./faq.html" class="real-menu-item mt-1">
-        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <i data-lucide="help-circle" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">FAQ</span>
       </a>
+
     </nav>
   </aside>
 
-  <!-- 2. MAIN CONTENT AREA -->
+  <!-- MAIN CONTENT AREA -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
-
+    
     <!-- Topbar Header -->
-    <header class="real-topbar">
-      <!-- Left: Mobile Hamburger + Breadcrumb -->
+    <header class="real-topbar sticky top-0 z-20 shadow-sm bg-white/80 backdrop-blur-md">
       <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
-        <button type="button" onclick="toggleMobileSidebar()"
-          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0"
-          title="เปิดเมนูนำทาง">
+        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
         <span class="text-slate-400 font-medium">บัญชี / สร้างหน่วยงาน</span>
         <span class="text-slate-300">/</span>
         <span class="font-bold text-slate-800">สร้างบัญชีทางการ</span>
       </div>
-
-      <div class="flex items-center gap-2">
-        <a href="./create-org-chart.html"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-blue-200 bg-blue-50/80 hover:bg-blue-100 text-blue-700 text-xs font-semibold shadow-2xs transition-colors cursor-pointer whitespace-nowrap">
-          <i data-lucide="network" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline">สร้างแบบผูกผังองค์กร</span>
-          <span class="sm:hidden">+ ผังองค์กร</span>
-        </a>
-      </div>
     </header>
 
     <!-- Scrollable Content Body -->
-    <div class="flex-1 overflow-y-auto" id="content-container">
-      <div class="w-full max-w-[1200px] mx-auto space-y-6">
-
-        <!-- Top Banner / Title Card -->
-        <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div class="flex items-center gap-3.5">
-            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
-              <i data-lucide="building" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">สร้างบัญชีทางการ (Official Account)</h1>
-              <p class="text-xs text-slate-500 mt-0.5">ลงทะเบียนบัญชีหน่วยงานใหม่ สำหรับเปิดใช้งาน Traffy Fondue และรับเรื่องแจ้งปัญหา</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
-            <span class="px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              โหมดสร้างบัญชีเดี่ยว (Single Account)
-            </span>
-          </div>
+    <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+      <div class="max-w-4xl mx-auto space-y-6 pb-12">
+        
+        <div class="mb-4 md:mb-6">
+          <h1 class="text-xl md:text-2xl font-bold text-slate-900">สร้างบัญชีหน่วยงานใหม่ (Official Account)</h1>
+          <p class="text-slate-500 mt-1 text-sm">สร้างหน่วยงาน, สร้าง QR code และสร้างรหัสขอเป็น admin/staff ในขั้นตอนเดียว</p>
         </div>
 
-        <!-- Form Card Container -->
-        <form id="form-create-account" onsubmit="handleFormSubmit(event)" class="space-y-6">
-
-          <!-- Section 1: ข้อมูลบัญชี / หน่วยงาน -->
-          <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 space-y-5">
-            <div class="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-              <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
-                <i data-lucide="file-badge" class="w-4 h-4"></i>
+        <form class="space-y-6" onsubmit="event.preventDefault(); showToast('สร้างบัญชีทางการสำเร็จ');">
+          
+          <!-- Card 1: ข้อมูลพื้นฐาน -->
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                <i data-lucide="building-2" class="w-4 h-4"></i>
               </div>
-              <div>
-                <h2 class="text-sm font-bold text-slate-900 leading-tight">1. ข้อมูลทั่วไปของหน่วยงาน</h2>
-                <p class="text-[11px] text-slate-400">ระบุชื่อและรายละเอียดเบื้องต้นของหน่วยงาน</p>
+              <h2 class="font-bold text-slate-800 text-sm">1. ข้อมูลทั่วไป</h2>
+            </div>
+            
+            <div class="p-6 md:p-8 space-y-5">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="md:col-span-2">
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">ชื่อหน่วยงาน <span class="text-rose-500">*</span></label>
+                  <input type="text" placeholder="ระบุชื่อหน่วยงานทางการ..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all text-sm text-slate-900">
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">รายละเอียด (ไม่บังคับ)</label>
+                  <textarea rows="2" placeholder="คำอธิบายเพิ่มเติมเกี่ยวกับหน่วยงาน..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all text-sm text-slate-900"></textarea>
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">รูปภาพประจำหน่วยงาน (ขนาดไม่เกิน 100 KB)</label>
+                  <input type="file" accept="image/*" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 border border-slate-300 rounded-xl bg-white cursor-pointer transition-all">
+                </div>
               </div>
             </div>
+          </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <!-- ชื่อหน่วยงาน (ภาษาไทย) -->
-              <div class="sm:col-span-2 space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ชื่อหน่วยงาน (ภาษาไทย) <span class="text-rose-500">*</span></label>
-                <input type="text" id="org-name-th" required placeholder="เช่น เทศบาลตำบลบ้านใหม่ หรือ สำนักงานเขตบางกอกน้อย"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
+          <!-- Card 2: ที่ตั้งและการติดต่อ -->
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
               </div>
-
-              <!-- ชื่อหน่วยงาน (ภาษาอังกฤษ) -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ชื่อหน่วยงาน (ภาษาอังกฤษ / Romanized)</label>
-                <input type="text" id="org-name-en" placeholder="เช่น Banmai Subdistrict Municipality"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
+              <h2 class="font-bold text-slate-800 text-sm">2. ที่ตั้งและการติดต่อ</h2>
+            </div>
+            
+            <div class="p-6 md:p-8 space-y-5">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="md:col-span-2">
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">ที่อยู่ไปรษณีย์ของสำนักงาน</label>
+                  <input type="text" placeholder="เลขที่ ถนน ซอย..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none text-sm text-slate-900">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">จังหวัดที่ตั้งสำนักงาน</label>
+                  <select class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none text-sm text-slate-900">
+                    <option>กรุงเทพมหานคร</option>
+                    <option>ปทุมธานี</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">เบอร์โทรศัพท์สำนักงาน</label>
+                  <input type="text" placeholder="02-xxx-xxxx" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none text-sm text-slate-900">
+                </div>
+                
+                <div class="md:col-span-2">
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">พิกัดสำนักงาน (Latitude, Longitude)</label>
+                  <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" value="13.0, 100.0" class="flex-1 px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none font-mono-code text-sm text-slate-900">
+                    <a href="https://maps.google.com" target="_blank" class="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center justify-center gap-2 transition-colors border border-slate-200 whitespace-nowrap">
+                      <i data-lucide="map" class="w-4 h-4"></i> หาพิกัดใน Maps
+                    </a>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-2">(Lat จะน้อยกว่า Lon ให้คลิกขวาบน Google Maps จะมีค่าพิกัดให้กดคัดลอกมาใช้ได้เลย)</p>
+                </div>
               </div>
+            </div>
+          </div>
 
-              <!-- ประเภทหน่วยงาน -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ประเภทหน่วยงาน <span class="text-rose-500">*</span></label>
-                <select id="org-type" required
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white cursor-pointer">
-                  <option value="" disabled selected>-- เลือกประเภทหน่วยงาน --</option>
-                  <option value="เทศบาลนคร / เทศบาลเมือง">เทศบาลนคร / เทศบาลเมือง</option>
-                  <option value="เทศบาลตำบล (ทต.)">เทศบาลตำบล (ทต.)</option>
-                  <option value="องค์การบริหารส่วนตำบล (อบต.)">องค์การบริหารส่วนตำบล (อบต.)</option>
-                  <option value="องค์การบริหารส่วนจังหวัด (อบจ.)">องค์การบริหารส่วนจังหวัด (อบจ.)</option>
-                  <option value="กรุงเทพมหานคร / สำนักงานเขต">กรุงเทพมหานคร / สำนักงานเขต</option>
-                  <option value="หน่วยงานราชการส่วนกลาง / ภูมิภาค">หน่วยงานราชการส่วนกลาง / ภูมิภาค</option>
-                  <option value="รัฐวิสาหกิจ (กฟภ. / กปภ. / อื่นๆ)">รัฐวิสาหกิจ (กฟภ. / กปภ. / อื่นๆ)</option>
-                  <option value="สถานพยาบาล / โรงพยาบาล">สถานพยาบาล / โรงพยาบาล</option>
-                  <option value="สถานศึกษา / มหาวิทยาลัย">สถานศึกษา / มหาวิทยาลัย</option>
-                  <option value="เอกชน / นิติบุคคล / องค์กรไม่แสวงหากำไร">เอกชน / นิติบุคคล / องค์กรไม่แสวงหากำไร</option>
+          <!-- Card 3: พื้นที่รับผิดชอบ -->
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                <i data-lucide="scan" class="w-4 h-4"></i>
+              </div>
+              <h2 class="font-bold text-slate-800 text-sm">3. ขอบเขตและพื้นที่รับผิดชอบ</h2>
+            </div>
+            
+            <div class="p-6 md:p-8 space-y-6">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">ประเภทหน่วยงาน</label>
+                <select class="w-full md:w-1/2 px-4 py-3 bg-white border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                  <option>หน่วยงานรัฐ (พื้นที่)</option>
+                  <option>หน่วยงานรัฐ (ส่วนกลาง)</option>
                 </select>
               </div>
 
-              <!-- ชื่อย่อ / รหัสหน่วยงาน -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ชื่อย่อ หรือรหัสอ้างอิง (ถ้ามี)</label>
-                <input type="text" id="org-code" placeholder="เช่น ทต.บ้านใหม่ หรือ BM01"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
+              <!-- รัศมี -->
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <label class="block text-sm font-bold text-slate-800 mb-2">สำหรับหน่วยงานที่ดูแลแบบรัศมี</label>
+                <div class="flex items-center gap-3">
+                  <span class="text-sm text-slate-600 font-medium">รัศมีครอบคลุม</span>
+                  <input type="number" step="0.01" value="0.01" class="w-24 px-3 py-2.5 bg-white border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-slate-900 text-center font-mono-code text-sm text-slate-900">
+                  <span class="text-sm text-slate-600 font-medium">กิโลเมตร</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">(ถ้าดูแลแบบพื้นที่ ตำบล/อำเภอ ให้ปล่อยรัศมีเป็น 0.01 ทิ้งไว้)</p>
               </div>
 
-              <!-- เบอร์โทรศัพท์สำนักงาน -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">เบอร์โทรศัพท์ติดต่อสำนักงาน</label>
-                <input type="tel" id="org-tel" placeholder="เช่น 02-123-4567"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
+              <!-- แบบพื้นที่ -->
+              <div>
+                <label class="block text-sm font-bold text-slate-800 mb-1">สำหรับหน่วยงานที่ดูแลแบบพื้นที่ (ตำบล, อำเภอ, จังหวัด)</label>
+                <p class="text-xs text-slate-500 mb-4">* ใส่ครอบชื่อด้วย <code class="bg-slate-100 px-1.5 py-0.5 rounded text-rose-500 font-mono-code">{}</code> และคั่นด้วยลูกน้ำ ไม่ต้องใส่คำนำหน้า เช่น <code class="bg-slate-100 px-1.5 py-0.5 rounded text-rose-500 font-mono-code">{คลองหนึ่ง,คลองสอง}</code></p>
+                
+                <div class="space-y-4">
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <span class="text-sm font-semibold text-slate-600 w-full sm:w-32 shrink-0">- รายชื่อ ตำบล</span>
+                    <input type="text" placeholder="{}" class="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded-xl outline-none font-mono-code focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                  </div>
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <span class="text-sm font-semibold text-slate-600 w-full sm:w-32 shrink-0">- รายชื่อ อำเภอ</span>
+                    <input type="text" placeholder="{}" class="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded-xl outline-none font-mono-code focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                  </div>
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <span class="text-sm font-semibold text-slate-600 w-full sm:w-32 shrink-0">- รายชื่อ จังหวัด</span>
+                    <input type="text" placeholder="{กรุงเทพมหานคร}" class="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded-xl outline-none font-mono-code focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                  </div>
+                </div>
               </div>
 
-              <!-- คำอธิบาย / ภารกิจ -->
-              <div class="sm:col-span-2 space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">คำอธิบายหน่วยงาน / พันธกิจเบื้องต้น</label>
-                <textarea id="org-desc" rows="2" placeholder="ระบุขอบเขตความรับผิดชอบหรือข้อมูลสังเขปสำหรับแสดงบนระบบ..."
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white resize-none"></textarea>
-              </div>
             </div>
           </div>
 
-          <!-- Section 2: ที่ตั้งและพิกัดสำนักงาน -->
-          <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 space-y-5">
-            <div class="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-              <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-100">
-                <i data-lucide="map-pin" class="w-4 h-4"></i>
+          <!-- Card 4: ตั้งค่าระบบ (Settings) -->
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+                <i data-lucide="settings" class="w-4 h-4"></i>
               </div>
-              <div>
-                <h2 class="text-sm font-bold text-slate-900 leading-tight">2. สถานที่ตั้งและพิกัดสำนักงาน</h2>
-                <p class="text-[11px] text-slate-400">ระบุจังหวัด อำเภอ และพิกัดเพื่อกำหนดขอบเขตการรับเรื่อง</p>
-              </div>
+              <h2 class="font-bold text-slate-800 text-sm">4. ตั้งค่าระบบและสิทธิ์</h2>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <!-- จังหวัด -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">จังหวัด <span class="text-rose-500">*</span></label>
-                <input type="text" id="org-province" required placeholder="เช่น กรุงเทพมหานคร, เชียงใหม่"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
+            
+            <div class="p-6 md:p-8 space-y-6">
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">ประเภทการใช้งาน</label>
+                  <select class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                    <option>ปัญหาทั่วไป / อื่นๆ</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">problemtype_creator</label>
+                  <select class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                    <option>อัตโนมัติ (ตามประเภทการใช้งาน)</option>
+                  </select>
+                </div>
               </div>
 
-              <!-- อำเภอ / เขต -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">อำเภอ / เขต <span class="text-rose-500">*</span></label>
-                <input type="text" id="org-district" required placeholder="เช่น เมือง, คลองเตย"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
-              </div>
-
-              <!-- ตำบล / แขวง -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ตำบล / แขวง</label>
-                <input type="text" id="org-subdistrict" placeholder="เช่น ในเมือง, คลองเตย"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
-              </div>
-
-              <!-- ที่อยู่สำนักงาน -->
-              <div class="sm:col-span-3 space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ที่อยู่สำนักงานโดยละเอียด</label>
-                <input type="text" id="org-address" placeholder="เลขที่ ถนน หมู่ ซอย อาคาร..."
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
-              </div>
-
-              <!-- พิกัดละติจูด -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ละติจูด (Latitude)</label>
-                <input type="text" id="org-lat" placeholder="เช่น 13.7563"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white font-mono-code" />
-              </div>
-
-              <!-- พิกัดลองจิจูด -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ลองจิจูด (Longitude)</label>
-                <input type="text" id="org-lng" placeholder="เช่น 100.5018"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white font-mono-code" />
-              </div>
-
-              <div class="flex items-end">
-                <button type="button" onclick="getCurrentLocation()"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-                  <i data-lucide="crosshair" class="w-4 h-4 text-emerald-600"></i>
-                  <span>ดึงพิกัดปัจจุบัน</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section 3: ข้อมูลผู้ดูแลระบบหลัก (Admin Contact) -->
-          <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 space-y-5">
-            <div class="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-              <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 border border-amber-100">
-                <i data-lucide="user-check" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <h2 class="text-sm font-bold text-slate-900 leading-tight">3. ผู้ดูแลระบบหลัก (Organization Admin)</h2>
-                <p class="text-[11px] text-slate-400">ผู้ประสานงานที่จะได้รับสิทธิ์ดูแลบัญชีและรับสิทธิ์เข้าใช้งานระบบคนแรก</p>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <!-- ชื่อผู้ดูแล -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ชื่อ-นามสกุล ผู้ดูแลหลัก <span class="text-rose-500">*</span></label>
-                <input type="text" id="admin-name" required placeholder="เช่น นายสมชาย ใจดี"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
-              </div>
-
-              <!-- ตำแหน่ง -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">ตำแหน่ง / ฝ่าย</label>
-                <input type="text" id="admin-role" placeholder="เช่น นักวิชาการคอมพิวเตอร์ / งานสารสนเทศ"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
-              </div>
-
-              <!-- เบอร์โทรศัพท์มือถือ -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">เบอร์โทรศัพท์มือถือ <span class="text-rose-500">*</span></label>
-                <input type="tel" id="admin-phone" required maxlength="10" placeholder="08xxxxxxxx"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white font-mono-code" />
-              </div>
-
-              <!-- อีเมลผู้ดูแล -->
-              <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">อีเมลสำหรับเข้าสู่ระบบ <span class="text-rose-500">*</span></label>
-                <input type="email" id="admin-email" required placeholder="admin@example.go.th"
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all bg-white" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Section 4: การตั้งค่าและการเปิดใช้งาน -->
-          <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 space-y-4">
-            <div class="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-              <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0 border border-purple-100">
-                <i data-lucide="sliders" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <h2 class="text-sm font-bold text-slate-900 leading-tight">4. การตั้งค่าระบบเริ่มต้น</h2>
-                <p class="text-[11px] text-slate-400">เลือกคุณสมบัติและบริการที่ต้องการเปิดให้หน่วยงานใช้งาน</p>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <label class="flex items-start gap-3 p-3 rounded-2xl border border-slate-200 hover:bg-slate-50/70 transition-colors cursor-pointer">
-                <input type="checkbox" id="setting-auto-active" checked class="mt-0.5 rounded text-blue-600 focus:ring-blue-500" />
-                <div class="min-w-0">
-                  <span class="block text-xs font-bold text-slate-800">เปิดใช้งานบัญชีทันที (Active Immediately)</span>
-                  <span class="block text-[11px] text-slate-500">พร้อมรับเรื่องแจ้งปัญหาทันทีหลังจากกดสร้างบัญชี</span>
+              <!-- Checkbox Switch -->
+              <label class="flex items-center gap-3 cursor-pointer p-4 bg-slate-50 border border-slate-200 rounded-2xl hover:bg-slate-100 transition-colors">
+                <input type="checkbox" checked class="w-5 h-5 accent-slate-900 rounded cursor-pointer">
+                <div class="flex-1">
+                  <span class="text-sm font-bold text-slate-800 block">สร้างรหัส admin & staff</span>
+                  <span class="text-xs text-slate-500 mt-0.5 block">ระบบจะทำการสร้างรหัสเชิญชวนอัตโนมัติเมื่อกดบันทึก</span>
                 </div>
               </label>
 
-              <label class="flex items-start gap-3 p-3 rounded-2xl border border-slate-200 hover:bg-slate-50/70 transition-colors cursor-pointer">
-                <input type="checkbox" id="setting-default-richmenu" checked class="mt-0.5 rounded text-blue-600 focus:ring-blue-500" />
-                <div class="min-w-0">
-                  <span class="block text-xs font-bold text-slate-800">สร้าง Rich Menu เริ่มต้นอัตโนมัติ</span>
-                  <span class="block text-[11px] text-slate-500">สร้างเมนูพื้นฐานสำหรับส่งเรื่องและติดตามสถานะ</span>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="md:col-span-2 flex flex-col sm:flex-row gap-5">
+                  <div class="flex-1">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Tags (fondue_group_tags)</label>
+                    <input type="text" placeholder="{}" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl outline-none font-mono-code focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                  </div>
+                  <div class="flex-1">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">สถานะตอนสร้าง (deleted_at)</label>
+                    <select class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                      <option>เปิดใช้งานปกติ</option>
+                      <option>ซ่อนไว้ก่อน</option>
+                    </select>
+                  </div>
                 </div>
-              </label>
+
+                <div class="md:col-span-2">
+                  <label class="block text-xs font-bold text-slate-700 mb-1.5">อนุญาตส่งต่อเฉพาะองค์กร (show_joinforward_from_hierarchy)</label>
+                  <input type="text" placeholder="{}" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl outline-none font-mono-code focus:ring-2 focus:ring-slate-900 text-sm text-slate-900">
+                  <p class="text-[11px] text-slate-400 mt-1.5">ครอบด้วย {} เช่น {bfmcc} ถ้าอนุญาตหมดก็ใส่ {} ทิ้งไว้</p>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Form Actions Bar -->
-          <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="text-[11px] text-slate-400 text-center sm:text-left">
-              <span class="text-rose-500">*</span> หมายถึงข้อมูลที่จำเป็นต้องกรอกให้ครบถ้วนก่อนบันทึก
-            </div>
-
-            <div class="flex items-center gap-2.5 w-full sm:w-auto">
-              <a href="./organizations.html"
-                class="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors text-center cursor-pointer">
-                ยกเลิก
-              </a>
-              <button type="submit" id="btn-submit"
-                class="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md shadow-blue-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95">
-                <i data-lucide="check" class="w-4 h-4"></i>
-                <span>บันทึกและสร้างบัญชีทางการ</span>
-              </button>
-            </div>
+          <!-- Sticky Action Bar -->
+          <div class="sticky bottom-4 z-10 bg-white/90 backdrop-blur-lg border border-slate-200 p-4 rounded-3xl shadow-lg flex justify-end gap-3 items-center mt-8">
+            <span class="text-xs text-slate-400 font-medium hidden sm:inline mr-auto pl-4">โปรดตรวจสอบข้อมูลให้ครบถ้วนก่อนบันทึก</span>
+            <a href="./organizations.html" class="px-6 py-3 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all text-sm focus:outline-none inline-flex items-center justify-center">
+              ยกเลิก
+            </a>
+            <button type="submit" class="px-8 py-3 rounded-xl font-bold text-white bg-slate-900 hover:bg-slate-800 shadow-md shadow-slate-900/20 transition-all active:scale-95 text-sm focus:outline-none cursor-pointer">
+              บันทึกและสร้างหน่วยงาน
+            </button>
           </div>
 
         </form>
-
       </div>
     </div>
   </main>
 
-  <!-- Toast Notification Box -->
+  <!-- Toast Notification -->
   <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
-    <div id="toast-bg" class="bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-xs font-medium border border-slate-800">
-      <i id="toast-icon" data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
+    <div class="bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 text-sm font-bold">
+      <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0">
+        <i data-lucide="check" class="w-4 h-4"></i>
+      </div>
       <span id="toast-message">แจ้งเตือน</span>
     </div>
   </div>
 
-  <!-- Scroll to Top Button -->
-  <button id="btn-scroll-top" onclick="scrollToTop()"
-    class="fixed bottom-6 right-6 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-[#4a3b32] shadow-xl border border-slate-200/90 flex items-center justify-center cursor-pointer transition-all duration-300 opacity-0 translate-y-3 pointer-events-none hover:bg-slate-50 hover:scale-105 active:scale-95"
-    title="เลื่อนไปด้านบน">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a3b32"
-      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-      <path d="m5 12 7-7 7 7" />
-      <path d="M12 19V5" />
-    </svg>
-  </button>
-
   <script>
-    // Initialize Lucide Icons
     lucide.createIcons();
 
-    // Mobile Sidebar
     function toggleMobileSidebar() {
       const sidebar = document.getElementById('main-sidebar');
       const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      if (sidebar.classList.contains('sidebar-open')) closeMobileSidebar();
-      else { sidebar.classList.add('sidebar-open'); backdrop.classList.remove('hidden'); }
-    }
-    function closeMobileSidebar() {
-      document.getElementById('main-sidebar').classList.remove('sidebar-open');
-      document.getElementById('mobile-sidebar-backdrop').classList.add('hidden');
-    }
-
-    // Toast Notification
-    let toastTimer = null;
-    function showToast(message, type = 'success') {
-      const toastBox = document.getElementById('toast-box');
-      const toastMsg = document.getElementById('toast-message');
-      const toastIcon = document.getElementById('toast-icon');
-
-      toastMsg.textContent = message;
-      if (type === 'success') {
-        toastIcon.setAttribute('data-lucide', 'check-circle-2');
-        toastIcon.className = 'w-5 h-5 text-emerald-400';
+      if (!sidebar || !backdrop) return;
+      
+      const isOpen = sidebar.classList.contains('sidebar-open');
+      if (isOpen) {
+        sidebar.classList.remove('sidebar-open');
+        backdrop.classList.add('hidden');
       } else {
-        toastIcon.setAttribute('data-lucide', 'alert-circle');
-        toastIcon.className = 'w-5 h-5 text-rose-400';
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
       }
-      lucide.createIcons();
+    }
 
-      toastBox.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-      toastBox.classList.add('translate-y-0', 'opacity-100');
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast-box');
+      const msgEl = document.getElementById('toast-message');
+      
+      msgEl.textContent = msg;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
 
       if (toastTimer) clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
-        toastBox.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-        toastBox.classList.remove('translate-y-0', 'opacity-100');
-      }, 3500);
-    }
-
-    // Get current location coords
-    function getCurrentLocation() {
-      if (!navigator.geolocation) {
-        showToast('เบราว์เซอร์ไม่รองรับ Geolocation', 'error');
-        return;
-      }
-      showToast('กำลังดึงพิกัดตำแหน่งปัจจุบัน...', 'success');
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          document.getElementById('org-lat').value = pos.coords.latitude.toFixed(6);
-          document.getElementById('org-lng').value = pos.coords.longitude.toFixed(6);
-          showToast('ดึงพิกัด GPS สำเร็จ');
-        },
-        (err) => {
-          showToast('ไม่สามารถดึงพิกัดได้: ' + err.message, 'error');
-        }
-      );
-    }
-
-    // Handle Form Submit
-    function handleFormSubmit(e) {
-      e.preventDefault();
-      const orgName = document.getElementById('org-name-th').value.trim();
-      const adminName = document.getElementById('admin-name').value.trim();
-
-      if (!orgName || !adminName) {
-        showToast('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน', 'error');
-        return;
-      }
-
-      const submitBtn = document.getElementById('btn-submit');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>กำลังสร้างบัญชี...</span>';
-      lucide.createIcons();
-
-      setTimeout(() => {
-        showToast(`สร้างบัญชีทางการ "${orgName}" สำเร็จเรียบร้อย!`, 'success');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i><span>บันทึกและสร้างบัญชีทางการ</span>';
-        lucide.createIcons();
-
-        // Redirect to organizations.html after brief delay
-        setTimeout(() => {
-          window.location.href = './organizations.html';
-        }, 1200);
-      }, 800);
-    }
-
-    // Scroll to Top
-    function scrollToTop() {
-      const scrollEl = document.getElementById('content-container');
-      if (scrollEl) scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function initScrollToTop() {
-      const btn = document.getElementById('btn-scroll-top');
-      const scrollTarget = document.getElementById('content-container');
-      if (!btn) return;
-
-      const handleScroll = () => {
-        const targetScroll = scrollTarget ? scrollTarget.scrollTop : 0;
-        const winScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
-        const currentScroll = Math.max(targetScroll, winScroll);
-
-        if (currentScroll > 100) {
-          btn.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
-          btn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-        } else {
-          btn.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
-          btn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-        }
-      };
-
-      if (scrollTarget) {
-        scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
-      }
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        initScrollToTop();
-        if (window.lucide) lucide.createIcons();
-      });
-    } else {
-      initScrollToTop();
-      if (window.lucide) lucide.createIcons();
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
     }
   </script>
 </body>
-
 </html>
