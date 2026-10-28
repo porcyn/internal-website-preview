@@ -410,15 +410,17 @@
             </div>
           </div>
 
-          <!-- Sticky Action Bar -->
-          <div class="sticky bottom-4 z-10 bg-white/90 backdrop-blur-lg border border-slate-200 p-4 rounded-3xl shadow-lg flex justify-end gap-3 items-center mt-8">
-            <span class="text-xs text-slate-400 font-medium hidden sm:inline mr-auto pl-4">โปรดตรวจสอบข้อมูลให้ครบถ้วนก่อนบันทึก</span>
-            <a href="./organizations.html" class="px-6 py-3 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all text-sm focus:outline-none inline-flex items-center justify-center">
-              ยกเลิก
-            </a>
-            <button type="submit" class="px-8 py-3 rounded-xl font-bold text-white bg-slate-900 hover:bg-slate-800 shadow-md shadow-slate-900/20 transition-all active:scale-95 text-sm focus:outline-none cursor-pointer">
-              บันทึกและสร้างหน่วยงาน
-            </button>
+          <!-- Action Bar (At bottom of form) -->
+          <div class="bg-white border border-slate-200 p-4 sm:p-5 rounded-3xl shadow-sm flex flex-col sm:flex-row justify-end gap-3 items-center mt-8">
+            <span class="text-xs text-slate-400 font-medium mr-auto pl-2">โปรดตรวจสอบข้อมูลให้ครบถ้วนก่อนบันทึก</span>
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+              <a href="./organizations.html" class="px-6 py-3 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all text-sm focus:outline-none inline-flex items-center justify-center">
+                ยกเลิก
+              </a>
+              <button type="submit" class="px-8 py-3 rounded-xl font-bold text-white bg-slate-900 hover:bg-slate-800 shadow-md shadow-slate-900/20 transition-all active:scale-95 text-sm focus:outline-none cursor-pointer">
+                บันทึกและสร้างหน่วยงาน
+              </button>
+            </div>
           </div>
 
         </form>
