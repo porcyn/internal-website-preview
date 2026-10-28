@@ -8,12 +8,18 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Breakpoints สอดคล้องมาตรฐานองค์กร (Mobile ≤767px, Tablet 768-1023px, Desktop ≥1024px)
+    // Breakpoints และ Font สอดคล้องมาตรฐานองค์กร (Mobile ≤767px, Tablet 768-1023px, Desktop ≥1024px)
     tailwind.config = {
       theme: {
         screens: {
           'md': '768px',
           'lg': '1024px'
+        },
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans Thai"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
         }
       }
     };
@@ -35,6 +41,7 @@
     */
     :root {
       --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       --page-min-width: 320px;
       --content-max-width: 1536px;
       --page-padding: 32px;
@@ -76,8 +83,12 @@
       overflow-x: hidden;
     }
 
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
     .font-mono-code {
-      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-family: var(--font-mono) !important;
       font-feature-settings: "tnum" 1, "zero" 1;
     }
 
@@ -298,7 +309,7 @@
     }
   </style>
 </head>
-<body class="flex h-screen overflow-hidden bg-slate-50 text-slate-900 font-sans">
+<body class="flex h-screen overflow-hidden bg-slate-50 text-slate-900">
 
   <!-- Mobile Drawer Backdrop -->
   <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
@@ -727,11 +738,11 @@
                   <!-- Stats Numbers -->
                   <div class="flex items-center justify-between md:justify-end gap-4 font-mono-code flex-shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
                     <div class="text-left md:text-right">
-                      <span class="text-[11px] md:text-xs text-slate-600 block font-sans font-semibold">ผู้ใช้งานจริง</span>
+                      <span class="text-[11px] md:text-xs text-slate-600 block font-semibold">ผู้ใช้งานจริง</span>
                       <span id="card1-users" class="text-base lg:text-lg font-black text-slate-900">5,966 คน</span>
                     </div>
                     <div class="border-l border-slate-200 pl-4 text-right">
-                      <span class="text-[11px] md:text-xs text-slate-600 block font-sans font-semibold">ยอดแสดงผล</span>
+                      <span class="text-[11px] md:text-xs text-slate-600 block font-semibold">ยอดแสดงผล</span>
                       <span id="card1-views" class="text-base lg:text-lg font-black text-emerald-900">11,498 views</span>
                     </div>
                   </div>
@@ -829,11 +840,11 @@
                   <!-- Stats Numbers -->
                   <div class="flex items-center justify-between md:justify-end gap-4 font-mono-code flex-shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
                     <div class="text-left md:text-right">
-                      <span class="text-[11px] md:text-xs text-slate-600 block font-sans font-semibold">ผู้ใช้งานจริง</span>
+                      <span class="text-[11px] md:text-xs text-slate-600 block font-semibold">ผู้ใช้งานจริง</span>
                       <span id="card2-users" class="text-base lg:text-lg font-black text-slate-900">876 คน</span>
                     </div>
                     <div class="border-l border-slate-200 pl-4 text-right">
-                      <span class="text-[11px] md:text-xs text-slate-600 block font-sans font-semibold">ยอดแสดงผล</span>
+                      <span class="text-[11px] md:text-xs text-slate-600 block font-semibold">ยอดแสดงผล</span>
                       <span id="card2-views" class="text-base lg:text-lg font-black text-blue-900">1,160 views</span>
                     </div>
                   </div>
