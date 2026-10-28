@@ -329,12 +329,7 @@
           <i data-lucide="building" class="w-3.5 h-3.5 text-slate-500"></i>
           <span class="hidden sm:inline">สร้างบัญชีเดี่ยว</span>
         </a>
-        <a href="./org-chart-creation/index.html" target="_blank"
-          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap active:scale-95"
-          title="เปิด Visual Org Builder ในแท็บใหม่">
-          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-          <span>เปิดเต็มจอ</span>
-        </a>
+        <button onclick="toggleAppFullscreen()" id="fs-btn" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap active:scale-95" title="ขยายพื้นที่ทำงานเต็มจอ"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i><span id="fs-text">ขยายเต็มจอ</span></button>
       </div>
     </header>
 
@@ -342,21 +337,6 @@
     <div class="flex-1 flex flex-col min-w-0 overflow-hidden p-2 sm:p-4">
       <div class="w-full h-full bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden flex flex-col relative">
         
-        <!-- Quick App Info Bar -->
-        <div class="px-4 py-2 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between text-xs text-slate-600 flex-shrink-0">
-          <div class="flex items-center gap-2 min-w-0">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span class="font-bold text-slate-900 truncate">ระบบสร้างบัญชีทางการแบบผูกผังองค์กร (org-chart-creation)</span>
-            <span class="text-slate-400 hidden md:inline">|</span>
-            <span class="text-[11px] text-slate-500 hidden md:inline">รองรับการอัปโหลดไฟล์ Excel / Google Sheet และลากเส้นผังองค์กรแบบอัตโนมัติ</span>
-          </div>
-          <div class="flex items-center gap-2 flex-shrink-0">
-            <button onclick="reloadIframe()" class="p-1 text-slate-500 hover:text-slate-800 hover:bg-slate-200/60 rounded-md transition-colors" title="รีเฟรชผัง">
-              <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-        </div>
-
         <!-- Embedded Iframe running org-chart-creation -->
         <iframe id="org-chart-iframe" src="./org-chart-creation/index.html"
           class="w-full flex-1 border-0 bg-white" title="สร้างบัญชีทางการ + ผูกผังองค์กร"></iframe>
@@ -380,6 +360,20 @@
       document.getElementById('mobile-sidebar-backdrop').classList.add('hidden');
     }
 
+    function toggleAppFullscreen() {
+      const container = document.getElementById('org-chart-iframe')?.parentElement;
+      if (!container) return;
+      if (!document.fullscreenElement) {
+        if (container.requestFullscreen) container.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+    document.addEventListener('fullscreenchange', () => {
+      const text = document.getElementById('fs-text');
+      if (text) text.textContent = document.fullscreenElement ? 'ย่อหน้าจอ' : 'ขยายเต็มจอ';
+    });
+    
     function reloadIframe() {
       const frame = document.getElementById('org-chart-iframe');
       if (frame) {
