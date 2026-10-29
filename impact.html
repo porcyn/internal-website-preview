@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>คำนวณ Impact - Traffy Fondue Internal Website</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Anuphan, Noto Sans Thai & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: {
+          'sm': '640px',
+          'md': '768px',
+          'lg': '1024px',
+          'xl': '1280px'
+        },
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans Thai"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            traffy: {
+              green: '#00B900',
+              'green-dark': '#009500',
+              'green-light': '#E8F8E8',
+              blue: '#0D6EFD',
+              'blue-dark': '#0B5ED7',
+              'blue-light': '#EDF7FF',
+              canvas: '#F8FAFC',
+              card: '#FFFFFF',
+              border: '#CBD5E1',
+              'border-subtle': '#E2E8F0',
+              title: '#0F172A',
+              body: '#334155',
+              muted: '#64748B',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 24px;
+      --sidebar-width: 280px;
+      --topbar-height: 64px;
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --page-padding: 16px;
+        --topbar-height: 56px;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
+      background-color: #F8FAFC;
+      color: #0F172A;
+      line-height: 1.5;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid #0D6EFD !important;
+      outline-offset: 2px !important;
+      box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25) !important;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+
+    /* SIDEBAR STYLES (Standard Enterprise matching system) */
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .real-user-card {
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+    .real-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .real-group-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+    .real-children-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 16px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
+    }
+    .real-nested-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 7px 10px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .real-nested-item.real-nested-active {
+      position: relative;
+      background: #52525b !important;
+      color: #ffffff !important;
+    }
+    .real-nested-item.real-nested-active::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #111827;
+      transform: translateY(-50%);
+    }
+
+    .real-action-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .real-action-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: #e0f2fe;
+      color: #0284c7;
+      font-size: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      line-height: 1.3;
+      cursor: pointer;
+    }
+    .real-action-badge:hover {
+      background: #0284c7;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .real-nested-item.real-nested-active .real-action-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+    .real-nested-item.real-nested-active .real-action-badge:hover {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    /* TOPBAR */
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--page-padding);
+      flex-shrink: 0;
+    }
+
+    /* Responsive Drawer Backdrop */
+    @media (max-width: 767px) {
+      .real-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        transform: translateX(-100%);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+      .real-sidebar.sidebar-open {
+        transform: translateX(0);
+      }
+    }
+
+    .drawer-backdrop {
+      background-color: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="h-screen flex overflow-hidden bg-traffy-canvas text-traffy-title selection:bg-traffy-blue selection:text-white">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 hidden md:hidden transition-opacity"></div>
+
+  <!-- Accessible Toast -->
+  <div id="toast-container" role="status" aria-live="polite" class="fixed bottom-6 right-4 left-4 sm:left-auto sm:w-auto z-50 pointer-events-none transform translate-y-12 opacity-0 transition-all duration-300">
+    <div class="flex items-center gap-3 px-4 py-3 bg-slate-900 text-white rounded-xl shadow-2xl border border-slate-700 text-sm font-semibold max-w-md mx-auto">
+      <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+      <span id="toast-text" class="truncate">ดำเนินการเรียบร้อยแล้ว</span>
+    </div>
+  </div>
+
+  <!-- Main Standard Sidebar -->
+  <aside id="main-sidebar" class="real-sidebar select-none">
+    <!-- User Card -->
+    <div class="real-user-card">
+      <div class="flex items-center gap-2.5">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile"
+          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+        />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <!-- Close button on Mobile Drawer -->
+        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <!-- Logout on Desktop -->
+        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-300 bg-amber-100 text-amber-950">
+          ADMIN
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-300 bg-emerald-100 text-emerald-950">
+          EDITOR
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation List -->
+    <nav class="flex-1 flex flex-col gap-0.5">
+      <!-- 1. จัดการหน่วยงาน -->
+      <div class="flex flex-col gap-1">
+        <div class="real-group-header">
+          <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./organizations.html" class="real-nested-item">
+            <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+          </a>
+          <a href="./search-duplicate.html" class="real-nested-item">
+            <span class="flex-1 truncate">ค้นหาชื่อที่คล้ายกัน</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. จัดการ Case -->
+      <a href="./cases.html" class="real-menu-item mt-1">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <!-- 3. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item mt-1">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
+
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+      <!-- 5. รายงานและสถิติ (Active Parent) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header real-group-active">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">รายงานและสถิติ</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
+          <a href="./richmenu-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./bkk-assessment.html" class="real-nested-item" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
+            <span class="whitespace-nowrap">ประเมินคุณภาพ กทม.</span>
+            <span class="real-action-group">
+              <span class="real-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
+              <span class="real-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
+            </span>
+          </a>
+          <a href="./impact.html" class="real-nested-item real-nested-active font-medium" aria-current="page">
+            <span class="flex-1 truncate">คำนวณ Impact</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- บัญชี / สร้างหน่วยงาน -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./create-official-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
+          </a>
+          <a href="./create-org-chart.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1">
+        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- 7. FAQ -->
+      <a href="./faq.html" class="real-menu-item mt-1">
+        <i data-lucide="help-circle" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- =====================================================================
+       MAIN WORKSPACE AREA
+       ===================================================================== -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Topbar -->
+    <header class="real-topbar">
+      <!-- Left: Mobile Hamburger + Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <span class="text-slate-400 font-medium">รายงานและสถิติ</span>
+        <span class="text-slate-300">/</span>
+        <span class="font-bold text-slate-800">คำนวณ Impact</span>
+      </div>
+    </header>
+
+    <!-- Scrollable Workspace Body -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6" id="content-container">
+      <div class="max-w-[1536px] w-full mx-auto space-y-4">
+        
+        <!-- CARD 1: TOP NAVIGATION MENU BAR (Icons + Clean Text, No Numbers, matching cases.html & organizations.html) -->
+        <section class="bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs">
+          <!-- DESKTOP / TABLET VIEW: Left Icon/Title + Right-aligned Clean Tabs -->
+          <div class="hidden md:flex items-center justify-between gap-3 w-full">
+            
+            <!-- Left: Page Identity -->
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200/80 flex items-center justify-center text-blue-700 flex-shrink-0">
+                <i data-lucide="sparkles" class="w-4 h-4 text-blue-600"></i>
+              </div>
+              <div class="min-w-0">
+                <h1 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight block truncate">วิเคราะห์และคำนวณผลกระทบด้วย AI</h1>
+                <span class="text-[10.5px] text-slate-400 font-normal">เลือกแท็บเพื่อดูผลการวิเคราะห์ในแต่ละมิติ</span>
+              </div>
+            </div>
+
+            <!-- Right: Tab Navigation Bar (Icons + Clean Text, No Numbers, matching cases.html & organizations.html) -->
+            <div class="inline-flex items-center gap-1 sm:gap-1.5 p-1 bg-slate-50/90 rounded-xl border border-slate-200/70 overflow-x-auto no-scrollbar flex-shrink-0" role="tablist" aria-label="แท็บงาน AI">
+              <button type="button" role="tab" id="tab-impact" aria-selected="true" onclick="selectCategory('impact')"
+                class="cat-pill py-2 px-3 sm:px-3.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 hover:text-white">
+                <i data-lucide="brain" class="w-3.5 h-3.5 text-white"></i>
+                <span>คำนวณ Impact</span>
+              </button>
+
+              <button type="button" role="tab" id="tab-insight" aria-selected="false" onclick="selectCategory('insight')"
+                class="cat-pill py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="file-text" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>บทความสั้นทรงพลัง</span>
+              </button>
+
+              <button type="button" role="tab" id="tab-policy" aria-selected="false" onclick="selectCategory('policy')"
+                class="cat-pill py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>ข้อเสนอแนะเชิงนโยบาย</span>
+              </button>
+
+              <button type="button" role="tab" id="tab-solution" aria-selected="false" onclick="selectCategory('solution')"
+                class="cat-pill py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="bot" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>ข้อเสนอโครงการ</span>
+              </button>
+
+              <button type="button" role="tab" id="tab-prompt" aria-selected="false" onclick="selectCategory('prompt')"
+                class="cat-pill py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="sliders" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>จัดการ Custom Prompt</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- MOBILE RESPONSIVE VIEW: Menu Row + Info Row Below (Matching organizations.html & User Image 1) -->
+          <div class="flex md:hidden flex-col gap-2.5 w-full">
+            <!-- Row 1: Single Row Menu (Sidebar Button + Icon + Tab Dropdown matching screenshot) -->
+            <div class="flex items-center gap-2 w-full">
+              <button type="button" onclick="toggleMobileSidebar()"
+                class="w-8 h-8 rounded-lg border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 shadow-2xs transition-colors cursor-pointer"
+                title="เปิดเมนูนำทาง">
+                <i data-lucide="menu" class="w-4 h-4 text-blue-600"></i>
+              </button>
+              <div
+                class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
+                title="วิเคราะห์และคำนวณผลกระทบด้วย AI">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+              </div>
+
+              <!-- Custom Responsive Tab Dropdown with Lucide Icons (flex-1 to fill the remaining row) -->
+              <div class="relative flex-1 min-w-0" id="mobile-tab-dropdown-wrapper">
+                <button type="button" onclick="toggleMobileTabDropdown(event)" id="mobile-tab-trigger"
+                  class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span id="mobile-tab-current-icon"
+                      class="text-blue-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="brain" class="w-4 h-4"></i>
+                    </span>
+                    <span id="mobile-tab-current-label" class="truncate">คำนวณ Impact</span>
+                  </div>
+                  <i data-lucide="chevron-down" id="mobile-tab-chevron"
+                    class="w-4 h-4 text-slate-500 transition-transform flex-shrink-0"></i>
+                </button>
+
+                <div id="mobile-tab-menu"
+                  class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
+                  <button type="button" onclick="selectMobileTab('impact')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
+                    data-tab="impact">
+                    <span
+                      class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="brain" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">คำนวณ Impact</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('insight')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="insight">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">บทความสั้นทรงพลัง</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('policy')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="policy">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="message-square" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">ข้อเสนอแนะเชิงนโยบาย</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('solution')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="solution">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="bot" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">ข้อเสนอโครงการ</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('prompt')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="prompt">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="sliders" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">จัดการ Custom Prompt</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Module Title & Info Below Menu Bar -->
+            <div class="flex items-center justify-between px-1 pt-2 border-t border-slate-100 min-w-0">
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold text-slate-900 leading-tight block truncate">วิเคราะห์และคำนวณผลกระทบด้วย AI</span>
+                <span class="text-[11px] text-slate-500 font-medium truncate block">Traffy Fondue AI Studio</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- WORKBENCH MASTER-DETAIL -->
+        <div id="view-splitstudio" class="style-view">
+          <div class="bg-white rounded-2xl border border-traffy-border shadow-xs overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[620px]">
+            
+            <!-- Left Column: Parameters, Model Selector & System Prompt Preview (lg:col-span-4) -->
+            <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-traffy-border p-4 sm:p-5 bg-slate-50/60 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                
+                <!-- Ticket ID / Message ID Search & Paste -->
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label for="search-input-split" class="text-xs font-bold text-traffy-title flex items-center gap-1.5">
+                      <i data-lucide="search" class="w-3.5 h-3.5 text-traffy-blue"></i>
+                      <span>รหัสเคสเรื่องร้องเรียน</span>
+                    </label>
+                    <span id="split-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-traffy-blue border border-blue-200">Ticket ID</span>
+                  </div>
+                  <div class="relative">
+                    <input 
+                      type="text" 
+                      id="search-input-split" 
+                      value="2025-0219-K897D" 
+                      oninput="syncSearchInputs(this.value)"
+                      class="w-full pl-3 pr-16 py-2 bg-white border border-slate-300 rounded-xl text-xs font-mono text-traffy-title focus:border-traffy-blue focus:outline-none shadow-2xs"
+                      placeholder="2025-XXXXXX หรือตัวเลข..."
+                    />
+                    <button type="button" onclick="pasteClipboard()" class="absolute right-1 top-1 bottom-1 px-2.5 bg-slate-50 hover:bg-slate-100 text-slate-800 text-[11px] font-bold rounded-lg border border-slate-200 cursor-pointer">
+                      วาง
+                    </button>
+                  </div>
+
+                  <!-- Quick Preset Samples -->
+                  <div class="mt-2 flex flex-wrap gap-1.5">
+                    <button type="button" onclick="loadSampleCase('2024-BKK-0842')" class="text-[11px] font-medium text-slate-600 bg-white hover:bg-blue-50 hover:text-traffy-blue px-2 py-1 rounded-md border border-slate-200 transition-colors">
+                      ตัวอย่าง: 2024-BKK-0842 (ท่อตัน)
+                    </button>
+                    <button type="button" onclick="loadSampleCase('2024-BKK-1150')" class="text-[11px] font-medium text-slate-600 bg-white hover:bg-blue-50 hover:text-traffy-blue px-2 py-1 rounded-md border border-slate-200 transition-colors">
+                      ตัวอย่าง: 2024-BKK-1150 (ฝาท่อแตก)
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Segmented Pill Buttons: AI Model Selector -->
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label class="text-xs font-bold text-traffy-title flex items-center gap-1">
+                      <i data-lucide="cpu" class="w-3.5 h-3.5 text-traffy-blue"></i>
+                      <span>โมเดล AI ที่เลือก:</span>
+                    </label>
+                    <span id="split-active-indicator" class="text-[11px] font-mono font-bold text-traffy-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                      ChatGPT
+                    </span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-1.5 bg-slate-100/90 p-1 rounded-xl border border-slate-200">
+                    <button type="button" onclick="setAiModel('ChatGPT')" id="split-btn-ChatGPT" class="split-model-pill py-2 px-2.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-traffy-blue text-white shadow-xs cursor-pointer">
+                      <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+                      <span>ChatGPT</span>
+                    </button>
+                    <button type="button" onclick="setAiModel('Gemini 1.5 Pro')" id="split-btn-Gemini" class="split-model-pill py-2 px-2.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                      <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                      <span>Gemini</span>
+                    </button>
+                    <button type="button" onclick="setAiModel('Claude 3.5')" id="split-btn-Claude" class="split-model-pill py-2 px-2.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                      <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                      <span>Claude</span>
+                    </button>
+                    <button type="button" onclick="setAiModel('Custom')" id="split-btn-Custom" class="split-model-pill py-2 px-2.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                      <i data-lucide="settings-2" class="w-3.5 h-3.5"></i>
+                      <span>Custom</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Custom AI Name Input (Split Studio) -->
+                <div id="custom-ai-container-split" class="hidden space-y-1 p-2.5 bg-purple-50/80 border border-purple-300 rounded-xl transition-all">
+                  <label for="custom-ai-input-split" class="text-xs font-bold text-purple-950 flex items-center gap-1">
+                    <i data-lucide="settings-2" class="w-3.5 h-3.5 text-purple-700"></i>
+                    <span>ชื่อโมเดล Custom AI:</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    id="custom-ai-input-split" 
+                    placeholder="เช่น Llama 3.3 70B, DeepSeek..." 
+                    oninput="syncCustomAiNames(this.value)"
+                    class="w-full px-2.5 py-1.5 bg-white border border-purple-300 rounded-lg text-xs font-mono text-purple-950 focus:border-purple-600 focus:outline-none"
+                  />
+                </div>
+
+                <!-- Run AI Button -->
+                <button type="button" onclick="fetchAiData()" id="btn-run-ai" class="w-full py-2.5 bg-traffy-green hover:bg-traffy-green-dark text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 min-h-[42px] shadow-xs cursor-pointer transition-all">
+                  <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  <span>ดึงและประมวลผลด้วย AI</span>
+                </button>
+
+                <!-- System Prompt Preview (Read Only) -->
+                <div class="border border-slate-200 rounded-xl p-3 bg-white space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-800 flex items-center gap-1">
+                      <i data-lucide="code" class="w-3.5 h-3.5 text-traffy-blue"></i>
+                      <span>System Prompt (ดูอย่างเดียว)</span>
+                    </span>
+                    <button type="button" onclick="copyCurrentPrompt()" class="text-[11px] font-bold text-traffy-blue hover:underline cursor-pointer">
+                      คัดลอก
+                    </button>
+                  </div>
+                  <pre id="split-prompt-text" class="text-[11px] font-mono text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-200 max-h-48 overflow-y-auto whitespace-pre-wrap leading-relaxed"></pre>
+                </div>
+
+              </div>
+
+              <!-- Status Footer -->
+              <div class="pt-2 border-t border-slate-200/60 text-[11px] text-slate-600 flex items-center justify-between">
+                <span>Traffy Fondue Suite</span>
+                <span class="text-emerald-700 font-semibold flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  ระบบพร้อมใช้งาน
+                </span>
+              </div>
+            </div>
+
+            <!-- Right Column: Line-numbered Synthesis Workspace (lg:col-span-8) -->
+            <div class="lg:col-span-8 p-4 sm:p-6 flex flex-col justify-between space-y-3 bg-white">
+              
+              <!-- Header -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+                <div>
+                  <h2 id="split-editor-title" class="text-sm sm:text-base font-bold text-traffy-title">
+                    ผลการวิเคราะห์และข้อความตอบกลับ
+                  </h2>
+                  <p class="text-xs text-traffy-muted">เจ้าหน้าที่สามารถตรวจทานและพิมพ์แก้ไขเนื้อหาได้อิสระ</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="split-counter" class="text-xs font-mono font-bold bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200">
+                    46 คำ | 362 ตัวอักษร
+                  </span>
+                </div>
+              </div>
+
+              <!-- Line Gutter Editor -->
+              <div class="flex border border-slate-300 rounded-xl overflow-hidden focus-within:border-traffy-blue focus-within:ring-2 focus-within:ring-blue-100 transition-all flex-1 min-h-[380px] bg-white">
+                <div id="gutter-split" class="w-11 bg-slate-50 border-r border-slate-200 text-slate-500 font-mono text-xs py-3 select-none text-right pr-2 leading-6 shrink-0" aria-hidden="true">
+                  1<br>2<br>3<br>4<br>5<br>6<br>7<br>8
+                </div>
+                <textarea 
+                  id="editor-split" 
+                  rows="15" 
+                  oninput="syncEditorContents(this.value)" 
+                  class="w-full p-3 font-mono text-xs sm:text-sm text-traffy-title bg-transparent leading-6 focus:outline-none resize-none flex-1"
+                  placeholder="พิมพ์หรือปรับแต่งผลการวิเคราะห์..."
+                ></textarea>
+              </div>
+
+              <!-- Footer Actions -->
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="clearEditor()" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                    <span>ล้างข้อความ</span>
+                  </button>
+                  <button type="button" onclick="copyEditorContent()" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>คัดลอกข้อความ</span>
+                  </button>
+                </div>
+                <button type="button" onclick="saveContext()" class="px-6 py-2.5 bg-traffy-blue hover:bg-traffy-blue-dark text-white rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-xs min-h-[42px] cursor-pointer">
+                  <i data-lucide="save" class="w-4 h-4"></i>
+                  <span>บันทึกผลการคำนวณ</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- =========================================================================
+             TAB 5: CUSTOM PROMPTS MANAGEMENT VIEW (จัดการ Custom Prompt)
+             ========================================================================= -->
+        <div id="view-prompts-management" class="hidden space-y-4">
+          
+          <!-- Top Action Bar -->
+          <section class="bg-white rounded-2xl border border-traffy-border p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-sm sm:text-base font-bold text-traffy-title flex items-center gap-2">
+                <i data-lucide="sliders" class="w-4 h-4 text-traffy-blue"></i>
+                <span>คลังจัดการ Custom Prompt (System Prompts Management)</span>
+              </h2>
+              <p class="text-xs text-traffy-muted">
+                จัดการ ปรับแต่ง และกำหนดคำสั่ง System Prompt ที่ส่งให้ AI ใช้งานในแต่ละหมวดหมู่
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="renderPromptTable()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl flex items-center gap-1.5 min-h-[40px] cursor-pointer">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                <span>รีเฟรช</span>
+              </button>
+              <button type="button" onclick="openPromptDrawer(null)" class="px-4 py-2 bg-traffy-green hover:bg-traffy-green-dark text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs min-h-[40px] cursor-pointer">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>เพิ่ม Custom Prompt ใหม่</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Search & Filter Bar -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <div class="relative flex-1">
+              <input 
+                type="text" 
+                id="prompt-search-input" 
+                oninput="filterPromptList(this.value)" 
+                placeholder="ค้นหาชื่อโมเดล, คำอธิบาย หรือข้อความ Prompt..." 
+                class="w-full pl-9 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-traffy-title focus:border-traffy-blue focus:outline-none"
+              />
+              <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3 top-3"></i>
+            </div>
+            <select id="prompt-model-filter" onchange="filterPromptList(document.getElementById('prompt-search-input').value)" class="px-3 py-2.5 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-traffy-body focus:border-traffy-blue focus:outline-none">
+              <option value="ALL">โมเดล AI ทั้งหมด</option>
+              <option value="ChatGPT">ChatGPT</option>
+              <option value="Gemini">Gemini</option>
+              <option value="Claude">Claude</option>
+              <option value="Custom">Custom</option>
+            </select>
+          </div>
+
+          <!-- Prompts Table / Cards Container -->
+          <div class="bg-white rounded-2xl border border-traffy-border shadow-xs overflow-hidden">
+            
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-traffy-border text-slate-700 font-bold uppercase tracking-wider">
+                    <th class="p-3.5 w-20">Prompt ID</th>
+                    <th class="p-3.5 w-32">AI Name</th>
+                    <th class="p-3.5 w-56">คำอธิบาย (Description)</th>
+                    <th class="p-3.5">ข้อความ Prompt (Prompt Text)</th>
+                    <th class="p-3.5 text-right w-24">จัดการ</th>
+                  </tr>
+                </thead>
+                <tbody id="prompt-table-body" class="divide-y divide-slate-100"></tbody>
+              </table>
+            </div>
+
+            <!-- Mobile Cards View -->
+            <div id="prompt-mobile-cards" class="md:hidden divide-y divide-slate-100"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       DRAWER: PROMPT VIEWER (READ-ONLY)
+       ========================================================================= -->
+  <aside id="prompt-viewer-drawer" class="fixed inset-y-0 right-0 w-full sm:w-[500px] bg-white border-l border-traffy-border shadow-2xl z-50 transform translate-x-full transition-transform duration-200 ease-in-out flex flex-col hidden" role="dialog" aria-modal="true" aria-labelledby="viewer-title">
+    
+    <div class="px-5 py-4 border-b border-traffy-border bg-slate-50 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-blue-50 text-traffy-blue border border-blue-200 flex items-center justify-center shrink-0">
+          <i data-lucide="terminal" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <span class="text-[11px] font-mono font-bold text-traffy-blue" id="viewer-tab-name">Current System Prompt</span>
+          <h3 id="viewer-title" class="text-sm font-bold text-traffy-title">คำสั่ง System Prompt ที่ใช้ประมวลผล</h3>
+        </div>
+      </div>
+      <button type="button" onclick="closePromptViewer()" class="w-8 h-8 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 flex items-center justify-center cursor-pointer" aria-label="ปิดหน้าต่าง">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <div class="p-5 space-y-4 flex-1 overflow-y-auto text-xs">
+      <div class="bg-blue-50/60 border border-blue-200 rounded-xl p-3 flex items-start gap-2.5">
+        <i data-lucide="info" class="w-4 h-4 text-traffy-blue shrink-0 mt-0.5"></i>
+        <div class="text-[11px] text-slate-700 leading-relaxed">
+          ชุดคำสั่งที่ส่งไปยังโมเดล <span class="font-bold text-traffy-blue font-mono" id="viewer-model-name">ChatGPT</span> สำหรับวิเคราะห์เคสนี้ (โหมดอ่านและคัดลอกเท่านั้น)
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1.5">
+          <label class="font-bold text-traffy-title flex items-center gap-1.5">
+            <i data-lucide="code-2" class="w-3.5 h-3.5 text-slate-600"></i>
+            <span>System Instruction (คำสั่งระบบ):</span>
+          </label>
+          <span class="text-[11px] font-mono text-slate-500" id="viewer-char-count">0 chars</span>
+        </div>
+        <div class="relative bg-slate-900 rounded-xl border border-slate-800 p-3.5 font-mono text-xs text-slate-100 leading-relaxed max-h-[380px] overflow-y-auto select-text shadow-inner">
+          <pre id="viewer-prompt-content" class="whitespace-pre-wrap break-words font-mono"></pre>
+        </div>
+      </div>
+
+      <div class="text-[11px] text-slate-600 flex items-center gap-1.5 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+        <i data-lucide="sliders" class="w-3.5 h-3.5 text-slate-500"></i>
+        <span>หากต้องการแก้ไขแม่แบบคำสั่งนี้ กรุณาไปที่แท็บ <strong>5. จัดการ Custom Prompt</strong></span>
+      </div>
+    </div>
+
+    <div class="px-5 py-3.5 border-t border-traffy-border bg-slate-50 flex items-center justify-between">
+      <button type="button" onclick="closePromptViewer()" class="px-4 py-2 border border-slate-300 rounded-xl font-bold text-slate-700 hover:bg-slate-100 min-h-[40px] text-xs cursor-pointer">
+        ปิดหน้าต่าง
+      </button>
+      <button type="button" onclick="copyViewerPrompt()" class="px-5 py-2 bg-traffy-blue hover:bg-traffy-blue-dark text-white rounded-xl font-bold min-h-[40px] shadow-xs text-xs flex items-center gap-1.5 cursor-pointer">
+        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+        <span>คัดลอกคำสั่ง Prompt</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- =========================================================================
+       MODAL: CUSTOM PROMPT EDITOR (CENTERED POPUP)
+       ========================================================================= -->
+  <div id="prompt-drawer-container" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <!-- Click backdrop to close -->
+    <div onclick="closePromptDrawer()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity" aria-hidden="true"></div>
+
+    <!-- Centered Modal Card -->
+    <aside id="prompt-drawer" class="relative w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl z-10 flex flex-col max-h-[90vh] overflow-hidden transform scale-95 opacity-0 transition-all duration-200 ease-out" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      
+      <!-- Header with Breadcrumb & ID -->
+      <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/70 flex items-center justify-between flex-shrink-0">
+        <div>
+          <div class="flex items-center gap-2 mb-0.5">
+            <span class="text-[11px] font-bold text-traffy-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-200 uppercase tracking-wider">
+              จัดการ Custom Prompt
+            </span>
+            <span class="text-xs font-mono font-bold text-slate-600" id="drawer-prompt-id">Prompt ID: 17</span>
+          </div>
+          <h3 id="drawer-title" class="text-sm sm:text-base font-bold text-slate-900">
+            แก้ไขคำสั่ง Custom Prompt
+          </h3>
+        </div>
+        <button type="button" onclick="closePromptDrawer()" class="w-9 h-9 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 flex items-center justify-center min-h-[36px] min-w-[36px] cursor-pointer transition-colors" aria-label="ปิดหน้าต่าง">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <div class="p-5 sm:p-6 space-y-4 flex-1 overflow-y-auto text-xs">
+        
+        <!-- Top Grid: AI Name & Prompt ID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="drawer-model-select" class="block font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
+              <i data-lucide="bot" class="w-3.5 h-3.5 text-traffy-blue"></i>
+              <span>AI Name (ชื่อโมเดล AI):</span>
+            </label>
+            <select id="drawer-model-select" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-traffy-blue text-xs font-semibold text-slate-800 outline-none">
+              <option value="ChatGPT">ChatGPT (OpenAI)</option>
+              <option value="Gemini">Gemini (Google)</option>
+              <option value="Claude">Claude (Anthropic)</option>
+              <option value="Custom">Custom Model</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="drawer-static-id" class="block font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
+              <i data-lucide="hash" class="w-3.5 h-3.5 text-slate-500"></i>
+              <span>Prompt ID:</span>
+            </label>
+            <input 
+              type="text" 
+              id="drawer-static-id" 
+              readonly 
+              value="17" 
+              class="w-full p-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-mono text-slate-600 cursor-not-allowed select-all"
+            />
+          </div>
+        </div>
+
+        <!-- Description Field with Virtual Line Numbers -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="drawer-desc-input" class="font-bold text-slate-800 flex items-center gap-1.5">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-traffy-blue"></i>
+              <span>คำอธิบาย (Description):</span>
+            </label>
+            <span class="text-[11px] font-mono text-slate-500" id="drawer-desc-counter">0 chars</span>
+          </div>
+          <div class="flex border border-slate-300 rounded-xl overflow-hidden focus-within:border-traffy-blue focus-within:ring-2 focus-within:ring-blue-100 transition-all bg-white">
+            <div class="w-9 bg-slate-50 border-r border-slate-200 text-slate-500 font-mono text-xs py-2 select-none text-right pr-2 leading-6 shrink-0" aria-hidden="true">
+              1
+            </div>
+            <input 
+              type="text" 
+              id="drawer-desc-input" 
+              oninput="document.getElementById('drawer-desc-counter').innerText = `${this.value.length} chars`"
+              class="w-full p-2.5 font-mono text-xs text-traffy-title bg-transparent leading-6 focus:outline-none" 
+              placeholder="เช่น คำสั่งวิเคราะห์ความรุนแรงและขนาดผลกระทบเคสทั่วไป (Impact)..."
+            />
+          </div>
+        </div>
+
+        <!-- Prompt Text Field with Dynamic Virtual Gutter -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="drawer-prompt-textarea" class="font-bold text-slate-800 flex items-center gap-1.5">
+              <i data-lucide="terminal" class="w-3.5 h-3.5 text-traffy-blue"></i>
+              <span>ข้อความ Prompt (Prompt Text):</span>
+            </label>
+            <span class="text-[11px] font-mono text-slate-500" id="drawer-prompt-counter">0 คำ | 0 chars</span>
+          </div>
+          
+          <div class="flex border border-slate-300 rounded-xl overflow-hidden focus-within:border-traffy-blue focus-within:ring-2 focus-within:ring-blue-100 transition-all bg-white min-h-[220px]">
+            <div id="drawer-gutter" class="w-10 bg-slate-50 border-r border-slate-200 text-slate-500 font-mono text-xs py-3 select-none text-right pr-2 leading-6 shrink-0" aria-hidden="true">
+              1<br>2<br>3<br>4<br>5
+            </div>
+            <textarea 
+              id="drawer-prompt-textarea" 
+              rows="10" 
+              oninput="syncDrawerPromptGutter(this.value)"
+              class="w-full p-3 font-mono text-xs sm:text-sm text-traffy-title bg-transparent leading-6 focus:outline-none resize-y"
+              placeholder="พิมพ์หรือปรับแต่งข้อความ Prompt..."
+            ></textarea>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-1.5 flex items-center gap-1">
+            <i data-lucide="info" class="w-3 h-3 text-slate-400"></i>
+            <span>สามารถใช้ตัวแปรของระบบ เช่น <code>{ticket_id}</code>, <code>{problem_type}</code> เพื่อให้ AI ดึงข้อมูลอัตโนมัติ</span>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Actions Footer -->
+      <div class="px-5 py-4 border-t border-slate-100 bg-slate-50/70 flex items-center justify-end gap-2.5 flex-shrink-0">
+        <button type="button" onclick="closePromptDrawer()" class="px-4 py-2.5 border border-slate-300 rounded-xl font-bold text-slate-700 hover:bg-slate-100 text-xs min-h-[42px] flex items-center gap-1.5 cursor-pointer">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>ยกเลิก</span>
+        </button>
+        <button type="button" onclick="savePromptFromDrawer()" class="px-5 py-2.5 bg-traffy-blue hover:bg-traffy-blue-dark text-white rounded-xl font-bold text-xs min-h-[42px] shadow-xs flex items-center gap-1.5 cursor-pointer">
+          <i data-lucide="save" class="w-4 h-4"></i>
+          <span>อัปเดต Prompt</span>
+        </button>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- Modal Backdrop Overlay -->
+  <div id="drawer-backdrop" onclick="closeAnyDrawer()" class="fixed inset-0 drawer-backdrop z-40 hidden" aria-hidden="true"></div>
+
+  <script>
+    // Centralized Application State
+    const APP_STATE = {
+      activeTab: 'impact',
+      aiModel: 'ChatGPT',
+      customAiName: '',
+      ticketId: '2025-0219-K897D',
+      content: '',
+      prompts: [
+        {
+          id: '17',
+          ai_name: 'Gemini',
+          description: 'ข้อความ prompt ใหม่#1 สังเคราะห์ผลกระทบเมือง',
+          prompt_text: 'คุณคือผู้เชี่ยวชาญด้านการประเมินและวิเคราะห์ผลกระทบเมือง (City Impact Analyst) ประจำโครงการ Traffy Fondue กรุณาวิเคราะห์เรื่องร้องเรียนที่ได้รับ และประเมินผลกระทบอย่างละเอียดใน 4 มิติ: 1. ขอบเขตและประชากร 2. ความเสียหายทางเศรษฐกิจ 3. ความปลอดภัย 4. สรุป Impact Score'
+        },
+        {
+          id: '18',
+          ai_name: 'ChatGPT',
+          description: 'สังเคราะห์บทความสั้นเพื่อการสื่อสารสาธารณะ (Insight)',
+          prompt_text: 'ช่วยกลั่นกรองเรื่องแจ้งให้เป็นบทความขนาดสั้น สื่อสารได้ทรงพลัง เข้าถึงอารมณ์ความรู้สึก และสร้างความตระหนักรู้ต่อการพัฒนาเมือง...'
+        },
+        {
+          id: '19',
+          ai_name: 'Claude',
+          description: 'สรุปข้อเสนอแนะเชิงนโยบายสำหรับฝ่ายบริหาร (Policy)',
+          prompt_text: 'วิเคราะห์สาเหตุเชิงโครงสร้างของปัญหาเรื่องร้องเรียนนี้ พร้อมเสนอแนะแนวทางเชิงนโยบายสาธารณะ 3 ข้อเร่งด่วน...'
+        },
+        {
+          id: '20',
+          ai_name: 'Custom',
+          description: 'ร่างโครงการเชิงวิศวกรรมเพื่อการแก้ไขระยะยาว (Solution)',
+          prompt_text: 'จากปัญหาเรื่องร้องเรียนที่ระบุ จงเสนอแผนโครงการแก้ไขเชิงวิศวกรรม พร้อมประมาณการกรอบเวลาและงบประมาณเบื้องต้น...'
+        }
+      ],
+      editingPromptId: null
+    };
+
+    const CATEGORY_META = {
+      impact: {
+        title: 'คำนวณ Impact',
+        prompt: `คุณคือผู้เชี่ยวชาญด้านการประเมินและวิเคราะห์ผลกระทบเมือง (City Impact Analyst) ประจำโครงการ Traffy Fondue
+กรุณาวิเคราะห์เรื่องร้องเรียนที่ได้รับ และประเมินผลกระทบอย่างละเอียดใน 4 มิติ:
+1. ขอบเขตและประชากรที่ได้รับผลกระทบ (Scope & Reach)
+2. การประเมินมูลค่าความเสียหายทางเศรษฐกิจและเวลาในการสัญจร
+3. ความเสี่ยงด้านความปลอดภัยในชีวิตและทรัพย์สิน
+4. สรุปคะแนน Impact Score (1-5 ดาว พร้อมเหตุผลสนับสนุน)`,
+        mockResult: `[ระดับผลกระทบ]: สูงมาก (ระดับ 4.6 / 5.0)
+[ขอบเขตและประชากร]: ผู้ใช้ทางสัญจรบริเวณถนนพหลโยธินขาออก ประมาณ 25,000 คน/วัน
+[ความเสียหายเชิงเศรษฐกิจ]: ก่อให้เกิดปัญหาจราจรติดขัดสะสมเฉลี่ย 35 นาที/คัน คิดเป็นมูลค่าสูญเสียทางเศรษฐกิจกว่า 210,000 บาท/สัปดาห์
+[ความปลอดภัยในชีวิต]: ฝาท่อระบายน้ำทรุดตัว เสี่ยงต่อการเกิดอุบัติเหตุรุนแรงต่อผู้ขับขี่รถจักรยานยนต์และคนเดินเท้าในเวลากลางคืน
+[ข้อเสนอแนะเร่งด่วน]: ส่งหน่วยซ่อมบำรุงเคลื่อนที่เร็วเข้ากั้นสัญญาณเตือนสะท้อนแสงภายใน 2 ชั่วโมง และเปลี่ยนโครงเหล็กหล่อเหนียวชนิดพิเศษภายใน 24 ชม.`
+      },
+      insight: {
+        title: 'บทความสั้นทรงพลัง',
+        prompt: `คุณคือนักเขียนและนักเล่าเรื่องเมือง (City Storyteller)
+จงนำข้อมูลเรื่องร้องเรียนข้างต้น มาเรียบเรียงเป็นบทความสั้นไม่เกิน 3 ย่อหน้า:
+1. เปิดเรื่องด้วยภาพสะท้อนชีวิตจริงของชาวเมือง
+2. ชี้ให้เห็นถึงความหวังและการร่วมมือกันแก้ไข
+3. สรุปบทเรียนเพื่อเมืองที่น่าอยู่ขึ้นสำหรับทุกคน`,
+        mockResult: `ฝาท่อที่ทรุดตัว อาจดูเหมือนเป็นเพียงหลุมเล็กๆ บนถนนสายยาว แต่สำหรับผู้คนที่ต้องเดินทางผ่านไปมาในทุกค่ำคืน มันคือเส้นแบ่งระหว่างการกลับถึงบ้านอย่างปลอดภัย กับอุบัติเหตุที่ไม่คาดคิด
+
+เมื่อเสียงสะท้อนของประชาชนถูกส่งผ่านระบบ Traffy Fondue พลังของการมีส่วนร่วมจึงเริ่มต้นขึ้น การลงมือแก้ไขในวันนี้ไม่ใช่แค่การซ่อมแซมฝาท่อ แต่คือการคืนความอุ่นใจและรอยยิ้มให้กับทุกคนในชุมชน
+
+เมืองที่ดีไม่ใช่เมืองที่ไร้ปัญหา แต่คือเมืองที่รับฟังและพร้อมแก้ไขอย่างทันท่วงที`
+      },
+      policy: {
+        title: 'ข้อเสนอแนะเชิงนโยบาย',
+        prompt: `คุณคือที่ปรึกษานโยบายเมือง (Urban Policy Advisor)
+จากเรื่องร้องเรียนนี้ จงสังเคราะห์ข้อเสนอแนะเชิงนโยบายสาธารณะ 3 ข้อ:
+1. การยกระดับเกณฑ์มาตรฐานการตรวจรับงานโครงสร้างพื้นฐาน
+2. ระบบตรวจสอบเชิงรุกก่อนเกิดความเสียหาย (Predictive Maintenance)
+3. การบูรณาการงบประมาณระหว่างหน่วยงานที่ทับซ้อน`,
+        mockResult: `[ข้อเสนอที่ 1]: กำหนดให้มีรอบการตรวจสอบความสมบูรณ์ของฝาท่อระบายน้ำบนถนนสายหลักทุกๆ 30 วัน ผ่านระบบเซนเซอร์หรือการลาดตระเวนเชิงรุก
+[ข้อเสนอที่ 2]: ออกระเบียบให้ผู้รับเหมาวางหลักประกันความปลอดภัยในพื้นที่ก่อสร้าง 2 ปี เพื่อความรับผิดชอบอย่างต่อเนื่อง
+[ข้อเสนอที่ 3]: จัดตั้งคณะทำงานบูรณาการระหว่าง กทม. และการประปา/การไฟฟ้านครหลวง เพื่อลดระยะเวลาการประสานงานกรณีพื้นที่ทับซ้อน`
+      },
+      solution: {
+        title: 'ข้อเสนอโครงการแก้ไขปัญหา',
+        prompt: `คุณคือวิศวกรผู้เชี่ยวชาญด้านโครงสร้างพื้นฐานเมือง
+จงเสนอแนวทางโครงการเชิงวิศวกรรมเพื่อแก้ไขปัญหานี้อย่างยั่งยืน:
+1. วัตถุประสงค์และขอบเขตโครงการ
+2. รายละเอียดเทคนิคทางวิศวกรรมที่แนะนำ
+3. แผนกรอบเวลาและงบประมาณโดยประมาณ`,
+        mockResult: `[ชื่อโครงการ]: โครงการปรับปรุงและเปลี่ยนฝาท่อระบายน้ำเหล็กหล่อเหนียวชนิดพิเศษรับแรงสะเทือนสูง (Heavy-Duty Ductile Iron Cover)
+[เทคนิคที่ใช้]: ทำการรื้อถอนคอนกรีตฐานรองเดิม และติดตั้งระบบ Joint ยางสังเคราะห์กันแรงสั่นสะเทือน ลดเสียงและป้องกันการทรุดตัว
+[ระยะเวลาดำเนินงาน]: 5 วันทำการ (ดำเนินการเฉพาะช่วง 22.00 - 04.00 น. เพื่อไม่ให้กระทบจราจร)
+[กรอบงบประมาณ]: ประมาณ 45,000 บาทต่อจุด`
+      }
+    };
+
+    // On Load Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      APP_STATE.content = CATEGORY_META[APP_STATE.activeTab].mockResult;
+      updateAllViewContents();
+      renderPromptTable();
+      setAiModel('ChatGPT');
+    });
+
+    // Mobile Sidebar Drawer
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      const isOpen = sidebar.classList.contains('sidebar-open');
+      if (isOpen) {
+        closeMobileSidebar();
+      } else {
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      sidebar.classList.remove('sidebar-open');
+      backdrop.classList.add('hidden');
+    }
+
+    const TAB_META = {
+      impact: { label: 'คำนวณ Impact', icon: 'brain' },
+      insight: { label: 'บทความสั้นทรงพลัง', icon: 'file-text' },
+      policy: { label: 'ข้อเสนอแนะเชิงนโยบาย', icon: 'message-square' },
+      solution: { label: 'ข้อเสนอโครงการ', icon: 'bot' },
+      prompt: { label: 'จัดการ Custom Prompt', icon: 'sliders' }
+    };
+
+    function toggleMobileTabDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('mobile-tab-menu');
+      const chevron = document.getElementById('mobile-tab-chevron');
+      if (menu) {
+        menu.classList.toggle('hidden');
+        if (chevron) chevron.classList.toggle('rotate-180');
+      }
+    }
+
+    function selectMobileTab(tabId) {
+      selectCategory(tabId);
+      const menu = document.getElementById('mobile-tab-menu');
+      const chevron = document.getElementById('mobile-tab-chevron');
+      if (menu) menu.classList.add('hidden');
+      if (chevron) chevron.classList.remove('rotate-180');
+    }
+
+    document.addEventListener('click', function (e) {
+      const wrapper = document.getElementById('mobile-tab-dropdown-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        const menu = document.getElementById('mobile-tab-menu');
+        const chevron = document.getElementById('mobile-tab-chevron');
+        if (menu) menu.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-180');
+      }
+    });
+
+    // Category Tab Switcher
+    function selectCategory(catKey) {
+      APP_STATE.activeTab = catKey;
+
+      // Update Desktop/Tablet Tabs
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.setAttribute('aria-selected', 'false');
+        btn.className = 'cat-pill py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5';
+        const icon = btn.querySelector('svg, i');
+        if (icon) {
+          icon.classList.remove('text-white');
+          icon.classList.add('text-slate-400');
+        }
+      });
+
+      const activeBtn = document.getElementById(`tab-${catKey}`);
+      if (activeBtn) {
+        activeBtn.setAttribute('aria-selected', 'true');
+        activeBtn.className = 'cat-pill py-2 px-3 sm:px-3.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 hover:text-white';
+        const icon = activeBtn.querySelector('svg, i');
+        if (icon) {
+          icon.classList.remove('text-slate-400');
+          icon.classList.add('text-white');
+        }
+      }
+
+      // Update Mobile Dropdown Header & List
+      if (TAB_META[catKey]) {
+        const meta = TAB_META[catKey];
+        const currentIcon = document.getElementById('mobile-tab-current-icon');
+        const currentLabel = document.getElementById('mobile-tab-current-label');
+        if (currentIcon) currentIcon.innerHTML = `<i data-lucide="${meta.icon}" class="w-4 h-4"></i>`;
+        if (currentLabel) currentLabel.textContent = meta.label;
+
+        document.querySelectorAll('.mobile-tab-item').forEach(btn => {
+          const isCurrent = btn.getAttribute('data-tab') === catKey;
+          const iconSpan = btn.querySelector('span');
+          if (isCurrent) {
+            btn.className = 'mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer';
+            if (iconSpan) iconSpan.className = 'w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0';
+          } else {
+            btn.className = 'mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer';
+            if (iconSpan) iconSpan.className = 'w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0';
+          }
+        });
+        lucide.createIcons();
+      }
+
+      const promptMgmt = document.getElementById('view-prompts-management');
+      const studioView = document.getElementById('view-splitstudio');
+
+      if (catKey === 'prompt') {
+        studioView.classList.add('hidden');
+        promptMgmt.classList.remove('hidden');
+        renderPromptTable();
+      } else {
+        promptMgmt.classList.add('hidden');
+        studioView.classList.remove('hidden');
+        APP_STATE.content = CATEGORY_META[catKey].mockResult;
+        updateAllViewContents();
+      }
+
+      showToast(`แท็บ: ${catKey === 'prompt' ? 'จัดการ Custom Prompt' : CATEGORY_META[catKey]?.title}`);
+    }
+
+    function updateAllViewContents() {
+      const meta = CATEGORY_META[APP_STATE.activeTab];
+      if (!meta) return;
+
+      const promptText = meta.prompt;
+      
+      const elSplitPrompt = document.getElementById('split-prompt-text');
+      if (elSplitPrompt) elSplitPrompt.innerText = promptText;
+
+      const titleEl = document.getElementById('split-editor-title');
+      if (titleEl) titleEl.innerText = `ผลการวิเคราะห์: ${meta.title} (แก้ไขได้)`;
+
+      const txtEl = document.getElementById('editor-split');
+      if (txtEl) txtEl.value = APP_STATE.content;
+
+      updateAllGutters();
+    }
+
+    function syncSearchInputs(val) {
+      APP_STATE.ticketId = val;
+      const el = document.getElementById('search-input-split');
+      if (el && el.value !== val) el.value = val;
+
+      const isTicket = val.includes('-');
+      const badgeText = isTicket ? 'Ticket ID' : /^\d+$/.test(val.trim()) ? 'Message ID' : 'ทั่วไป';
+      const badgeClass = isTicket 
+        ? 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-traffy-blue border border-blue-200'
+        : 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200';
+
+      const b = document.getElementById('split-badge');
+      if (b) {
+        b.innerText = badgeText;
+        b.className = badgeClass;
+      }
+    }
+
+    function loadSampleCase(caseId) {
+      syncSearchInputs(caseId);
+      if (caseId === '2024-BKK-0842') {
+        APP_STATE.content = `[ระดับผลกระทบ]: สูงมาก (Impact Score 88/100)
+[ขอบเขตและประชากร]: ผู้สัญจรและผู้ค้าตลาดสดคลองเตย ประมาณ 3,500 คน/วัน
+[ความเสียหายเชิงเศรษฐกิจ]: ร้านค้าสูญเสียรายได้ 30-40% ขณะน้ำท่วมขัง ถนนติดขัดสะสม 1.2 กม.
+[ความเสี่ยง]: สุขอนามัยจากน้ำเสียขัง และความเสี่ยงลื่นล้ม/ไฟฟ้าดูด
+[ข้อเสนอแนะ]: ประสานฝ่ายระบายน้ำเขตคลองเตยส่งรถดูดเลนฉุกเฉินเคลียร์พื้นที่ภายใน 24 ชม. และวางแผนลอกท่อเส้นหลักระยะทาง 400 ม.`;
+      } else if (caseId === '2024-BKK-1150') {
+        APP_STATE.content = `[ระดับผลกระทบ]: สูงมาก - เร่งด่วนฉุกเฉิน (Impact Score 92/100)
+[ขอบเขตและประชากร]: คนเดินเท้าทางเท้าปากซอยสุขุมวิท 22 ประมาณ 8,000 คน/วัน
+[ความเสี่ยงต่อชีวิต]: ฝาท่อคอนกรีตแตกเป็นโพรงลึก 1.8 ม. บนทางเท้าที่มีคนหนาแน่น เสี่ยงอุบัติเหตุร้ายแรงยามค่ำคืน
+[ภาพลักษณ์]: อยู่ในย่านเศรษฐกิจและการท่องเที่ยวหลัก
+[ข้อเสนอแนะ]: นำแผงเหล็กกั้นสัญญาณเตือนสะท้อนแสงทันที และเปลี่ยนฝาเหล็กหล่อมาตรฐานภายใน 12 ชั่วโมง`;
+      }
+      updateAllViewContents();
+      showToast(`โหลดข้อมูลเคส: ${caseId}`);
+    }
+
+    function syncEditorContents(val) {
+      APP_STATE.content = val;
+      updateAllGutters();
+    }
+
+    function updateAllGutters() {
+      const lines = (APP_STATE.content || '').split('\n').length;
+      let gutterHtml = '';
+      for (let i = 1; i <= Math.max(lines, 12); i++) {
+        gutterHtml += i + '<br>';
+      }
+
+      const gutter = document.getElementById('gutter-split');
+      if (gutter) gutter.innerHTML = gutterHtml;
+
+      const counter = document.getElementById('split-counter');
+      if (counter) {
+        const charCount = (APP_STATE.content || '').length;
+        const wordCount = (APP_STATE.content || '').trim().split(/\s+/).filter(Boolean).length;
+        counter.innerText = `${wordCount} คำ | ${charCount} ตัวอักษร`;
+      }
+    }
+
+    // Model Selection
+    function setAiModel(model) {
+      APP_STATE.aiModel = model;
+
+      const bentoKeyMap = {
+        'ChatGPT': 'ChatGPT',
+        'Gemini 1.5 Pro': 'Gemini',
+        'Claude 3.5': 'Claude',
+        'Custom': 'Custom'
+      };
+
+      document.querySelectorAll('.split-model-pill').forEach(btn => {
+        btn.className = 'split-model-pill py-2 px-2.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer';
+      });
+      const activeSplitBtn = document.getElementById(`split-btn-${bentoKeyMap[model] || 'ChatGPT'}`);
+      if (activeSplitBtn) {
+        activeSplitBtn.className = 'split-model-pill py-2 px-2.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-traffy-blue text-white shadow-xs cursor-pointer';
+      }
+
+      const splitIndicator = document.getElementById('split-active-indicator');
+      if (splitIndicator) {
+        splitIndicator.innerText = (model === 'Custom' && APP_STATE.customAiName) ? `Custom (${APP_STATE.customAiName})` : model;
+      }
+
+      const isCustom = (model === 'Custom');
+      const container = document.getElementById('custom-ai-container-split');
+      if (container) {
+        if (isCustom) {
+          container.classList.remove('hidden');
+        } else {
+          container.classList.add('hidden');
+        }
+      }
+
+      showToast(`เลือกโมเดล: ${model}${isCustom && APP_STATE.customAiName ? ' (' + APP_STATE.customAiName + ')' : ''}`);
+    }
+
+    function syncCustomAiNames(val) {
+      APP_STATE.customAiName = val;
+      const splitIndicator = document.getElementById('split-active-indicator');
+      if (splitIndicator && APP_STATE.aiModel === 'Custom') {
+        splitIndicator.innerText = val ? `Custom (${val})` : 'Custom';
+      }
+    }
+
+    function fetchAiData() {
+      const btn = document.getElementById('btn-run-ai');
+      const activeModelLabel = (APP_STATE.aiModel === 'Custom' && APP_STATE.customAiName) 
+        ? `Custom [${APP_STATE.customAiName}]` 
+        : APP_STATE.aiModel;
+
+      showToast(`ส่งคำสั่งไปยังโมเดล ${activeModelLabel}...`);
+
+      if (btn) {
+        btn.classList.add('opacity-75');
+        btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 animate-spin"></i><span>กำลังประมวลผลด้วย AI...</span>`;
+        lucide.createIcons();
+      }
+
+      setTimeout(() => {
+        const meta = CATEGORY_META[APP_STATE.activeTab];
+        if (meta) {
+          APP_STATE.content = meta.mockResult;
+          updateAllViewContents();
+          showToast(`ประมวลผลสำเร็จ (${activeModelLabel})`);
+        }
+        if (btn) {
+          btn.classList.remove('opacity-75');
+          btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i><span>ดึงและประมวลผลด้วย AI</span>`;
+          lucide.createIcons();
+        }
+      }, 500);
+    }
+
+    function copyCurrentPrompt() {
+      const promptText = CATEGORY_META[APP_STATE.activeTab]?.prompt || '';
+      copyTextToClipboard(promptText, 'คัดลอก System Prompt แล้ว');
+    }
+
+    function copyEditorContent() {
+      copyTextToClipboard(APP_STATE.content, 'คัดลอกข้อความวิเคราะห์เรียบร้อย');
+    }
+
+    function copyViewerPrompt() {
+      const promptText = document.getElementById('viewer-prompt-content')?.innerText || '';
+      copyTextToClipboard(promptText, 'คัดลอกคำสั่ง Prompt เรียบร้อย');
+    }
+
+    function copyTextToClipboard(text, successMsg) {
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg);
+        }).catch(() => fallbackCopy(text, successMsg));
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      showToast(successMsg);
+    }
+
+    function clearEditor() {
+      APP_STATE.content = '';
+      updateAllViewContents();
+      showToast('ล้างข้อความเรียบร้อย');
+    }
+
+    function saveContext() {
+      const name = CATEGORY_META[APP_STATE.activeTab]?.title || APP_STATE.activeTab;
+      showToast(`บันทึก [${name}] ลงระบบ Traffy สำเร็จ`);
+    }
+
+    function pasteClipboard() {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard.readText().then(text => {
+          if (text) {
+            syncSearchInputs(text.trim());
+            showToast('วางข้อความแล้ว');
+          }
+        }).catch(() => showToast('กรุณากดวางข้อความ'));
+      } else {
+        showToast('กรุณากดวางข้อความ');
+      }
+    }
+
+    // PROMPT VIEWER (READ-ONLY)
+    function openPromptViewer() {
+      const viewer = document.getElementById('prompt-viewer-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      const meta = CATEGORY_META[APP_STATE.activeTab];
+      if (!meta) return;
+
+      const tabTitle = meta.title || 'การคำนวณ Impact';
+      const promptText = meta.prompt || '';
+
+      document.getElementById('viewer-tab-name').innerText = `Current Tab: ${tabTitle}`;
+      document.getElementById('viewer-title').innerText = `ดูคำสั่ง System Prompt: ${tabTitle}`;
+      document.getElementById('viewer-model-name').innerText = APP_STATE.aiModel;
+      document.getElementById('viewer-char-count').innerText = `${promptText.length} ตัวอักษร`;
+      document.getElementById('viewer-prompt-content').innerText = promptText;
+
+      viewer.classList.remove('hidden');
+      backdrop.classList.remove('hidden');
+      setTimeout(() => viewer.classList.remove('translate-x-full'), 10);
+    }
+
+    function closePromptViewer() {
+      const viewer = document.getElementById('prompt-viewer-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      viewer.classList.add('translate-x-full');
+      setTimeout(() => {
+        viewer.classList.add('hidden');
+        backdrop.classList.add('hidden');
+      }, 200);
+    }
+
+    function closeAnyDrawer() {
+      closePromptViewer();
+      closePromptDrawer();
+    }
+
+    // 5. Custom Prompts Management
+    function renderPromptTable(filterText = '', filterModel = 'ALL') {
+      const tableBody = document.getElementById('prompt-table-body');
+      const mobileCards = document.getElementById('prompt-mobile-cards');
+      if (!tableBody || !mobileCards) return;
+
+      let filtered = APP_STATE.prompts;
+      if (filterModel !== 'ALL') {
+        filtered = filtered.filter(p => p.ai_name.toLowerCase() === filterModel.toLowerCase());
+      }
+      if (filterText.trim()) {
+        const query = filterText.toLowerCase();
+        filtered = filtered.filter(p => 
+          p.description.toLowerCase().includes(query) || 
+          p.prompt_text.toLowerCase().includes(query) ||
+          p.id.includes(query)
+        );
+      }
+
+      tableBody.innerHTML = filtered.map(item => `
+        <tr class="hover:bg-slate-50 transition-colors">
+          <td class="p-3.5 font-mono text-slate-700 font-bold">#${item.id}</td>
+          <td class="p-3.5">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-traffy-blue border border-blue-200">
+              ${item.ai_name}
+            </span>
+          </td>
+          <td class="p-3.5 font-semibold text-slate-800">${item.description}</td>
+          <td class="p-3.5 font-mono text-slate-600 max-w-md truncate" title="${item.prompt_text}">
+            ${item.prompt_text}
+          </td>
+          <td class="p-3.5 text-right">
+            <button type="button" onclick="openPromptDrawer('${item.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-traffy-blue hover:text-white text-traffy-body font-semibold rounded-lg transition-colors min-h-[32px] inline-flex items-center gap-1 cursor-pointer">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> แก้ไข
+            </button>
+          </td>
+        </tr>
+      `).join('') || `<tr><td colspan="5" class="p-6 text-center text-slate-500">ไม่พบข้อมูล Custom Prompt</td></tr>`;
+
+      mobileCards.innerHTML = filtered.map(item => `
+        <div class="p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-slate-600">ID #${item.id}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-traffy-blue border border-blue-200">${item.ai_name}</span>
+          </div>
+          <h4 class="text-xs font-bold text-traffy-title">${item.description}</h4>
+          <p class="text-[11px] text-slate-600 font-mono line-clamp-2">${item.prompt_text}</p>
+          <div class="pt-1 flex justify-end">
+            <button type="button" onclick="openPromptDrawer('${item.id}')" class="px-3.5 py-1.5 bg-blue-50 text-traffy-blue border border-blue-200 rounded-lg text-xs font-bold hover:bg-blue-100 flex items-center gap-1 cursor-pointer">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> แก้ไข Custom Prompt
+            </button>
+          </div>
+        </div>
+      `).join('') || `<div class="p-6 text-center text-xs text-slate-500">ไม่พบข้อมูล Custom Prompt</div>`;
+
+      lucide.createIcons();
+    }
+
+    function filterPromptList(query) {
+      const model = document.getElementById('prompt-model-filter').value;
+      renderPromptTable(query, model);
+    }
+
+    // Centered Modal Controller
+    function openPromptDrawer(promptId) {
+      APP_STATE.editingPromptId = promptId;
+      const container = document.getElementById('prompt-drawer-container');
+      const drawer = document.getElementById('prompt-drawer');
+
+      if (promptId) {
+        const item = APP_STATE.prompts.find(p => p.id === promptId);
+        if (item) {
+          document.getElementById('drawer-prompt-id').innerText = `Prompt ID: ${item.id}`;
+          document.getElementById('drawer-static-id').value = item.id;
+          document.getElementById('drawer-title').innerText = 'แก้ไขคำสั่ง Custom Prompt';
+          document.getElementById('drawer-model-select').value = item.ai_name;
+          document.getElementById('drawer-desc-input').value = item.description;
+          document.getElementById('drawer-desc-counter').innerText = `${item.description.length} chars`;
+          document.getElementById('drawer-prompt-textarea').value = item.prompt_text;
+          syncDrawerPromptGutter(item.prompt_text);
+        }
+      } else {
+        const nextId = String(Number(APP_STATE.prompts[0]?.id || 20) + 1);
+        document.getElementById('drawer-prompt-id').innerText = `Prompt ID: ${nextId} (สร้างใหม่)`;
+        document.getElementById('drawer-static-id').value = nextId;
+        document.getElementById('drawer-title').innerText = 'เพิ่ม Custom Prompt ใหม่';
+        document.getElementById('drawer-model-select').value = 'ChatGPT';
+        document.getElementById('drawer-desc-input').value = '';
+        document.getElementById('drawer-desc-counter').innerText = '0 chars';
+        document.getElementById('drawer-prompt-textarea').value = '';
+        syncDrawerPromptGutter('');
+      }
+
+      container.classList.remove('hidden');
+      setTimeout(() => {
+        drawer.classList.remove('scale-95', 'opacity-0');
+        drawer.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closePromptDrawer() {
+      const container = document.getElementById('prompt-drawer-container');
+      const drawer = document.getElementById('prompt-drawer');
+      if (!drawer || !container) return;
+      drawer.classList.remove('scale-100', 'opacity-100');
+      drawer.classList.add('scale-95', 'opacity-0');
+
+      setTimeout(() => {
+        container.classList.add('hidden');
+      }, 200);
+    }
+
+    function syncDrawerPromptGutter(text) {
+      const lines = (text || '').split('\n').length;
+      let html = '';
+      for (let i = 1; i <= Math.max(lines, 8); i++) {
+        html += i + '<br>';
+      }
+      const gutter = document.getElementById('drawer-gutter');
+      if (gutter) gutter.innerHTML = html;
+
+      const words = (text || '').trim().split(/\s+/).filter(Boolean).length;
+      const chars = (text || '').length;
+      const counter = document.getElementById('drawer-prompt-counter');
+      if (counter) counter.innerText = `${words} คำ | ${chars} chars`;
+    }
+
+    function savePromptFromDrawer() {
+      const model = document.getElementById('drawer-model-select').value;
+      const desc = document.getElementById('drawer-desc-input').value.trim();
+      const text = document.getElementById('drawer-prompt-textarea').value.trim();
+
+      if (!desc || !text) {
+        showToast('กรุณากรอกคำอธิบายและข้อความ Prompt');
+        return;
+      }
+
+      if (APP_STATE.editingPromptId) {
+        const item = APP_STATE.prompts.find(p => p.id === APP_STATE.editingPromptId);
+        if (item) {
+          item.ai_name = model;
+          item.description = desc;
+          item.prompt_text = text;
+        }
+        showToast('อัปเดต Custom Prompt เรียบร้อย');
+      } else {
+        const nextId = document.getElementById('drawer-static-id').value || String(APP_STATE.prompts.length + 21);
+        APP_STATE.prompts.unshift({
+          id: nextId,
+          ai_name: model,
+          description: desc,
+          prompt_text: text
+        });
+        showToast('สร้าง Custom Prompt ใหม่เรียบร้อย');
+      }
+
+      renderPromptTable();
+      closePromptDrawer();
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const text = document.getElementById('toast-text');
+      if (!container || !text) return;
+      text.innerText = msg;
+      container.classList.remove('translate-y-12', 'opacity-0');
+      setTimeout(() => {
+        container.classList.add('translate-y-12', 'opacity-0');
+      }, 2400);
+    }
+  </script>
+</body>
+</html>
