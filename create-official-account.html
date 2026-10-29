@@ -401,7 +401,7 @@
 
     <!-- Topbar Header -->
     <header class="real-topbar">
-      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+      <div class="flex items-center gap-2 text-xs min-w-0 flex-1">
         <button type="button" onclick="toggleMobileSidebar()"
           class="md:hidden p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-lg flex-shrink-0 cursor-pointer"
           title="เปิดเมนูนำทาง">
@@ -411,16 +411,6 @@
         <span class="text-slate-300 hidden sm:inline">/</span>
         <span id="topbar-breadcrumb-active"
           class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">สร้างบัญชีทางการ</span>
-      </div>
-
-      <!-- Quick Mode Switcher -->
-      <div class="flex items-center gap-2 shrink-0">
-        <a href="./create-org-chart.html"
-          class="px-2.5 sm:px-3 py-1.5 rounded-full border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 font-semibold text-xs whitespace-nowrap shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1.5"
-          title="ไปหน้าสร้างบัญชีทางการ + ผูกผังองค์กร">
-          <i data-lucide="network" class="w-3.5 h-3.5 text-blue-600 shrink-0"></i>
-          <span>สร้างบัญชี + ผูกผัง</span>
-        </a>
       </div>
     </header>
 
@@ -531,8 +521,78 @@
                     <div class="md:col-span-2">
                       <label class="block text-xs font-bold text-slate-700 mb-1.5">รูปภาพประจำหน่วยงาน (ขนาดไม่เกิน 100
                         KB)</label>
-                      <input type="file" accept="image/*"
-                        class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer transition-all shadow-2xs">
+                      <input id="org-image-input" type="file" accept="image/*" class="hidden"
+                        onchange="handleOrgImageChange(this)">
+
+                      <!-- State 1: Empty Dropzone (Shown when no file is selected) -->
+                      <div id="org-image-dropzone" onclick="triggerOrgImageSelect()"
+                        ondragover="handleOrgImageDragOver(event)" ondragleave="handleOrgImageDragLeave(event)"
+                        ondrop="handleOrgImageDrop(event)"
+                        class="border-2 border-dashed border-slate-200 hover:border-slate-400 bg-slate-50/60 hover:bg-slate-100/50 rounded-2xl p-4 sm:p-5 transition-all cursor-pointer flex flex-col sm:flex-row items-center justify-between gap-3.5 text-center sm:text-left group">
+                        <div class="flex flex-col sm:flex-row items-center gap-3.5 min-w-0">
+                          <div
+                            class="w-12 h-12 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-center text-slate-500 group-hover:text-slate-900 group-hover:scale-105 transition-all shrink-0">
+                            <i data-lucide="image-plus" class="w-5 h-5"></i>
+                          </div>
+                          <div class="min-w-0">
+                            <p class="text-xs sm:text-sm font-bold text-slate-800">คลิกเพื่อเลือกรูปภาพ หรือลากไฟล์มาวางที่นี่</p>
+                            <p class="text-[11px] text-slate-400 mt-0.5">รองรับไฟล์ PNG, JPG, WEBP หรือ GIF แนะนำรูปสี่เหลี่ยมจัตุรัส ขนาดไม่เกิน 100 KB</p>
+                          </div>
+                        </div>
+                        <span
+                          class="px-3.5 py-2 rounded-xl bg-slate-900 group-hover:bg-slate-800 text-white font-semibold text-xs shadow-2xs inline-flex items-center gap-1.5 shrink-0 transition-colors">
+                          <i data-lucide="upload" class="w-3.5 h-3.5"></i> เลือกรูปภาพ
+                        </span>
+                      </div>
+
+                      <!-- State 2: Uploaded Preview Card (Shown after selecting a file) -->
+                      <div id="org-image-preview-card"
+                        class="hidden bg-slate-50/70 border border-slate-200/90 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5">
+                        <div class="flex items-center gap-3.5 min-w-0 w-full sm:w-auto">
+                          <!-- Rounded Avatar Preview -->
+                          <div onclick="openImageLightbox()"
+                            class="relative w-16 h-16 rounded-2xl bg-white border border-slate-200 shadow-xs overflow-hidden shrink-0 cursor-pointer group"
+                            title="คลิกเพื่อดูรูปขนาดเต็ม">
+                            <img id="org-image-preview" src="" alt="ตัวอย่างรูปภาพประจำหน่วยงาน"
+                              class="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
+                            <div
+                              class="absolute inset-0 bg-slate-900/45 backdrop-blur-[1px] flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                              <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                            </div>
+                          </div>
+
+                          <!-- File Details -->
+                          <div class="min-w-0 flex-1 space-y-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                              <span id="org-image-filename"
+                                class="text-xs sm:text-sm font-bold text-slate-900 truncate max-w-[180px] sm:max-w-[260px]">logo.png</span>
+                              <span id="org-image-status-badge"
+                                class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1 shrink-0">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> พร้อมใช้งาน
+                              </span>
+                            </div>
+                            <p id="org-image-meta-text" class="text-[11px] font-mono-code text-slate-500">24.5 KB</p>
+                          </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div
+                          class="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0 border-t sm:border-t-0 pt-2.5 sm:pt-0 border-slate-200/70">
+                          <button type="button" onclick="openImageLightbox()"
+                            class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-semibold text-xs shadow-2xs inline-flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap">
+                            <i data-lucide="eye" class="w-3.5 h-3.5 text-slate-500"></i> ดูรูปขยาย
+                          </button>
+                          <button type="button" onclick="triggerOrgImageSelect()"
+                            class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-semibold text-xs shadow-2xs inline-flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-slate-500"></i> เปลี่ยนรูป
+                          </button>
+                          <button type="button" onclick="clearOrgImage()"
+                            class="p-1.5 rounded-xl bg-white border border-rose-200 hover:bg-rose-50 text-rose-600 shadow-2xs inline-flex items-center justify-center cursor-pointer transition-colors shrink-0"
+                            title="ลบรูปภาพ">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -831,8 +891,12 @@
             <!-- Organization Information Row -->
             <div class="p-5 sm:p-6 border-b border-slate-100 bg-white">
               <div class="flex items-center gap-3.5">
-                <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg shadow-xs shrink-0">
-                  <i data-lucide="building-2" class="w-6 h-6 text-emerald-400"></i>
+                <div id="success-org-logo-box"
+                  class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg shadow-xs shrink-0 overflow-hidden">
+                  <i id="success-org-default-icon" data-lucide="building-2" class="w-6 h-6 text-emerald-400"></i>
+                  <img id="success-org-logo-img" src="" alt="รูปภาพประจำหน่วยงาน"
+                    class="hidden w-full h-full object-cover border border-slate-200 rounded-2xl cursor-pointer"
+                    onclick="openImageLightbox()" title="คลิกเพื่อดูรูปขนาดเต็ม" />
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2.5 flex-wrap">
@@ -991,7 +1055,32 @@
           </div>
 
         </div><!-- /#success-screen -->
+      </div>
+    </div>
   </main>
+
+  <!-- Image Preview Lightbox Modal -->
+  <div id="image-lightbox-modal" onclick="closeImageLightbox(event)"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden relative"
+      onclick="event.stopPropagation()">
+      <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2 min-w-0">
+          <i data-lucide="image" class="w-4 h-4 text-slate-600 shrink-0"></i>
+          <span id="lightbox-filename" class="text-xs sm:text-sm font-bold text-slate-800 truncate">ตัวอย่างรูปภาพประจำหน่วยงาน</span>
+        </div>
+        <button type="button" onclick="closeImageLightbox()"
+          class="w-7 h-7 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+          title="ปิด">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="p-6 bg-slate-50/70 flex items-center justify-center min-h-[220px] max-h-[65vh]">
+        <img id="lightbox-image" src="" alt="Preview"
+          class="max-w-full max-h-[55vh] object-contain rounded-xl shadow-xs bg-white p-2 border border-slate-200/80" />
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Notification -->
   <div id="toast-box"
@@ -1009,6 +1098,133 @@
 
     let currentStep = 1;
     const totalSteps = 4;
+    let currentOrgImageDataUrl = null;
+    let currentOrgImageFilename = '';
+
+    function triggerOrgImageSelect() {
+      const input = document.getElementById('org-image-input');
+      if (input) input.click();
+    }
+
+    function handleOrgImageDragOver(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dz = document.getElementById('org-image-dropzone');
+      if (dz) dz.classList.add('border-slate-900', 'bg-slate-100');
+    }
+
+    function handleOrgImageDragLeave(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dz = document.getElementById('org-image-dropzone');
+      if (dz) dz.classList.remove('border-slate-900', 'bg-slate-100');
+    }
+
+    function handleOrgImageDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dz = document.getElementById('org-image-dropzone');
+      if (dz) dz.classList.remove('border-slate-900', 'bg-slate-100');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        processOrgImageFile(e.dataTransfer.files[0]);
+      }
+    }
+
+    function handleOrgImageChange(input) {
+      if (!input.files || !input.files[0]) return;
+      processOrgImageFile(input.files[0]);
+    }
+
+    function processOrgImageFile(file) {
+      if (!file.type.startsWith('image/')) {
+        showToast('กรุณาเลือกไฟล์รูปภาพเท่านั้น');
+        return;
+      }
+
+      const sizeKB = (file.size / 1024).toFixed(1);
+      const isOverSize = file.size > 100 * 1024;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        currentOrgImageDataUrl = e.target.result;
+        currentOrgImageFilename = file.name;
+
+        const dropzone = document.getElementById('org-image-dropzone');
+        const previewCard = document.getElementById('org-image-preview-card');
+        const previewImg = document.getElementById('org-image-preview');
+        const filenameEl = document.getElementById('org-image-filename');
+        const statusBadge = document.getElementById('org-image-status-badge');
+        const metaText = document.getElementById('org-image-meta-text');
+
+        if (dropzone) dropzone.classList.add('hidden');
+        if (previewCard) previewCard.classList.remove('hidden');
+
+        if (previewImg) {
+          previewImg.onload = function () {
+            if (metaText) {
+              metaText.textContent = `${sizeKB} KB • ${previewImg.naturalWidth} × ${previewImg.naturalHeight} px`;
+            }
+          };
+          previewImg.src = currentOrgImageDataUrl;
+        }
+
+        if (filenameEl) filenameEl.textContent = file.name;
+        if (metaText) metaText.textContent = `${sizeKB} KB`;
+
+        if (statusBadge) {
+          if (isOverSize) {
+            statusBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200 inline-flex items-center gap-1 shrink-0';
+            statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> เกิน 100 KB`;
+          } else {
+            statusBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1 shrink-0';
+            statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> พร้อมใช้งาน`;
+          }
+        }
+
+        if (isOverSize) {
+          showToast(`อัปโหลดรูปภาพแล้ว (${sizeKB} KB - เกินขนาดแนะนำ 100 KB)`);
+        } else {
+          showToast('อัปโหลดรูปภาพประจำหน่วยงานเรียบร้อยแล้ว');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearOrgImage(silent = false) {
+      currentOrgImageDataUrl = null;
+      currentOrgImageFilename = '';
+
+      const input = document.getElementById('org-image-input');
+      const dropzone = document.getElementById('org-image-dropzone');
+      const previewCard = document.getElementById('org-image-preview-card');
+      const previewImg = document.getElementById('org-image-preview');
+
+      if (input) input.value = '';
+      if (previewImg) previewImg.src = '';
+      if (previewCard) previewCard.classList.add('hidden');
+      if (dropzone) dropzone.classList.remove('hidden');
+
+      if (!silent) showToast('ลบรูปภาพประจำหน่วยงานแล้ว');
+    }
+
+    function openImageLightbox() {
+      if (!currentOrgImageDataUrl) return;
+      const modal = document.getElementById('image-lightbox-modal');
+      const img = document.getElementById('lightbox-image');
+      const filenameEl = document.getElementById('lightbox-filename');
+      if (!modal || !img) return;
+      img.src = currentOrgImageDataUrl;
+      if (filenameEl) filenameEl.textContent = currentOrgImageFilename || 'ตัวอย่างรูปภาพประจำหน่วยงาน';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeImageLightbox(e) {
+      const modal = document.getElementById('image-lightbox-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
 
     function updateStepUI() {
       // Toggle card visibility
@@ -1155,6 +1371,22 @@
       document.getElementById('success-org-coords').textContent = orgCoords;
       document.getElementById('success-org-type-badge').textContent = orgType;
 
+      // Populate Success Screen Logo if uploaded
+      const successLogoImg = document.getElementById('success-org-logo-img');
+      const successDefaultIcon = document.getElementById('success-org-default-icon');
+      const successLogoBox = document.getElementById('success-org-logo-box');
+      if (currentOrgImageDataUrl && successLogoImg && successDefaultIcon) {
+        successLogoImg.src = currentOrgImageDataUrl;
+        successLogoImg.classList.remove('hidden');
+        successDefaultIcon.classList.add('hidden');
+        if (successLogoBox) successLogoBox.classList.remove('bg-slate-900');
+      } else if (successLogoImg && successDefaultIcon) {
+        successLogoImg.src = '';
+        successLogoImg.classList.add('hidden');
+        successDefaultIcon.classList.remove('hidden');
+        if (successLogoBox) successLogoBox.classList.add('bg-slate-900');
+      }
+
       const statusBadge = document.getElementById('success-org-status-badge');
       if (orgStatus === 'เปิดใช้งานปกติ') {
         statusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5';
@@ -1228,6 +1460,7 @@
       if (addressInput) addressInput.value = '';
       const phoneInput = document.getElementById('org-phone-input');
       if (phoneInput) phoneInput.value = '';
+      clearOrgImage(true);
 
       // Reset views
       document.getElementById('success-screen').classList.add('hidden');
