@@ -20,52 +20,40 @@
   <style>
     :root {
       --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      --page-min-width: 320px;
-      --content-max-width: 1536px;
-      --page-padding: 24px;
       --sidebar-width: 260px;
-      --sidebar-collapsed-width: 72px;
       --topbar-height: 64px;
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-      :root {
-        --page-padding: 20px;
-      }
-    }
-
-    @media (max-width: 767px) {
-      :root {
-        --page-padding: 12px;
-        --topbar-height: 56px;
-      }
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      -webkit-text-size-adjust: 100%;
-    }
-
     body {
-      margin: 0;
-      min-width: var(--page-min-width);
       font-family: var(--font-family);
+      margin: 0;
       background-color: #f8fafc;
-      color: #0f172a;
-      line-height: 1.5;
+      color: #1e293b;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow: hidden;
     }
 
     .font-mono-code {
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-feature-settings: "tnum" 1, "zero" 1;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
     }
 
     /* REAL PROJECT SIDEBAR STYLES */
@@ -80,7 +68,19 @@
       padding: 16px 12px;
       overflow-y: auto;
       flex-shrink: 0;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), padding 0.25s, opacity 0.2s, margin 0.25s;
+    }
+
+    .real-sidebar.sidebar-collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      border-right-width: 0 !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
 
     .real-user-card {
@@ -153,10 +153,24 @@
       color: #0f172a;
     }
 
-    .real-nested-active {
-      background: #0f172a !important;
+    .real-nested-active,
+    .real-nested-active:hover {
+      position: relative !important;
+      background: #52525b !important;
       color: #ffffff !important;
-      font-weight: 600;
+      font-weight: 500 !important;
+    }
+
+    .real-nested-active::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #111827;
+      transform: translateY(-50%);
     }
 
     /* REAL PROJECT TOPBAR STYLES */
@@ -167,7 +181,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 var(--page-padding);
+      padding: 0 24px;
       flex-shrink: 0;
     }
 
@@ -181,7 +195,7 @@
         width: 280px;
         max-width: 84vw;
         height: 100vh;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
         transform: translateX(-100%);
       }
 
@@ -190,36 +204,53 @@
       }
 
       .real-topbar {
-        padding: 0 var(--page-padding);
-        height: var(--topbar-height);
+        padding: 0 12px;
+        height: 52px;
+      }
+
+      .real-menu-item {
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+
+      .real-group-header {
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+
+      .real-nested-item {
+        font-size: 12px;
+        padding: 6px 10px;
       }
     }
   </style>
 </head>
 
-<body class="flex h-screen overflow-hidden text-xs">
+<body class="flex h-screen overflow-hidden text-xs bg-slate-50">
 
-  <!-- 1. SIDEBAR NAVIGATION -->
+  <!-- Mobile Drawer Backdrop -->
   <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()"
     class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
 
+  <!-- Main Sidebar -->
   <aside id="main-sidebar" class="real-sidebar select-none">
+
     <!-- User Card -->
-    <div class="real-user-card">
-      <div class="flex items-center gap-2.5">
+    <div class="real-user-card relative">
+      <div class="flex items-center gap-2.5 pr-6 md:pr-0">
         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
           alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
         <div class="flex-1 min-w-0">
-          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
-          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+          <p class="m-0 text-xs sm:text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-[11px] sm:text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
         </div>
         <button type="button" onclick="closeMobileSidebar()"
-          class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors"
+          class="md:hidden absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
           title="ปิดเมนู">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
         <button type="button"
-          class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors"
+          class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors flex-shrink-0"
           title="ออกจากระบบ">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
@@ -234,6 +265,7 @@
 
     <!-- Navigation Menu Items -->
     <nav class="flex flex-col gap-0.5">
+
       <!-- 1. จัดการหน่วยงาน -->
       <a href="./organizations.html" class="real-menu-item">
         <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
@@ -274,10 +306,10 @@
         </div>
       </div>
 
-      <!-- 6. บัญชี / สร้างหน่วยงาน (ACTIVE GROUP) -->
+      <!-- บัญชี / สร้างหน่วยงาน -->
       <div class="flex flex-col gap-1 mt-1">
-        <div class="real-group-header text-slate-900 font-semibold">
-          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0 text-blue-600"></i>
+        <div class="real-group-header">
+          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
         </div>
         <div class="real-children-group">
@@ -290,42 +322,92 @@
         </div>
       </div>
 
-      <!-- 7. จัดการผู้ใช้ -->
+      <!-- จัดการผู้ใช้ -->
       <a href="./users.html" class="real-menu-item mt-1">
         <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">จัดการผู้ใช้</span>
       </a>
 
-      <!-- 8. FAQ -->
+      <!-- 7. FAQ -->
       <a href="./faq.html" class="real-menu-item mt-1">
-        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <i data-lucide="help-circle" class="w-[18px] h-[18px] flex-shrink-0"></i>
         <span class="flex-1 truncate">FAQ</span>
       </a>
+
     </nav>
   </aside>
 
-  <!-- 2. MAIN CONTENT AREA -->
+  <!-- MAIN CONTENT AREA -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
 
     <!-- Topbar Header -->
-    <header class="real-topbar">
-      <!-- Left: Mobile Hamburger + Breadcrumb -->
+    <header class="real-topbar bg-white border-b border-slate-200 px-3 sm:px-4 flex items-center justify-between shrink-0 shadow-xs relative z-30">
       <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+        <!-- Hamburger Button (Mobile < 768px matching organizations.html) -->
         <button type="button" onclick="toggleMobileSidebar()"
-          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0"
+          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0 cursor-pointer"
           title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-        <span class="text-slate-400 font-medium">บัญชี / สร้างหน่วยงาน</span>
-        <span class="text-slate-300">/</span>
-        <span class="font-bold text-slate-800">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+
+
+        <!-- Breadcrumbs (Truncates gracefully on compact widths) -->
+        <div class="flex items-center gap-1.5 min-w-0 truncate text-[11px] sm:text-xs">
+          <span class="text-slate-400 font-medium hidden sm:inline whitespace-nowrap">บัญชี / สร้างหน่วยงาน</span>
+          <span class="text-slate-300 hidden sm:inline">/</span>
+          <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+        </div>
+      </div>
+
+      <!-- Right Actions: Inline on sm+, Dropdown on mobile/compact -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- Desktop Buttons (Visible on sm+) -->
+        <div class="hidden sm:flex items-center gap-1.5 sm:gap-2">
+          <a href="./create-official-account.html"
+            class="px-2.5 sm:px-3 py-1.5 rounded-full border border-blue-200/90 bg-blue-50/80 hover:bg-blue-100 text-blue-700 font-semibold text-[11px] sm:text-xs whitespace-nowrap shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1.5"
+            title="ย้อนกลับไปหน้าสร้างบัญชีทางการ">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-blue-600"></i>
+            <span>สร้างบัญชีทางการ</span>
+          </a>
+
+          <button type="button" onclick="toggleFullscreen()"
+            class="px-2.5 sm:px-3 py-1.5 text-slate-700 hover:bg-slate-100 rounded-xl transition-colors inline-flex items-center gap-1.5 cursor-pointer font-medium text-[11px] sm:text-xs border border-slate-200 shadow-2xs bg-white whitespace-nowrap"
+            title="ขยายเต็มจอ">
+            <i data-lucide="maximize" id="fullscreen-icon" class="w-3.5 h-3.5 text-slate-600"></i>
+            <span>เต็มจอ</span>
+          </button>
+        </div>
+
+        <!-- Mobile Dropdown Menu (Visible on mobile < sm) -->
+        <div class="relative sm:hidden" id="topbar-more-container">
+          <button type="button" onclick="toggleTopbarDropdown(event)"
+            class="p-1.5 text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-200 shadow-2xs bg-white cursor-pointer flex items-center justify-center"
+            title="ตัวเลือกเพิ่มเติม">
+            <i data-lucide="more-vertical" class="w-4 h-4 text-slate-600"></i>
+          </button>
+
+          <!-- Dropdown Panel -->
+          <div id="topbar-dropdown"
+            class="hidden absolute right-0 top-full mt-1.5 w-44 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50">
+            <a href="./create-official-account.html"
+              class="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 transition-colors">
+              <i data-lucide="arrow-left" class="w-4 h-4 text-blue-600"></i>
+              <span>สร้างบัญชีทางการ</span>
+            </a>
+            <button type="button" onclick="toggleFullscreen(); closeTopbarDropdown();"
+              class="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors text-left cursor-pointer">
+              <i data-lucide="maximize" class="w-4 h-4 text-slate-500"></i>
+              <span>ขยายเต็มจอ</span>
+            </button>
+          </div>
+        </div>
       </div>
     </header>
 
-    <!-- Embedded Application Container (Self-contained in this repo, fills full page) -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
-      <iframe id="org-chart-iframe" src="./org-chart-creation/index.html"
-        class="w-full h-full border-0 bg-white" title="สร้างบัญชีทางการ + ผูกผังองค์กร"></iframe>
+    <!-- Embedded Application Container -->
+    <div id="iframe-wrapper" class="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f8fafc] relative">
+      <iframe id="org-chart-iframe" src="./org-chart-creation/index.html?v=10"
+        class="w-full h-full border-0 bg-transparent flex-1" title="สร้างบัญชีทางการ + ผูกผังองค์กร"></iframe>
     </div>
   </main>
 
@@ -333,16 +415,75 @@
     // Initialize Lucide Icons
     lucide.createIcons();
 
-    // Mobile Sidebar
+    // Desktop Sidebar Collapse Toggle
+    function toggleDesktopSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const icon = document.getElementById('sidebar-icon');
+      const label = document.getElementById('sidebar-btn-label');
+      if (!sidebar) return;
+      sidebar.classList.toggle('sidebar-collapsed');
+      const isCollapsed = sidebar.classList.contains('sidebar-collapsed');
+      if (label) label.textContent = isCollapsed ? 'แสดงเมนู' : 'ซ่อนเมนู';
+      if (icon) {
+        icon.setAttribute('data-lucide', isCollapsed ? 'panel-left-open' : 'panel-left-close');
+        lucide.createIcons();
+      }
+    }
+
+    // Fullscreen Toggle
+    function toggleFullscreen() {
+      const iframeContainer = document.getElementById('iframe-wrapper');
+      const icon = document.getElementById('fullscreen-icon');
+      if (!iframeContainer) return;
+      if (!document.fullscreenElement) {
+        iframeContainer.requestFullscreen().catch(() => {});
+        if (icon) icon.setAttribute('data-lucide', 'minimize');
+      } else {
+        document.exitFullscreen().catch(() => {});
+        if (icon) icon.setAttribute('data-lucide', 'maximize');
+      }
+      lucide.createIcons();
+    }
+
+    // Topbar Dropdown for Mobile/Compact screens
+    function toggleTopbarDropdown(e) {
+      if (e) e.stopPropagation();
+      const dd = document.getElementById('topbar-dropdown');
+      if (dd) dd.classList.toggle('hidden');
+    }
+
+    function closeTopbarDropdown() {
+      const dd = document.getElementById('topbar-dropdown');
+      if (dd) dd.classList.add('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('topbar-more-container');
+      if (container && !container.contains(e.target)) {
+        closeTopbarDropdown();
+      }
+    });
+
+    // Mobile/Tablet Sidebar Drawer Toggle
     function toggleMobileSidebar() {
       const sidebar = document.getElementById('main-sidebar');
       const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      if (sidebar.classList.contains('sidebar-open')) closeMobileSidebar();
-      else { sidebar.classList.add('sidebar-open'); backdrop.classList.remove('hidden'); }
+      if (!sidebar || !backdrop) return;
+      const isOpen = sidebar.classList.contains('sidebar-open');
+      if (isOpen) {
+        sidebar.classList.remove('sidebar-open');
+        backdrop.classList.add('hidden');
+      } else {
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
+      }
     }
+
     function closeMobileSidebar() {
-      document.getElementById('main-sidebar').classList.remove('sidebar-open');
-      document.getElementById('mobile-sidebar-backdrop').classList.add('hidden');
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (sidebar) sidebar.classList.remove('sidebar-open');
+      if (backdrop) backdrop.classList.add('hidden');
     }
   </script>
 </body>

@@ -1,17 +1,409 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/org-chart-creation/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Visual Org Builder</title>
-    <script type="module" crossorigin src="/org-chart-creation/assets/index-B4YLyS51.js"></script>
-    <link rel="modulepreload" crossorigin href="/org-chart-creation/assets/vendor-ZRIxRDPn.js">
-    <link rel="modulepreload" crossorigin href="/org-chart-creation/assets/xyflow-BIx3VGMx.js">
-    <link rel="modulepreload" crossorigin href="/org-chart-creation/assets/xlsx-BBWTpfDg.js">
-    <link rel="stylesheet" crossorigin href="/org-chart-creation/assets/index-DABBtCwM.css">
+    <style>
+      /* Keep all table headers, cells, badges, and buttons on 1 line */
+      table th,
+      table td,
+      table th span,
+      table td span,
+      table td button,
+      .org-table-toolbar button,
+      .org-table-toolbar h2 {
+        white-space: nowrap !important;
+      }
+      table th.w-32,
+      table th.w-24 {
+        width: auto !important;
+      }
+
+      /* Desktop Header (>= 768px): 100% Original UI, never overflow purple button */
+      .org-header-desktop {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-wrap: nowrap !important;
+      }
+      .org-header-desktop > div:first-child {
+        min-width: 0 !important;
+        flex-shrink: 1 !important;
+      }
+      .org-header-desktop h1 {
+        white-space: nowrap !important;
+      }
+      .org-header-desktop button {
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+      }
+      .org-header-desktop > div:last-child {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+        flex-shrink: 0 !important;
+      }
+      .org-header-desktop > div:last-child > div:first-child {
+        margin-right: 0 !important;
+      }
+      .org-header-desktop > div:last-child > div:first-child button {
+        padding: 7px 11px !important;
+        font-size: 12px !important;
+      }
+      .org-header-desktop button[aria-label="เมนูจัดการข้อมูล"],
+      .org-header-desktop > div:last-child > button:last-child {
+        padding: 7px 12px !important;
+        font-size: 12.5px !important;
+      }
+      .org-header-mobile {
+        display: none !important;
+      }
+
+      /* Fit all Desktop Header items inside iframe without overflowing right border */
+      @media (max-width: 1340px) {
+        .org-header-desktop h1 {
+          font-size: 16px !important;
+        }
+        .org-header-desktop > div:last-child > .w-px {
+          display: none !important;
+        }
+        .org-header-desktop > div:last-child > div:first-child button,
+        .org-header-desktop button[aria-label="เมนูจัดการข้อมูล"],
+        .org-header-desktop > div:last-child > button:last-child {
+          padding: 6px 10px !important;
+          font-size: 12px !important;
+          gap: 5px !important;
+        }
+      }
+      @media (max-width: 1180px) {
+        .org-header-desktop h1 > div {
+          display: none !important;
+        }
+      }
+      @media (max-width: 1040px) {
+        .org-header-desktop h1 > span {
+          display: none !important;
+        }
+        .org-header-desktop > div:last-child > div:first-child button,
+        .org-header-desktop button[aria-label="เมนูจัดการข้อมูล"],
+        .org-header-desktop > div:last-child > button:last-child {
+          padding: 5px 8px !important;
+          font-size: 11.5px !important;
+          gap: 4px !important;
+        }
+      }
+
+      /* Pin Close Button (X) to Top-Right Corner of Modals & Side Panels */
+      .org-modal-header-rel {
+        position: relative !important;
+        padding-right: 48px !important;
+      }
+      .org-close-top-right {
+        position: absolute !important;
+        top: 12px !important;
+        right: 12px !important;
+        width: 30px !important;
+        height: 30px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 9999px !important;
+        background-color: #f1f5f9 !important;
+        color: #475569 !important;
+        border: 1px solid #e2e8f0 !important;
+        cursor: pointer !important;
+        z-index: 30 !important;
+        padding: 0 !important;
+        flex-shrink: 0 !important;
+        transition: all 0.15s ease !important;
+      }
+      .org-close-top-right:hover {
+        background-color: #fee2e2 !important;
+        color: #dc2626 !important;
+        border-color: #fecaca !important;
+      }
+
+      /* Tablet & Mobile (< 1024px): Overlay drawers for ConfigPanel & IssueSidebar */
+      @media (max-width: 1023px) {
+        html {
+          font-size: 14.5px;
+        }
+        .pr-\[390px\] {
+          padding-right: 16px !important;
+        }
+        .w-\[360px\].z-40 {
+          position: fixed !important;
+          top: 12px !important;
+          right: 12px !important;
+          bottom: 12px !important;
+          width: min(360px, calc(100vw - 24px)) !important;
+          z-index: 130 !important;
+          box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35) !important;
+        }
+        .w-\[340px\].opacity-100 {
+          position: fixed !important;
+          top: 12px !important;
+          left: 12px !important;
+          bottom: 12px !important;
+          width: min(340px, calc(100vw - 24px)) !important;
+          z-index: 130 !important;
+          box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35) !important;
+        }
+      }
+
+      /* Mobile (< 768px): Responsive Menu matching organizations.html + Proportional Font Scaling */
+      @media (max-width: 767px) {
+        html {
+          font-size: 13.5px;
+        }
+        #root > div {
+          padding: 8px !important;
+        }
+        .org-top-header {
+          padding: 10px 12px !important;
+          margin-bottom: 10px !important;
+          border-radius: 14px !important;
+        }
+        .org-header-desktop {
+          display: none !important;
+        }
+        .org-header-mobile {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 8px !important;
+          width: 100% !important;
+        }
+        .mob-header-row1 {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          width: 100%;
+        }
+        .mob-brand-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+          background-color: #faf7f5;
+          border: 1px solid #e0cec0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .mob-tab-wrap {
+          position: relative;
+          flex: 1;
+          min-width: 0;
+        }
+        .mob-tab-trigger {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 6px;
+          background-color: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 6px 10px;
+          font-size: 12px;
+          font-weight: 700;
+          color: #0f172a;
+          cursor: pointer;
+        }
+        .mob-tab-trigger-left {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          min-width: 0;
+        }
+        .mob-tab-menu {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          margin-top: 6px;
+          background-color: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 6px;
+          box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15);
+          z-index: 110;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .mob-tab-option {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          width: 100%;
+          padding: 8px 10px;
+          border-radius: 8px;
+          font-size: 12px;
+          font-weight: 600;
+          color: #475569;
+          text-align: left;
+          cursor: pointer;
+        }
+        .mob-tab-option.active {
+          background-color: #f1f5f9;
+          color: #0f172a;
+          font-weight: 700;
+        }
+        .mob-tab-option-icon {
+          width: 24px;
+          height: 24px;
+          border-radius: 6px;
+          background-color: #f1f5f9;
+          color: #64748b;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .mob-tab-option.active .mob-tab-option-icon {
+          background-color: #f2e9e1;
+          color: #462e1c;
+        }
+        .mob-action-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          padding: 6px 10px;
+          background-color: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          font-size: 11.5px;
+          font-weight: 700;
+          color: #334155;
+          white-space: nowrap;
+          cursor: pointer;
+        }
+        .mob-help-btn {
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+          background-color: #f8fafc;
+          border: 1px solid #e2e8f0;
+          color: #64748b;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          cursor: pointer;
+        }
+        .mob-header-row2 {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          padding-top: 8px;
+          border-top: 1px solid #f1f5f9;
+        }
+        .mob-title-text {
+          font-size: 12px;
+          font-weight: 700;
+          color: #0f172a;
+          line-height: 1.3;
+        }
+        .mob-subtitle-text {
+          font-size: 11px;
+          color: #64748b;
+          font-weight: 500;
+          line-height: 1.3;
+        }
+        .mob-check-btn {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 6px 11px;
+          border-radius: 8px;
+          font-size: 11.5px;
+          font-weight: 700;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        /* TableView & Canvas Overlay on Mobile */
+        .org-table-toolbar > div:last-child {
+          width: 100% !important;
+        }
+        .org-table-toolbar .relative.w-64 {
+          flex: 1 1 auto !important;
+          width: auto !important;
+          min-width: 0 !important;
+        }
+        .org-canvas-overlay {
+          left: 10px !important;
+          right: 10px !important;
+          top: 10px !important;
+          max-width: calc(100% - 20px) !important;
+        }
+        .org-canvas-overlay > div:last-child {
+          width: 100% !important;
+        }
+        .org-canvas-overlay .w-64 {
+          flex: 1 1 auto !important;
+          width: auto !important;
+          min-width: 0 !important;
+        }
+        .react-flow__panel.top.right {
+          top: auto !important;
+          bottom: 10px !important;
+          right: 54px !important;
+          margin: 0 !important;
+        }
+        .react-flow__panel.top.right button {
+          padding: 6px 10px !important;
+          font-size: 11px !important;
+        }
+        .react-flow__panel.bottom.right {
+          margin-bottom: 10px !important;
+          margin-right: 10px !important;
+        }
+        .react-flow__panel.bottom.right button {
+          width: 36px !important;
+          height: 36px !important;
+        }
+        .react-flow__controls {
+          bottom: 58px !important;
+          left: 10px !important;
+          margin: 0 !important;
+        }
+        button[title="เปิดแถบแจ้งเตือน"] {
+          left: 10px !important;
+          bottom: 10px !important;
+          padding: 9px !important;
+        }
+        .w-\[1100px\],
+        .w-\[600px\],
+        .w-\[500px\],
+        .w-\[480px\] {
+          width: calc(100vw - 16px) !important;
+          max-width: calc(100vw - 16px) !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        html {
+          font-size: 12.75px;
+        }
+        .org-close-top-right {
+          top: 8px !important;
+          right: 8px !important;
+          width: 28px !important;
+          height: 28px !important;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
+    <script src="./assets/bundle.js?v=10"></script>
   </body>
 </html>
