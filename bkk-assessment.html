@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ประเมินคุณภาพ กทม. - Traffy Fondue Internal Website</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Breakpoints และ Font สอดคล้องมาตรฐานองค์กร (Mobile ≤767px, Tablet 768-1023px, Desktop ≥1024px)
+    tailwind.config = {
+      theme: {
+        screens: {
+          'md': '768px',
+          'lg': '1024px'
+        },
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans Thai"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Noto Sans Thai & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /*
+      Breakpoints (WCAG 1.4.10 & Internal Website Standard):
+        mobile   ≤ 767px    @media (max-width: 767px)
+        tablet   768–1023px @media (min-width: 768px) and (max-width: 1023px)
+        desktop  ≥ 1024px   @media (min-width: 1024px)
+    */
+    :root {
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 32px;
+      --sidebar-width: 280px;
+      --sidebar-collapsed-width: 72px;
+      --topbar-height: 64px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root {
+        --page-padding: 24px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --page-padding: 16px;
+        --topbar-height: 56px;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    .font-mono-code {
+      font-family: var(--font-mono) !important;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+
+    /* WCAG 2.4.13 Focus Appearance (AAA Compliant: 3px thickness & contrast >= 7:1) */
+    *:focus-visible {
+      outline: 3px solid #0284c7 !important;
+      outline-offset: 2px !important;
+    }
+
+    /* Minimal Modern Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* REAL PROJECT SIDEBAR STYLES */
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .real-user-card {
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+    .real-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .real-group-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+    .real-children-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 16px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
+    }
+    .real-nested-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 7px 10px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* Exact Active State matching Real App & Screenshot */
+    .real-nested-item.real-nested-active {
+      position: relative;
+      background: #52525b !important;
+      color: #ffffff !important;
+    }
+    .real-nested-item.real-nested-active::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #111827;
+      transform: translateY(-50%);
+    }
+
+    .real-action-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .real-action-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: #e0f2fe;
+      color: #0284c7;
+      font-size: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      line-height: 1.3;
+      cursor: pointer;
+    }
+    .real-action-badge:hover {
+      background: #0284c7;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .real-nested-item.real-nested-active .real-action-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+    .real-nested-item.real-nested-active .real-action-badge:hover {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    /* Content Container */
+    #content-container {
+      padding: var(--page-padding) !important;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    /* REAL PROJECT TOPBAR STYLES */
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--page-padding);
+      flex-shrink: 0;
+    }
+
+    /* Responsive Mobile Drawer */
+    @media (max-width: 767px) {
+      .real-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 280px;
+        max-width: 84vw;
+        height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transform: translateX(-100%);
+      }
+      .real-sidebar.sidebar-open {
+        transform: translateX(0) !important;
+      }
+    }
+  </style>
+</head>
+<body class="flex h-screen overflow-hidden bg-slate-50 text-slate-900">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+
+  <!-- =====================================================================
+       REAL SIDEBAR (Exact match with Internal Website System)
+       ===================================================================== -->
+  <aside class="real-sidebar" id="app-sidebar" aria-label="แถบเมนูหลัก">
+    <!-- User Card -->
+    <div class="real-user-card">
+      <div class="flex items-center gap-2.5">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile"
+          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+        />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <!-- Close button on Mobile Drawer -->
+        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <!-- Logout on Desktop -->
+        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-300 bg-amber-100 text-amber-950">
+          ADMIN
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-300 bg-emerald-100 text-emerald-950">
+          EDITOR
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Items -->
+    <nav class="flex flex-col gap-0.5" aria-label="เมนูระบบ">
+      <!-- 1. จัดการหน่วยงาน -->
+      <a href="./organizations.html" class="real-menu-item">
+        <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+      </a>
+
+      <!-- 2. จัดการ Case -->
+      <a href="./cases.html" class="real-menu-item mt-1">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <!-- 3. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item mt-1">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
+
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+      <!-- 5. รายงานและสถิติ -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header real-group-active">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">รายงานและสถิติ</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
+          <a href="./richmenu-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./bkk-assessment.html" class="real-nested-item real-nested-active font-medium" aria-current="page" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
+            <span class="whitespace-nowrap">ประเมินคุณภาพ กทม.</span>
+            <span class="real-action-group">
+              <span class="real-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
+              <span class="real-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- บัญชี / สร้างหน่วยงาน -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./create-official-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
+          </a>
+          <a href="./create-org-chart.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1">
+        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- 7. FAQ -->
+      <a href="./faq.html" class="real-menu-item mt-1">
+        <i data-lucide="help-circle" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- =====================================================================
+       MAIN WORKSPACE AREA
+       ===================================================================== -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Real Topbar -->
+    <header class="real-topbar">
+      <!-- Left: Mobile Hamburger + Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <span class="text-slate-400 font-medium">รายงานและสถิติ</span>
+        <span class="text-slate-300">/</span>
+        <span class="font-bold text-slate-800">ประเมินคุณภาพ กทม.</span>
+      </div>
+    </header>
+
+    <!-- Scrollable Workspace Body -->
+    <div class="flex-1 overflow-y-auto" id="content-container">
+      <div class="w-full space-y-5 md:space-y-6">
+        
+        <!-- PAGE HEADER & CONTROLS (Standard Enterprise Design matching system & WCAG 2.2 AAA) -->
+        <section class="bg-white p-4 sm:p-5 md:p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+          <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+            
+            <!-- Left: Title, Description & Status Metadata -->
+            <div class="space-y-2 max-w-3xl">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-900 border border-blue-200">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-600"></i>
+                  <span>BKK Assessment &amp; Quality Score</span>
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                  <i data-lucide="building-2" class="w-3.5 h-3.5 text-slate-500"></i>
+                  <span>50 เขต + สำนักในสังกัด กทม.</span>
+                </span>
+                <span class="inline-flex items-center gap-1.5 text-xs text-slate-600">
+                  <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-500 flex-shrink-0"></i>
+                  <span>อัปเดตอัตโนมัติจาก API กทม.</span>
+                </span>
+              </div>
+              
+              <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight m-0 leading-snug">
+                คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.
+              </h1>
+              
+              <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed m-0">
+                ระบบคำนวณตัวชี้วัดและคะแนนประเมินผลการดำเนินงานของ 50 เขตและหน่วยงานในสังกัดกรุงเทพมหานคร ผ่านระบบ Traffy Fondue เพื่อใช้รายงานความก้าวหน้าและการแก้ไขปัญหาเส้นเลือดฝอย
+              </p>
+            </div>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap flex-shrink-0">
+              <a href="https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors shadow-2xs" title="ดาวน์โหลดไฟล์ CSV">
+                <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+                <span>ดาวน์โหลด CSV</span>
+              </a>
+              <a href="https://dashboard.traffy.in.th/api_for_bkk_assessment.php" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 hover:text-slate-900 border border-slate-200 transition-colors shadow-2xs" title="เปิดดูข้อมูล API JSON">
+                <i data-lucide="code-2" class="w-4 h-4 text-slate-500"></i>
+                <span>เปิดดู JSON</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 SUMMARY TILES -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" aria-label="ภาพรวมตัวชี้วัด">
+          <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200 shadow-2xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="building" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-slate-500">เขต/หน่วยงานที่ประเมิน</div>
+              <div class="text-lg md:text-xl font-bold text-slate-900 mt-0.5" id="stat-total-orgs">50 เขต + 6 สำนัก</div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200 shadow-2xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-slate-500">เรื่องเสร็จสิ้นทั้งหมด</div>
+              <div class="text-lg md:text-xl font-bold text-slate-900 font-mono-code mt-0.5" id="stat-completed-cases">330,578 เคส</div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200 shadow-2xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="clock" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-slate-500">อยู่ระหว่างดำเนินการ</div>
+              <div class="text-lg md:text-xl font-bold text-slate-900 font-mono-code mt-0.5" id="stat-pending-cases">27,632 เคส</div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 md:p-5 rounded-2xl border border-slate-200 shadow-2xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-slate-500">คะแนนคุณภาพเฉลี่ย</div>
+              <div class="text-lg md:text-xl font-black text-slate-900 font-mono-code mt-0.5" id="stat-avg-score">91.2 / 100</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DATA TABLE SECTION -->
+        <section class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+          
+          <!-- Toolbar -->
+          <div class="p-4 md:p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="relative w-full sm:w-80">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="ค้นหาชื่อเขตหรือหน่วยงาน..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-400 focus:outline-none transition-colors">
+            </div>
+            <div class="text-xs text-slate-500 font-medium" id="table-count-badge">
+              แสดงทั้งหมด 56 หน่วยงาน (50 เขต + 6 สำนัก)
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[720px]">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase tracking-wider font-mono-code">
+                  <th scope="col" class="py-3.5 px-4 w-16">ลำดับ</th>
+                  <th scope="col" class="py-3.5 px-4">เขต / หน่วยงาน</th>
+                  <th scope="col" class="py-3.5 px-4 text-right">เรื่องแจ้งทั้งหมด</th>
+                  <th scope="col" class="py-3.5 px-4 text-right">แก้ไขเสร็จสิ้น</th>
+                  <th scope="col" class="py-3.5 px-4 text-right">กำลังดำเนินการ</th>
+                  <th scope="col" class="py-3.5 px-4 text-center">คะแนนคุณภาพ (Score)</th>
+                  <th scope="col" class="py-3.5 px-4 text-center">ระดับการประเมิน</th>
+                </tr>
+              </thead>
+              <tbody id="table-body" class="divide-y divide-slate-100 text-xs font-mono-code">
+                <!-- Rendered via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SAMPLE_ASSESSMENT_DATA = [
+      { id: 1, name: "เขตจตุจักร", totalCases: 8420, completedCases: 8163, pendingCases: 257, score: 96.6, grade: "ดีเยี่ยม" },
+      { id: 2, name: "เขตบางรัก", totalCases: 6150, completedCases: 5951, pendingCases: 199, score: 96.4, grade: "ดีเยี่ยม" },
+      { id: 3, name: "เขตดินแดง", totalCases: 7890, completedCases: 7591, pendingCases: 299, score: 95.8, grade: "ดีเยี่ยม" },
+      { id: 4, name: "เขตพระนคร", totalCases: 5430, completedCases: 5210, pendingCases: 220, score: 95.5, grade: "ดีเยี่ยม" },
+      { id: 5, name: "เขตพญาไท", totalCases: 6120, completedCases: 5856, pendingCases: 264, score: 95.2, grade: "ดีเยี่ยม" },
+      { id: 6, name: "เขตคลองเตย", totalCases: 9320, completedCases: 8884, pendingCases: 436, score: 94.8, grade: "ดีมาก" },
+      { id: 7, name: "เขตวัฒนา", totalCases: 8200, completedCases: 7794, pendingCases: 406, score: 94.5, grade: "ดีมาก" },
+      { id: 8, name: "เขตสาทร", totalCases: 5120, completedCases: 4857, pendingCases: 263, score: 94.3, grade: "ดีมาก" },
+      { id: 9, name: "เขตราชเทวี", totalCases: 6980, completedCases: 6609, pendingCases: 371, score: 94.1, grade: "ดีมาก" },
+      { id: 10, name: "เขตห้วยขวาง", totalCases: 7340, completedCases: 6937, pendingCases: 403, score: 93.9, grade: "ดีมาก" },
+      { id: 11, name: "เขตปทุมวัน", totalCases: 6420, completedCases: 6056, pendingCases: 364, score: 93.7, grade: "ดีมาก" },
+      { id: 12, name: "เขตสัมพันธวงศ์", totalCases: 3820, completedCases: 3596, pendingCases: 224, score: 93.5, grade: "ดีมาก" },
+      { id: 13, name: "สำนักการแพทย์", totalCases: 5120, completedCases: 4816, pendingCases: 304, score: 93.4, grade: "ดีมาก" },
+      { id: 14, name: "เขตบางซื่อ", totalCases: 6710, completedCases: 6305, pendingCases: 405, score: 93.3, grade: "ดีมาก" },
+      { id: 15, name: "เขตบางขุนเทียน", totalCases: 7450, completedCases: 6987, pendingCases: 463, score: 93.1, grade: "ดีมาก" },
+      { id: 16, name: "เขตธนบุรี", baseCases: 5930, totalCases: 5930, completedCases: 5546, pendingCases: 384, score: 92.8, grade: "ดีมาก" },
+      { id: 17, name: "เขตบางพลัด", totalCases: 5310, completedCases: 4956, pendingCases: 354, score: 92.6, grade: "ดีมาก" },
+      { id: 18, name: "เขตสายไหม", totalCases: 9110, completedCases: 8487, pendingCases: 623, score: 92.4, grade: "ดีมาก" },
+      { id: 19, name: "เขตดุสิต", totalCases: 4890, completedCases: 4542, pendingCases: 348, score: 92.1, grade: "ดีมาก" },
+      { id: 20, name: "สำนักอนามัย", totalCases: 6410, completedCases: 5948, pendingCases: 462, score: 92.0, grade: "ดีมาก" },
+      { id: 21, name: "เขตบางเขน", totalCases: 8730, completedCases: 8086, pendingCases: 644, score: 91.8, grade: "ดีมาก" },
+      { id: 22, name: "เขตมีนบุรี", totalCases: 6320, completedCases: 5842, pendingCases: 478, score: 91.6, grade: "ดีมาก" },
+      { id: 23, name: "สำนักการโยธา", totalCases: 14200, completedCases: 13114, pendingCases: 1086, score: 91.5, grade: "ดีมาก" },
+      { id: 24, name: "เขตบางกอกน้อย", totalCases: 5480, completedCases: 5056, pendingCases: 424, score: 91.4, grade: "ดีมาก" },
+      { id: 25, name: "สำนักการระบายน้ำ", totalCases: 11500, completedCases: 10589, pendingCases: 911, score: 91.2, grade: "ดีมาก" },
+      { id: 26, name: "เขตประเวศ", totalCases: 7650, completedCases: 7044, pendingCases: 606, score: 91.2, grade: "ดีมาก" },
+      { id: 27, name: "เขตดอนเมือง", totalCases: 8120, completedCases: 7462, pendingCases: 658, score: 91.0, grade: "ดีมาก" },
+      { id: 28, name: "สำนักสิ่งแวดล้อม", totalCases: 7200, completedCases: 6604, pendingCases: 596, score: 90.8, grade: "ดีมาก" },
+      { id: 29, name: "เขตบางแค", totalCases: 7920, completedCases: 7264, pendingCases: 656, score: 90.8, grade: "ดีมาก" },
+      { id: 30, name: "เขตสวนหลวง", totalCases: 6840, completedCases: 6261, pendingCases: 579, score: 90.6, grade: "ดีมาก" },
+      { id: 31, name: "เขตบางกะปิ", totalCases: 8940, completedCases: 8168, pendingCases: 772, score: 90.4, grade: "ดีมาก" },
+      { id: 32, name: "เขตหลักสี่", totalCases: 5620, completedCases: 5129, pendingCases: 491, score: 90.3, grade: "ดีมาก" },
+      { id: 33, name: "เขตตลิ่งชัน", totalCases: 4790, completedCases: 4363, pendingCases: 427, score: 90.1, grade: "ดีมาก" },
+      { id: 34, name: "เขตจอมทอง", totalCases: 5880, completedCases: 5346, pendingCases: 534, score: 89.9, grade: "ปานกลาง" },
+      { id: 35, name: "สำนักการจราจรและขนส่ง", totalCases: 8850, completedCases: 8038, pendingCases: 812, score: 89.8, grade: "ปานกลาง" },
+      { id: 36, name: "เขตคลองสาน", totalCases: 4210, completedCases: 3824, pendingCases: 386, score: 89.8, grade: "ปานกลาง" },
+      { id: 37, name: "เขตบางกอกใหญ่", totalCases: 3950, completedCases: 3584, pendingCases: 366, score: 89.7, grade: "ปานกลาง" },
+      { id: 38, name: "เขตภาษีเจริญ", totalCases: 5140, completedCases: 4659, pendingCases: 481, score: 89.6, grade: "ปานกลาง" },
+      { id: 39, name: "เขตป้อมปราบศัตรูพ่าย", totalCases: 3670, completedCases: 3323, pendingCases: 347, score: 89.5, grade: "ปานกลาง" },
+      { id: 40, name: "เขตลาดพร้าว", totalCases: 7420, completedCases: 6712, pendingCases: 708, score: 89.4, grade: "ปานกลาง" },
+      { id: 41, name: "เขตพระโขนง", totalCases: 4980, completedCases: 4500, pendingCases: 480, score: 89.3, grade: "ปานกลาง" },
+      { id: 42, name: "เขตวังทองหลาง", totalCases: 5320, completedCases: 4803, pendingCases: 517, score: 89.2, grade: "ปานกลาง" },
+      { id: 43, name: "เขตหนองแขม", totalCases: 6240, completedCases: 5628, pendingCases: 612, score: 89.1, grade: "ปานกลาง" },
+      { id: 44, name: "เขตราษฎร์บูรณะ", totalCases: 4410, completedCases: 3973, pendingCases: 437, score: 89.0, grade: "ปานกลาง" },
+      { id: 45, name: "เขตบึงกุ่ม", totalCases: 5730, completedCases: 5158, pendingCases: 572, score: 88.9, grade: "ปานกลาง" },
+      { id: 46, name: "เขตบางคอแหลม", totalCases: 4120, completedCases: 3705, pendingCases: 415, score: 88.8, grade: "ปานกลาง" },
+      { id: 47, name: "เขตยานนาวา", totalCases: 4860, completedCases: 4366, pendingCases: 494, score: 88.7, grade: "ปานกลาง" },
+      { id: 48, name: "เขตบางนา", totalCases: 6510, completedCases: 5842, pendingCases: 668, score: 88.6, grade: "ปานกลาง" },
+      { id: 49, name: "เขตคันนายาว", totalCases: 4620, completedCases: 4142, pendingCases: 478, score: 88.5, grade: "ปานกลาง" },
+      { id: 50, name: "เขตสะพานสูง", totalCases: 4380, completedCases: 3923, pendingCases: 457, score: 88.4, grade: "ปานกลาง" },
+      { id: 51, name: "เขตคลองสามวา", totalCases: 6890, completedCases: 6164, pendingCases: 726, score: 88.3, grade: "ปานกลาง" },
+      { id: 52, name: "เขตทวีวัฒนา", totalCases: 3740, completedCases: 3343, pendingCases: 397, score: 88.2, grade: "ปานกลาง" },
+      { id: 53, name: "เขตทุ่งครุ", totalCases: 4950, completedCases: 4420, pendingCases: 530, score: 88.1, grade: "ปานกลาง" },
+      { id: 54, name: "เขตบางบอน", totalCases: 4560, completedCases: 4068, pendingCases: 492, score: 88.0, grade: "ปานกลาง" },
+      { id: 55, name: "เขตลาดกระบัง", totalCases: 7120, completedCases: 6345, pendingCases: 775, score: 87.9, grade: "ปานกลาง" },
+      { id: 56, name: "เขตหนองจอก", totalCases: 5210, completedCases: 4638, pendingCases: 572, score: 87.8, grade: "ปานกลาง" }
+    ];
+
+    function updateSummaryStats(data) {
+      if (!data || data.length === 0) return;
+      const totalCompleted = data.reduce((sum, item) => sum + item.completedCases, 0);
+      const totalPending = data.reduce((sum, item) => sum + item.pendingCases, 0);
+      const avgScore = (data.reduce((sum, item) => sum + item.score, 0) / data.length).toFixed(1);
+
+      const elCompleted = document.getElementById('stat-completed-cases');
+      const elPending = document.getElementById('stat-pending-cases');
+      const elAvgScore = document.getElementById('stat-avg-score');
+
+      if (elCompleted) elCompleted.textContent = totalCompleted.toLocaleString() + ' เคส';
+      if (elPending) elPending.textContent = totalPending.toLocaleString() + ' เคส';
+      if (elAvgScore) elAvgScore.textContent = avgScore + ' / 100';
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('table-body');
+      if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="py-12 text-center text-slate-400 font-sans">ไม่พบข้อมูลเขตหรือหน่วยงานที่ตรงกับคำค้นหา</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = data.map((item, idx) => {
+        let pillClass = 'bg-amber-50 text-amber-800 border border-amber-200';
+        if (item.score >= 95) pillClass = 'bg-emerald-50 text-emerald-800 border border-emerald-200';
+        else if (item.score >= 90) pillClass = 'bg-blue-50 text-blue-800 border border-blue-200';
+
+        return `
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="py-3 px-4 text-slate-500">${idx + 1}</td>
+            <td class="py-3 px-4 font-bold text-slate-900 font-sans">${item.name}</td>
+            <td class="py-3 px-4 text-right text-slate-700">${item.totalCases.toLocaleString()}</td>
+            <td class="py-3 px-4 text-right text-emerald-700 font-bold">${item.completedCases.toLocaleString()}</td>
+            <td class="py-3 px-4 text-right text-amber-700 font-semibold">${item.pendingCases.toLocaleString()}</td>
+            <td class="py-3 px-4 text-center">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${pillClass}">
+                ★ ${item.score}%
+              </span>
+            </td>
+            <td class="py-3 px-4 text-center font-bold font-sans text-slate-800">${item.grade}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function handleSearch(query) {
+      const q = (query || '').trim().toLowerCase();
+      const countBadge = document.getElementById('table-count-badge');
+      if (!q) {
+        renderTable(SAMPLE_ASSESSMENT_DATA);
+        if (countBadge) countBadge.textContent = 'แสดงทั้งหมด ' + SAMPLE_ASSESSMENT_DATA.length + ' หน่วยงาน (50 เขต + 6 สำนัก)';
+        return;
+      }
+      const filtered = SAMPLE_ASSESSMENT_DATA.filter(item => 
+        item.name.toLowerCase().includes(q) || item.grade.toLowerCase().includes(q)
+      );
+      renderTable(filtered);
+      if (countBadge) countBadge.textContent = 'แสดง ' + filtered.length + ' หน่วยงาน';
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      const isOpen = sidebar.classList.contains('sidebar-open');
+      if (isOpen) {
+        closeMobileSidebar();
+      } else {
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      sidebar.classList.remove('sidebar-open');
+      backdrop.classList.add('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      updateSummaryStats(SAMPLE_ASSESSMENT_DATA);
+      renderTable(SAMPLE_ASSESSMENT_DATA);
+    });
+  </script>
+</body>
+</html>

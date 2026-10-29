@@ -90,7 +90,7 @@
   
     /* Real Sidebar Styles */
     :root {
-      --sidebar-width: 260px;
+      --sidebar-width: 280px;
       --topbar-height: 64px;
       --page-padding: 32px;
       --content-max-width: 1536px;
@@ -152,19 +152,24 @@
       font-size: 14px;
       font-weight: 500;
     }
+    .real-group-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
     .real-children-group {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      margin-left: 20px;
+      margin-left: 16px;
       padding-left: 8px;
       border-left: 1px solid #e2e8f0;
     }
     .real-nested-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 7px 12px;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 7px 10px;
       font-size: 13px;
       border-radius: 10px;
       color: #334155;
@@ -173,6 +178,56 @@
       cursor: pointer;
     }
     .real-nested-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-nested-item.real-nested-active,
+    .real-nested-item.real-nested-active:hover {
+      position: relative;
+      background: #52525b !important;
+      color: #ffffff !important;
+    }
+    .real-nested-item.real-nested-active::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #111827;
+      transform: translateY(-50%);
+    }
+    .real-action-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .real-action-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+      line-height: 1.2;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-action-badge:hover {
+      background: #cbd5e1;
+      color: #0f172a;
+    }
+    .real-nested-item.real-nested-active .real-action-badge,
+    .real-nested-item.real-menu-active .real-action-badge {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+    }
+    .real-nested-item.real-nested-active .real-action-badge:hover,
+    .real-nested-item.real-menu-active .real-action-badge:hover {
+      background: #ffffff;
+      color: #0f172a;
+    }
     .real-topbar {
       height: var(--topbar-height);
       background: #ffffff;
@@ -195,25 +250,35 @@
   <!-- Main Sidebar -->
   <aside id="main-sidebar" class="real-sidebar select-none">
     <!-- User Card -->
-    <div class="real-user-card p-3 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col gap-2">
+    <div class="real-user-card">
       <div class="flex items-center gap-2.5">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-          alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile"
+          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+        />
         <div class="flex-1 min-w-0">
           <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
           <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
         </div>
-        <button type="button" onclick="closeMobileSidebar()"
-          class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors"
-          title="ปิดเมนู">
+        <!-- Close button on Mobile Drawer -->
+        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
+        <!-- Logout on Desktop -->
+        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
       </div>
-      <div class="flex flex-wrap gap-1 mt-1">
-        <span
-          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
-        <span
-          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-300 bg-amber-100 text-amber-950">
+          ADMIN
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-300 bg-emerald-100 text-emerald-950">
+          EDITOR
+        </span>
       </div>
     </div>
 
@@ -241,16 +306,23 @@
 
       <!-- รายงานและสถิติ -->
       <div class="flex flex-col gap-1 mt-1">
-        <div class="real-group-header">
+        <div class="real-group-header real-group-active">
           <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
           <span class="flex-1 truncate">รายงานและสถิติ</span>
         </div>
         <div class="real-children-group">
+          <a href="./org-group-stats.html" class="real-nested-item real-nested-active font-medium">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
           <a href="./richmenu-stats.html" class="real-nested-item">
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
           </a>
-          <a href="./org-group-stats.html" class="real-nested-item real-menu-active font-semibold">
-            <span class="flex-1 truncate">สถิติหน่วยงาน</span>
+          <a href="./bkk-assessment.html" class="real-nested-item" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
+            <span class="whitespace-nowrap">ประเมินคุณภาพ กทม.</span>
+            <span class="real-action-group">
+              <span class="real-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
+              <span class="real-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
+            </span>
           </a>
         </div>
       </div>

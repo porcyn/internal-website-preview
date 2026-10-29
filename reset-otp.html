@@ -151,6 +151,39 @@
       cursor: pointer;
     }
     .real-nested-item:hover { background: #f1f5f9; color: #0f172a; }
+    .real-action-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .real-action-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+      line-height: 1.2;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-action-badge:hover {
+      background: #cbd5e1;
+      color: #0f172a;
+    }
+    .real-nested-item.real-nested-active .real-action-badge,
+    .real-nested-item.real-menu-active .real-action-badge {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+    }
+    .real-nested-item.real-nested-active .real-action-badge:hover,
+    .real-nested-item.real-menu-active .real-action-badge:hover {
+      background: #ffffff;
+      color: #0f172a;
+    }
 
     .real-topbar {
       height: var(--topbar-height);
@@ -265,11 +298,18 @@
           <span class="flex-1 truncate">รายงานและสถิติ</span>
         </div>
         <div class="real-children-group">
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
           <a href="./richmenu-stats.html" class="real-nested-item">
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
           </a>
-          <a href="./org-group-stats.html" class="real-nested-item">
-            <span class="flex-1 truncate">สถิติหน่วยงาน</span>
+          <a href="./bkk-assessment.html" class="real-nested-item" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
+            <span class="flex-1 truncate">ประเมินคุณภาพ กทม.</span>
+            <span class="real-action-group">
+              <span class="real-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
+              <span class="real-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
+            </span>
           </a>
         </div>
       </div>
