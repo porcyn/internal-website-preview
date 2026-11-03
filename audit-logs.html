@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ประวัติการแก้ไข - Traffy Fondue Internal Website</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Noto Sans Thai & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 32px;
+      --sidebar-width: 260px;
+      --sidebar-collapsed-width: 72px;
+      --topbar-height: 64px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root {
+        --page-padding: 24px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --page-padding: 16px;
+        --topbar-height: 56px;
+      }
+    }
+
+    #content-container {
+      padding: var(--page-padding) !important;
+      box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
+    }
+
+    /* REAL PROJECT SIDEBAR STYLES */
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .real-user-card {
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+
+    .real-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+
+    .real-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .real-children-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
+    }
+
+    .real-nested-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+
+    .real-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* REAL PROJECT TOPBAR STYLES */
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--page-padding);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 767px) {
+      .real-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 280px;
+        max-width: 84vw;
+        height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        transform: translateX(-100%);
+      }
+
+      .real-sidebar.sidebar-open {
+        transform: translateX(0) !important;
+      }
+
+      .real-topbar {
+        padding: 0 12px;
+      }
+    }
+
+    /* Responsive Tab Buttons matching organizations.html */
+    .org-tab-btn {
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col md:flex-row h-screen overflow-hidden text-xs">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()"
+    class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+
+  <!-- ==========================================
+       SIDEBAR NAVIGATION
+       ========================================== -->
+  <aside id="main-sidebar" class="real-sidebar select-none">
+
+    <!-- User Card -->
+    <div class="real-user-card relative">
+      <div class="flex items-center gap-2.5 pr-6 md:pr-0">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile" class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0" />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-xs sm:text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-[11px] sm:text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <button type="button" onclick="toggleMobileSidebar()"
+          class="md:hidden absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+          title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <button type="button"
+          class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors"
+          title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span
+          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">ADMIN</span>
+        <span
+          class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">EDITOR</span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex flex-col gap-0.5">
+      <!-- 1. จัดการหน่วยงาน -->
+      <a href="./organizations.html" class="real-menu-item">
+        <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+      </a>
+
+      <!-- 2. จัดการ Case -->
+      <a href="./cases.html" class="real-menu-item mt-1">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <!-- 3. Reset OTP -->
+      <a href="./reset-otp.html" class="real-menu-item mt-1">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Reset OTP</span>
+      </a>
+
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+      <!-- 5. รายงานและสถิติ -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">รายงานและสถิติ</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./org-group-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
+          <a href="./richmenu-stats.html" class="real-nested-item">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./bkk-assessment.html" class="real-nested-item">
+            <span class="flex-1 truncate">ประเมินคุณภาพ กทม.</span>
+          </a>
+          <a href="./impact.html" class="real-nested-item">
+            <span class="flex-1 truncate">คำนวณ Impact</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- บัญชี / สร้างหน่วยงาน -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./create-official-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
+          </a>
+          <a href="./create-org-chart.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1">
+        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- ประวัติการแก้ไข (Active Standalone) -->
+      <a href="./audit-logs.html" class="real-menu-item mt-1 real-menu-active">
+        <i data-lucide="history" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">ประวัติการแก้ไข</span>
+      </a>
+
+      <!-- FAQ -->
+      <a href="./faq.html" class="real-menu-item mt-1">
+        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ==========================================
+       MAIN CONTENT CONTAINER
+       ========================================== -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
+
+    <!-- Topbar Header -->
+    <header class="real-topbar">
+      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+        <button type="button" onclick="toggleMobileSidebar()"
+          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-lg flex-shrink-0 cursor-pointer"
+          title="เปิดเมนูนำทาง">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <span class="text-slate-400 font-medium whitespace-nowrap hidden sm:inline">ระบบ</span>
+        <span class="text-slate-300 hidden sm:inline">/</span>
+        <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">ประวัติการแก้ไข</span>
+      </div>
+
+      <!-- Right Topbar Action -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button type="button" onclick="exportAuditLogs()"
+          class="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs whitespace-nowrap shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1.5"
+          title="ดาวน์โหลดประวัติเป็นไฟล์ CSV">
+          <i data-lucide="download" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>ส่งออก CSV</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Content Body -->
+    <div class="flex-1 overflow-y-auto" id="content-container">
+      <div class="w-full max-w-[1536px] mx-auto space-y-5 pb-12">
+
+        <!-- Main Header Card (Styled exactly like organizations.html) -->
+        <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div class="flex items-center gap-3.5">
+              <div
+                class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                <i data-lucide="history" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+              </div>
+              <div>
+                <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ประวัติการแก้ไขระบบ</h1>
+                <p class="text-xs text-slate-500 mt-0.5">บันทึกการเปลี่ยนแปลงและการดำเนินการย้อนหลังในแต่ละส่วนงาน</p>
+              </div>
+            </div>
+
+            <!-- Total count badge -->
+            <div
+              class="flex items-center gap-2 self-start sm:self-auto bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="text-xs text-slate-600 font-medium">บันทึกทั้งหมด <span id="count-display"
+                  class="font-bold text-slate-900 font-mono-code">10</span> รายการ</span>
+            </div>
+          </div>
+
+          <!-- DESKTOP TABS BAR (Icons + Clean Text, matching organizations.html) -->
+          <div
+            class="hidden md:inline-flex items-center gap-1 sm:gap-1.5 p-1 bg-slate-50/90 rounded-xl border border-slate-200/70 overflow-x-auto no-scrollbar flex-shrink-0">
+            <button onclick="selectModule('all')" id="btn-tab-all"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 hover:text-white">
+              <i data-lucide="history" class="w-3.5 h-3.5"></i>
+              <span>ทั้งหมด</span>
+            </button>
+            <button onclick="selectModule('organizations')" id="btn-tab-organizations"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+              <span>จัดการหน่วยงาน</span>
+            </button>
+            <button onclick="selectModule('cases')" id="btn-tab-cases"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+              <span>จัดการ Case</span>
+            </button>
+            <button onclick="selectModule('users')" id="btn-tab-users"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+              <span>จัดการผู้ใช้ / สิทธิ์</span>
+            </button>
+            <button onclick="selectModule('security')" id="btn-tab-security"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+              <span>Reset OTP</span>
+            </button>
+          </div>
+
+          <!-- MOBILE RESPONSIVE VIEW: Menu Row (Matching organizations.html) -->
+          <div class="flex md:hidden flex-col gap-2.5 w-full">
+            <div class="flex items-center gap-2 w-full">
+              <div
+                class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
+                title="หมวดหมู่">
+                <i data-lucide="layers" class="w-4 h-4" id="mobile-tab-prefix-icon"></i>
+              </div>
+
+              <!-- Custom Responsive Tab Dropdown with Lucide Icons (flex-1 to fill the remaining row) -->
+              <div class="relative flex-1 min-w-0" id="mobile-tab-dropdown-wrapper">
+                <button type="button" onclick="toggleMobileTabDropdown(event)" id="mobile-tab-trigger"
+                  class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span id="mobile-tab-current-icon"
+                      class="text-blue-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="history" class="w-4 h-4"></i>
+                    </span>
+                    <span id="mobile-tab-current-label" class="truncate">ทั้งหมด</span>
+                  </div>
+                  <i data-lucide="chevron-down" id="mobile-tab-chevron"
+                    class="w-4 h-4 text-slate-500 transition-transform duration-200 flex-shrink-0"></i>
+                </button>
+
+                <div id="mobile-tab-menu"
+                  class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
+                  <button type="button" onclick="selectMobileTab('all')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
+                    data-tab="all">
+                    <span
+                      class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="history" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">ทั้งหมด</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('organizations')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="organizations">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="building-2" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('cases')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="cases">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">จัดการ Case</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('users')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="users">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="users" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">จัดการผู้ใช้ / สิทธิ์</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('security')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="security">
+                    <span
+                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
+                        data-lucide="key-round" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">Reset OTP</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Row: Search & Quick Type Select -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+          <div class="relative flex-1">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="log-search-input" oninput="applyFilters()"
+              placeholder="ค้นหาชื่อหน่วยงาน, เลขเคส, ผู้แก้ไข หรือสิ่งที่เปลี่ยน..."
+              class="w-full bg-white border border-slate-200/90 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs transition-all">
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="relative flex-1 sm:flex-initial">
+              <select id="action-type-filter" onchange="applyFilters()"
+                class="w-full sm:w-auto bg-white border border-slate-200/90 rounded-2xl pl-3.5 pr-8 py-2.5 text-xs font-medium text-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs cursor-pointer appearance-none">
+                <option value="all">ทุกประเภทการกระทำ</option>
+                <option value="update">แก้ไขข้อมูล (Update)</option>
+                <option value="status">เปลี่ยนสถานะ (Status)</option>
+                <option value="create">สร้างใหม่ (Create)</option>
+                <option value="delete">ลบ/ระงับ (Delete)</option>
+              </select>
+              <i data-lucide="chevron-down"
+                class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+            </div>
+
+            <button type="button" onclick="resetFilters()"
+              class="p-2.5 rounded-2xl bg-white border border-slate-200/90 text-slate-500 hover:text-slate-900 hover:bg-slate-50 shadow-2xs transition-all shrink-0 cursor-pointer flex items-center justify-center"
+              title="ล้างตัวกรองทั้งหมด">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Desktop View: Table (md and up) -->
+        <div class="hidden md:block bg-white rounded-3xl border border-slate-200/90 shadow-2xs overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs whitespace-nowrap">
+              <thead
+                class="bg-slate-50/90 text-slate-500 border-b border-slate-200/90 font-semibold text-[11px] uppercase tracking-wider">
+                <tr>
+                  <th scope="col" class="py-3.5 px-5 w-32">วัน - เวลา</th>
+                  <th scope="col" class="py-3.5 px-4 w-44">ส่วนงาน & การดำเนินการ</th>
+                  <th scope="col" class="py-3.5 px-4">เป้าหมายที่แก้ไข</th>
+                  <th scope="col" class="py-3.5 px-4">ข้อมูลที่เปลี่ยนแปลง (Diff)</th>
+                  <th scope="col" class="py-3.5 px-4 w-44">ผู้ดำเนินการ</th>
+                  <th scope="col" class="py-3.5 px-5 text-right w-28">รายละเอียด</th>
+                </tr>
+              </thead>
+              <tbody id="logs-tbody" class="divide-y divide-slate-100">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mobile View: Clean Separated Individual Cards (screens < md) -->
+        <div id="logs-mobile-list" class="md:hidden space-y-3.5">
+          <!-- Injected via JavaScript: individual floating cards -->
+        </div>
+
+        <!-- Empty State (Shown when no results in either view) -->
+        <div id="logs-empty-state"
+          class="hidden bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-10 text-center space-y-2.5">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
+            <i data-lucide="search-x" class="w-6 h-6"></i>
+          </div>
+          <p class="text-xs font-bold text-slate-800">ไม่พบรายการประวัติที่ตรงกับเงื่อนไข</p>
+          <p class="text-[11px] text-slate-400 max-w-xs mx-auto">ลองเปลี่ยนคำค้นหา
+            หรือเลือกหมวดหมู่อื่นเพื่อดูรายการเพิ่มเติม</p>
+          <div class="pt-2">
+            <button onclick="resetFilters()"
+              class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors cursor-pointer">ล้างตัวกรอง</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================
+       MODAL: CLEAN AUDIT DETAIL MODAL
+       ========================================== -->
+  <div id="audit-detail-modal" onclick="closeAuditModal(event)"
+    class="fixed inset-0 bg-slate-900/50 backdrop-blur-[2px] z-50 hidden items-center justify-center p-3 sm:p-4">
+    <div
+      class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden"
+      onclick="event.stopPropagation()">
+
+      <!-- Modal Header -->
+      <div
+        class="px-4 sm:px-5 py-3 sm:py-3.5 border-b border-slate-100 flex items-center justify-between gap-3 bg-slate-50/60 shrink-0">
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="modal-module-badge"
+            class="px-2 py-0.5 rounded text-[10.5px] font-bold bg-slate-200 text-slate-700 shrink-0">ส่วนงาน</span>
+          <span id="modal-log-id" class="text-xs font-mono-code font-bold text-slate-500">LOG-000</span>
+        </div>
+        <button type="button" onclick="closeAuditModal()"
+          class="w-7 h-7 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer"
+          title="ปิด">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-4 sm:p-5 space-y-3.5 overflow-y-auto text-xs">
+        <div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">เป้าหมายที่แก้ไข</span>
+          <h3 id="modal-target-object" class="text-sm font-bold text-slate-900 mt-0.5 leading-tight break-words">-</h3>
+          <p id="modal-summary-text" class="text-xs text-slate-600 mt-1 leading-relaxed">-</p>
+        </div>
+
+        <!-- Meta Details (Actor & Timestamp) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <div>
+            <span class="text-[10px] text-slate-400 font-medium block">ผู้ดำเนินการ</span>
+            <span id="modal-actor-name" class="font-bold text-slate-800 block truncate mt-0.5">-</span>
+            <span id="modal-actor-email" class="text-[11px] text-slate-400 block truncate">-</span>
+          </div>
+          <div class="pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/60">
+            <span class="text-[10px] text-slate-400 font-medium block">เวลาที่บันทึก</span>
+            <span id="modal-timestamp" class="font-bold text-slate-800 block mt-0.5">-</span>
+            <span id="modal-ip-address" class="text-[11px] font-mono-code text-slate-400 block">IP: 172.24.10.82</span>
+          </div>
+        </div>
+
+        <!-- Diff List -->
+        <div class="space-y-1.5">
+          <span class="text-[11px] font-bold text-slate-700 block">รายละเอียดการเปลี่ยนค่า (Changes):</span>
+          <div class="border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100">
+            <div id="modal-diff-list" class="divide-y divide-slate-100">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Reason / Justification -->
+        <div id="modal-comment-box"
+          class="p-3 bg-slate-50 border border-slate-200/70 rounded-xl text-slate-600 space-y-0.5">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">เหตุผล</span>
+          <p id="modal-log-comment" class="text-xs text-slate-700 leading-relaxed">-</p>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-4 sm:px-5 py-3 border-t border-slate-100 bg-slate-50/50 flex justify-end shrink-0">
+        <button type="button" onclick="closeAuditModal()"
+          class="w-full sm:w-auto px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors cursor-pointer text-center">
+          ปิด
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-box"
+    class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
+    <div
+      class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2.5 text-xs font-semibold">
+      <div class="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0">
+        <i data-lucide="check" class="w-2.5 h-2.5"></i>
+      </div>
+      <span id="toast-message">แจ้งเตือน</span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT
+       ========================================== -->
+  <script>
+    lucide.createIcons();
+
+    // Data Store
+    const auditLogsData = [
+      {
+        id: "LOG-10492",
+        module: "organizations",
+        moduleLabel: "จัดการหน่วยงาน",
+        actionType: "update",
+        target: "สำนักงานเขตราชเทวี (ORG-89241)",
+        actionTitle: "แก้ไขข้อมูลหน่วยงาน",
+        summaryChange: "รัศมี 0.01 กม. ➔ 3.50 กม.",
+        fullSummary: "แก้ไขรัศมีรับผิดชอบ และเบอร์โทรศัพท์สำนักงาน",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "03 พ.ย. 69",
+        time: "12:05 น.",
+        timestamp: "03 พ.ย. 2569 12:05 น.",
+        diff: [
+          { field: "รัศมีครอบคลุม (radius_km)", oldVal: "0.01 กม.", newVal: "3.50 กม." },
+          { field: "เบอร์โทรศัพท์สำนักงาน", oldVal: "02-245-xxxx", newVal: "02-245-9034" }
+        ],
+        comment: "ปรับขยายรัศมีการดูแลพื้นที่ตามมติการจัดแบ่งเขตพื้นที่ กทม. ฉบับใหม่"
+      },
+      {
+        id: "LOG-10491",
+        module: "cases",
+        moduleLabel: "จัดการ Case",
+        actionType: "status",
+        target: "Case #2026-BKK-94021",
+        actionTitle: "เปลี่ยนสถานะเคส",
+        summaryChange: "กำลังดำเนินการ ➔ เสร็จสิ้น",
+        fullSummary: "อัปเดตสถานะเป็น 'เสร็จสิ้น' พร้อมแนบภาพหลักฐานการขุดลอกท่อ 2 ภาพ",
+        actorName: "สมชาย (Staff)",
+        actorEmail: "somchai.m@bkk.go.th",
+        actorRole: "STAFF",
+        actorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+        date: "03 พ.ย. 69",
+        time: "11:48 น.",
+        timestamp: "03 พ.ย. 2569 11:48 น.",
+        diff: [
+          { field: "สถานะเคส (status)", oldVal: "กำลังดำเนินการ", newVal: "เสร็จสิ้น" },
+          { field: "เจ้าหน้าที่ผู้รับผิดชอบ", oldVal: "ยังไม่ระบุ", newVal: "นายสมชาย มีสุข (ฝ่ายโยธา)" }
+        ],
+        comment: "ดำเนินการลอกท่อระบายน้ำและดูดโคลนบริเวณจุดที่ได้รับแจ้งเรียบร้อย น้ำระบายได้ปกติ"
+      },
+      {
+        id: "LOG-10490",
+        module: "cases",
+        moduleLabel: "จัดการ Case",
+        actionType: "update",
+        target: "Case #2026-BKK-93998",
+        actionTitle: "ส่งต่อเรื่อง (Forward)",
+        summaryChange: "ส่งต่อให้ การไฟฟ้านครหลวง (กฟน.)",
+        fullSummary: "ส่งต่อเรื่องร้องเรียนข้ามหน่วยงานไปยังการไฟฟ้านครหลวง",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "03 พ.ย. 69",
+        time: "11:12 น.",
+        timestamp: "03 พ.ย. 2569 11:12 น.",
+        diff: [
+          { field: "หน่วยงานรับผิดชอบ", oldVal: "สำนักงานเขตราชเทวี", newVal: "การไฟฟ้านครหลวง (MEA)" }
+        ],
+        comment: "สายสื่อสารของการไฟฟ้าและโทรคมนาคม จึงส่งต่อให้ กฟน. จัดระเบียบสาย"
+      },
+      {
+        id: "LOG-10489",
+        module: "organizations",
+        moduleLabel: "จัดการหน่วยงาน",
+        actionType: "create",
+        target: "ศูนย์บริการสาธารณสุข 4 (ORG-89240)",
+        actionTitle: "สร้างหน่วยงานใหม่",
+        summaryChange: "ลงทะเบียนหน่วยงาน + กำหนดพิกัด",
+        fullSummary: "สร้างบัญชีทางการและกำหนดขอบเขตพื้นที่แขวงทุ่งพญาไท",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "03 พ.ย. 69",
+        time: "10:15 น.",
+        timestamp: "03 พ.ย. 2569 10:15 น.",
+        diff: [
+          { field: "ชื่อหน่วยงาน", oldVal: "(ไม่มี)", newVal: "ศูนย์บริการสาธารณสุข 4 (คลินิกอบอุ่น)" },
+          { field: "พิกัดสำนักงาน", oldVal: "(ไม่มี)", newVal: "13.7634, 100.5348" }
+        ],
+        comment: "ลงทะเบียนบัญชีทางการเพื่อรองรับการรับเรื่องร้องเรียนด้านสาธารณสุขชุมชน"
+      },
+      {
+        id: "LOG-10488",
+        module: "users",
+        moduleLabel: "จัดการผู้ใช้",
+        actionType: "update",
+        target: "witthawat.s@bkk.go.th",
+        actionTitle: "ปรับสิทธิ์ผู้ใช้งาน",
+        summaryChange: "Viewer ➔ EDITOR (เขตดินแดง)",
+        fullSummary: "เปลี่ยนบทบาทจาก Viewer เป็น EDITOR ในสังกัดสำนักงานเขตดินแดง",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "03 พ.ย. 69",
+        time: "09:20 น.",
+        timestamp: "03 พ.ย. 2569 09:20 น.",
+        diff: [
+          { field: "บทบาท (Role)", oldVal: "VIEWER", newVal: "EDITOR" },
+          { field: "หน่วยงานที่สังกัด", oldVal: "กลาง", newVal: "สำนักงานเขตดินแดง" }
+        ],
+        comment: "แต่งตั้งเป็นผู้ประสานงานจัดการข้อร้องเรียนประจำเขตดินแดง"
+      },
+      {
+        id: "LOG-10487",
+        module: "organizations",
+        moduleLabel: "จัดการหน่วยงาน",
+        actionType: "update",
+        target: "ผังองค์กร: สำนักการระบายน้ำ",
+        actionTitle: "ปรับโครงสร้างผังองค์กร",
+        summaryChange: "ย้าย 'กลุ่มงานระบายน้ำ' ➔ 'กองระบบคลอง'",
+        fullSummary: "ย้ายกลุ่มงานระบบระบายน้ำฝั่งตะวันออกเข้าใต้กองระบบคลอง",
+        actorName: "ประวิทย์ (Editor)",
+        actorEmail: "prawit.r@bkk.go.th",
+        actorRole: "EDITOR",
+        actorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80",
+        date: "03 พ.ย. 69",
+        time: "08:35 น.",
+        timestamp: "03 พ.ย. 2569 08:35 น.",
+        diff: [
+          { field: "หน่วยงานต้นสังกัด", oldVal: "สำนักการระบายน้ำ", newVal: "กองระบบคลอง (Level 2)" }
+        ],
+        comment: "ปรับปรุงผังโครงสร้างสายบังคับบัญชาตามโครงสร้างใหม่ปี 2570"
+      },
+      {
+        id: "LOG-10486",
+        module: "security",
+        moduleLabel: "Reset OTP",
+        actionType: "update",
+        target: "เบอร์: 089-765-xxxx",
+        actionTitle: "Reset OTP & ปลดล็อก",
+        summaryChange: "Locked ➔ Active (ล้าง 5 ครั้ง)",
+        fullSummary: "ล้างสถานะการใส่รหัส OTP ผิดเกินจำนวนครั้ง และส่งรหัสยืนยันใหม่",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "02 พ.ย. 69",
+        time: "16:40 น.",
+        timestamp: "02 พ.ย. 2569 16:40 น.",
+        diff: [
+          { field: "สถานะบัญชี OTP", oldVal: "ถูกระงับชั่วคราว (Locked)", newVal: "พร้อมใช้งาน (Active)" },
+          { field: "จำนวนครั้งที่ผิด", oldVal: "5 ครั้ง", newVal: "0 ครั้ง" }
+        ],
+        comment: "เจ้าหน้าที่เปลี่ยนซิมการ์ดโทรศัพท์ และกดรหัสยืนยันผิดเกิน 5 ครั้ง ได้ยืนยันตัวตนเรียบร้อย"
+      },
+      {
+        id: "LOG-10485",
+        module: "cases",
+        moduleLabel: "จัดการ Case",
+        actionType: "update",
+        target: "Case #2026-BKK-93810",
+        actionTitle: "แก้ไขพิกัดเคส",
+        summaryChange: "ปรับหมุดตรงเสาไฟฟ้าซอยเพชรบุรี 7",
+        fullSummary: "ย้ายหมุดพิกัดให้ตรงกับเสาไฟฟ้าต้นที่ 4 หน้าปากซอยเพชรบุรี 7",
+        actorName: "สมชาย (Staff)",
+        actorEmail: "somchai.m@bkk.go.th",
+        actorRole: "STAFF",
+        actorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+        date: "02 พ.ย. 69",
+        time: "14:15 น.",
+        timestamp: "02 พ.ย. 2569 14:15 น.",
+        diff: [
+          { field: "พิกัดละติจูด/ลองจิจูด", oldVal: "13.7540, 100.5280", newVal: "13.7548, 100.5292" }
+        ],
+        comment: "ลงพื้นที่แล้วพบว่าประชาชนปักหมุดคลาดเคลื่อนไป 80 เมตร ได้ปรับหมุดให้ตรงกับเสาที่ชำรุดจริง"
+      },
+      {
+        id: "LOG-10484",
+        module: "organizations",
+        moduleLabel: "จัดการหน่วยงาน",
+        actionType: "delete",
+        target: "หน่วยเฉพาะกิจพิเศษ (ORG-1004)",
+        actionTitle: "ระงับการใช้งาน",
+        summaryChange: "Active ➔ ซ่อนไว้ก่อน (ปิดรับเรื่อง)",
+        fullSummary: "เปลี่ยนสถานะหน่วยงานเป็น 'ซ่อนไว้ก่อน (deleted_at)' เนื่องจากหมดภารกิจ",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "02 พ.ย. 69",
+        time: "11:00 น.",
+        timestamp: "02 พ.ย. 2569 11:00 น.",
+        diff: [
+          { field: "สถานะการเปิดใช้งาน", oldVal: "เปิดใช้งานปกติ (Active)", newVal: "ซ่อนไว้ก่อน (Deactivated)" }
+        ],
+        comment: "ยุบเลิกหน่วยงานชั่วคราวตามคำสั่งปิดภารกิจศูนย์ควบคุมโรคระบาดประจำเขต"
+      },
+      {
+        id: "LOG-10483",
+        module: "cases",
+        moduleLabel: "จัดการ Case",
+        actionType: "create",
+        target: "Case #2026-BKK-93774",
+        actionTitle: "สร้างเคสรับเรื่องแทน",
+        summaryChange: "เปิดเคสด่วน: ฝาท่อชำรุด",
+        fullSummary: "เจ้าหน้าที่เดินตรวจพื้นที่พบเห็นฝาท่อเหล็กแตกชำรุด จึงเปิดเคสแจ้งเรื่องเข้าระบบเอง",
+        actorName: "ประวิทย์ (Editor)",
+        actorEmail: "prawit.r@bkk.go.th",
+        actorRole: "EDITOR",
+        actorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80",
+        date: "01 พ.ย. 69",
+        time: "15:30 น.",
+        timestamp: "01 พ.ย. 2569 15:30 น.",
+        diff: [
+          { field: "ช่องทางแจ้งเรื่อง", oldVal: "(ไม่มี)", newVal: "เจ้าหน้าที่ตรวจพบเอง" },
+          { field: "ระดับความเร่งด่วน", oldVal: "(ไม่มี)", newVal: "ด่วนมาก" }
+        ],
+        comment: "พบฝาท่อแตกเกรงว่าประชาชนเดินตกท่อในเวลากลางคืน จึงประสานฝ่ายโยธาเข้ากั้นกรวยทันที"
+      }
+    ];
+
+    let currentModule = 'all';
+
+    const moduleConfig = {
+      all: { label: 'ทั้งหมด', icon: 'history', iconBg: 'bg-slate-100', iconColor: 'text-slate-700' },
+      organizations: { label: 'จัดการหน่วยงาน', icon: 'building-2', iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
+      cases: { label: 'จัดการ Case', icon: 'file-text', iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
+      users: { label: 'จัดการผู้ใช้ / สิทธิ์', icon: 'users', iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
+      security: { label: 'Reset OTP', icon: 'key-round', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600' }
+    };
+
+    const actionConfig = {
+      update: { label: 'แก้ไขข้อมูล', textColor: 'text-blue-600' },
+      status: { label: 'เปลี่ยนสถานะ', textColor: 'text-indigo-600' },
+      create: { label: 'สร้างใหม่', textColor: 'text-emerald-600' },
+      delete: { label: 'ระงับ/ลบ', textColor: 'text-rose-600' }
+    };
+
+    function renderTable(logs) {
+      const tbody = document.getElementById('logs-tbody');
+      const mobileList = document.getElementById('logs-mobile-list');
+      const emptyState = document.getElementById('logs-empty-state');
+      const countEl = document.getElementById('count-display');
+
+      if (countEl) countEl.textContent = logs.length;
+
+      if (!logs || logs.length === 0) {
+        if (tbody) tbody.innerHTML = '';
+        if (mobileList) mobileList.innerHTML = '';
+        if (emptyState) emptyState.classList.remove('hidden');
+        return;
+      }
+
+      if (emptyState) emptyState.classList.add('hidden');
+
+      // Desktop View
+      if (tbody) {
+        tbody.innerHTML = logs.map(log => {
+          const mConf = moduleConfig[log.module] || moduleConfig.all;
+          const actConf = actionConfig[log.actionType] || { label: log.actionTitle, textColor: 'text-slate-600' };
+          const displayName = log.actorName.replace(/\s*\([^)]*\)/, '');
+
+          // Beautiful Diff visualization
+          let diffHtml = '';
+          if (log.diff && log.diff.length > 0 && log.diff[0].oldVal && log.diff[0].oldVal !== '(ไม่มี)') {
+            const d = log.diff[0];
+            const moreTag = log.diff.length > 1
+              ? `<span class="text-[10px] text-slate-400 font-medium font-sans ml-1" title="${log.diff.slice(1).map(x => x.field).join(', ')}">(+${log.diff.length - 1})</span>`
+              : '';
+            diffHtml = `
+              <div class="inline-flex items-center gap-1.5 font-mono-code bg-slate-50 border border-slate-200/80 px-2.5 py-1 rounded-lg">
+                <span class="text-rose-600 line-through text-[11px] max-w-[120px] truncate" title="${d.oldVal}">${d.oldVal}</span>
+                <i data-lucide="arrow-right" class="w-3 h-3 text-slate-400 shrink-0"></i>
+                <span class="text-emerald-700 font-semibold text-[11px] max-w-[140px] truncate" title="${d.newVal}">${d.newVal}</span>
+                ${moreTag}
+              </div>
+            `;
+          } else {
+            diffHtml = `
+              <div class="inline-flex items-center gap-1.5 font-mono-code bg-slate-50 border border-slate-200/80 px-2.5 py-1 rounded-lg text-slate-700">
+                <i data-lucide="sparkles" class="w-3 h-3 text-amber-500 shrink-0"></i>
+                <span class="text-[11px] font-medium max-w-[240px] truncate">${log.summaryChange}</span>
+              </div>
+            `;
+          }
+
+          return `
+            <tr class="hover:bg-slate-50/80 transition-colors cursor-pointer group" onclick="openAuditModal('${log.id}')">
+              <!-- Date / Time -->
+              <td class="py-3.5 px-5">
+                <span class="font-bold text-slate-900 block text-xs leading-tight">${log.time}</span>
+                <span class="text-[11px] text-slate-400 block mt-0.5">${log.date}</span>
+              </td>
+
+              <!-- Module & Action (Clean Icon + Typography Hierarchy) -->
+              <td class="py-3.5 px-4">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-lg ${mConf.iconBg} ${mConf.iconColor} flex items-center justify-center shrink-0">
+                    <i data-lucide="${mConf.icon}" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <span class="text-xs font-semibold text-slate-800 block leading-tight truncate">${log.moduleLabel}</span>
+                    <span class="text-[11px] font-medium ${actConf.textColor} block leading-tight mt-0.5">${actConf.label}</span>
+                  </div>
+                </div>
+              </td>
+
+              <!-- Target -->
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors text-xs truncate max-w-[280px]">
+                  ${log.target}
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5 truncate max-w-[340px]">
+                  ${log.fullSummary}
+                </div>
+              </td>
+
+              <!-- Changes (Diff) -->
+              <td class="py-3.5 px-4">
+                ${diffHtml}
+              </td>
+
+              <!-- Actor (Clean Avatar + Name + Subtitle Role, no duplicate badges) -->
+              <td class="py-3.5 px-4">
+                <div class="flex items-center gap-2.5">
+                  <img src="${log.actorAvatar}" alt="${displayName}" class="w-7 h-7 rounded-full object-cover border border-slate-200/90 shadow-2xs shrink-0">
+                  <div class="min-w-0">
+                    <span class="text-slate-800 font-semibold truncate max-w-[120px] block leading-tight text-xs">${displayName}</span>
+                    <span class="text-[10.5px] text-slate-400 font-medium capitalize block mt-0.5">${log.actorRole.toLowerCase()}</span>
+                  </div>
+                </div>
+              </td>
+
+              <!-- View Action Button -->
+              <td class="py-3.5 px-5 text-right">
+                <button type="button" onclick="event.stopPropagation(); openAuditModal('${log.id}')"
+                  class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-900 hover:text-white text-slate-700 font-medium text-xs shadow-2xs group-hover:border-slate-300 transition-all cursor-pointer">
+                  <span>ดูบันทึก</span>
+                  <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-transform"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // Mobile View: Clean Separated Floating Cards (No Badge Clutter)
+      if (mobileList) {
+        mobileList.innerHTML = logs.map(log => {
+          const mConf = moduleConfig[log.module] || moduleConfig.all;
+          const actConf = actionConfig[log.actionType] || { label: log.actionTitle, textColor: 'text-slate-600' };
+          const displayName = log.actorName.replace(/\s*\([^)]*\)/, '');
+
+          return `
+            <div class="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all cursor-pointer space-y-3 active:scale-[0.99] group" onclick="openAuditModal('${log.id}')">
+              <!-- Row 1: Module & Action Breadcrumb + Time (Clean Typography, No Badges) -->
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <div class="w-6 h-6 rounded-md ${mConf.iconBg} ${mConf.iconColor} flex items-center justify-center shrink-0">
+                    <i data-lucide="${mConf.icon}" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <span class="text-xs font-semibold text-slate-700 truncate">${log.moduleLabel}</span>
+                  <span class="text-slate-300">•</span>
+                  <span class="text-xs font-semibold ${actConf.textColor} shrink-0">${actConf.label}</span>
+                </div>
+                <span class="text-[11px] text-slate-400 font-medium shrink-0 flex items-center gap-1">
+                  ${log.date} ${log.time}
+                </span>
+              </div>
+
+              <!-- Row 2: Target & Activity Description -->
+              <div>
+                <h3 class="text-[13px] font-bold text-slate-900 leading-snug break-words group-hover:text-blue-600 transition-colors">${log.target}</h3>
+                <p class="text-[11.5px] text-slate-500 mt-1 leading-relaxed">${log.fullSummary}</p>
+              </div>
+
+              <!-- Row 3: Diff Summary Box (Minimalist, No Redundant DIFF Tag) -->
+              <div class="p-2.5 rounded-xl bg-slate-50/90 border border-slate-200/80 font-mono-code text-[11px] text-slate-800 flex items-center gap-2">
+                <i data-lucide="arrow-right-left" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
+                <div class="min-w-0 truncate">
+                  ${log.diff && log.diff.length > 0 && log.diff[0].oldVal && log.diff[0].oldVal !== '(ไม่มี)'
+              ? `<span class="text-rose-600 line-through text-[11px]">${log.diff[0].oldVal}</span>
+                       <i data-lucide="arrow-right" class="w-3 h-3 text-slate-400 inline mx-1"></i>
+                       <span class="text-emerald-700 font-bold text-[11px]">${log.diff[0].newVal}</span>`
+              : `<span class="font-medium text-slate-700">${log.summaryChange}</span>`
+            }
+                </div>
+              </div>
+
+              <!-- Row 4: Actor & Action Cue (Clean Typography) -->
+              <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
+                <div class="flex items-center gap-2 min-w-0">
+                  <img src="${log.actorAvatar}" alt="${displayName}" class="w-6 h-6 rounded-full object-cover border border-slate-200 shrink-0">
+                  <span class="text-xs font-semibold text-slate-800 truncate">${displayName}</span>
+                  <span class="text-[11px] text-slate-400 font-medium shrink-0">(${log.actorRole.toLowerCase()})</span>
+                </div>
+                <div class="text-xs font-semibold text-blue-600 group-hover:text-blue-700 flex items-center gap-0.5 shrink-0">
+                  <span>ดูบันทึก</span>
+                  <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      lucide.createIcons();
+    }
+
+    function selectModule(key) {
+      currentModule = key;
+
+      // 1. Update Desktop Tabs
+      const tabIds = ['all', 'organizations', 'cases', 'users', 'security'];
+      tabIds.forEach(id => {
+        const btn = document.getElementById('btn-tab-' + id);
+        if (!btn) return;
+        if (id === key) {
+          btn.className = 'org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 hover:bg-slate-800 hover:text-white';
+        } else {
+          btn.className = 'org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5';
+        }
+      });
+
+      // 2. Update Mobile Tab Trigger and Menu Item (matching organizations.html)
+      const conf = moduleConfig[key] || moduleConfig.all;
+      const currentLabelEl = document.getElementById('mobile-tab-current-label');
+      const currentIconEl = document.getElementById('mobile-tab-current-icon');
+      if (currentLabelEl) currentLabelEl.textContent = conf.label;
+      if (currentIconEl) {
+        currentIconEl.className = `${conf.iconBg} flex items-center justify-center flex-shrink-0`;
+        currentIconEl.innerHTML = `<i data-lucide="${conf.icon}" class="w-4 h-4"></i>`;
+      }
+
+      document.querySelectorAll('.mobile-tab-item').forEach(item => {
+        const tab = item.getAttribute('data-tab');
+        if (tab === key) {
+          item.className = 'mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer';
+        } else {
+          item.className = 'mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer';
+        }
+      });
+
+      lucide.createIcons();
+      applyFilters();
+    }
+
+    function toggleMobileTabDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('mobile-tab-menu');
+      const chevron = document.getElementById('mobile-tab-chevron');
+      if (menu) {
+        menu.classList.toggle('hidden');
+        if (chevron) chevron.classList.toggle('rotate-180');
+      }
+    }
+
+    function selectMobileTab(moduleId) {
+      selectModule(moduleId);
+      const menu = document.getElementById('mobile-tab-menu');
+      const chevron = document.getElementById('mobile-tab-chevron');
+      if (menu) menu.classList.add('hidden');
+      if (chevron) chevron.classList.remove('rotate-180');
+    }
+
+    document.addEventListener('click', function (e) {
+      const wrapper = document.getElementById('mobile-tab-dropdown-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        const menu = document.getElementById('mobile-tab-menu');
+        const chevron = document.getElementById('mobile-tab-chevron');
+        if (menu) menu.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-180');
+      }
+    });
+
+    function applyFilters() {
+      const keyword = (document.getElementById('log-search-input')?.value || '').trim().toLowerCase();
+      const actionType = document.getElementById('action-type-filter')?.value || 'all';
+
+      const filtered = auditLogsData.filter(log => {
+        if (currentModule !== 'all' && log.module !== currentModule) return false;
+        if (actionType !== 'all' && log.actionType !== actionType) return false;
+        if (keyword) {
+          const matchTarget = log.target.toLowerCase().includes(keyword);
+          const matchSummary = log.summaryChange.toLowerCase().includes(keyword) || log.fullSummary.toLowerCase().includes(keyword);
+          const matchActor = log.actorName.toLowerCase().includes(keyword) || log.actorEmail.toLowerCase().includes(keyword);
+          const matchId = log.id.toLowerCase().includes(keyword);
+          if (!matchTarget && !matchSummary && !matchActor && !matchId) return false;
+        }
+        return true;
+      });
+
+      renderTable(filtered);
+    }
+
+    function resetFilters() {
+      const searchInput = document.getElementById('log-search-input');
+      const actionSelect = document.getElementById('action-type-filter');
+      if (searchInput) searchInput.value = '';
+      if (actionSelect) actionSelect.value = 'all';
+      selectModule('all');
+      showToast('ล้างการค้นหาแล้ว');
+    }
+
+    function openAuditModal(logId) {
+      const item = auditLogsData.find(l => l.id === logId);
+      if (!item) return;
+
+      document.getElementById('modal-module-badge').textContent = item.moduleLabel;
+      document.getElementById('modal-log-id').textContent = item.id;
+      document.getElementById('modal-target-object').textContent = item.target;
+      document.getElementById('modal-summary-text').textContent = item.fullSummary;
+      document.getElementById('modal-actor-name').textContent = item.actorName;
+      document.getElementById('modal-actor-email').textContent = item.actorEmail;
+      document.getElementById('modal-timestamp').textContent = item.timestamp;
+      document.getElementById('modal-log-comment').textContent = item.comment || '-';
+
+      const diffList = document.getElementById('modal-diff-list');
+      if (diffList) {
+        diffList.innerHTML = item.diff.map(d => `
+          <div class="p-2.5 bg-white text-xs space-y-1">
+            <span class="text-slate-500 font-semibold block">${d.field}</span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-700 line-through text-[11px] font-mono-code">${d.oldVal}</span>
+              <i data-lucide="arrow-right" class="w-3 h-3 text-slate-400"></i>
+              <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[11px] font-mono-code">${d.newVal}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const modal = document.getElementById('audit-detail-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closeAuditModal(e) {
+      const modal = document.getElementById('audit-detail-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function exportAuditLogs() {
+      showToast('กำลังดาวน์โหลดไฟล์ audit_logs.csv...');
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (!sidebar || !backdrop) return;
+      sidebar.classList.toggle('sidebar-open');
+      backdrop.classList.toggle('hidden');
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast-box');
+      const msgEl = document.getElementById('toast-message');
+      if (!toast || !msgEl) return;
+      msgEl.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2500);
+    }
+
+    // Init Render
+    renderTable(auditLogsData);
+  </script>
+</body>
+
+</html>
