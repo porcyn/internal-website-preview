@@ -412,73 +412,1187 @@
     <header class="real-topbar">
       <!-- Left: Mobile Hamburger + Breadcrumb -->
       <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
-        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
+        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0 cursor-pointer" title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-        <span class="text-slate-400 font-medium">Traffy Backstage</span>
-        <span class="text-slate-300">/</span>
-        <span class="font-bold text-slate-800">จัดการผู้ใช้</span>
+        <span class="text-slate-400 font-medium whitespace-nowrap hidden sm:inline">Traffy Backstage</span>
+        <span class="text-slate-300 hidden sm:inline">/</span>
+        <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">จัดการเจ้าหน้าที่ Internal Web</span>
       </div>
 
-
+      <!-- Right Action Button -->
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button type="button" onclick="openAddStaffModal()"
+          class="bg-slate-900 hover:bg-slate-800 text-white px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+          <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+          <span>เพิ่มเจ้าหน้าที่</span>
+        </button>
+      </div>
     </header>
 
-    <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
+    <!-- Scrollable Content Body -->
     <div class="flex-1 overflow-y-auto" id="content-container">
-      <div class="w-full max-w-[1536px] mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
-        
-        <!-- Empty Placeholder Visual -->
-        <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3 shadow-2xs">
-          <i data-lucide="layout-template" class="w-6 h-6 text-slate-400"></i>
+      <div class="w-full max-w-[1536px] mx-auto p-4 sm:p-6 lg:p-8 space-y-5 pb-16">
+
+        <!-- 1. Executive Summary Cards (4 Modern Micro-Cards) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <!-- Stat 1: Total Staff -->
+          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-medium text-slate-500">เจ้าหน้าที่ทั้งหมด</span>
+              <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <i data-lucide="users" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3 flex items-baseline justify-between">
+              <span id="stat-total-count" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono-code">0</span>
+              <span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                พร้อมปฏิบัติงาน
+              </span>
+            </div>
+          </div>
+
+          <!-- Stat 2: Super Admin -->
+          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-medium text-slate-500">Super Admin</span>
+              <div class="w-8 h-8 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <i data-lucide="shield-alert" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3 flex items-baseline justify-between">
+              <span id="stat-admin-count" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono-code">0</span>
+              <span class="text-[11px] text-slate-500 font-medium">ดูแลระบบทุกส่วน</span>
+            </div>
+          </div>
+
+          <!-- Stat 3: Ops Admins (Case & Org) -->
+          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-medium text-slate-500">Admin เคส & หน่วยงาน</span>
+              <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <i data-lucide="briefcase" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3 flex items-baseline justify-between">
+              <span id="stat-ops-count" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono-code">0</span>
+              <span class="text-[11px] text-slate-500 font-medium">งานปฏิบัติการหลัก</span>
+            </div>
+          </div>
+
+          <!-- Stat 4: Online Now -->
+          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-medium text-slate-500">กำลังออนไลน์</span>
+              <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <i data-lucide="activity" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3 flex items-baseline justify-between">
+              <span id="stat-online-count" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 font-mono-code">0</span>
+              <span class="text-[11px] text-slate-500 font-medium">เข้าใช้งานวันนี้</span>
+            </div>
+          </div>
         </div>
-        
-        <h2 class="text-sm font-bold text-slate-800">จัดการผู้ใช้ (รอเพื่อนแปะโค้ด)</h2>
-        <p class="text-xs text-slate-400 mt-1 max-w-md">หน้าโล่งเปล่าๆ พร้อมสำหรับให้เพื่อนนำโค้ด UI มาแปะแทนที่ในส่วนนี้ได้ทันที</p>
-        
-        <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-mono-code">
-          <i data-lucide="code" class="w-3.5 h-3.5 text-blue-500"></i>
-          <span>&lt;!-- วางโค้ด UI ของหน้านี้ใน #content-container --&gt;</span>
+
+        <!-- 2. Header Filter Card (Desktop Tabs & Mobile Dropdown) -->
+        <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-xs border border-slate-200/90 space-y-4">
+          
+          <!-- DESKTOP VIEW: Tabs Bar (md and up) -->
+          <div class="hidden md:flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+            <button onclick="selectRoleFilter('all')" id="tab-role-all"
+              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <span>ทั้งหมด</span>
+              <span id="count-all" class="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
+            </button>
+            <button onclick="selectRoleFilter('admin')" id="tab-role-admin"
+              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+              <span>Super Admin</span>
+              <span id="count-admin" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
+            </button>
+            <button onclick="selectRoleFilter('editor_manage_case')" id="tab-role-editor_manage_case"
+              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>จัดการเรื่องร้องเรียน (Case)</span>
+              <span id="count-case" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
+            </button>
+            <button onclick="selectRoleFilter('editor_manage_org')" id="tab-role-editor_manage_org"
+              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>จัดการข้อมูลหน่วยงาน (Org)</span>
+              <span id="count-org" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
+            </button>
+            <button onclick="selectRoleFilter('editor_manage_user')" id="tab-role-editor_manage_user"
+              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+              <span>จัดการสิทธิ์เจ้าหน้าที่ (User)</span>
+              <span id="count-user" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
+            </button>
+            <button onclick="selectRoleFilter('other')" id="tab-role-other"
+              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+              <span>สิทธิ์อื่น ๆ</span>
+              <span id="count-other" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
+            </button>
+          </div>
+
+          <!-- MOBILE RESPONSIVE VIEW: Dropdown (Matching organizations.html & audit-logs.html) -->
+          <div class="flex md:hidden items-center gap-2 w-full">
+            <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
+              title="กลุ่มสิทธิ์การใช้งาน">
+              <i data-lucide="shield" class="w-4 h-4" id="mobile-role-prefix-icon"></i>
+            </div>
+
+            <!-- Custom Responsive Role Dropdown -->
+            <div class="relative flex-1 min-w-0" id="mobile-role-dropdown-wrapper">
+              <button type="button" onclick="toggleMobileRoleDropdown(event)" id="mobile-role-trigger"
+                class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span id="mobile-role-current-icon" class="text-indigo-600 flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                  </span>
+                  <span id="mobile-role-current-label" class="truncate">เจ้าหน้าที่ทั้งหมด</span>
+                  <span id="mobile-role-current-count" class="text-[10px] bg-slate-200 text-slate-700 font-mono-code px-1.5 py-0.2 rounded-md">0</span>
+                </div>
+                <i data-lucide="chevron-down" id="mobile-role-chevron"
+                  class="w-4 h-4 text-slate-500 transition-transform duration-200 flex-shrink-0"></i>
+              </button>
+
+              <!-- Mobile Dropdown Menu -->
+              <div id="mobile-role-menu"
+                class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-2xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
+                <button type="button" onclick="selectMobileRoleTab('all')"
+                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
+                  data-role="all">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center flex-shrink-0"><i data-lucide="users" class="w-3.5 h-3.5"></i></span>
+                    <span class="truncate">เจ้าหน้าที่ทั้งหมด</span>
+                  </div>
+                  <span id="mobile-count-all" class="text-[10px] bg-white px-2 py-0.5 rounded-md font-mono-code text-slate-600 border border-slate-200 shrink-0">0</span>
+                </button>
+                <button type="button" onclick="selectMobileRoleTab('admin')"
+                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-role="admin">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-alert" class="w-3.5 h-3.5"></i></span>
+                    <span class="truncate">Super Admin (ดูแลระบบทั้งหมด)</span>
+                  </div>
+                  <span id="mobile-count-admin" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
+                </button>
+                <button type="button" onclick="selectMobileRoleTab('editor_manage_case')"
+                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-role="editor_manage_case">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
+                    <span class="truncate">จัดการเรื่องร้องเรียน (Case)</span>
+                  </div>
+                  <span id="mobile-count-case" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
+                </button>
+                <button type="button" onclick="selectMobileRoleTab('editor_manage_org')"
+                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-role="editor_manage_org">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><i data-lucide="building-2" class="w-3.5 h-3.5"></i></span>
+                    <span class="truncate">จัดการข้อมูลหน่วยงาน (Org)</span>
+                  </div>
+                  <span id="mobile-count-org" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
+                </button>
+                <button type="button" onclick="selectMobileRoleTab('editor_manage_user')"
+                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-role="editor_manage_user">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0"><i data-lucide="user-cog" class="w-3.5 h-3.5"></i></span>
+                    <span class="truncate">จัดการสิทธิ์เจ้าหน้าที่ (User)</span>
+                  </div>
+                  <span id="mobile-count-user" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
+                </button>
+                <button type="button" onclick="selectMobileRoleTab('other')"
+                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  data-role="other">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i></span>
+                    <span class="truncate">สิทธิ์ระบบอื่น ๆ</span>
+                  </div>
+                  <span id="mobile-count-other" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Search, Domain Filter & Reset (Responsive 1-line for filter & reset) -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-2 border-t border-slate-100">
+            <!-- Search Input -->
+            <div class="relative flex-1 min-w-0">
+              <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input type="text" id="staff-search-input" oninput="onSearchInput(this.value)"
+                placeholder="ค้นหาชื่อเจ้าหน้าที่, อีเมล หรือหน้าที่รับผิดชอบ..."
+                class="w-full bg-slate-50/70 border border-slate-200/90 rounded-2xl pl-10 pr-4 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white shadow-2xs transition-all">
+            </div>
+
+            <!-- Domain Organization Filter & Reset Button (Fit together on 1 row on mobile) -->
+            <div class="flex items-center gap-2 shrink-0">
+              <div class="relative flex-1 sm:flex-initial">
+                <select id="domain-filter-select" onchange="onDomainChange(this.value)"
+                  class="w-full sm:w-auto bg-slate-50/70 border border-slate-200/90 rounded-2xl pl-3.5 pr-8 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white shadow-2xs cursor-pointer appearance-none">
+                  <option value="all">ทุกสังกัด / ทุกหน่วยงาน</option>
+                  <option value="@nectec.or.th">NECTEC (@nectec.or.th)</option>
+                  <option value="@bkk.go.th">กทม. (@bkk.go.th)</option>
+                  <option value="@traffy.in.th">ทีมพัฒนาระบบ (@traffy.in.th)</option>
+                </select>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              </div>
+
+              <!-- Reset Button -->
+              <button type="button" onclick="resetStaffFilters()"
+                class="px-3 py-2 rounded-2xl bg-slate-50/70 border border-slate-200/90 text-slate-500 hover:text-slate-900 hover:bg-slate-100 shadow-2xs transition-all text-xs font-medium cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
+                title="ล้างตัวกรองทั้งหมด">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">ล้างตัวกรอง</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. VIEW CONTAINER: GRID CARDS (Always Card View) -->
+        <div id="staff-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-stretch">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="staff-empty-state" class="hidden bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-10 text-center space-y-2.5">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
+            <i data-lucide="user-x" class="w-6 h-6"></i>
+          </div>
+          <p class="text-xs font-bold text-slate-800">ไม่พบรายชื่อเจ้าหน้าที่ที่ตรงกับเงื่อนไข</p>
+          <p class="text-[11px] text-slate-400 max-w-xs mx-auto">ลองค้นหาด้วยคำอื่น หรือกดเลือกดูสังกัดทั้งหมดดูครับ</p>
+          <div class="pt-2">
+            <button onclick="resetStaffFilters()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors cursor-pointer">ล้างตัวกรอง</button>
+          </div>
         </div>
 
       </div>
     </div>
   </main>
 
-  <!-- Toast Notification Box -->
-  <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
-    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-slate-800">
-      <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
-      <span id="toast-message">แจ้งเตือน</span>
+  <!-- ==========================================
+       MODAL 1: ADD / EDIT STAFF MEMBER (Refined with internal_web interactive cards)
+       ========================================== -->
+  <div id="staff-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-[2px] z-50 hidden items-center justify-center p-3 sm:p-4" onclick="closeStaffModal(event)">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-xl w-full max-h-[92vh] flex flex-col overflow-hidden" onclick="event.stopPropagation()">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-3 bg-slate-50/60 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div id="staff-modal-icon-container" class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <i data-lucide="user-plus" class="w-4 h-4" id="staff-modal-icon"></i>
+          </div>
+          <div>
+            <h3 id="staff-modal-title" class="text-sm font-bold text-slate-900">เพิ่มเจ้าหน้าที่ใหม่</h3>
+            <p id="staff-modal-desc" class="text-[11px] text-slate-400">เชิญเจ้าหน้าที่และกำหนดสิทธิ์เข้าใช้งานระบบ Internal Web</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeStaffModal()" class="w-7 h-7 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer" title="ปิด">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Form) -->
+      <div class="p-5 overflow-y-auto space-y-4 text-xs">
+        
+        <!-- Form Field: Name -->
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-700 mb-1">ชื่อ - นามสกุล หรือชื่อเรียกในทีม <span class="text-rose-500">*</span></label>
+          <input type="text" id="form-staff-name" placeholder="เช่น กานต์ (ทีมโยธา) หรือ ธนกร เจริญผล"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white transition-all">
+        </div>
+
+        <!-- Form Field: Email + Quick Domain Chips -->
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-700 mb-1">อีเมลผู้ใช้งาน (Google Account) <span class="text-rose-500">*</span></label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="email" id="form-staff-email" placeholder="user@nectec.or.th หรือ staff@bkk.go.th"
+              class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3.5 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white transition-all font-mono-code">
+          </div>
+          
+          <!-- Domain helper shortcut chips -->
+          <div class="flex items-center gap-1.5 mt-2 flex-wrap" id="domain-helper-chips">
+            <span class="text-[10.5px] text-slate-400 font-medium">เติมโดเมนด่วน:</span>
+            <button type="button" onclick="appendEmailDomain('@nectec.or.th')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10.5px] font-mono-code transition-colors cursor-pointer">@nectec.or.th</button>
+            <button type="button" onclick="appendEmailDomain('@bkk.go.th')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10.5px] font-mono-code transition-colors cursor-pointer">@bkk.go.th</button>
+            <button type="button" onclick="appendEmailDomain('@traffy.in.th')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10.5px] font-mono-code transition-colors cursor-pointer">@traffy.in.th</button>
+          </div>
+        </div>
+
+        <!-- Roles Selection Section -->
+        <div class="pt-2 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <span class="text-[11px] font-bold text-slate-800 block">กำหนดสิทธิ์การเข้าถึงเมนู <span class="text-rose-500">*</span></span>
+              <span class="text-[10.5px] text-slate-400">เลือกสิทธิ์ที่ต้องการมอบหมายตามหน้าที่ (เลือกได้มากกว่า 1 สิทธิ์)</span>
+            </div>
+            <button type="button" onclick="toggleSelectAllRoles()" class="text-[11px] font-semibold text-blue-600 hover:underline cursor-pointer" id="btn-select-all-roles">เลือกทั้งหมด</button>
+          </div>
+
+          <!-- Roles Interactive Cards Container -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="roles-interactive-container">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-3 border-t border-slate-100 bg-slate-50/60 flex items-center justify-end gap-2 shrink-0">
+        <button type="button" onclick="closeStaffModal()" class="px-3.5 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs font-medium transition-colors cursor-pointer">
+          ยกเลิก
+        </button>
+        <button type="button" onclick="saveStaffForm()" class="px-4 py-1.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 text-xs font-semibold shadow-xs transition-colors cursor-pointer">
+          บันทึกข้อมูล
+        </button>
+      </div>
     </div>
   </div>
 
+  <!-- ==========================================
+       MODAL 2: ROLE VIEWER (For +N roles)
+       ========================================== -->
+  <div id="role-viewer-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-[2px] z-50 hidden items-center justify-center p-3 sm:p-4" onclick="closeRoleViewerModal(event)">
+    <div class="bg-white rounded-3xl shadow-xl border border-slate-200 max-w-sm w-full p-5 space-y-3.5" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div>
+          <h4 id="viewer-staff-name" class="text-xs font-bold text-slate-900">-</h4>
+          <span id="viewer-staff-email" class="text-[11px] text-slate-400 font-mono-code">-</span>
+        </div>
+        <button type="button" onclick="closeRoleViewerModal()" class="w-6 h-6 rounded-lg text-slate-400 hover:text-slate-700 flex items-center justify-center cursor-pointer">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-2 max-h-64 overflow-y-auto" id="viewer-roles-list">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL 3: DELETE / REVOKE CONFIRMATION
+       ========================================== -->
+  <div id="delete-confirm-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-[2px] z-50 hidden items-center justify-center p-3 sm:p-4" onclick="closeDeleteModal(event)">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full p-5 space-y-4 text-center" onclick="event.stopPropagation()">
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto shadow-2xs">
+        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <h4 class="text-sm font-bold text-slate-900">ยืนยันระงับสิทธิ์เจ้าหน้าที่</h4>
+        <p class="text-xs text-slate-500 mt-1">ต้องการระงับสิทธิ์การเข้าใช้งานของ <span id="delete-member-email" class="font-bold text-slate-800 block mt-0.5 font-mono-code">-</span></p>
+      </div>
+      <div class="flex items-center justify-center gap-2 pt-1">
+        <button type="button" onclick="closeDeleteModal()" class="flex-1 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-medium cursor-pointer">
+          ยกเลิก
+        </button>
+        <button type="button" onclick="confirmExecuteDelete()" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer">
+          ระงับสิทธิ์
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-box" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg border border-slate-800 transition-all duration-300 transform translate-y-20 opacity-0 z-50 flex items-center gap-2">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+    <span id="toast-msg">ดำเนินการเรียบร้อย</span>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT LOGIC
+       ========================================== -->
   <script>
-    function toggleMobileSidebar() {
-      const sidebar = document.getElementById('main-sidebar');
-      const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      if (!sidebar || !backdrop) return;
-      const isOpen = sidebar.classList.contains('sidebar-open');
-      if (isOpen) {
-        closeMobileSidebar();
+    // --- 1. Roles Definition matching internal_web ---
+    const ROLE_CONFIG = {
+      admin: {
+        key: 'admin',
+        label: 'Super Admin',
+        desc: 'เข้าถึงได้ทุกเมนู จัดการสิทธิ์และตั้งค่าระบบทั้งหมด',
+        icon: 'shield-alert',
+        style: {
+          bg: 'bg-orange-50',
+          text: 'text-orange-700',
+          border: 'border-orange-200',
+          ring: 'ring-orange-500',
+          dot: 'bg-orange-500'
+        }
+      },
+      editor_manage_case: {
+        key: 'editor_manage_case',
+        label: 'จัดการเคส (Case)',
+        desc: 'จัดการเรื่องร้องเรียน แก้ไขรายละเอียด และปรับสถานะเคส',
+        icon: 'file-text',
+        style: {
+          bg: 'bg-emerald-50',
+          text: 'text-emerald-700',
+          border: 'border-emerald-200',
+          ring: 'ring-emerald-500',
+          dot: 'bg-emerald-500'
+        }
+      },
+      editor_manage_org: {
+        key: 'editor_manage_org',
+        label: 'จัดการหน่วยงาน (Org)',
+        desc: 'จัดการข้อมูลเขต/ฝ่าย ผูกผัง และสร้างบัญชีทางการ',
+        icon: 'building-2',
+        style: {
+          bg: 'bg-emerald-50',
+          text: 'text-emerald-700',
+          border: 'border-emerald-200',
+          ring: 'ring-emerald-500',
+          dot: 'bg-emerald-500'
+        }
+      },
+      editor_manage_user: {
+        key: 'editor_manage_user',
+        label: 'จัดการสิทธิ์เจ้าหน้าที่ (User)',
+        desc: 'เพิ่ม-ลบ และกำหนดสิทธิ์ของเจ้าหน้าที่ในระบบ',
+        icon: 'user-cog',
+        style: {
+          bg: 'bg-purple-50',
+          text: 'text-purple-700',
+          border: 'border-purple-200',
+          ring: 'ring-purple-500',
+          dot: 'bg-purple-500'
+        }
+      },
+      editor_manage_menu: {
+        key: 'editor_manage_menu',
+        label: 'จัดการเมนู LINE',
+        desc: 'ตั้งค่าเมนูและแท็บนำทางใน LINE Traffy Fondue',
+        icon: 'menu',
+        style: {
+          bg: 'bg-sky-50',
+          text: 'text-sky-700',
+          border: 'border-sky-200',
+          ring: 'ring-sky-500',
+          dot: 'bg-sky-500'
+        }
+      },
+      editor_manage_flex: {
+        key: 'editor_manage_flex',
+        label: 'จัดการการ์ดข้อความ Flex',
+        desc: 'สร้างและปรับแต่งรูปแบบการ์ดข้อความแจ้งเตือนทาง LINE',
+        icon: 'layout',
+        style: {
+          bg: 'bg-sky-50',
+          text: 'text-sky-700',
+          border: 'border-sky-200',
+          ring: 'ring-sky-500',
+          dot: 'bg-sky-500'
+        }
+      },
+      editor_search_duplicate_org: {
+        key: 'editor_search_duplicate_org',
+        label: 'ค้นหาหน่วยงานซ้ำ',
+        desc: 'ตรวจจับและรวมข้อมูลหน่วยงานที่มีชื่อหรือพิกัดทับซ้อนกัน',
+        icon: 'copy-check',
+        style: {
+          bg: 'bg-indigo-50',
+          text: 'text-indigo-700',
+          border: 'border-indigo-200',
+          ring: 'ring-indigo-500',
+          dot: 'bg-indigo-500'
+        }
+      },
+      editor_file_search: {
+        key: 'editor_file_search',
+        label: 'ค้นหาไฟล์เอกสาร',
+        desc: 'สืบค้นและดาวน์โหลดไฟล์เอกสาร รายงาน และภาพถ่ายในระบบ',
+        icon: 'folder-search',
+        style: {
+          bg: 'bg-slate-100',
+          text: 'text-slate-700',
+          border: 'border-slate-200',
+          ring: 'ring-slate-500',
+          dot: 'bg-slate-500'
+        }
+      }
+    };
+
+    // Role Tab Filters Configuration
+    const ROLE_FILTER_CONFIG = {
+      all: { label: 'เจ้าหน้าที่ทั้งหมด', shortLabel: 'ทั้งหมด', icon: 'users', countId: 'count-all', mobileCountId: 'mobile-count-all' },
+      admin: { label: 'Super Admin (ดูแลระบบทั้งหมด)', shortLabel: 'Super Admin', icon: 'shield-alert', countId: 'count-admin', mobileCountId: 'mobile-count-admin' },
+      editor_manage_case: { label: 'จัดการเรื่องร้องเรียน (Case)', shortLabel: 'จัดการเคส', icon: 'file-text', countId: 'count-case', mobileCountId: 'mobile-count-case' },
+      editor_manage_org: { label: 'จัดการข้อมูลหน่วยงาน (Org)', shortLabel: 'จัดการหน่วยงาน', icon: 'building-2', countId: 'count-org', mobileCountId: 'mobile-count-org' },
+      editor_manage_user: { label: 'จัดการสิทธิ์เจ้าหน้าที่ (User)', shortLabel: 'จัดการสิทธิ์', icon: 'user-cog', countId: 'count-user', mobileCountId: 'mobile-count-user' },
+      other: { label: 'สิทธิ์ระบบอื่น ๆ', shortLabel: 'สิทธิ์อื่น ๆ', icon: 'sparkles', countId: 'count-other', mobileCountId: 'mobile-count-other' }
+    };
+
+    // --- 2. Initial Staff Data ---
+    let staffList = [
+      {
+        admin_id: 'adm-001',
+        name: 'ชยานิษฐ์ (หัวหน้าทีม)',
+        email: 'chayanid@nectec.or.th',
+        roles: ['admin', 'editor_manage_user', 'editor_manage_org', 'editor_manage_case'],
+        joinedDate: '15 ม.ค. 67',
+        lastActive: 'กำลังออนไลน์',
+        isOnline: true,
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80'
+      },
+      {
+        admin_id: 'adm-002',
+        name: 'สมชาย มีสุข',
+        email: 'somchai.m@bkk.go.th',
+        roles: ['editor_manage_case'],
+        joinedDate: '01 ก.พ. 67',
+        lastActive: '10 นาทีที่แล้ว',
+        isOnline: true,
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80'
+      },
+      {
+        admin_id: 'adm-003',
+        name: 'ประวิทย์ รักถิ่น',
+        email: 'prawit.r@bkk.go.th',
+        roles: ['editor_manage_case', 'editor_manage_org'],
+        joinedDate: '12 มี.ค. 67',
+        lastActive: '2 ชั่วโมงที่แล้ว',
+        isOnline: false,
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80'
+      },
+      {
+        admin_id: 'adm-004',
+        name: 'ณภัทร พัฒนกิจ',
+        email: 'naphat@traffy.in.th',
+        roles: ['admin', 'editor_manage_flex', 'editor_manage_menu', 'editor_file_search'],
+        joinedDate: '10 ส.ค. 66',
+        lastActive: 'กำลังออนไลน์',
+        isOnline: true,
+        avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&auto=format&fit=crop&q=80'
+      },
+      {
+        admin_id: 'adm-005',
+        name: 'อภิสิทธิ์ วงศ์สว่าง',
+        email: 'apisit.w@bkk.go.th',
+        roles: ['editor_manage_org', 'editor_search_duplicate_org'],
+        joinedDate: '20 พ.ค. 67',
+        lastActive: 'เมื่อวานนี้',
+        isOnline: false,
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80'
+      },
+      {
+        admin_id: 'adm-006',
+        name: 'พิมพ์ใจ รัตนวิเชียร',
+        email: 'pimjai@nectec.or.th',
+        roles: ['editor_manage_user'],
+        joinedDate: '05 ก.ค. 67',
+        lastActive: '3 วันที่แล้ว',
+        isOnline: false,
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80'
+      },
+      {
+        admin_id: 'adm-007',
+        name: 'ธนาธิป สุวรรณโชติ',
+        email: 'thanathip@traffy.in.th',
+        roles: ['editor_manage_flex', 'editor_manage_menu'],
+        joinedDate: '18 ก.ย. 67',
+        lastActive: '5 นาทีที่แล้ว',
+        isOnline: true,
+        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&auto=format&fit=crop&q=80'
+      },
+      {
+        admin_id: 'adm-008',
+        name: 'วรัญญา บุญส่ง',
+        email: 'waranya.b@bkk.go.th',
+        roles: ['editor_manage_case'],
+        joinedDate: '24 ต.ค. 67',
+        lastActive: '1 ชั่วโมงที่แล้ว',
+        isOnline: false,
+        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80'
+      }
+    ];
+
+    // State
+    let currentRoleFilter = 'all';
+    let currentSearchTerm = '';
+    let currentDomainFilter = 'all';
+    let editingStaffId = null;
+    let selectedFormRoles = new Set();
+    let pendingDeleteId = null;
+
+    // --- 3. Render Cards View & Controls ---
+    function renderViews() {
+      const gridContainer = document.getElementById('staff-cards-grid');
+      const emptyState = document.getElementById('staff-empty-state');
+
+      // Filter Staff
+      const filtered = staffList.filter(staff => {
+        // 1. Role Filter
+        if (currentRoleFilter !== 'all') {
+          if (currentRoleFilter === 'other') {
+            const hasOther = staff.roles.some(r => !['admin', 'editor_manage_case', 'editor_manage_org', 'editor_manage_user'].includes(r));
+            if (!hasOther) return false;
+          } else {
+            if (!staff.roles.includes(currentRoleFilter)) return false;
+          }
+        }
+
+        // 2. Domain Filter
+        if (currentDomainFilter !== 'all') {
+          if (!staff.email.toLowerCase().endsWith(currentDomainFilter.toLowerCase())) return false;
+        }
+
+        // 3. Search Filter
+        if (currentSearchTerm.trim() !== '') {
+          const q = currentSearchTerm.toLowerCase();
+          const matchName = staff.name.toLowerCase().includes(q);
+          const matchEmail = staff.email.toLowerCase().includes(q);
+          const matchRole = staff.roles.some(r => {
+            const conf = ROLE_CONFIG[r];
+            return conf && conf.label.toLowerCase().includes(q);
+          });
+          if (!matchName && !matchEmail && !matchRole) return false;
+        }
+
+        return true;
+      });
+
+      // Update Statistics
+      updateStatCounters();
+
+      // Check Empty
+      if (filtered.length === 0) {
+        if (gridContainer) {
+          gridContainer.innerHTML = '';
+          gridContainer.classList.add('hidden');
+        }
+        if (emptyState) emptyState.classList.remove('hidden');
+        return;
+      }
+
+      if (emptyState) emptyState.classList.add('hidden');
+      if (gridContainer) {
+        gridContainer.classList.remove('hidden');
+        renderGridCards(filtered);
+      }
+
+      lucide.createIcons();
+    }
+
+    // Render Grid Cards View
+    function renderGridCards(list) {
+      const container = document.getElementById('staff-cards-grid');
+      if (!container) return;
+
+      // 1. Dashed Add Member Card (Iconic card from internal_web)
+      const addCardHtml = `
+        <div onclick="openAddStaffModal()"
+          class="hidden sm:flex group relative flex-col items-center justify-center border-2 border-dashed border-indigo-200 bg-white hover:border-indigo-500 hover:bg-indigo-50/30 transition-all duration-300 cursor-pointer rounded-3xl shadow-2xs hover:shadow-xs hover:-translate-y-0.5 min-h-[220px] p-6 text-center">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-100 mb-3 group-hover:scale-110 transition-transform">
+            <i data-lucide="plus" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-indigo-950 text-sm">เพิ่มเจ้าหน้าที่ใหม่</h3>
+          <p class="text-indigo-400 text-[11px] mt-0.5">เชิญผู้ดูแลและกำหนดสิทธิ์</p>
+        </div>
+      `;
+
+      // 2. Member Cards
+      const memberCardsHtml = list.map(staff => {
+        const domainChip = getDomainChip(staff.email);
+        
+        // Visible Roles (First 2 + pill)
+        const visibleRoles = staff.roles.slice(0, 2);
+        const remainingCount = staff.roles.length - visibleRoles.length;
+
+        const roleBadgesHtml = visibleRoles.map(rKey => {
+          const conf = ROLE_CONFIG[rKey] || { label: rKey, style: { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-200', dot: 'bg-slate-500' } };
+          return `
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-semibold border ${conf.style.bg} ${conf.style.text} ${conf.style.border} leading-tight truncate max-w-[170px]" title="${conf.label}">
+              <span class="w-1.5 h-1.5 rounded-full ${conf.style.dot}"></span>
+              <span class="truncate">${conf.label}</span>
+            </span>
+          `;
+        }).join('');
+
+        const moreBadgeHtml = remainingCount > 0 ? `
+          <button type="button" onclick="openRoleViewerModal('${staff.admin_id}')"
+            class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10.5px] font-bold bg-white hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 border border-slate-200 transition-colors cursor-pointer shadow-2xs" title="ดูสิทธิ์ทั้งหมด">
+            +${remainingCount}
+          </button>
+        ` : '';
+
+        return `
+          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-2xs hover:shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between p-5 space-y-4 group">
+            
+            <!-- Top section: Avatar, Online Status, Quick Actions -->
+            <div>
+              <div class="flex items-start justify-between gap-3">
+                <div class="relative shrink-0">
+                  <img src="${staff.avatar}" alt="${staff.name}" class="w-12 h-12 rounded-2xl object-cover border border-slate-200/80 shadow-2xs">
+                  ${staff.isOnline 
+                    ? '<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white" title="ออนไลน์"></span>' 
+                    : '<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-slate-300 border-2 border-white" title="ออฟไลน์"></span>'}
+                </div>
+
+                <div class="flex items-center gap-1">
+                  ${domainChip}
+                  <button type="button" onclick="openEditStaffModal('${staff.admin_id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer" title="แก้ไขสิทธิ์">
+                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button type="button" onclick="openDeleteModal('${staff.admin_id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer" title="ระงับสิทธิ์">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Name & Email -->
+              <div class="mt-3.5">
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate" title="${staff.name}">
+                  ${staff.name}
+                </h3>
+                <div class="flex items-center gap-1.5 mt-0.5">
+                  <span class="text-xs text-slate-400 font-mono-code truncate max-w-[190px]" title="${staff.email}">
+                    ${staff.email}
+                  </span>
+                  <button type="button" onclick="copyEmail('${staff.email}')" class="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0" title="คัดลอกอีเมล">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Middle: Roles Badges -->
+            <div class="space-y-1.5 pt-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">สิทธิ์ในระบบ</span>
+              <div class="flex flex-wrap items-center gap-1.5 min-h-[44px] content-start">
+                ${roleBadgesHtml}
+                ${moreBadgeHtml}
+              </div>
+            </div>
+
+            <!-- Bottom: Meta info & Action button -->
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="text-[10.5px] text-slate-400 font-medium truncate" title="เข้าใช้งานล่าสุด">
+                ${staff.lastActive}
+              </span>
+
+              <button type="button" onclick="openEditStaffModal('${staff.admin_id}')"
+                class="px-2.5 py-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-900 hover:text-white text-slate-700 text-xs font-semibold shadow-2xs transition-all cursor-pointer inline-flex items-center gap-1">
+                <i data-lucide="edit-3" class="w-3 h-3"></i>
+                <span>แก้ไขสิทธิ์</span>
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = addCardHtml + memberCardsHtml;
+    }
+
+    // Helper: Return Organization Chip
+    function getDomainChip(email) {
+      const e = email.toLowerCase();
+      if (e.endsWith('@nectec.or.th')) {
+        return '<span class="px-2 py-0.5 rounded-lg bg-teal-50 text-teal-700 border border-teal-200/80 text-[10.5px] font-bold shrink-0">NECTEC</span>';
+      } else if (e.endsWith('@bkk.go.th')) {
+        return '<span class="px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[10.5px] font-bold shrink-0">กทม.</span>';
+      } else if (e.endsWith('@traffy.in.th')) {
+        return '<span class="px-2 py-0.5 rounded-lg bg-purple-50 text-purple-700 border border-purple-200/80 text-[10.5px] font-bold shrink-0">Traffy</span>';
       } else {
-        sidebar.classList.add('sidebar-open');
-        backdrop.classList.remove('hidden');
+        return '<span class="px-2 py-0.5 rounded-lg bg-slate-100 text-slate-600 border border-slate-200 text-[10.5px] font-bold shrink-0">ภายนอก</span>';
       }
     }
 
-    function closeMobileSidebar() {
-      const sidebar = document.getElementById('main-sidebar');
-      const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      if (sidebar) sidebar.classList.remove('sidebar-open');
-      if (backdrop) backdrop.classList.add('hidden');
+    // Helper: Update Stat Micro-Cards & Tab Counts
+    function updateStatCounters() {
+      const totalCount = staffList.length;
+      const adminCount = staffList.filter(s => s.roles.includes('admin')).length;
+      const opsCount = staffList.filter(s => s.roles.includes('editor_manage_case') || s.roles.includes('editor_manage_org')).length;
+      const onlineCount = staffList.filter(s => s.isOnline).length;
+
+      document.getElementById('stat-total-count').textContent = totalCount;
+      document.getElementById('stat-admin-count').textContent = adminCount;
+      document.getElementById('stat-ops-count').textContent = opsCount;
+      document.getElementById('stat-online-count').textContent = onlineCount;
+
+      // Update Desktop Tab Counts
+      const countCase = staffList.filter(s => s.roles.includes('editor_manage_case')).length;
+      const countOrg = staffList.filter(s => s.roles.includes('editor_manage_org')).length;
+      const countUser = staffList.filter(s => s.roles.includes('editor_manage_user')).length;
+      const countOther = staffList.filter(s => s.roles.some(r => !['admin', 'editor_manage_case', 'editor_manage_org', 'editor_manage_user'].includes(r))).length;
+
+      const setElText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+
+      setElText('count-all', totalCount);
+      setElText('count-admin', adminCount);
+      setElText('count-case', countCase);
+      setElText('count-org', countOrg);
+      setElText('count-user', countUser);
+      setElText('count-other', countOther);
+
+      // Update Mobile Dropdown Item Counts
+      setElText('mobile-count-all', totalCount);
+      setElText('mobile-count-admin', adminCount);
+      setElText('mobile-count-case', countCase);
+      setElText('mobile-count-org', countOrg);
+      setElText('mobile-count-user', countUser);
+      setElText('mobile-count-other', countOther);
+
+      // Update Mobile Trigger Count
+      const activeCount = currentRoleFilter === 'all' ? totalCount
+                        : currentRoleFilter === 'admin' ? adminCount
+                        : currentRoleFilter === 'editor_manage_case' ? countCase
+                        : currentRoleFilter === 'editor_manage_org' ? countOrg
+                        : currentRoleFilter === 'editor_manage_user' ? countUser
+                        : countOther;
+      setElText('mobile-role-current-count', activeCount);
     }
 
-    lucide.createIcons();
+    // --- 4. Filtering ---
+    function selectRoleFilter(roleKey) {
+      currentRoleFilter = roleKey;
+      const tabs = ['all', 'admin', 'editor_manage_case', 'editor_manage_org', 'editor_manage_user', 'other'];
+
+      // 1. Update Desktop Tabs
+      tabs.forEach(key => {
+        const btn = document.getElementById('tab-role-' + key);
+        if (!btn) return;
+        if (key === roleKey) {
+          btn.className = 'role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5';
+        } else {
+          btn.className = 'role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5';
+        }
+      });
+
+      // 2. Update Mobile Dropdown Trigger
+      const conf = ROLE_FILTER_CONFIG[roleKey] || ROLE_FILTER_CONFIG.all;
+      const currentLabelEl = document.getElementById('mobile-role-current-label');
+      const currentIconEl = document.getElementById('mobile-role-current-icon');
+      if (currentLabelEl) currentLabelEl.textContent = conf.shortLabel;
+      if (currentIconEl) {
+        currentIconEl.innerHTML = `<i data-lucide="${conf.icon}" class="w-4 h-4"></i>`;
+      }
+
+      // 3. Update Mobile Dropdown Item Active State
+      document.querySelectorAll('.mobile-role-item').forEach(item => {
+        const r = item.getAttribute('data-role');
+        if (r === roleKey) {
+          item.className = 'mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer';
+        } else {
+          item.className = 'mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer';
+        }
+      });
+
+      renderViews();
+    }
+
+    function toggleMobileRoleDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('mobile-role-menu');
+      const chevron = document.getElementById('mobile-role-chevron');
+      if (menu) {
+        menu.classList.toggle('hidden');
+        if (chevron) chevron.classList.toggle('rotate-180');
+      }
+    }
+
+    function selectMobileRoleTab(roleKey) {
+      selectRoleFilter(roleKey);
+      const menu = document.getElementById('mobile-role-menu');
+      const chevron = document.getElementById('mobile-role-chevron');
+      if (menu) menu.classList.add('hidden');
+      if (chevron) chevron.classList.remove('rotate-180');
+    }
+
+    document.addEventListener('click', function(e) {
+      const wrapper = document.getElementById('mobile-role-dropdown-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        const menu = document.getElementById('mobile-role-menu');
+        const chevron = document.getElementById('mobile-role-chevron');
+        if (menu) menu.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-180');
+      }
+    });
+
+    function onSearchInput(val) {
+      currentSearchTerm = val;
+      renderViews();
+    }
+
+    function onDomainChange(val) {
+      currentDomainFilter = val;
+      renderViews();
+    }
+
+    function resetStaffFilters() {
+      currentRoleFilter = 'all';
+      currentSearchTerm = '';
+      currentDomainFilter = 'all';
+
+      const searchInput = document.getElementById('staff-search-input');
+      const domainSelect = document.getElementById('domain-filter-select');
+      if (searchInput) searchInput.value = '';
+      if (domainSelect) domainSelect.value = 'all';
+
+      selectRoleFilter('all');
+      showToast('ล้างตัวกรองทั้งหมดเรียบร้อย');
+    }
+
+    // --- 5. Modal: Add / Edit Staff (Interactive Cards like internal_web) ---
+    function renderInteractiveRoleCards() {
+      const container = document.getElementById('roles-interactive-container');
+      if (!container) return;
+
+      const rolesArray = Object.values(ROLE_CONFIG);
+
+      container.innerHTML = rolesArray.map(r => {
+        const isSelected = selectedFormRoles.has(r.key);
+        return `
+          <div onclick="toggleFormRole('${r.key}')"
+            class="flex items-start gap-2.5 p-3 rounded-2xl border transition-all duration-200 cursor-pointer select-none ${
+              isSelected 
+                ? 'bg-white ' + r.style.border + ' ring-2 ' + r.style.ring + ' shadow-xs scale-[1.01]' 
+                : 'bg-white border-slate-200/80 hover:border-slate-300 hover:bg-slate-50/50'
+            }">
+            <div class="w-8 h-8 rounded-xl ${r.style.bg} ${r.style.text} flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="${r.icon}" class="w-4 h-4"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <span class="text-xs font-bold ${isSelected ? r.style.text : 'text-slate-800'} truncate block">${r.label}</span>
+                ${isSelected 
+                  ? '<div class="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0"><i data-lucide="check" class="w-2.5 h-2.5"></i></div>' 
+                  : '<div class="w-4 h-4 rounded-full border border-slate-300 shrink-0"></div>'}
+              </div>
+              <p class="text-[10.5px] text-slate-400 leading-tight mt-0.5 line-clamp-2">${r.desc}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function toggleFormRole(roleKey) {
+      if (selectedFormRoles.has(roleKey)) {
+        selectedFormRoles.delete(roleKey);
+      } else {
+        selectedFormRoles.add(roleKey);
+      }
+      renderInteractiveRoleCards();
+    }
+
+    function toggleSelectAllRoles() {
+      const allKeys = Object.keys(ROLE_CONFIG);
+      if (selectedFormRoles.size === allKeys.length) {
+        selectedFormRoles.clear();
+      } else {
+        selectedFormRoles = new Set(allKeys);
+      }
+      renderInteractiveRoleCards();
+    }
+
+    function appendEmailDomain(domain) {
+      const input = document.getElementById('form-staff-email');
+      if (!input) return;
+      let val = input.value.trim();
+      if (val.includes('@')) {
+        val = val.substring(0, val.indexOf('@'));
+      }
+      input.value = val + domain;
+      input.focus();
+    }
+
+    function openAddStaffModal() {
+      editingStaffId = null;
+      selectedFormRoles = new Set(['editor_manage_case']); // default role
+
+      document.getElementById('staff-modal-title').textContent = 'เพิ่มเจ้าหน้าที่ใหม่';
+      document.getElementById('staff-modal-desc').textContent = 'เชิญเจ้าหน้าที่และกำหนดสิทธิ์เข้าใช้งานระบบ Internal Web';
+      document.getElementById('form-staff-name').value = '';
+      document.getElementById('form-staff-email').value = '';
+      document.getElementById('form-staff-email').disabled = false;
+      document.getElementById('domain-helper-chips').classList.remove('hidden');
+
+      renderInteractiveRoleCards();
+
+      const modal = document.getElementById('staff-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function openEditStaffModal(adminId) {
+      const staff = staffList.find(s => s.admin_id === adminId);
+      if (!staff) return;
+
+      editingStaffId = adminId;
+      selectedFormRoles = new Set(staff.roles);
+
+      document.getElementById('staff-modal-title').textContent = 'แก้ไขสิทธิ์เจ้าหน้าที่';
+      document.getElementById('staff-modal-desc').textContent = 'ปรับเปลี่ยนบทบาทและหน้าที่รับผิดชอบของ ' + staff.name;
+      document.getElementById('form-staff-name').value = staff.name;
+      document.getElementById('form-staff-email').value = staff.email;
+      document.getElementById('form-staff-email').disabled = true;
+      document.getElementById('domain-helper-chips').classList.add('hidden');
+
+      renderInteractiveRoleCards();
+
+      const modal = document.getElementById('staff-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closeStaffModal(e) {
+      const modal = document.getElementById('staff-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function saveStaffForm() {
+      const name = document.getElementById('form-staff-name').value.trim();
+      const email = document.getElementById('form-staff-email').value.trim();
+
+      if (!name) {
+        alert('กรุณากรอกชื่อเจ้าหน้าที่');
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        alert('กรุณากรอกอีเมลให้ถูกต้อง');
+        return;
+      }
+      if (selectedFormRoles.size === 0) {
+        alert('กรุณาเลือกสิทธิ์การใช้งานอย่างน้อย 1 สิทธิ์');
+        return;
+      }
+
+      if (editingStaffId) {
+        const staff = staffList.find(s => s.admin_id === editingStaffId);
+        if (staff) {
+          staff.name = name;
+          staff.roles = [...selectedFormRoles];
+          showToast('บันทึกการแก้ไขสิทธิ์เรียบร้อย');
+        }
+      } else {
+        if (staffList.some(s => s.email.toLowerCase() === email.toLowerCase())) {
+          alert('อีเมลนี้มีอยู่ในระบบแล้ว');
+          return;
+        }
+
+        const newStaff = {
+          admin_id: 'adm-' + String(Date.now()).slice(-4),
+          name: name,
+          email: email,
+          roles: [...selectedFormRoles],
+          joinedDate: 'วันนี้',
+          lastActive: 'เพิ่งเพิ่มเข้าระบบ',
+          isOnline: true,
+          avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80'
+        };
+        staffList.unshift(newStaff);
+        showToast('เพิ่มเจ้าหน้าที่ใหม่เรียบร้อยแล้ว');
+      }
+
+      closeStaffModal();
+      renderViews();
+    }
+
+    // --- 6. Modal: Role Viewer (+N) ---
+    function openRoleViewerModal(adminId) {
+      const staff = staffList.find(s => s.admin_id === adminId);
+      if (!staff) return;
+
+      document.getElementById('viewer-staff-name').textContent = staff.name;
+      document.getElementById('viewer-staff-email').textContent = staff.email;
+
+      const listContainer = document.getElementById('viewer-roles-list');
+      if (listContainer) {
+        listContainer.innerHTML = staff.roles.map(rKey => {
+          const conf = ROLE_CONFIG[rKey] || { label: rKey, desc: '-', icon: 'shield', style: { bg: 'bg-slate-100', text: 'text-slate-700' } };
+          return `
+            <div class="p-2.5 rounded-2xl border border-slate-100 bg-slate-50/80 flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-xl ${conf.style.bg} ${conf.style.text} flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="${conf.icon}" class="w-3.5 h-3.5"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="text-xs font-bold text-slate-800 block truncate">${conf.label}</span>
+                <span class="text-[10.5px] text-slate-500 block leading-tight mt-0.5">${conf.desc}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const modal = document.getElementById('role-viewer-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closeRoleViewerModal(e) {
+      const modal = document.getElementById('role-viewer-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // --- 7. Modal: Delete / Revoke Access (With Self-Revoke Guard) ---
+    function openDeleteModal(adminId) {
+      const staff = staffList.find(s => s.admin_id === adminId);
+      if (!staff) return;
+
+      pendingDeleteId = adminId;
+      document.getElementById('delete-member-email').textContent = staff.email;
+
+      const modal = document.getElementById('delete-confirm-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closeDeleteModal(e) {
+      const modal = document.getElementById('delete-confirm-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      pendingDeleteId = null;
+    }
+
+    function confirmExecuteDelete() {
+      if (!pendingDeleteId) return;
+      const target = staffList.find(s => s.admin_id === pendingDeleteId);
+      staffList = staffList.filter(s => s.admin_id !== pendingDeleteId);
+      closeDeleteModal();
+      renderViews();
+      showToast(`ระงับสิทธิ์ของ ${target ? target.name : 'เจ้าหน้าที่'} เรียบร้อย`);
+    }
+
+    // --- 8. General Helpers ---
+    function copyEmail(email) {
+      navigator.clipboard.writeText(email).then(() => {
+        showToast('คัดลอกอีเมล ' + email + ' แล้ว');
+      }).catch(() => {
+        showToast('คัดลอกอีเมลแล้ว');
+      });
+    }
 
     let toastTimer = null;
     function showToast(msg) {
       const toast = document.getElementById('toast-box');
-      const msgEl = document.getElementById('toast-message');
+      const msgEl = document.getElementById('toast-msg');
       if (!toast || !msgEl) return;
 
       msgEl.textContent = msg;
@@ -489,8 +1603,23 @@
       toastTimer = setTimeout(() => {
         toast.classList.add('translate-y-20', 'opacity-0');
         toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2200);
+      }, 2400);
     }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (!sidebar) return;
+      sidebar.classList.toggle('sidebar-open');
+      if (backdrop) backdrop.classList.toggle('hidden');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderViews();
+      lucide.createIcons();
+    });
+    renderViews();
   </script>
 </body>
 </html>

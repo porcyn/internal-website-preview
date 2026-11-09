@@ -361,7 +361,7 @@
         </button>
         <span class="text-slate-400 font-medium whitespace-nowrap hidden sm:inline">ระบบ</span>
         <span class="text-slate-300 hidden sm:inline">/</span>
-        <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">ประวัติการแก้ไข</span>
+        <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">ประวัติการแก้ไขและเรื่องแจ้ง</span>
       </div>
 
       <!-- Right Topbar Action -->
@@ -370,7 +370,7 @@
           class="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs whitespace-nowrap shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1.5"
           title="ดาวน์โหลดประวัติเป็นไฟล์ CSV">
           <i data-lucide="download" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span>ส่งออก CSV</span>
+          <span>ดาวน์โหลด CSV</span>
         </button>
       </div>
     </header>
@@ -388,8 +388,8 @@
                 <i data-lucide="history" class="w-5 h-5 sm:w-6 sm:h-6"></i>
               </div>
               <div>
-                <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ประวัติการแก้ไขระบบ</h1>
-                <p class="text-xs text-slate-500 mt-0.5">บันทึกการเปลี่ยนแปลงและการดำเนินการย้อนหลังในแต่ละส่วนงาน</p>
+                <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ประวัติการแก้ไขและเรื่องแจ้ง</h1>
+                <p class="text-xs text-slate-500 mt-0.5">ดูประวัติการแก้ไขข้อมูล การเปลี่ยนสถานะ และบันทึกการทำงานย้อนหลัง</p>
               </div>
             </div>
 
@@ -418,12 +418,12 @@
             <button onclick="selectModule('cases')" id="btn-tab-cases"
               class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
               <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-              <span>จัดการ Case</span>
+              <span>เรื่องแจ้ง (Case)</span>
             </button>
             <button onclick="selectModule('users')" id="btn-tab-users"
               class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
               <i data-lucide="users" class="w-3.5 h-3.5"></i>
-              <span>จัดการผู้ใช้ / สิทธิ์</span>
+              <span>ผู้ใช้งาน & สิทธิ์</span>
             </button>
             <button onclick="selectModule('security')" id="btn-tab-security"
               class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
@@ -480,7 +480,7 @@
                     <span
                       class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
                         data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
-                    <span class="flex-1 truncate">จัดการ Case</span>
+                    <span class="flex-1 truncate">เรื่องแจ้ง (Case)</span>
                   </button>
                   <button type="button" onclick="selectMobileTab('users')"
                     class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
@@ -488,7 +488,7 @@
                     <span
                       class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
                         data-lucide="users" class="w-3.5 h-3.5"></i></span>
-                    <span class="flex-1 truncate">จัดการผู้ใช้ / สิทธิ์</span>
+                    <span class="flex-1 truncate">ผู้ใช้งาน & สิทธิ์</span>
                   </button>
                   <button type="button" onclick="selectMobileTab('security')"
                     class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
@@ -509,7 +509,7 @@
           <div class="relative flex-1">
             <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
             <input type="text" id="log-search-input" oninput="applyFilters()"
-              placeholder="ค้นหาชื่อหน่วยงาน, เลขเคส, ผู้แก้ไข หรือสิ่งที่เปลี่ยน..."
+              placeholder="ค้นหาชื่อเรื่อง, เลขเคส, หน่วยงาน หรือชื่อคนแก้ไข..."
               class="w-full bg-white border border-slate-200/90 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs transition-all">
           </div>
 
@@ -517,11 +517,11 @@
             <div class="relative flex-1 sm:flex-initial">
               <select id="action-type-filter" onchange="applyFilters()"
                 class="w-full sm:w-auto bg-white border border-slate-200/90 rounded-2xl pl-3.5 pr-8 py-2.5 text-xs font-medium text-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs cursor-pointer appearance-none">
-                <option value="all">ทุกประเภทการกระทำ</option>
-                <option value="update">แก้ไขข้อมูล (Update)</option>
-                <option value="status">เปลี่ยนสถานะ (Status)</option>
-                <option value="create">สร้างใหม่ (Create)</option>
-                <option value="delete">ลบ/ระงับ (Delete)</option>
+                <option value="all">ทุกกิจกรรม</option>
+                <option value="update">แก้ไขข้อมูล</option>
+                <option value="status">เปลี่ยนสถานะ</option>
+                <option value="create">สร้างใหม่</option>
+                <option value="delete">ลบ / ปิดใช้งาน</option>
               </select>
               <i data-lucide="chevron-down"
                 class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
@@ -543,10 +543,10 @@
                 class="bg-slate-50/90 text-slate-500 border-b border-slate-200/90 font-semibold text-[11px] uppercase tracking-wider">
                 <tr>
                   <th scope="col" class="py-3.5 px-5 w-32">วัน - เวลา</th>
-                  <th scope="col" class="py-3.5 px-4 w-44">ส่วนงาน & การดำเนินการ</th>
-                  <th scope="col" class="py-3.5 px-4">เป้าหมายที่แก้ไข</th>
-                  <th scope="col" class="py-3.5 px-4">ข้อมูลที่เปลี่ยนแปลง (Diff)</th>
-                  <th scope="col" class="py-3.5 px-4 w-44">ผู้ดำเนินการ</th>
+                  <th scope="col" class="py-3.5 px-4 w-44">หมวดหมู่ & กิจกรรม</th>
+                  <th scope="col" class="py-3.5 px-4">เรื่องที่แก้ไข</th>
+                  <th scope="col" class="py-3.5 px-4">สิ่งที่เปลี่ยน</th>
+                  <th scope="col" class="py-3.5 px-4 w-44">คนแก้ไข</th>
                   <th scope="col" class="py-3.5 px-5 text-right w-28">รายละเอียด</th>
                 </tr>
               </thead>
@@ -568,9 +568,8 @@
           <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
             <i data-lucide="search-x" class="w-6 h-6"></i>
           </div>
-          <p class="text-xs font-bold text-slate-800">ไม่พบรายการประวัติที่ตรงกับเงื่อนไข</p>
-          <p class="text-[11px] text-slate-400 max-w-xs mx-auto">ลองเปลี่ยนคำค้นหา
-            หรือเลือกหมวดหมู่อื่นเพื่อดูรายการเพิ่มเติม</p>
+          <p class="text-xs font-bold text-slate-800">ไม่พบประวัติที่ค้นหา</p>
+          <p class="text-[11px] text-slate-400 max-w-xs mx-auto">ลองพิมพ์ค้นหาคำใหม่ หรือกดเลือกดูหมวดหมู่อื่นดูครับ</p>
           <div class="pt-2">
             <button onclick="resetFilters()"
               class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors cursor-pointer">ล้างตัวกรอง</button>
@@ -595,7 +594,7 @@
         class="px-4 sm:px-5 py-3 sm:py-3.5 border-b border-slate-100 flex items-center justify-between gap-3 bg-slate-50/60 shrink-0">
         <div class="flex items-center gap-2 min-w-0">
           <span id="modal-module-badge"
-            class="px-2 py-0.5 rounded text-[10.5px] font-bold bg-slate-200 text-slate-700 shrink-0">ส่วนงาน</span>
+            class="px-2 py-0.5 rounded text-[10.5px] font-bold bg-slate-200 text-slate-700 shrink-0">หมวดหมู่</span>
           <span id="modal-log-id" class="text-xs font-mono-code font-bold text-slate-500">LOG-000</span>
         </div>
         <button type="button" onclick="closeAuditModal()"
@@ -608,7 +607,7 @@
       <!-- Modal Body -->
       <div class="p-4 sm:p-5 space-y-3.5 overflow-y-auto text-xs">
         <div>
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">เป้าหมายที่แก้ไข</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">เรื่อง / รายการที่แก้ไข</span>
           <h3 id="modal-target-object" class="text-sm font-bold text-slate-900 mt-0.5 leading-tight break-words">-</h3>
           <p id="modal-summary-text" class="text-xs text-slate-600 mt-1 leading-relaxed">-</p>
         </div>
@@ -616,12 +615,12 @@
         <!-- Meta Details (Actor & Timestamp) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-100">
           <div>
-            <span class="text-[10px] text-slate-400 font-medium block">ผู้ดำเนินการ</span>
+            <span class="text-[10px] text-slate-400 font-medium block">คนแก้ไข</span>
             <span id="modal-actor-name" class="font-bold text-slate-800 block truncate mt-0.5">-</span>
             <span id="modal-actor-email" class="text-[11px] text-slate-400 block truncate">-</span>
           </div>
           <div class="pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/60">
-            <span class="text-[10px] text-slate-400 font-medium block">เวลาที่บันทึก</span>
+            <span class="text-[10px] text-slate-400 font-medium block">วันและเวลาที่ทำรายการ</span>
             <span id="modal-timestamp" class="font-bold text-slate-800 block mt-0.5">-</span>
             <span id="modal-ip-address" class="text-[11px] font-mono-code text-slate-400 block">IP: 172.24.10.82</span>
           </div>
@@ -629,7 +628,7 @@
 
         <!-- Diff List -->
         <div class="space-y-1.5">
-          <span class="text-[11px] font-bold text-slate-700 block">รายละเอียดการเปลี่ยนค่า (Changes):</span>
+          <span class="text-[11px] font-bold text-slate-700 block">รายการที่แก้ไข:</span>
           <div class="border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100">
             <div id="modal-diff-list" class="divide-y divide-slate-100">
               <!-- Injected by JS -->
@@ -640,7 +639,7 @@
         <!-- Reason / Justification -->
         <div id="modal-comment-box"
           class="p-3 bg-slate-50 border border-slate-200/70 rounded-xl text-slate-600 space-y-0.5">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">เหตุผล</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">เหตุผล / บันทึกเพิ่มเติม</span>
           <p id="modal-log-comment" class="text-xs text-slate-700 leading-relaxed">-</p>
         </div>
       </div>
@@ -682,9 +681,9 @@
         moduleLabel: "จัดการหน่วยงาน",
         actionType: "update",
         target: "สำนักงานเขตราชเทวี (ORG-89241)",
-        actionTitle: "แก้ไขข้อมูลหน่วยงาน",
-        summaryChange: "รัศมี 0.01 กม. ➔ 3.50 กม.",
-        fullSummary: "แก้ไขรัศมีรับผิดชอบ และเบอร์โทรศัพท์สำนักงาน",
+        actionTitle: "แก้ไขข้อมูลเขต",
+        summaryChange: "ปรับรัศมี 0.01 กม. ➔ 3.50 กม.",
+        fullSummary: "อัปเดตเบอร์โทรสำนักงาน และขยายรัศมีดูแลพื้นที่",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
@@ -693,20 +692,20 @@
         time: "12:05 น.",
         timestamp: "03 พ.ย. 2569 12:05 น.",
         diff: [
-          { field: "รัศมีครอบคลุม (radius_km)", oldVal: "0.01 กม.", newVal: "3.50 กม." },
-          { field: "เบอร์โทรศัพท์สำนักงาน", oldVal: "02-245-xxxx", newVal: "02-245-9034" }
+          { field: "รัศมีครอบคลุมพื้นที่", oldVal: "0.01 กม.", newVal: "3.50 กม." },
+          { field: "เบอร์โทรสำนักงาน", oldVal: "02-245-xxxx", newVal: "02-245-9034" }
         ],
-        comment: "ปรับขยายรัศมีการดูแลพื้นที่ตามมติการจัดแบ่งเขตพื้นที่ กทม. ฉบับใหม่"
+        comment: "ขยายเขตรับผิดชอบเพิ่มขึ้นตามประกาศแบ่งเขตใหม่ของ กทม."
       },
       {
         id: "LOG-10491",
         module: "cases",
-        moduleLabel: "จัดการ Case",
+        moduleLabel: "เรื่องแจ้ง (Case)",
         actionType: "status",
         target: "Case #2026-BKK-94021",
         actionTitle: "เปลี่ยนสถานะเคส",
         summaryChange: "กำลังดำเนินการ ➔ เสร็จสิ้น",
-        fullSummary: "อัปเดตสถานะเป็น 'เสร็จสิ้น' พร้อมแนบภาพหลักฐานการขุดลอกท่อ 2 ภาพ",
+        fullSummary: "ปิดงานเคส: ขุดลอกท่อระบายน้ำเสร็จเรียบร้อย พร้อมแนบรูปหลังทำ 2 รูป",
         actorName: "สมชาย (Staff)",
         actorEmail: "somchai.m@bkk.go.th",
         actorRole: "STAFF",
@@ -715,20 +714,20 @@
         time: "11:48 น.",
         timestamp: "03 พ.ย. 2569 11:48 น.",
         diff: [
-          { field: "สถานะเคส (status)", oldVal: "กำลังดำเนินการ", newVal: "เสร็จสิ้น" },
+          { field: "สถานะเคส", oldVal: "กำลังดำเนินการ", newVal: "เสร็จสิ้น" },
           { field: "เจ้าหน้าที่ผู้รับผิดชอบ", oldVal: "ยังไม่ระบุ", newVal: "นายสมชาย มีสุข (ฝ่ายโยธา)" }
         ],
-        comment: "ดำเนินการลอกท่อระบายน้ำและดูดโคลนบริเวณจุดที่ได้รับแจ้งเรียบร้อย น้ำระบายได้ปกติ"
+        comment: "เจ้าหน้าที่ฝ่ายโยธาลงพื้นที่ลอกท่อและดูดเลนออกหมดแล้ว ตอนนี้น้ำระบายได้คล่องปกติ"
       },
       {
         id: "LOG-10490",
         module: "cases",
-        moduleLabel: "จัดการ Case",
+        moduleLabel: "เรื่องแจ้ง (Case)",
         actionType: "update",
         target: "Case #2026-BKK-93998",
-        actionTitle: "ส่งต่อเรื่อง (Forward)",
+        actionTitle: "ส่งต่อเรื่องให้ กฟน.",
         summaryChange: "ส่งต่อให้ การไฟฟ้านครหลวง (กฟน.)",
-        fullSummary: "ส่งต่อเรื่องร้องเรียนข้ามหน่วยงานไปยังการไฟฟ้านครหลวง",
+        fullSummary: "ส่งต่อเรื่องให้การไฟฟ้านครหลวง (กฟน.) เข้ามาดูหน้างาน",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
@@ -739,7 +738,7 @@
         diff: [
           { field: "หน่วยงานรับผิดชอบ", oldVal: "สำนักงานเขตราชเทวี", newVal: "การไฟฟ้านครหลวง (MEA)" }
         ],
-        comment: "สายสื่อสารของการไฟฟ้าและโทรคมนาคม จึงส่งต่อให้ กฟน. จัดระเบียบสาย"
+        comment: "หน้างานเป็นสายไฟและสายสื่อสารพันกันอันตราย อยู่นอกเหนืออำนาจเขต เลยส่งเรื่องต่อให้ กฟน. ช่วยจัดระเบียบสาย"
       },
       {
         id: "LOG-10489",
@@ -747,8 +746,8 @@
         moduleLabel: "จัดการหน่วยงาน",
         actionType: "create",
         target: "ศูนย์บริการสาธารณสุข 4 (ORG-89240)",
-        actionTitle: "สร้างหน่วยงานใหม่",
-        summaryChange: "ลงทะเบียนหน่วยงาน + กำหนดพิกัด",
+        actionTitle: "เพิ่มหน่วยงานใหม่",
+        summaryChange: "ลงทะเบียนหน่วยงาน + ปักหมุดพิกัด",
         fullSummary: "สร้างบัญชีทางการและกำหนดขอบเขตพื้นที่แขวงทุ่งพญาไท",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
@@ -761,17 +760,17 @@
           { field: "ชื่อหน่วยงาน", oldVal: "(ไม่มี)", newVal: "ศูนย์บริการสาธารณสุข 4 (คลินิกอบอุ่น)" },
           { field: "พิกัดสำนักงาน", oldVal: "(ไม่มี)", newVal: "13.7634, 100.5348" }
         ],
-        comment: "ลงทะเบียนบัญชีทางการเพื่อรองรับการรับเรื่องร้องเรียนด้านสาธารณสุขชุมชน"
+        comment: "เพิ่มหน่วยงานเข้าระบบ เตรียมเปิดรับเรื่องร้องเรียนจากชาวบ้านในพื้นที่"
       },
       {
         id: "LOG-10488",
         module: "users",
-        moduleLabel: "จัดการผู้ใช้",
+        moduleLabel: "ผู้ใช้งาน & สิทธิ์",
         actionType: "update",
         target: "witthawat.s@bkk.go.th",
-        actionTitle: "ปรับสิทธิ์ผู้ใช้งาน",
-        summaryChange: "Viewer ➔ EDITOR (เขตดินแดง)",
-        fullSummary: "เปลี่ยนบทบาทจาก Viewer เป็น EDITOR ในสังกัดสำนักงานเขตดินแดง",
+        actionTitle: "ปรับสิทธิ์การใช้งาน",
+        summaryChange: "Viewer ➔ ผู้แก้ไข (เขตดินแดง)",
+        fullSummary: "เปลี่ยนสิทธิ์จาก Viewer เป็นผู้แก้ไข (EDITOR) ประจำเขตดินแดง",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
@@ -780,10 +779,10 @@
         time: "09:20 น.",
         timestamp: "03 พ.ย. 2569 09:20 น.",
         diff: [
-          { field: "บทบาท (Role)", oldVal: "VIEWER", newVal: "EDITOR" },
-          { field: "หน่วยงานที่สังกัด", oldVal: "กลาง", newVal: "สำนักงานเขตดินแดง" }
+          { field: "สิทธิ์การใช้งาน", oldVal: "VIEWER (ดูได้อย่างเดียว)", newVal: "EDITOR (แก้ไขได้)" },
+          { field: "สังกัดเขต", oldVal: "ส่วนกลาง", newVal: "สำนักงานเขตดินแดง" }
         ],
-        comment: "แต่งตั้งเป็นผู้ประสานงานจัดการข้อร้องเรียนประจำเขตดินแดง"
+        comment: "ปรับสิทธิ์เป็นผู้ดูแล ให้ช่วยตอบและจัดการเรื่องร้องเรียนของเขตดินแดง"
       },
       {
         id: "LOG-10487",
@@ -791,9 +790,9 @@
         moduleLabel: "จัดการหน่วยงาน",
         actionType: "update",
         target: "ผังองค์กร: สำนักการระบายน้ำ",
-        actionTitle: "ปรับโครงสร้างผังองค์กร",
+        actionTitle: "ปรับสายงานในผัง",
         summaryChange: "ย้าย 'กลุ่มงานระบายน้ำ' ➔ 'กองระบบคลอง'",
-        fullSummary: "ย้ายกลุ่มงานระบบระบายน้ำฝั่งตะวันออกเข้าใต้กองระบบคลอง",
+        fullSummary: "ย้ายกลุ่มงานระบบระบายน้ำฝั่งตะวันออกไปสังกัดกองระบบคลอง",
         actorName: "ประวิทย์ (Editor)",
         actorEmail: "prawit.r@bkk.go.th",
         actorRole: "EDITOR",
@@ -802,9 +801,9 @@
         time: "08:35 น.",
         timestamp: "03 พ.ย. 2569 08:35 น.",
         diff: [
-          { field: "หน่วยงานต้นสังกัด", oldVal: "สำนักการระบายน้ำ", newVal: "กองระบบคลอง (Level 2)" }
+          { field: "หน่วยงานต้นสังกัด", oldVal: "สำนักการระบายน้ำ", newVal: "กองระบบคลอง" }
         ],
-        comment: "ปรับปรุงผังโครงสร้างสายบังคับบัญชาตามโครงสร้างใหม่ปี 2570"
+        comment: "ย้ายฝ่ายงานให้ตรงตามผังองค์กรใหม่ปี 2570"
       },
       {
         id: "LOG-10486",
@@ -812,9 +811,9 @@
         moduleLabel: "Reset OTP",
         actionType: "update",
         target: "เบอร์: 089-765-xxxx",
-        actionTitle: "Reset OTP & ปลดล็อก",
-        summaryChange: "Locked ➔ Active (ล้าง 5 ครั้ง)",
-        fullSummary: "ล้างสถานะการใส่รหัส OTP ผิดเกินจำนวนครั้ง และส่งรหัสยืนยันใหม่",
+        actionTitle: "ปลดล็อก OTP",
+        summaryChange: "โดนล็อก ➔ พร้อมใช้งาน (ล้างรอบผิด)",
+        fullSummary: "ล้างประวัติการใส่รหัสผิดเกิน 5 ครั้ง และส่งรหัส OTP ให้ใหม่",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
@@ -823,20 +822,20 @@
         time: "16:40 น.",
         timestamp: "02 พ.ย. 2569 16:40 น.",
         diff: [
-          { field: "สถานะบัญชี OTP", oldVal: "ถูกระงับชั่วคราว (Locked)", newVal: "พร้อมใช้งาน (Active)" },
-          { field: "จำนวนครั้งที่ผิด", oldVal: "5 ครั้ง", newVal: "0 ครั้ง" }
+          { field: "สถานะ OTP", oldVal: "โดนระงับชั่วคราว (Locked)", newVal: "พร้อมใช้งาน (Active)" },
+          { field: "จำนวนครั้งที่กดผิด", oldVal: "5 ครั้ง", newVal: "0 ครั้ง" }
         ],
-        comment: "เจ้าหน้าที่เปลี่ยนซิมการ์ดโทรศัพท์ และกดรหัสยืนยันผิดเกิน 5 ครั้ง ได้ยืนยันตัวตนเรียบร้อย"
+        comment: "เจ้าหน้าที่เพิ่งเปลี่ยนซิมเบอร์ใหม่แล้วกดรหัสผิดจนระบบล็อก ตรวจสอบตัวตนแล้วจึงปลดล็อกให้ใช้งานได้ต่อ"
       },
       {
         id: "LOG-10485",
         module: "cases",
-        moduleLabel: "จัดการ Case",
+        moduleLabel: "เรื่องแจ้ง (Case)",
         actionType: "update",
         target: "Case #2026-BKK-93810",
-        actionTitle: "แก้ไขพิกัดเคส",
-        summaryChange: "ปรับหมุดตรงเสาไฟฟ้าซอยเพชรบุรี 7",
-        fullSummary: "ย้ายหมุดพิกัดให้ตรงกับเสาไฟฟ้าต้นที่ 4 หน้าปากซอยเพชรบุรี 7",
+        actionTitle: "ย้ายหมุดพิกัด",
+        summaryChange: "ย้ายหมุดไปตรงเสาไฟ ปากซอยเพชรบุรี 7",
+        fullSummary: "ขยับหมุดพิกัดให้ตรงกับเสาไฟต้นที่มีปัญหาจริง ปากซอยเพชรบุรี 7",
         actorName: "สมชาย (Staff)",
         actorEmail: "somchai.m@bkk.go.th",
         actorRole: "STAFF",
@@ -845,9 +844,9 @@
         time: "14:15 น.",
         timestamp: "02 พ.ย. 2569 14:15 น.",
         diff: [
-          { field: "พิกัดละติจูด/ลองจิจูด", oldVal: "13.7540, 100.5280", newVal: "13.7548, 100.5292" }
+          { field: "พิกัดตำแหน่ง", oldVal: "13.7540, 100.5280", newVal: "13.7548, 100.5292" }
         ],
-        comment: "ลงพื้นที่แล้วพบว่าประชาชนปักหมุดคลาดเคลื่อนไป 80 เมตร ได้ปรับหมุดให้ตรงกับเสาที่ชำรุดจริง"
+        comment: "คนแจ้งปักหมุดคลาดไปประมาณ 80 เมตร ช่างไปดูหน้างานแล้วเลยย้ายหมุดให้ตรงกับเสาไฟที่สายไฟขาด"
       },
       {
         id: "LOG-10484",
@@ -855,9 +854,9 @@
         moduleLabel: "จัดการหน่วยงาน",
         actionType: "delete",
         target: "หน่วยเฉพาะกิจพิเศษ (ORG-1004)",
-        actionTitle: "ระงับการใช้งาน",
-        summaryChange: "Active ➔ ซ่อนไว้ก่อน (ปิดรับเรื่อง)",
-        fullSummary: "เปลี่ยนสถานะหน่วยงานเป็น 'ซ่อนไว้ก่อน (deleted_at)' เนื่องจากหมดภารกิจ",
+        actionTitle: "ปิดรับเรื่องชั่วคราว",
+        summaryChange: "เปิดรับเรื่อง ➔ ซ่อนไว้ก่อน",
+        fullSummary: "เปลี่ยนสถานะหน่วยงานเป็น 'ซ่อนไว้ก่อน' เนื่องจากจบภารกิจแล้ว",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
@@ -866,19 +865,19 @@
         time: "11:00 น.",
         timestamp: "02 พ.ย. 2569 11:00 น.",
         diff: [
-          { field: "สถานะการเปิดใช้งาน", oldVal: "เปิดใช้งานปกติ (Active)", newVal: "ซ่อนไว้ก่อน (Deactivated)" }
+          { field: "สถานะการรับเรื่อง", oldVal: "เปิดใช้งานปกติ", newVal: "ซ่อนไว้ก่อน (ปิดรับเรื่อง)" }
         ],
-        comment: "ยุบเลิกหน่วยงานชั่วคราวตามคำสั่งปิดภารกิจศูนย์ควบคุมโรคระบาดประจำเขต"
+        comment: "ปิดรับเรื่องชั่วคราวเนื่องจากเสร็จสิ้นภารกิจเฉพาะกิจแล้ว"
       },
       {
         id: "LOG-10483",
         module: "cases",
-        moduleLabel: "จัดการ Case",
+        moduleLabel: "เรื่องแจ้ง (Case)",
         actionType: "create",
         target: "Case #2026-BKK-93774",
-        actionTitle: "สร้างเคสรับเรื่องแทน",
-        summaryChange: "เปิดเคสด่วน: ฝาท่อชำรุด",
-        fullSummary: "เจ้าหน้าที่เดินตรวจพื้นที่พบเห็นฝาท่อเหล็กแตกชำรุด จึงเปิดเคสแจ้งเรื่องเข้าระบบเอง",
+        actionTitle: "เปิดเคสแทนประชาชน",
+        summaryChange: "แจ้งเคสด่วน: ฝาท่อชำรุด",
+        fullSummary: "เจ้าหน้าที่เดินตรวจพื้นที่แล้วเจอฝาท่อแตก เลยเปิดเรื่องแจ้งซ่อมด่วนเอง",
         actorName: "ประวิทย์ (Editor)",
         actorEmail: "prawit.r@bkk.go.th",
         actorRole: "EDITOR",
@@ -887,10 +886,10 @@
         time: "15:30 น.",
         timestamp: "01 พ.ย. 2569 15:30 น.",
         diff: [
-          { field: "ช่องทางแจ้งเรื่อง", oldVal: "(ไม่มี)", newVal: "เจ้าหน้าที่ตรวจพบเอง" },
-          { field: "ระดับความเร่งด่วน", oldVal: "(ไม่มี)", newVal: "ด่วนมาก" }
+          { field: "ช่องทางรับแจ้ง", oldVal: "(ไม่มี)", newVal: "เจ้าหน้าที่ตรวจพบเอง" },
+          { field: "ความเร่งด่วน", oldVal: "(ไม่มี)", newVal: "ด่วนมาก" }
         ],
-        comment: "พบฝาท่อแตกเกรงว่าประชาชนเดินตกท่อในเวลากลางคืน จึงประสานฝ่ายโยธาเข้ากั้นกรวยทันที"
+        comment: "ฝาท่อแตกกลัวคนเดินตกตอนกลางคืน เลยเอากรวยส้มมาตั้งเตือนไว้ก่อน แล้วประสานฝ่ายโยธามาเปลี่ยนฝาใหม่"
       }
     ];
 
@@ -899,8 +898,8 @@
     const moduleConfig = {
       all: { label: 'ทั้งหมด', icon: 'history', iconBg: 'bg-slate-100', iconColor: 'text-slate-700' },
       organizations: { label: 'จัดการหน่วยงาน', icon: 'building-2', iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
-      cases: { label: 'จัดการ Case', icon: 'file-text', iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
-      users: { label: 'จัดการผู้ใช้ / สิทธิ์', icon: 'users', iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
+      cases: { label: 'เรื่องแจ้ง (Case)', icon: 'file-text', iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
+      users: { label: 'ผู้ใช้งาน & สิทธิ์', icon: 'users', iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
       security: { label: 'Reset OTP', icon: 'key-round', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600' }
     };
 
@@ -908,7 +907,7 @@
       update: { label: 'แก้ไขข้อมูล', textColor: 'text-blue-600' },
       status: { label: 'เปลี่ยนสถานะ', textColor: 'text-indigo-600' },
       create: { label: 'สร้างใหม่', textColor: 'text-emerald-600' },
-      delete: { label: 'ระงับ/ลบ', textColor: 'text-rose-600' }
+      delete: { label: 'ลบ/ปิดใช้งาน', textColor: 'text-rose-600' }
     };
 
     function renderTable(logs) {
@@ -1010,7 +1009,7 @@
               <td class="py-3.5 px-5 text-right">
                 <button type="button" onclick="event.stopPropagation(); openAuditModal('${log.id}')"
                   class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-900 hover:text-white text-slate-700 font-medium text-xs shadow-2xs group-hover:border-slate-300 transition-all cursor-pointer">
-                  <span>ดูบันทึก</span>
+                  <span>ดูรายละเอียด</span>
                   <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-transform"></i>
                 </button>
               </td>
@@ -1070,7 +1069,7 @@
                   <span class="text-[11px] text-slate-400 font-medium shrink-0">(${log.actorRole.toLowerCase()})</span>
                 </div>
                 <div class="text-xs font-semibold text-blue-600 group-hover:text-blue-700 flex items-center gap-0.5 shrink-0">
-                  <span>ดูบันทึก</span>
+                  <span>ดูรายละเอียด</span>
                   <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                 </div>
               </div>
@@ -1174,7 +1173,7 @@
       if (searchInput) searchInput.value = '';
       if (actionSelect) actionSelect.value = 'all';
       selectModule('all');
-      showToast('ล้างการค้นหาแล้ว');
+      showToast('ล้างคำค้นหาเรียบร้อย');
     }
 
     function openAuditModal(logId) {
@@ -1221,7 +1220,7 @@
     }
 
     function exportAuditLogs() {
-      showToast('กำลังดาวน์โหลดไฟล์ audit_logs.csv...');
+      showToast('กำลังดาวน์โหลดไฟล์ประวัติ (.csv)...');
     }
 
     function toggleMobileSidebar() {
