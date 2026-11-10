@@ -2,8 +2,12 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=./bot-studio.html?tab=richmenu">
+  <script>
+    window.location.replace('./bot-studio.html?tab=richmenu');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>จัดการ Rich Menu - Traffy Fondue Internal Website</title>
+  <title>จัดการ Rich Menu (กำลังสลับไปยัง Bot Studio) - Traffy Fondue</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -13,6 +17,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Rich Menu Manager Studio Styles -->
+  <link rel="stylesheet" href="./css/richmenu-studio.css">
   
   <style>
     /*
@@ -252,7 +259,8 @@
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @media (max-width: 767px) {
+    /* Responsive Sidebar: Collapsed on Mobile & Tablet (< 1024px), Fixed on Desktop (>= 1024px) */
+    @media (max-width: 1023px) {
       .real-sidebar {
         position: fixed;
         top: 0;
@@ -273,13 +281,20 @@
         height: var(--topbar-height);
       }
     }
+
+    @media (min-width: 1024px) {
+      .real-sidebar {
+        position: relative;
+        transform: none !important;
+      }
+    }
   </style>
 </head>
 <body class="flex h-screen overflow-hidden text-xs">
 
   <!-- 1. SIDEBAR NAVIGATION -->
     <!-- Mobile Drawer Backdrop -->
-  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity duration-300"></div>
 
   <!-- Main Sidebar (Pinned on Desktop, Slide-over Drawer on Mobile) -->
   <aside id="main-sidebar" class="real-sidebar select-none">
@@ -297,11 +312,11 @@
           <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
         </div>
         <!-- Close button on Mobile Drawer -->
-        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
+        <button type="button" onclick="closeMobileSidebar()" class="lg:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
         <!-- Logout on Desktop -->
-        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+        <button type="button" class="hidden lg:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
@@ -343,7 +358,19 @@
         <span class="flex-1 truncate">Flex Message</span>
       </a>
 
-      <!-- 5. รายงานและสถิติ (Group with Children: สถิติ Rich Menu) -->
+      <!-- 5. จัดการ Rich Menu (ACTIVE) -->
+      <a href="./richmenu.html" class="real-menu-item mt-1 real-menu-active" aria-current="page">
+        <i data-lucide="layout-grid" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Rich Menu</span>
+      </a>
+
+      <!-- 6. จัดการแชทบอท (Bot Studio) -->
+      <a href="./bot-studio.html" class="real-menu-item mt-1">
+        <i data-lucide="bot" class="w-[18px] h-[18px] shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Line Bot</span>
+      </a>
+
+      <!-- 6. รายงานและสถิติ (Group with Children: สถิติ Rich Menu) -->
       <div class="flex flex-col gap-1 mt-1">
         <div class="real-group-header">
           <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
@@ -406,7 +433,7 @@
     <header class="real-topbar">
       <!-- Left: Mobile Hamburger + Breadcrumb -->
       <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
-        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
+        <button type="button" onclick="toggleMobileSidebar()" class="lg:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
         <span class="text-slate-400 font-medium">Traffy Backstage</span>
@@ -417,26 +444,30 @@
 
     </header>
 
-    <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
+    <!-- Scrollable Content Body -->
     <div class="flex-1 overflow-y-auto" id="content-container">
-      <div class="w-full max-w-[1536px] mx-auto min-h-[520px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200/90 rounded-2xl bg-white/60 p-8 text-center">
-        
-        <!-- Empty Placeholder Visual -->
-        <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3 shadow-2xs">
-          <i data-lucide="layout-template" class="w-6 h-6 text-slate-400"></i>
+      <div class="w-full max-w-[1536px] mx-auto p-4 sm:p-6 lg:p-8" id="tab-richmenu">
+        <!-- Content will be rendered dynamically by richmenu-manager.js -->
+        <div class="flex items-center justify-center p-12 text-slate-400">
+          <i data-lucide="loader-2" class="w-6 h-6 animate-spin mr-2"></i>
+          <span>กำลังโหลดระบบจัดการ Rich Menu...</span>
         </div>
-        
-        <h2 class="text-sm font-bold text-slate-800">จัดการ Rich Menu (รอเพื่อนแปะโค้ด)</h2>
-        <p class="text-xs text-slate-400 mt-1 max-w-md">หน้าโล่งเปล่าๆ พร้อมสำหรับให้เพื่อนนำโค้ด UI มาแปะแทนที่ในส่วนนี้ได้ทันที</p>
-        
-        <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-mono-code">
-          <i data-lucide="code" class="w-3.5 h-3.5 text-blue-500"></i>
-          <span>&lt;!-- วางโค้ด UI ของหน้านี้ใน #content-container --&gt;</span>
-        </div>
-
       </div>
     </div>
   </main>
+
+  <!-- Modal for JSON / Payload Preview -->
+  <div id="payload-modal" class="modal-overlay hidden" onclick="if(event.target === this) window.app.hidePayloadModal()">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h4 id="payload-modal-title" class="text-sm font-bold text-slate-800">Datastore JSON</h4>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="window.app.hidePayloadModal()">✕ ปิด</button>
+      </div>
+      <div class="modal-body">
+        <pre class="code-preview" id="payload-modal-code"></pre>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Notification Box -->
   <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
@@ -446,7 +477,49 @@
     </div>
   </div>
 
+  <!-- Load Rich Menu Data & Manager Scripts -->
+  <script src="./js/richmenu-mock-data.js"></script>
+  <script src="./js/richmenu-manager.js"></script>
+
   <script>
+    // Provide window.app adapter for richmenu-manager
+    window.app = {
+      showToast(msg, type = 'info') {
+        const toast = document.getElementById('toast-box');
+        const msgEl = document.getElementById('toast-message');
+        if (!toast || !msgEl) return;
+
+        msgEl.textContent = msg;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        if (window.toastTimer) clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 2200);
+      },
+      showPayloadModal(title, jsonString) {
+        const modal = document.getElementById('payload-modal');
+        const titleEl = document.getElementById('payload-modal-title');
+        const codeEl = document.getElementById('payload-modal-code');
+        if (!modal || !titleEl || !codeEl) return;
+
+        titleEl.textContent = title;
+        try {
+          const parsed = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
+          codeEl.textContent = JSON.stringify(parsed, null, 2);
+        } catch (e) {
+          codeEl.textContent = String(jsonString);
+        }
+        modal.classList.remove('hidden');
+      },
+      hidePayloadModal() {
+        const modal = document.getElementById('payload-modal');
+        if (modal) modal.classList.add('hidden');
+      }
+    };
+
     function toggleMobileSidebar() {
       const sidebar = document.getElementById('main-sidebar');
       const backdrop = document.getElementById('mobile-sidebar-backdrop');
@@ -467,24 +540,15 @@
       if (backdrop) backdrop.classList.add('hidden');
     }
 
-    lucide.createIcons();
-
-    let toastTimer = null;
-    function showToast(msg) {
-      const toast = document.getElementById('toast-box');
-      const msgEl = document.getElementById('toast-message');
-      if (!toast || !msgEl) return;
-
-      msgEl.textContent = msg;
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-
-      if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-        toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2200);
-    }
+    // Initialize Rich Menu Manager
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      if (window.richMenuManager) {
+        window.richMenuManager.init();
+        window.richMenuManager.renderTab();
+        lucide.createIcons();
+      }
+    });
   </script>
 </body>
 </html>

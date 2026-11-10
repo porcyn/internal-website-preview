@@ -1,0 +1,250 @@
+/* ============================================================
+   Traffy Fondue Bot Studio — Visual Flow Graph Canvas
+   State Machine Visualizer, Node Cards, Bezier Edges & Controls
+   ============================================================ */
+
+.flow-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-base);
+  background-image: radial-gradient(var(--border-subtle) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Graph Canvas Area */
+.graph-canvas-wrapper {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.graph-canvas-wrapper.panning {
+  cursor: grabbing;
+}
+
+#graph-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#graph-nodes-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  pointer-events: auto;
+  z-index: 20;
+}
+
+/* Edge Paths */
+.graph-edge {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 2;
+  transition: stroke 0.2s, stroke-width 0.2s;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.graph-edge:hover {
+  stroke: var(--traffy-green);
+  stroke-width: 3.5;
+}
+
+.graph-edge.active {
+  stroke: var(--traffy-green);
+  stroke-width: 3;
+  stroke-dasharray: 6 3;
+  animation: dashAnimation 1s linear infinite;
+}
+
+.graph-edge.duplicate-edge {
+  stroke: var(--warning);
+  stroke-width: 2.5;
+}
+
+@keyframes dashAnimation {
+  from { stroke-dashoffset: 18; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* State Node Card */
+.state-node {
+  position: absolute;
+  width: 240px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform 0.1s ease;
+}
+
+.state-node:hover {
+  border-color: var(--traffy-green);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+  transform: translateY(-2px);
+}
+
+.state-node.selected {
+  border-color: var(--traffy-green);
+  box-shadow: 0 0 0 2px var(--traffy-green), 0 8px 24px var(--traffy-green-glow);
+}
+
+.state-node.inactive-node {
+  opacity: 0.55;
+  filter: grayscale(0.5);
+  border-style: dashed;
+}
+
+.state-node.inactive-node:hover {
+  opacity: 0.9;
+  filter: grayscale(0.1);
+}
+
+.state-node.duplicate-warning {
+  border-color: var(--warning);
+  box-shadow: 0 0 0 2px var(--warning), 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.state-node.entry-node {
+  border-left: 4px solid var(--traffy-cyan);
+}
+
+.state-node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.state-node-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.state-node-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  word-break: break-word;
+  margin-bottom: 6px;
+}
+
+.state-node-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-surface-elevated);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+
+.state-node-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.action-badge-pill {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 10.5px;
+}
+
+/* Floating Graph Toolbar */
+.graph-toolbar {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+}
+
+.graph-stats-chip {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border-subtle);
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* State Inspector Drawer */
+.state-inspector-drawer {
+  width: 360px;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: var(--shadow-lg);
+  z-index: 60;
+  transition: transform var(--transition-normal);
+}
+
+.state-inspector-drawer.collapsed {
+  transform: translateX(100%);
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.drawer-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.drawer-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  background: var(--bg-glass);
+}
