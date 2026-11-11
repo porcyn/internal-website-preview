@@ -96,113 +96,484 @@
       background: #cbd5e1;
     }
 
-    /* REAL PROJECT SIDEBAR STYLES */
-    .real-sidebar {
-      width: var(--sidebar-width);
-      height: 100vh;
-      background: #ffffff;
-      border-right: 1px solid #e2e8f0;
+        /* ========================================================
+       INTERNAL-WEBSITE SIDEBAR EXACT REPLICA
+       Styles extracted directly from internal-website:
+       - Sidebar.module.css
+       - UserCard.module.css
+       - SidebarItem.module.css
+       ======================================================== */
+
+    .real-desktop-sidebar {
+      display: none;
+    }
+
+    @media (min-width: 1024px) {
+      .real-desktop-sidebar {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        height: 100vh;
+        height: 100dvh;
+        background: #ffffff;
+        border-right: 1px solid #e2e8f0;
+        z-index: 40;
+        transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), padding 0.25s ease;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        user-select: none;
+        flex-shrink: 0;
+      }
+
+      .real-desktop-sidebar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sidebar-expanded {
+        width: 260px;
+        padding: 14px 12px 24px;
+        gap: 12px;
+      }
+
+      .sidebar-collapsed {
+        width: 72px;
+        padding: 14px 8px 24px;
+        gap: 12px;
+      }
+    }
+
+    /* Toggle Header */
+    .toggle-header {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px 12px;
-      overflow-y: auto;
-      flex-shrink: 0;
+      align-items: center;
+      width: 100%;
     }
-    .real-user-card {
-      padding: 12px;
+    .toggle-end {
+      justify-content: flex-end;
+    }
+    .toggle-center {
+      justify-content: center;
+    }
+    .toggle-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .toggle-btn:hover {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    .toggle-svg {
+      width: 17px;
+      height: 17px;
+      transition: transform 0.25s ease;
+    }
+    .toggle-svg-rotated {
+      transform: rotate(180deg);
+    }
+
+    /* UserCard Exact */
+    .user-card {
+      padding: 11px 12px;
       border: 1px solid #e2e8f0;
-      border-radius: 12px;
+      border-radius: 10px;
       background: #f8fafc;
+      transition: all 0.2s ease;
+      user-select: none;
     }
-    .real-menu-item {
+    .user-card-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 9px 12px;
-      border-radius: 10px;
-      color: #334155;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-      cursor: pointer;
     }
-    .real-menu-item:hover {
+    .user-card-avatar {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #e2e8f0;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    .user-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .user-card-name {
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #0f172a;
+      font-size: 13.5px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .user-card-email {
+      margin: 1px 0 0 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #64748b;
+      font-size: 11.5px;
+    }
+    .user-card-logout {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: #ef4444;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .user-card-logout:hover {
+      background: #fef2f2;
+      color: #dc2626;
+      transform: scale(1.05);
+    }
+    .user-card-close-mobile {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .user-card-close-mobile:hover {
       background: #f1f5f9;
       color: #0f172a;
     }
-    .real-menu-active {
-      background: #111827 !important;
-      color: #ffffff !important;
+    .user-card-roles {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
     }
-    .real-group-header {
+    .user-card-role {
+      padding: 2.5px 8px;
+      border-radius: 999px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      border: 1px solid;
+    }
+    .user-card-role-admin {
+      border-color: #fed7aa;
+      background: #fff7ed;
+      color: #ea580c;
+    }
+    .user-card-role-editor {
+      border-color: #a7f3d0;
+      background: #ecfdf5;
+      color: #059669;
+    }
+    .user-card-role-other {
+      border-color: #bae6fd;
+      background: #f0f9ff;
+      color: #0284c7;
+    }
+
+    /* Collapsed User Card */
+    .user-card-collapsed {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+      width: 100%;
+    }
+    .collapsed-avatar-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .collapsed-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .collapsed-logout-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: #ef4444;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .collapsed-logout-btn:hover {
+      background: #fef2f2;
+      color: #dc2626;
+      transform: scale(1.05);
+    }
+
+    /* Nav List & Items */
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
+    .nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-block: 2px;
+    }
+    .nav-group-header {
       display: flex;
       align-items: center;
       gap: 10px;
       margin: 0;
-      padding: 9px 12px;
-      border-radius: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
       color: #334155;
       font-size: 14px;
       font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
-    .real-children-group {
+    .nav-group-header:hover {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .nav-group-header.group-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+    .nav-group-header-collapsed {
+      justify-content: center;
+      padding: 10px 0;
+      gap: 0;
+    }
+    .nav-group-label {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .nav-chevron {
+      transition: transform 0.2s ease;
+      color: #64748b;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .nav-chevron-open {
+      transform: rotate(180deg);
+    }
+    .nav-children {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      margin-left: 20px;
+      margin-left: 18px;
       padding-left: 8px;
       border-left: 1px solid #e2e8f0;
     }
-    .real-nested-item {
+    .nav-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 7px 12px;
-      font-size: 13px;
-      border-radius: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
       color: #334155;
+      font-size: 14px;
+      font-weight: 500;
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
-      cursor: pointer;
     }
-    .real-nested-item:hover {
+    .nav-item:hover {
       background: #f1f5f9;
       color: #0f172a;
     }
-    .real-action-group {
+    .nav-item.active {
+      background: #111827 !important;
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+    .nav-item.active i,
+    .nav-item.active svg {
+      color: #ffffff !important;
+    }
+    .nav-item-collapsed {
+      justify-content: center;
+      padding: 10px 0;
+      gap: 0;
+    }
+    .nav-item-label {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .nav-nested-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      font-size: 13px;
+      border-radius: 8px;
+      color: #475569;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-nested-item::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #94a3b8;
+      flex-shrink: 0;
+    }
+    .nav-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .nav-nested-item.active {
+      background: #52525b !important;
+      color: #ffffff !important;
+    }
+    .nav-nested-item.active::before {
+      background: #ffffff;
+    }
+    .nav-action-group {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       margin-left: auto;
       flex-shrink: 0;
     }
-    .real-action-badge {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+    .nav-action-badge {
+      display: inline-flex;
+      align-items: center;
       padding: 1px 4px;
       border-radius: 4px;
-      background: #e2e8f0;
-      color: #475569;
-      line-height: 1.2;
-      transition: background 0.15s, color 0.15s;
+      background: #e0f2fe;
+      color: #0284c7;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      line-height: 1.3;
       cursor: pointer;
     }
-    .real-action-badge:hover {
-      background: #cbd5e1;
-      color: #0f172a;
-    }
-    .real-nested-item.real-nested-active .real-action-badge,
-    .real-nested-item.real-menu-active .real-action-badge {
-      background: rgba(255, 255, 255, 0.22);
+    .nav-action-badge:hover {
+      background: #0284c7;
       color: #ffffff;
+      transform: translateY(-1px);
     }
-    .real-nested-item.real-nested-active .real-action-badge:hover,
-    .real-nested-item.real-menu-active .real-action-badge:hover {
-      background: #ffffff;
-      color: #0f172a;
+
+    /* Mobile Drawer Exact (< 1024px) */
+    .mobile-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-drawer {
+      display: none;
+    }
+    @media (max-width: 1023px) {
+      .mobile-drawer {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 60;
+        width: 280px;
+        max-width: 86vw;
+        height: 100vh;
+        height: 100dvh;
+        background: #ffffff;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+        transform: translateX(-100%);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        border-right: 1px solid #e2e8f0;
+        padding: 16px 12px 24px;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 14px;
+        user-select: none;
+      }
+      .mobile-drawer::-webkit-scrollbar {
+        display: none;
+      }
+      .mobile-drawer.open {
+        transform: translateX(0) !important;
+      }
+      .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .mobile-header-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+      }
+      .mobile-close-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 6px;
+        border: none;
+        background: transparent;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .mobile-close-btn:hover {
+        background-color: #f1f5f9;
+        color: #0f172a;
+      }
     }
 
     /* REAL PROJECT TOPBAR STYLES */
@@ -211,202 +582,310 @@
       background: #ffffff;
       border-bottom: 1px solid #e2e8f0;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      padding: 0 var(--page-padding);
+      padding: 0 16px;
       flex-shrink: 0;
     }
-    .real-topbar-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 36px;
-      padding: 0 14px;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
-      background: #ffffff;
-      color: #334155;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .real-topbar-btn:hover {
-      border-color: #cbd5e1;
-      background: #f8fafc;
-      color: #0f172a;
-    }
-
-    .real-sidebar {
-      width: var(--sidebar-width);
-      height: 100vh;
-      background: #ffffff;
-      border-right: 1px solid #e2e8f0;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px 12px;
-      overflow-y: auto;
-      flex-shrink: 0;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @media (max-width: 767px) {
-      .real-sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        z-index: 50;
-        width: 280px;
-        max-width: 84vw;
-        height: 100vh;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        transform: translateX(-100%);
-      }
-      .real-sidebar.sidebar-open {
-        transform: translateX(0) !important;
-      }
+    @media (min-width: 768px) {
       .real-topbar {
-        padding: 0 var(--page-padding);
-        height: var(--topbar-height);
+        padding: 0 24px;
       }
     }
+
   </style>
 </head>
 <body class="flex h-screen overflow-hidden text-xs">
 
-  <!-- 1. SIDEBAR NAVIGATION -->
-    <!-- Mobile Drawer Backdrop -->
-  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+  <!-- 1. SIDEBAR NAVIGATION (Matching internal-website exactly) -->
+  <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="mobile-drawer-backdrop hidden"></div>
 
-  <!-- Main Sidebar (Pinned on Desktop, Slide-over Drawer on Mobile) -->
-  <aside id="main-sidebar" class="real-sidebar select-none">
-    
-    <!-- User Card -->
-    <div class="real-user-card">
-      <div class="flex items-center gap-2.5">
+  <!-- Mobile Responsive Drawer (screens < 1024px) -->
+  <aside id="mobile-drawer" class="mobile-drawer">
+    <div class="mobile-header">
+      <span class="mobile-header-title">เมนูนำทาง</span>
+      <button type="button" onclick="closeMobileSidebar()" class="mobile-close-btn" title="ปิดเมนู" aria-label="ปิดเมนู">
+        <i data-lucide="x" class="w-[18px] h-[18px]"></i>
+      </button>
+    </div>
+
+    <!-- User Card Mobile -->
+    <div class="user-card">
+      <div class="user-card-row">
         <img
           src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-          alt="User Profile"
-          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+          alt="ชยานิษฐ์ (หัวหน้าทีม)"
+          class="user-card-avatar"
         />
-        <div class="flex-1 min-w-0">
-          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
-          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        <div class="user-card-info">
+          <p class="user-card-name" title="ชยานิษฐ์ (หัวหน้าทีม)">ชยานิษฐ์ (หัวหน้าทีม)</p>
+          <p class="user-card-email" title="chayanid@nectec.or.th">chayanid@nectec.or.th</p>
         </div>
-        <!-- Close button on Mobile Drawer -->
-        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-        <!-- Logout on Desktop -->
-        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+        <button type="button" class="user-card-logout" title="ออกจากระบบ" aria-label="ออกจากระบบ">
           <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
-
-      <!-- Badges -->
-      <div class="flex flex-wrap gap-1 mt-2">
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">
-          ADMIN
-        </span>
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">
-          EDITOR
-        </span>
+      <div class="user-card-roles">
+        <span class="user-card-role user-card-role-admin">ADMIN</span>
+        <span class="user-card-role user-card-role-editor">EDITOR</span>
       </div>
     </div>
 
-    <!-- Navigation Menu Items -->
-            <nav class="flex flex-col gap-0.5">
+    <!-- Navigation List Mobile -->
+    <nav class="nav-list">
       <!-- 1. จัดการหน่วยงาน -->
-      <a href="./organizations.html" class="real-menu-item ">
-        <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+      <a href="./organizations.html" class="nav-item">
+        <i data-lucide="building-2" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการหน่วยงาน</span>
       </a>
 
       <!-- 2. จัดการ Case -->
-      <a href="./cases.html" class="real-menu-item mt-1 ">
-        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">จัดการ Case</span>
+      <a href="./cases.html" class="nav-item">
+        <i data-lucide="file-text" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการ Case</span>
       </a>
 
-      <!-- 3. Reset OTP -->
-      <a href="./reset-otp.html" class="real-menu-item mt-1 ">
-        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">Reset OTP</span>
+      <!-- 3. จัดการผู้ใช้ (ACTIVE) -->
+      <a href="./users.html" class="nav-item active">
+        <i data-lucide="users" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการผู้ใช้</span>
       </a>
 
-      <!-- 4. Flex Message -->
-      <a href="./flex-message.html" class="real-menu-item mt-1 ">
-        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">Flex Message</span>
+      <!-- 4. Reset OTP -->
+      <a href="./reset-otp.html" class="nav-item">
+        <i data-lucide="key-round" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">Reset OTP</span>
       </a>
 
-<!-- 6. จัดการแชทบอท (Bot Studio) -->
-      <a href="./bot-studio.html" class="real-menu-item mt-1">
-        <i data-lucide="bot" class="w-[18px] h-[18px] shrink-0"></i>
-        <span class="flex-1 truncate">จัดการ Line Bot</span>
+      <!-- 5. Flex Message -->
+      <a href="./flex-message.html" class="nav-item">
+        <i data-lucide="message-square" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">Flex Message</span>
       </a>
 
-      <!-- 6. รายงานและสถิติ (Group with Children: สถิติ Rich Menu) -->
-      <div class="flex flex-col gap-1 mt-1">
-        <div class="real-group-header">
-          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
-          <span class="flex-1 truncate">รายงานและสถิติ</span>
+      <!-- 6. จัดการ Line Bot -->
+      <a href="./bot-studio.html" class="nav-item">
+        <i data-lucide="bot" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการ Line Bot</span>
+      </a>
+
+      <!-- 7. รายงานและสถิติ -->
+      <div class="nav-group">
+        <div class="nav-group-header" onclick="toggleSidebarGroup('mobile-group-stats', 'mobile-chevron-group-stats')">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] shrink-0"></i>
+          <span class="nav-group-label">รายงานและสถิติ</span>
+          <i data-lucide="chevron-down" class="nav-chevron w-4 h-4" id="mobile-chevron-group-stats"></i>
         </div>
-        <div class="real-children-group">
-<a href="./org-group-stats.html" class="real-nested-item ">
-            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
-          </a>
-          <a href="./richmenu-stats.html" class="real-nested-item ">
+        <div class="nav-children hidden" id="mobile-group-stats">
+          <a href="./richmenu-stats.html" class="nav-nested-item">
             <span class="flex-1 truncate">สถิติ Rich Menu</span>
           </a>
-          <a href="./bkk-assessment.html" class="real-nested-item" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
+          <a href="./org-group-stats.html" class="nav-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
+          <a href="./bkk-assessment.html" class="nav-nested-item" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
             <span class="flex-1 truncate">ประเมินคุณภาพ กทม.</span>
-            <span class="real-action-group">
-              <span class="real-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
-              <span class="real-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
+            <span class="nav-action-group">
+              <span class="nav-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
+              <span class="nav-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
             </span>
           </a>
-          <a href="./impact.html" class="real-nested-item">
+          <a href="./impact.html" class="nav-nested-item">
             <span class="flex-1 truncate">คำนวณ Impact</span>
           </a>
         </div>
       </div>
 
-      <!-- บัญชี / สร้างหน่วยงาน -->
-      <div class="flex flex-col gap-1 mt-1">
-        <div class="real-group-header">
-          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0"></i>
-          <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
+      <!-- 7. บัญชี / สร้างหน่วยงาน -->
+      <div class="nav-group">
+        <div class="nav-group-header" onclick="toggleSidebarGroup('mobile-group-org', 'mobile-chevron-group-org')">
+          <i data-lucide="building" class="w-[18px] h-[18px] shrink-0"></i>
+          <span class="nav-group-label">บัญชี / สร้างหน่วยงาน</span>
+          <i data-lucide="chevron-down" class="nav-chevron w-4 h-4" id="mobile-chevron-group-org"></i>
         </div>
-        <div class="real-children-group">
-          <a href="./create-official-account.html" class="real-nested-item">
+        <div class="nav-children hidden" id="mobile-group-org">
+          <a href="./create-official-account.html" class="nav-nested-item">
             <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
           </a>
-          <a href="./create-org-chart.html" class="real-nested-item">
+          <a href="./create-org-chart.html" class="nav-nested-item">
             <span class="flex-1 truncate">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
           </a>
         </div>
       </div>
 
-      <!-- 6. จัดการผู้ใช้ -->
-      <a href="./users.html" class="real-menu-item mt-1 real-menu-active">
-        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      <!-- 8. ประวัติการแก้ไข -->
+      <a href="./audit-logs.html" class="nav-item">
+        <i data-lucide="history" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">ประวัติการแก้ไข</span>
       </a>
 
-      <!-- ประวัติการแก้ไข -->
-      <a href="./audit-logs.html" class="real-menu-item mt-1">
-        <i data-lucide="history" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">ประวัติการแก้ไข</span>
+      <!-- 9. FAQ -->
+      <a href="./faq.html" class="nav-item">
+        <i data-lucide="circle-help" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Desktop Docked Collapsible Sidebar (screens >= 1024px) -->
+  <aside id="desktop-sidebar" class="real-desktop-sidebar sidebar-expanded">
+    
+    <!-- Top Toggle Collapse/Expand Button -->
+    <div class="toggle-header toggle-end" id="desktop-toggle-header">
+      <button
+        type="button"
+        onclick="toggleDesktopSidebar()"
+        class="toggle-btn"
+        aria-label="toggle sidebar"
+        title="ย่อเมนูนำทาง"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          stroke-width="2"
+          fill="none"
+          stroke="currentColor"
+          class="toggle-svg"
+          id="desktop-toggle-svg"
+        >
+          <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+          <path d="M9 4v16" />
+          <path d="M14 10l2 2l-2 2" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- User Card (Expanded View) -->
+    <div class="user-card" id="desktop-user-card-expanded">
+      <div class="user-card-row">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="ชยานิษฐ์ (หัวหน้าทีม)"
+          class="user-card-avatar"
+        />
+        <div class="user-card-info">
+          <p class="user-card-name" title="ชยานิษฐ์ (หัวหน้าทีม)">ชยานิษฐ์ (หัวหน้าทีม)</p>
+          <p class="user-card-email" title="chayanid@nectec.or.th">chayanid@nectec.or.th</p>
+        </div>
+        <button type="button" class="user-card-logout" title="ออกจากระบบ" aria-label="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="user-card-roles">
+        <span class="user-card-role user-card-role-admin">ADMIN</span>
+        <span class="user-card-role user-card-role-editor">EDITOR</span>
+      </div>
+    </div>
+
+    <!-- User Card (Collapsed View) -->
+    <div class="user-card-collapsed hidden" id="desktop-user-card-collapsed">
+      <div class="collapsed-avatar-box" title="ชยานิษฐ์ (หัวหน้าทีม) (chayanid@nectec.or.th)">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="ชยานิษฐ์ (หัวหน้าทีม)"
+          class="collapsed-avatar-img"
+        />
+      </div>
+      <button type="button" class="collapsed-logout-btn" title="ออกจากระบบ" aria-label="ออกจากระบบ">
+        <i data-lucide="log-out" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Navigation List Desktop -->
+    <nav class="nav-list" id="desktop-nav-list">
+      <!-- 1. จัดการหน่วยงาน -->
+      <a href="./organizations.html" class="nav-item" title="จัดการหน่วยงาน">
+        <i data-lucide="building-2" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการหน่วยงาน</span>
       </a>
 
-      <!-- 7. FAQ -->
-      <a href="./faq.html" class="real-menu-item mt-1 ">
-        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">FAQ</span>
+      <!-- 2. จัดการ Case -->
+      <a href="./cases.html" class="nav-item" title="จัดการ Case">
+        <i data-lucide="file-text" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการ Case</span>
+      </a>
+
+      <!-- 3. จัดการผู้ใช้ (ACTIVE) -->
+      <a href="./users.html" class="nav-item active" title="จัดการผู้ใช้">
+        <i data-lucide="users" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- 4. Reset OTP -->
+      <a href="./reset-otp.html" class="nav-item" title="Reset OTP">
+        <i data-lucide="key-round" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">Reset OTP</span>
+      </a>
+
+      <!-- 5. Flex Message -->
+      <a href="./flex-message.html" class="nav-item" title="Flex Message">
+        <i data-lucide="message-square" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">Flex Message</span>
+      </a>
+
+      <!-- 6. จัดการ Line Bot -->
+      <a href="./bot-studio.html" class="nav-item" title="จัดการ Line Bot">
+        <i data-lucide="bot" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">จัดการ Line Bot</span>
+      </a>
+
+      <!-- 6. รายงานและสถิติ (Collapsed by default on /users) -->
+      <div class="nav-group">
+        <div class="nav-group-header" id="desktop-group-stats-header" onclick="toggleSidebarGroup('desktop-group-stats', 'desktop-chevron-group-stats')" title="รายงานและสถิติ">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] shrink-0"></i>
+          <span class="nav-group-label">รายงานและสถิติ</span>
+          <i data-lucide="chevron-down" class="nav-chevron w-4 h-4" id="desktop-chevron-group-stats"></i>
+        </div>
+        <div class="nav-children hidden" id="desktop-group-stats">
+          <a href="./richmenu-stats.html" class="nav-nested-item">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./org-group-stats.html" class="nav-nested-item">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
+          <a href="./bkk-assessment.html" class="nav-nested-item" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
+            <span class="flex-1 truncate">ประเมินคุณภาพ กทม.</span>
+            <span class="nav-action-group">
+              <span class="nav-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
+              <span class="nav-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
+            </span>
+          </a>
+          <a href="./impact.html" class="nav-nested-item">
+            <span class="flex-1 truncate">คำนวณ Impact</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 7. บัญชี / สร้างหน่วยงาน (Collapsed by default on /users) -->
+      <div class="nav-group">
+        <div class="nav-group-header" id="desktop-group-org-header" onclick="toggleSidebarGroup('desktop-group-org', 'desktop-chevron-group-org')" title="บัญชี / สร้างหน่วยงาน">
+          <i data-lucide="building" class="w-[18px] h-[18px] shrink-0"></i>
+          <span class="nav-group-label">บัญชี / สร้างหน่วยงาน</span>
+          <i data-lucide="chevron-down" class="nav-chevron w-4 h-4" id="desktop-chevron-group-org"></i>
+        </div>
+        <div class="nav-children hidden" id="desktop-group-org">
+          <a href="./create-official-account.html" class="nav-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
+          </a>
+          <a href="./create-org-chart.html" class="nav-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 8. ประวัติการแก้ไข -->
+      <a href="./audit-logs.html" class="nav-item" title="ประวัติการแก้ไข">
+        <i data-lucide="history" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">ประวัติการแก้ไข</span>
+      </a>
+
+      <!-- 9. FAQ -->
+      <a href="./faq.html" class="nav-item" title="FAQ">
+        <i data-lucide="circle-help" class="w-[19px] h-[19px] shrink-0"></i>
+        <span class="nav-item-label">FAQ</span>
       </a>
     </nav>
   </aside>
@@ -414,20 +893,20 @@
   <!-- 2. MAIN CONTENT AREA -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
     
-    <!-- Topbar Header -->
+    <!-- Topbar Header (Matching internal-website Topbar.jsx) -->
     <header class="real-topbar">
       <!-- Left: Mobile Hamburger + Breadcrumb -->
-      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
-        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0 cursor-pointer" title="เปิดเมนูนำทาง">
+      <div class="flex items-center gap-2.5 text-xs min-w-0 flex-1 mr-2">
+        <button type="button" onclick="openMobileSidebar()" class="lg:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0 cursor-pointer" title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
         <span class="text-slate-400 font-medium whitespace-nowrap hidden sm:inline">Traffy Backstage</span>
         <span class="text-slate-300 hidden sm:inline">/</span>
-        <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">จัดการเจ้าหน้าที่ Internal Web</span>
+        <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">จัดการผู้ใช้</span>
       </div>
 
-      <!-- Right Action Button -->
-      <div class="flex items-center gap-2 flex-shrink-0">
+      <!-- Right Action Button (Show ONLY on responsive / mobile screens, hidden on desktop) -->
+      <div class="flex md:hidden items-center gap-2 flex-shrink-0">
         <button type="button" onclick="openAddStaffModal()"
           class="bg-slate-900 hover:bg-slate-800 text-white px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
           <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
@@ -440,224 +919,110 @@
     <div class="flex-1 overflow-y-auto" id="content-container">
       <div class="w-full max-w-[1536px] mx-auto p-4 sm:p-6 lg:p-8 space-y-5 pb-16">
 
-        <!-- 1. Executive Summary Cards (4 Modern Micro-Cards) -->
+        <!-- 1. Executive Clickable Filter Cards (Stat Cards = One-Click Role Filters) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <!-- Stat 1: Total Staff -->
-          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+          <!-- Card 1: All Staff -->
+          <div id="stat-card-all" onclick="selectRoleFilter('all')"
+            class="stat-filter-card bg-slate-50/70 rounded-3xl p-4 sm:p-5 border-2 border-slate-900 ring-2 ring-slate-900/10 shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group cursor-pointer"
+            title="คลิกเพื่อดูเจ้าหน้าที่ทั้งหมด">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs font-medium text-slate-500">เจ้าหน้าที่ทั้งหมด</span>
-              <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <span class="text-[11px] sm:text-xs font-semibold text-slate-800">เจ้าหน้าที่ทั้งหมด</span>
+              <div class="w-8 h-8 rounded-xl bg-slate-200/80 text-slate-800 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <i data-lucide="users" class="w-4 h-4"></i>
               </div>
             </div>
             <div class="mt-3 flex items-baseline justify-between">
               <span id="stat-total-count" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono-code">0</span>
-              <span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                พร้อมปฏิบัติงาน
+              <span id="badge-card-all" class="text-[10px] sm:text-[11px] font-semibold text-slate-800 bg-slate-200/80 px-2 py-0.5 rounded-md flex items-center gap-1">
+                ดูทั้งหมด
               </span>
             </div>
           </div>
 
-          <!-- Stat 2: Super Admin -->
-          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+          <!-- Card 2: Super Admin -->
+          <div id="stat-card-admin" onclick="selectRoleFilter('admin')"
+            class="stat-filter-card bg-white opacity-90 rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between relative overflow-hidden group cursor-pointer"
+            title="คลิกเพื่อกรองเฉพาะ Super Admin">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs font-medium text-slate-500">Super Admin</span>
+              <span class="text-[11px] sm:text-xs font-semibold text-slate-700">Super Admin</span>
               <div class="w-8 h-8 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <i data-lucide="shield-alert" class="w-4 h-4"></i>
               </div>
             </div>
             <div class="mt-3 flex items-baseline justify-between">
               <span id="stat-admin-count" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono-code">0</span>
-              <span class="text-[11px] text-slate-500 font-medium">ดูแลระบบทุกส่วน</span>
+              <span id="badge-card-admin" class="text-[10px] sm:text-[11px] text-orange-700 bg-orange-50 font-medium px-2 py-0.5 rounded-md">ดูแลระบบทุกส่วน</span>
             </div>
           </div>
 
-          <!-- Stat 3: Ops Admins (Case & Org) -->
-          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+          <!-- Card 3: Ops Admins (Case & Org) -->
+          <div id="stat-card-ops" onclick="selectRoleFilter('ops')"
+            class="stat-filter-card bg-white opacity-90 rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between relative overflow-hidden group cursor-pointer"
+            title="คลิกเพื่อกรองเฉพาะ Admin เคส & หน่วยงาน">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs font-medium text-slate-500">Admin เคส & หน่วยงาน</span>
+              <span class="text-[11px] sm:text-xs font-semibold text-slate-700">Admin เคส & หน่วยงาน</span>
               <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <i data-lucide="briefcase" class="w-4 h-4"></i>
               </div>
             </div>
             <div class="mt-3 flex items-baseline justify-between">
               <span id="stat-ops-count" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono-code">0</span>
-              <span class="text-[11px] text-slate-500 font-medium">งานปฏิบัติการหลัก</span>
+              <span id="badge-card-ops" class="text-[10px] sm:text-[11px] text-blue-700 bg-blue-50 font-medium px-2 py-0.5 rounded-md">งานปฏิบัติการหลัก</span>
             </div>
           </div>
 
-          <!-- Stat 4: Online Now -->
-          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
+          <!-- Card 4: Other Specialized Admins (User / Flex / Menu / Search) -->
+          <div id="stat-card-other" onclick="selectRoleFilter('other')"
+            class="stat-filter-card bg-white opacity-90 rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between relative overflow-hidden group cursor-pointer"
+            title="คลิกเพื่อกรองสิทธิ์เฉพาะด้านอื่น ๆ">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs font-medium text-slate-500">กำลังออนไลน์</span>
-              <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-                <i data-lucide="activity" class="w-4 h-4"></i>
+              <span class="text-[11px] sm:text-xs font-semibold text-slate-700">สิทธิ์อื่น ๆ</span>
+              <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
               </div>
             </div>
             <div class="mt-3 flex items-baseline justify-between">
-              <span id="stat-online-count" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 font-mono-code">0</span>
-              <span class="text-[11px] text-slate-500 font-medium">เข้าใช้งานวันนี้</span>
+              <span id="stat-other-count" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono-code">0</span>
+              <span id="badge-card-other" class="text-[10px] sm:text-[11px] text-purple-700 bg-purple-50 font-medium px-2 py-0.5 rounded-md">User, Flex, Menu</span>
             </div>
           </div>
         </div>
 
-        <!-- 2. Header Filter Card (Desktop Tabs & Mobile Dropdown) -->
-        <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-xs border border-slate-200/90 space-y-4">
-          
-          <!-- DESKTOP VIEW: Tabs Bar (md and up) -->
-          <div class="hidden md:flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-            <button onclick="selectRoleFilter('all')" id="tab-role-all"
-              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
-              <span>ทั้งหมด</span>
-              <span id="count-all" class="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
-            </button>
-            <button onclick="selectRoleFilter('admin')" id="tab-role-admin"
-              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-              <span>Super Admin</span>
-              <span id="count-admin" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
-            </button>
-            <button onclick="selectRoleFilter('editor_manage_case')" id="tab-role-editor_manage_case"
-              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span>จัดการเรื่องร้องเรียน (Case)</span>
-              <span id="count-case" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
-            </button>
-            <button onclick="selectRoleFilter('editor_manage_org')" id="tab-role-editor_manage_org"
-              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span>จัดการข้อมูลหน่วยงาน (Org)</span>
-              <span id="count-org" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
-            </button>
-            <button onclick="selectRoleFilter('editor_manage_user')" id="tab-role-editor_manage_user"
-              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-              <span>จัดการสิทธิ์เจ้าหน้าที่ (User)</span>
-              <span id="count-user" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
-            </button>
-            <button onclick="selectRoleFilter('other')" id="tab-role-other"
-              class="role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-sky-500"></span>
-              <span>สิทธิ์อื่น ๆ</span>
-              <span id="count-other" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded-md font-mono-code">0</span>
-            </button>
+        <!-- 2. Clean Search & Role Dropdown Bar (No Duplicated Tabs & No Hardcoded Domain Dropdown) -->
+        <div class="bg-white rounded-3xl p-3.5 sm:p-4 shadow-xs border border-slate-200/90 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+          <!-- Search Input: Search Any Name, Email (Any Domain), or Role -->
+          <div class="relative flex-1 min-w-0">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="staff-search-input" oninput="onSearchInput(this.value)"
+              placeholder="ค้นหาชื่อเจ้าหน้าที่, อีเมล (ทุกโดเมน) หรือหน้าที่รับผิดชอบ..."
+              class="w-full bg-slate-50/70 border border-slate-200/90 rounded-2xl pl-10 pr-4 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white shadow-2xs transition-all">
           </div>
 
-          <!-- MOBILE RESPONSIVE VIEW: Dropdown (Matching organizations.html & audit-logs.html) -->
-          <div class="flex md:hidden items-center gap-2 w-full">
-            <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center flex-shrink-0 shadow-2xs"
-              title="กลุ่มสิทธิ์การใช้งาน">
-              <i data-lucide="shield" class="w-4 h-4" id="mobile-role-prefix-icon"></i>
+          <!-- Specific Role Selector Dropdown & Reset Button (Single Row on Mobile) -->
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="relative flex-1 sm:flex-initial">
+              <select id="role-select-dropdown" onchange="onRoleDropdownChange(this.value)"
+                class="w-full sm:w-auto bg-slate-50/70 border border-slate-200/90 rounded-2xl pl-3.5 pr-8 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white shadow-2xs cursor-pointer appearance-none">
+                <option value="all">ทุกหน้าที่ / ทุกบทบาท</option>
+                <option value="admin">Super Admin (ดูแลระบบทั้งหมด)</option>
+                <option value="editor_manage_case">จัดการเรื่องร้องเรียน (Case)</option>
+                <option value="editor_manage_org">จัดการข้อมูลหน่วยงาน (Org)</option>
+                <option value="editor_manage_user">จัดการสิทธิ์เจ้าหน้าที่ (User)</option>
+                <option value="editor_manage_flex">จัดการ Flex Message</option>
+                <option value="editor_manage_menu">ปรับแต่งโครงสร้างเมนู</option>
+                <option value="editor_search_duplicate_org">ค้นหาหน่วยงานซ้ำ</option>
+                <option value="editor_file_search">ค้นหาไฟล์และเอกสาร</option>
+              </select>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
             </div>
 
-            <!-- Custom Responsive Role Dropdown -->
-            <div class="relative flex-1 min-w-0" id="mobile-role-dropdown-wrapper">
-              <button type="button" onclick="toggleMobileRoleDropdown(event)" id="mobile-role-trigger"
-                class="w-full flex items-center justify-between gap-2 bg-[#f8fafc] hover:bg-slate-100 border border-slate-200/90 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-900 transition-all cursor-pointer shadow-2xs">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span id="mobile-role-current-icon" class="text-indigo-600 flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="users" class="w-4 h-4"></i>
-                  </span>
-                  <span id="mobile-role-current-label" class="truncate">เจ้าหน้าที่ทั้งหมด</span>
-                  <span id="mobile-role-current-count" class="text-[10px] bg-slate-200 text-slate-700 font-mono-code px-1.5 py-0.2 rounded-md">0</span>
-                </div>
-                <i data-lucide="chevron-down" id="mobile-role-chevron"
-                  class="w-4 h-4 text-slate-500 transition-transform duration-200 flex-shrink-0"></i>
-              </button>
-
-              <!-- Mobile Dropdown Menu -->
-              <div id="mobile-role-menu"
-                class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-2xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
-                <button type="button" onclick="selectMobileRoleTab('all')"
-                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
-                  data-role="all">
-                  <div class="flex items-center gap-2.5 min-w-0">
-                    <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center flex-shrink-0"><i data-lucide="users" class="w-3.5 h-3.5"></i></span>
-                    <span class="truncate">เจ้าหน้าที่ทั้งหมด</span>
-                  </div>
-                  <span id="mobile-count-all" class="text-[10px] bg-white px-2 py-0.5 rounded-md font-mono-code text-slate-600 border border-slate-200 shrink-0">0</span>
-                </button>
-                <button type="button" onclick="selectMobileRoleTab('admin')"
-                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-role="admin">
-                  <div class="flex items-center gap-2.5 min-w-0">
-                    <span class="w-6 h-6 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-alert" class="w-3.5 h-3.5"></i></span>
-                    <span class="truncate">Super Admin (ดูแลระบบทั้งหมด)</span>
-                  </div>
-                  <span id="mobile-count-admin" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
-                </button>
-                <button type="button" onclick="selectMobileRoleTab('editor_manage_case')"
-                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-role="editor_manage_case">
-                  <div class="flex items-center gap-2.5 min-w-0">
-                    <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
-                    <span class="truncate">จัดการเรื่องร้องเรียน (Case)</span>
-                  </div>
-                  <span id="mobile-count-case" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
-                </button>
-                <button type="button" onclick="selectMobileRoleTab('editor_manage_org')"
-                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-role="editor_manage_org">
-                  <div class="flex items-center gap-2.5 min-w-0">
-                    <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><i data-lucide="building-2" class="w-3.5 h-3.5"></i></span>
-                    <span class="truncate">จัดการข้อมูลหน่วยงาน (Org)</span>
-                  </div>
-                  <span id="mobile-count-org" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
-                </button>
-                <button type="button" onclick="selectMobileRoleTab('editor_manage_user')"
-                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-role="editor_manage_user">
-                  <div class="flex items-center gap-2.5 min-w-0">
-                    <span class="w-6 h-6 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0"><i data-lucide="user-cog" class="w-3.5 h-3.5"></i></span>
-                    <span class="truncate">จัดการสิทธิ์เจ้าหน้าที่ (User)</span>
-                  </div>
-                  <span id="mobile-count-user" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
-                </button>
-                <button type="button" onclick="selectMobileRoleTab('other')"
-                  class="mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
-                  data-role="other">
-                  <div class="flex items-center gap-2.5 min-w-0">
-                    <span class="w-6 h-6 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i></span>
-                    <span class="truncate">สิทธิ์ระบบอื่น ๆ</span>
-                  </div>
-                  <span id="mobile-count-other" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-md font-mono-code text-slate-600 shrink-0">0</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom Row: Search, Domain Filter & Reset (Responsive 1-line for filter & reset) -->
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-2 border-t border-slate-100">
-            <!-- Search Input -->
-            <div class="relative flex-1 min-w-0">
-              <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-              <input type="text" id="staff-search-input" oninput="onSearchInput(this.value)"
-                placeholder="ค้นหาชื่อเจ้าหน้าที่, อีเมล หรือหน้าที่รับผิดชอบ..."
-                class="w-full bg-slate-50/70 border border-slate-200/90 rounded-2xl pl-10 pr-4 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white shadow-2xs transition-all">
-            </div>
-
-            <!-- Domain Organization Filter & Reset Button (Fit together on 1 row on mobile) -->
-            <div class="flex items-center gap-2 shrink-0">
-              <div class="relative flex-1 sm:flex-initial">
-                <select id="domain-filter-select" onchange="onDomainChange(this.value)"
-                  class="w-full sm:w-auto bg-slate-50/70 border border-slate-200/90 rounded-2xl pl-3.5 pr-8 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white shadow-2xs cursor-pointer appearance-none">
-                  <option value="all">ทุกสังกัด / ทุกหน่วยงาน</option>
-                  <option value="@nectec.or.th">NECTEC (@nectec.or.th)</option>
-                  <option value="@bkk.go.th">กทม. (@bkk.go.th)</option>
-                  <option value="@traffy.in.th">ทีมพัฒนาระบบ (@traffy.in.th)</option>
-                </select>
-                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-              </div>
-
-              <!-- Reset Button -->
-              <button type="button" onclick="resetStaffFilters()"
-                class="px-3 py-2 rounded-2xl bg-slate-50/70 border border-slate-200/90 text-slate-500 hover:text-slate-900 hover:bg-slate-100 shadow-2xs transition-all text-xs font-medium cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
-                title="ล้างตัวกรองทั้งหมด">
-                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">ล้างตัวกรอง</span>
-              </button>
-            </div>
+            <!-- Reset Button -->
+            <button type="button" onclick="resetStaffFilters()"
+              class="px-3.5 py-2 rounded-2xl bg-slate-50/70 border border-slate-200/90 text-slate-600 hover:text-slate-900 hover:bg-slate-100 shadow-2xs transition-all text-xs font-semibold cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
+              title="ล้างตัวกรองทั้งหมด">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span class="hidden sm:inline">ล้างค่า</span>
+            </button>
           </div>
         </div>
 
@@ -714,21 +1079,13 @@
             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white transition-all">
         </div>
 
-        <!-- Form Field: Email + Quick Domain Chips -->
+        <!-- Form Field: Email -->
         <div>
           <label class="block text-[11px] font-semibold text-slate-700 mb-1">อีเมลผู้ใช้งาน (Google Account) <span class="text-rose-500">*</span></label>
           <div class="relative">
             <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
             <input type="email" id="form-staff-email" placeholder="user@nectec.or.th หรือ staff@bkk.go.th"
               class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3.5 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white transition-all font-mono-code">
-          </div>
-          
-          <!-- Domain helper shortcut chips -->
-          <div class="flex items-center gap-1.5 mt-2 flex-wrap" id="domain-helper-chips">
-            <span class="text-[10.5px] text-slate-400 font-medium">เติมโดเมนด่วน:</span>
-            <button type="button" onclick="appendEmailDomain('@nectec.or.th')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10.5px] font-mono-code transition-colors cursor-pointer">@nectec.or.th</button>
-            <button type="button" onclick="appendEmailDomain('@bkk.go.th')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10.5px] font-mono-code transition-colors cursor-pointer">@bkk.go.th</button>
-            <button type="button" onclick="appendEmailDomain('@traffy.in.th')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10.5px] font-mono-code transition-colors cursor-pointer">@traffy.in.th</button>
           </div>
         </div>
 
@@ -1020,7 +1377,7 @@
     // State
     let currentRoleFilter = 'all';
     let currentSearchTerm = '';
-    let currentDomainFilter = 'all';
+    // Domain filter removed per feedback (any email allowed)
     let editingStaffId = null;
     let selectedFormRoles = new Set();
     let pendingDeleteId = null;
@@ -1032,19 +1389,17 @@
 
       // Filter Staff
       const filtered = staffList.filter(staff => {
-        // 1. Role Filter
+        // 1. Role Filter (Clickable Cards / Dropdown)
         if (currentRoleFilter !== 'all') {
-          if (currentRoleFilter === 'other') {
-            const hasOther = staff.roles.some(r => !['admin', 'editor_manage_case', 'editor_manage_org', 'editor_manage_user'].includes(r));
+          if (currentRoleFilter === 'ops') {
+            const isOps = staff.roles.some(r => ['editor_manage_case', 'editor_manage_org'].includes(r));
+            if (!isOps) return false;
+          } else if (currentRoleFilter === 'other') {
+            const hasOther = staff.roles.some(r => !['admin', 'editor_manage_case', 'editor_manage_org'].includes(r));
             if (!hasOther) return false;
           } else {
             if (!staff.roles.includes(currentRoleFilter)) return false;
           }
-        }
-
-        // 2. Domain Filter
-        if (currentDomainFilter !== 'all') {
-          if (!staff.email.toLowerCase().endsWith(currentDomainFilter.toLowerCase())) return false;
         }
 
         // 3. Search Filter
@@ -1084,27 +1439,25 @@
       lucide.createIcons();
     }
 
-    // Render Grid Cards View
+    // Render Grid Cards View (Matching internal-website exactly)
     function renderGridCards(list) {
       const container = document.getElementById('staff-cards-grid');
       if (!container) return;
 
-      // 1. Dashed Add Member Card (Iconic card from internal_web)
+      // 1. Dashed Add Member Card (Matching internal-website)
       const addCardHtml = `
         <div onclick="openAddStaffModal()"
-          class="hidden sm:flex group relative flex-col items-center justify-center border-2 border-dashed border-indigo-200 bg-white hover:border-indigo-500 hover:bg-indigo-50/30 transition-all duration-300 cursor-pointer rounded-3xl shadow-2xs hover:shadow-xs hover:-translate-y-0.5 min-h-[220px] p-6 text-center">
-          <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-100 mb-3 group-hover:scale-110 transition-transform">
-            <i data-lucide="plus" class="w-6 h-6"></i>
+          class="hidden sm:flex group relative flex-col items-center justify-center border-[1.5px] border-dashed border-indigo-200 bg-white hover:border-indigo-500 hover:bg-indigo-50/20 transition-all duration-200 cursor-pointer rounded-2xl shadow-2xs hover:shadow-xs hover:-translate-y-0.5 min-h-[120px] p-4 text-center">
+          <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-xs shadow-indigo-200 mb-2 group-hover:scale-105 transition-transform">
+            <i data-lucide="plus" class="w-5 h-5"></i>
           </div>
-          <h3 class="font-bold text-indigo-950 text-sm">เพิ่มเจ้าหน้าที่ใหม่</h3>
-          <p class="text-indigo-400 text-[11px] mt-0.5">เชิญผู้ดูแลและกำหนดสิทธิ์</p>
+          <h3 class="font-bold text-slate-900 text-[13px]">เพิ่มเจ้าหน้าที่ใหม่</h3>
+          <p class="text-indigo-600 text-[10px] mt-0.5">เชิญผู้ดูแลและกำหนดสิทธิ์เข้าใช้งาน</p>
         </div>
       `;
 
-      // 2. Member Cards
+      // 2. Member Cards (Matching internal-website)
       const memberCardsHtml = list.map(staff => {
-        const domainChip = getDomainChip(staff.email);
-        
         // Visible Roles (First 2 + pill)
         const visibleRoles = staff.roles.slice(0, 2);
         const remainingCount = staff.roles.length - visibleRoles.length;
@@ -1112,8 +1465,8 @@
         const roleBadgesHtml = visibleRoles.map(rKey => {
           const conf = ROLE_CONFIG[rKey] || { label: rKey, style: { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-200', dot: 'bg-slate-500' } };
           return `
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-semibold border ${conf.style.bg} ${conf.style.text} ${conf.style.border} leading-tight truncate max-w-[170px]" title="${conf.label}">
-              <span class="w-1.5 h-1.5 rounded-full ${conf.style.dot}"></span>
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-semibold border ${conf.style.bg} ${conf.style.text} ${conf.style.border} max-w-[130px] truncate" title="${conf.label}">
+              <span class="w-1.5 h-1.5 rounded-full ${conf.style.dot} shrink-0"></span>
               <span class="truncate">${conf.label}</span>
             </span>
           `;
@@ -1121,71 +1474,64 @@
 
         const moreBadgeHtml = remainingCount > 0 ? `
           <button type="button" onclick="openRoleViewerModal('${staff.admin_id}')"
-            class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10.5px] font-bold bg-white hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 border border-slate-200 transition-colors cursor-pointer shadow-2xs" title="ดูสิทธิ์ทั้งหมด">
+            class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 transition-colors cursor-pointer shadow-2xs shrink-0 whitespace-nowrap" title="ดูสิทธิ์ทั้งหมด">
             +${remainingCount}
           </button>
         ` : '';
 
         return `
-          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-2xs hover:shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between p-5 space-y-4 group">
+          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between p-3.5 sm:p-4 gap-2.5 group">
             
-            <!-- Top section: Avatar, Online Status, Quick Actions -->
-            <div>
-              <div class="flex items-start justify-between gap-3">
+            <!-- Top Section: Avatar + Name/Email on left, Action buttons on right -->
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5 min-w-0 flex-1">
                 <div class="relative shrink-0">
-                  <img src="${staff.avatar}" alt="${staff.name}" class="w-12 h-12 rounded-2xl object-cover border border-slate-200/80 shadow-2xs">
+                  <img src="${staff.avatar}" alt="${staff.name}" class="w-[38px] h-[38px] rounded-xl object-cover border border-slate-200/80 shadow-2xs">
                   ${staff.isOnline 
-                    ? '<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white" title="ออนไลน์"></span>' 
-                    : '<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-slate-300 border-2 border-white" title="ออฟไลน์"></span>'}
+                    ? '<span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-[1.5px] border-white" title="ออนไลน์"></span>' 
+                    : '<span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-slate-300 border-[1.5px] border-white" title="ออฟไลน์"></span>'}
                 </div>
 
-                <div class="flex items-center gap-1">
-                  ${domainChip}
-                  <button type="button" onclick="openEditStaffModal('${staff.admin_id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer" title="แก้ไขสิทธิ์">
-                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                  </button>
-                  <button type="button" onclick="openDeleteModal('${staff.admin_id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer" title="ระงับสิทธิ์">
-                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                  </button>
+                <div class="min-w-0 flex-1">
+                  <h3 class="text-[13px] font-bold text-slate-900 truncate" title="${staff.name}">
+                    ${staff.name}
+                  </h3>
+                  <div class="flex items-center gap-1 mt-0.5">
+                    <span class="text-[11px] text-slate-400 font-mono-code truncate max-w-[130px] sm:max-w-[140px]" title="${staff.email}">
+                      ${staff.email}
+                    </span>
+                    <button type="button" onclick="copyEmail('${staff.email}')" class="p-0.5 rounded text-slate-400 hover:text-slate-700 transition-colors cursor-pointer shrink-0" title="คัดลอกอีเมล">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <!-- Name & Email -->
-              <div class="mt-3.5">
-                <h3 class="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate" title="${staff.name}">
-                  ${staff.name}
-                </h3>
-                <div class="flex items-center gap-1.5 mt-0.5">
-                  <span class="text-xs text-slate-400 font-mono-code truncate max-w-[190px]" title="${staff.email}">
-                    ${staff.email}
-                  </span>
-                  <button type="button" onclick="copyEmail('${staff.email}')" class="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0" title="คัดลอกอีเมล">
-                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
+              <!-- Action Buttons (Pencil & Trash) -->
+              <div class="flex items-center gap-0.5 shrink-0">
+                <button type="button" onclick="openEditStaffModal('${staff.admin_id}')" class="w-6 h-6 rounded-md text-slate-400 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer" title="แก้ไขสิทธิ์">
+                  <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                </button>
+                <button type="button" onclick="openDeleteModal('${staff.admin_id}')" class="w-6 h-6 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer" title="ระงับสิทธิ์">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
               </div>
             </div>
 
             <!-- Middle: Roles Badges -->
-            <div class="space-y-1.5 pt-1">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">สิทธิ์ในระบบ</span>
-              <div class="flex flex-wrap items-center gap-1.5 min-h-[44px] content-start">
+            <div class="flex flex-col gap-1 pt-0.5">
+              <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400 block">สิทธิ์ในระบบ</span>
+              <div class="flex items-center gap-1 flex-nowrap overflow-hidden">
                 ${roleBadgesHtml}
                 ${moreBadgeHtml}
               </div>
             </div>
 
-            <!-- Bottom: Meta info & Action button -->
-            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-              <span class="text-[10.5px] text-slate-400 font-medium truncate" title="เข้าใช้งานล่าสุด">
+            <!-- Bottom: Meta Info (lastActive) -->
+            <div class="pt-1.5 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[10px] text-slate-400 font-medium truncate" title="เข้าใช้งานล่าสุด">
                 ${staff.lastActive}
               </span>
-
-              <button type="button" onclick="openEditStaffModal('${staff.admin_id}')"
-                class="px-2.5 py-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-900 hover:text-white text-slate-700 text-xs font-semibold shadow-2xs transition-all cursor-pointer inline-flex items-center gap-1">
-                <i data-lucide="edit-3" class="w-3 h-3"></i>
-                <span>แก้ไขสิทธิ์</span>
-              </button>
             </div>
 
           </div>
@@ -1195,153 +1541,104 @@
       container.innerHTML = addCardHtml + memberCardsHtml;
     }
 
-    // Helper: Return Organization Chip
-    function getDomainChip(email) {
-      const e = email.toLowerCase();
-      if (e.endsWith('@nectec.or.th')) {
-        return '<span class="px-2 py-0.5 rounded-lg bg-teal-50 text-teal-700 border border-teal-200/80 text-[10.5px] font-bold shrink-0">NECTEC</span>';
-      } else if (e.endsWith('@bkk.go.th')) {
-        return '<span class="px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[10.5px] font-bold shrink-0">กทม.</span>';
-      } else if (e.endsWith('@traffy.in.th')) {
-        return '<span class="px-2 py-0.5 rounded-lg bg-purple-50 text-purple-700 border border-purple-200/80 text-[10.5px] font-bold shrink-0">Traffy</span>';
-      } else {
-        return '<span class="px-2 py-0.5 rounded-lg bg-slate-100 text-slate-600 border border-slate-200 text-[10.5px] font-bold shrink-0">ภายนอก</span>';
-      }
-    }
-
-    // Helper: Update Stat Micro-Cards & Tab Counts
+    // Helper: Update Stat Clickable Filter Cards
     function updateStatCounters() {
       const totalCount = staffList.length;
       const adminCount = staffList.filter(s => s.roles.includes('admin')).length;
-      const opsCount = staffList.filter(s => s.roles.includes('editor_manage_case') || s.roles.includes('editor_manage_org')).length;
-      const onlineCount = staffList.filter(s => s.isOnline).length;
-
-      document.getElementById('stat-total-count').textContent = totalCount;
-      document.getElementById('stat-admin-count').textContent = adminCount;
-      document.getElementById('stat-ops-count').textContent = opsCount;
-      document.getElementById('stat-online-count').textContent = onlineCount;
-
-      // Update Desktop Tab Counts
-      const countCase = staffList.filter(s => s.roles.includes('editor_manage_case')).length;
-      const countOrg = staffList.filter(s => s.roles.includes('editor_manage_org')).length;
-      const countUser = staffList.filter(s => s.roles.includes('editor_manage_user')).length;
-      const countOther = staffList.filter(s => s.roles.some(r => !['admin', 'editor_manage_case', 'editor_manage_org', 'editor_manage_user'].includes(r))).length;
+      const opsCount = staffList.filter(s => s.roles.some(r => ['editor_manage_case', 'editor_manage_org'].includes(r))).length;
+      const otherCount = staffList.filter(s => s.roles.some(r => !['admin', 'editor_manage_case', 'editor_manage_org'].includes(r))).length;
 
       const setElText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
 
-      setElText('count-all', totalCount);
-      setElText('count-admin', adminCount);
-      setElText('count-case', countCase);
-      setElText('count-org', countOrg);
-      setElText('count-user', countUser);
-      setElText('count-other', countOther);
-
-      // Update Mobile Dropdown Item Counts
-      setElText('mobile-count-all', totalCount);
-      setElText('mobile-count-admin', adminCount);
-      setElText('mobile-count-case', countCase);
-      setElText('mobile-count-org', countOrg);
-      setElText('mobile-count-user', countUser);
-      setElText('mobile-count-other', countOther);
-
-      // Update Mobile Trigger Count
-      const activeCount = currentRoleFilter === 'all' ? totalCount
-                        : currentRoleFilter === 'admin' ? adminCount
-                        : currentRoleFilter === 'editor_manage_case' ? countCase
-                        : currentRoleFilter === 'editor_manage_org' ? countOrg
-                        : currentRoleFilter === 'editor_manage_user' ? countUser
-                        : countOther;
-      setElText('mobile-role-current-count', activeCount);
+      setElText('stat-total-count', totalCount);
+      setElText('stat-admin-count', adminCount);
+      setElText('stat-ops-count', opsCount);
+      setElText('stat-other-count', otherCount);
     }
 
-    // --- 4. Filtering ---
+    // --- 4. Interactive Filtering via Stat Cards & Role Selector ---
     function selectRoleFilter(roleKey) {
       currentRoleFilter = roleKey;
-      const tabs = ['all', 'admin', 'editor_manage_case', 'editor_manage_org', 'editor_manage_user', 'other'];
+      updateStatCardActiveState(roleKey);
 
-      // 1. Update Desktop Tabs
-      tabs.forEach(key => {
-        const btn = document.getElementById('tab-role-' + key);
-        if (!btn) return;
-        if (key === roleKey) {
-          btn.className = 'role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5';
+      // Sync with role dropdown
+      const roleSelect = document.getElementById('role-select-dropdown');
+      if (roleSelect) {
+        if (['all', 'admin', 'editor_manage_case', 'editor_manage_org', 'editor_manage_user', 'editor_manage_flex', 'editor_manage_menu', 'editor_search_duplicate_org', 'editor_file_search'].includes(roleKey)) {
+          roleSelect.value = roleKey;
         } else {
-          btn.className = 'role-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5';
+          roleSelect.value = 'all';
         }
-      });
-
-      // 2. Update Mobile Dropdown Trigger
-      const conf = ROLE_FILTER_CONFIG[roleKey] || ROLE_FILTER_CONFIG.all;
-      const currentLabelEl = document.getElementById('mobile-role-current-label');
-      const currentIconEl = document.getElementById('mobile-role-current-icon');
-      if (currentLabelEl) currentLabelEl.textContent = conf.shortLabel;
-      if (currentIconEl) {
-        currentIconEl.innerHTML = `<i data-lucide="${conf.icon}" class="w-4 h-4"></i>`;
       }
-
-      // 3. Update Mobile Dropdown Item Active State
-      document.querySelectorAll('.mobile-role-item').forEach(item => {
-        const r = item.getAttribute('data-role');
-        if (r === roleKey) {
-          item.className = 'mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer';
-        } else {
-          item.className = 'mobile-role-item flex items-center justify-between gap-2.5 w-full p-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer';
-        }
-      });
 
       renderViews();
     }
 
-    function toggleMobileRoleDropdown(e) {
-      if (e) e.stopPropagation();
-      const menu = document.getElementById('mobile-role-menu');
-      const chevron = document.getElementById('mobile-role-chevron');
-      if (menu) {
-        menu.classList.toggle('hidden');
-        if (chevron) chevron.classList.toggle('rotate-180');
-      }
+    function updateStatCardActiveState(roleKey) {
+      const cards = [
+        { key: 'all', id: 'stat-card-all', badgeId: 'badge-card-all', activeText: 'ดูทั้งหมด', normalText: 'ดูทั้งหมด' },
+        { key: 'admin', id: 'stat-card-admin', badgeId: 'badge-card-admin', activeText: '✓ กำลังเลือก', normalText: 'ดูแลระบบทุกส่วน' },
+        { key: 'ops', id: 'stat-card-ops', badgeId: 'badge-card-ops', activeText: '✓ กำลังเลือก', normalText: 'งานปฏิบัติการหลัก' },
+        { key: 'other', id: 'stat-card-other', badgeId: 'badge-card-other', activeText: '✓ กำลังเลือก', normalText: 'User, Flex, Menu' }
+      ];
+
+      cards.forEach(c => {
+        const el = document.getElementById(c.id);
+        const badge = document.getElementById(c.badgeId);
+        if (!el) return;
+
+        const isSelected = (c.key === roleKey);
+        if (isSelected) {
+          el.className = 'stat-filter-card bg-slate-50/70 rounded-3xl p-4 sm:p-5 border-2 border-slate-900 ring-2 ring-slate-900/10 shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group cursor-pointer';
+          if (badge && c.key !== 'all') {
+            badge.textContent = c.activeText;
+            badge.className = 'text-[10px] sm:text-[11px] font-bold text-white bg-slate-900 px-2 py-0.5 rounded-md';
+          }
+        } else {
+          el.className = 'stat-filter-card bg-white opacity-85 hover:opacity-100 rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between relative overflow-hidden group cursor-pointer';
+          if (badge && c.key !== 'all') {
+            badge.textContent = c.normalText;
+            if (c.key === 'admin') badge.className = 'text-[10px] sm:text-[11px] text-orange-700 bg-orange-50 font-medium px-2 py-0.5 rounded-md';
+            if (c.key === 'ops') badge.className = 'text-[10px] sm:text-[11px] text-blue-700 bg-blue-50 font-medium px-2 py-0.5 rounded-md';
+            if (c.key === 'other') badge.className = 'text-[10px] sm:text-[11px] text-purple-700 bg-purple-50 font-medium px-2 py-0.5 rounded-md';
+          }
+        }
+      });
     }
 
-    function selectMobileRoleTab(roleKey) {
-      selectRoleFilter(roleKey);
-      const menu = document.getElementById('mobile-role-menu');
-      const chevron = document.getElementById('mobile-role-chevron');
-      if (menu) menu.classList.add('hidden');
-      if (chevron) chevron.classList.remove('rotate-180');
-    }
-
-    document.addEventListener('click', function(e) {
-      const wrapper = document.getElementById('mobile-role-dropdown-wrapper');
-      if (wrapper && !wrapper.contains(e.target)) {
-        const menu = document.getElementById('mobile-role-menu');
-        const chevron = document.getElementById('mobile-role-chevron');
-        if (menu) menu.classList.add('hidden');
-        if (chevron) chevron.classList.remove('rotate-180');
+    function onRoleDropdownChange(val) {
+      if (val === 'all') {
+        selectRoleFilter('all');
+      } else {
+        currentRoleFilter = val;
+        // Check if val corresponds to one of the stat cards
+        if (val === 'admin') {
+          updateStatCardActiveState('admin');
+        } else if (['editor_manage_case', 'editor_manage_org'].includes(val)) {
+          updateStatCardActiveState('ops');
+        } else {
+          updateStatCardActiveState('other');
+        }
+        renderViews();
       }
-    });
+    }
 
     function onSearchInput(val) {
       currentSearchTerm = val;
       renderViews();
     }
 
-    function onDomainChange(val) {
-      currentDomainFilter = val;
-      renderViews();
-    }
-
     function resetStaffFilters() {
       currentRoleFilter = 'all';
       currentSearchTerm = '';
-      currentDomainFilter = 'all';
 
       const searchInput = document.getElementById('staff-search-input');
-      const domainSelect = document.getElementById('domain-filter-select');
+      const roleSelect = document.getElementById('role-select-dropdown');
       if (searchInput) searchInput.value = '';
-      if (domainSelect) domainSelect.value = 'all';
+      if (roleSelect) roleSelect.value = 'all';
 
       selectRoleFilter('all');
-      showToast('ล้างตัวกรองทั้งหมดเรียบร้อย');
+      showToast('ล้างตัวกรองเรียบร้อย');
     }
 
     // --- 5. Modal: Add / Edit Staff (Interactive Cards like internal_web) ---
@@ -1398,17 +1695,6 @@
       renderInteractiveRoleCards();
     }
 
-    function appendEmailDomain(domain) {
-      const input = document.getElementById('form-staff-email');
-      if (!input) return;
-      let val = input.value.trim();
-      if (val.includes('@')) {
-        val = val.substring(0, val.indexOf('@'));
-      }
-      input.value = val + domain;
-      input.focus();
-    }
-
     function openAddStaffModal() {
       editingStaffId = null;
       selectedFormRoles = new Set(['editor_manage_case']); // default role
@@ -1418,7 +1704,6 @@
       document.getElementById('form-staff-name').value = '';
       document.getElementById('form-staff-email').value = '';
       document.getElementById('form-staff-email').disabled = false;
-      document.getElementById('domain-helper-chips').classList.remove('hidden');
 
       renderInteractiveRoleCards();
 
@@ -1442,7 +1727,6 @@
       document.getElementById('form-staff-name').value = staff.name;
       document.getElementById('form-staff-email').value = staff.email;
       document.getElementById('form-staff-email').disabled = true;
-      document.getElementById('domain-helper-chips').classList.add('hidden');
 
       renderInteractiveRoleCards();
 
@@ -1626,6 +1910,88 @@
       lucide.createIcons();
     });
     renderViews();
+  
+    // --- 7. Sidebar & Mobile Drawer Interactions (Matching internal-website exactly) ---
+    function openMobileSidebar() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (drawer) drawer.classList.add('open');
+      if (backdrop) backdrop.classList.remove('hidden');
+    }
+
+    function closeMobileSidebar() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (drawer) drawer.classList.remove('open');
+      if (backdrop) backdrop.classList.add('hidden');
+    }
+
+    function toggleSidebarGroup(childrenId, chevronId) {
+      const el = document.getElementById(childrenId);
+      const chevron = document.getElementById(chevronId);
+      if (!el) return;
+      const isHidden = el.classList.contains('hidden');
+      if (isHidden) {
+        el.classList.remove('hidden');
+        if (chevron) chevron.classList.add('nav-chevron-open');
+      } else {
+        el.classList.add('hidden');
+        if (chevron) chevron.classList.remove('nav-chevron-open');
+      }
+    }
+
+    let isDesktopSidebarOpen = true;
+    function toggleDesktopSidebar() {
+      const sidebar = document.getElementById('desktop-sidebar');
+      const toggleHeader = document.getElementById('desktop-toggle-header');
+      const toggleSvg = document.getElementById('desktop-toggle-svg');
+      const expandedCard = document.getElementById('desktop-user-card-expanded');
+      const collapsedCard = document.getElementById('desktop-user-card-collapsed');
+      const toggleBtn = toggleHeader ? toggleHeader.querySelector('.toggle-btn') : null;
+
+      if (!sidebar) return;
+      isDesktopSidebarOpen = !isDesktopSidebarOpen;
+
+      if (isDesktopSidebarOpen) {
+        // Expand to 260px
+        sidebar.classList.remove('sidebar-collapsed');
+        sidebar.classList.add('sidebar-expanded');
+        if (toggleHeader) {
+          toggleHeader.classList.remove('toggle-center');
+          toggleHeader.classList.add('toggle-end');
+        }
+        if (toggleSvg) toggleSvg.classList.remove('toggle-svg-rotated');
+        if (toggleBtn) toggleBtn.setAttribute('title', 'ย่อเมนูนำทาง');
+        if (expandedCard) expandedCard.classList.remove('hidden');
+        if (collapsedCard) collapsedCard.classList.add('hidden');
+
+        // Show labels
+        document.querySelectorAll('#desktop-nav-list .nav-item-label, #desktop-nav-list .nav-group-label, #desktop-nav-list .nav-chevron').forEach(el => el.classList.remove('hidden'));
+        document.querySelectorAll('#desktop-nav-list .nav-item').forEach(el => el.classList.remove('nav-item-collapsed'));
+        document.querySelectorAll('#desktop-nav-list .nav-group-header').forEach(el => el.classList.remove('nav-group-header-collapsed'));
+      } else {
+        // Collapse to 72px
+        sidebar.classList.remove('sidebar-expanded');
+        sidebar.classList.add('sidebar-collapsed');
+        if (toggleHeader) {
+          toggleHeader.classList.remove('toggle-end');
+          toggleHeader.classList.add('toggle-center');
+        }
+        if (toggleSvg) toggleSvg.classList.add('toggle-svg-rotated');
+        if (toggleBtn) toggleBtn.setAttribute('title', 'ขยายเมนูนำทาง');
+        if (expandedCard) expandedCard.classList.add('hidden');
+        if (collapsedCard) collapsedCard.classList.remove('hidden');
+
+        // Hide labels and submenus
+        document.querySelectorAll('#desktop-nav-list .nav-item-label, #desktop-nav-list .nav-group-label, #desktop-nav-list .nav-chevron').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('#desktop-nav-list .nav-item').forEach(el => el.classList.add('nav-item-collapsed'));
+        document.querySelectorAll('#desktop-nav-list .nav-group-header').forEach(el => el.classList.add('nav-group-header-collapsed'));
+        document.querySelectorAll('#desktop-nav-list .nav-children').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('#desktop-nav-list .nav-chevron').forEach(el => el.classList.remove('nav-chevron-open'));
+      }
+      lucide.createIcons();
+    }
+
   </script>
 </body>
 </html>
