@@ -10,6 +10,98 @@
     <link rel="modulepreload" crossorigin href="./assets/xyflow-BzaZ1F1N.js">
     <link rel="modulepreload" crossorigin href="./assets/xlsx-BBWTpfDg.js">
     <link rel="stylesheet" crossorigin href="./assets/index-9BJfhxxd.css">
+    <style>
+      /* Ultra-Modern SaaS Elevation for Visual Org Builder */
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+      body, #root {
+        font-family: 'Noto Sans Thai', 'Prompt', system-ui, -apple-system, sans-serif !important;
+        background-color: #f8fafc !important;
+      }
+
+      /* React Flow Canvas Background */
+      .react-flow__pane {
+        background-color: #f8fafc !important;
+        background-image: radial-gradient(rgba(148, 163, 184, 0.4) 1.25px, transparent 1.25px) !important;
+        background-size: 24px 24px !important;
+      }
+
+      /* Modern Org Node Cards */
+      .react-flow__node {
+        border-radius: 1.25rem !important;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .react-flow__node > div {
+        border-radius: 1.25rem !important;
+        box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
+        border: 1px solid rgba(226, 232, 240, 0.95) !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(10px) !important;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .react-flow__node:hover > div {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.14), 0 0 0 1.5px rgba(59, 130, 246, 0.45) !important;
+        border-color: rgba(59, 130, 246, 0.4) !important;
+      }
+
+      /* Card Bottom Action Buttons */
+      .react-flow__node button:last-child {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.28) !important;
+        transition: all 0.2s ease !important;
+      }
+      .react-flow__node button:last-child:hover {
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.42) !important;
+        transform: scale(1.02) !important;
+      }
+
+      .react-flow__node button:first-child {
+        background: #f8fafc !important;
+        color: #475569 !important;
+        border: 1px solid #e2e8f0 !important;
+        font-weight: 600 !important;
+        border-radius: 10px !important;
+        transition: all 0.2s ease !important;
+      }
+      .react-flow__node button:first-child:hover {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      /* React Flow Connector Points (Handles) */
+      .react-flow__handle {
+        width: 11px !important;
+        height: 11px !important;
+        background: #3b82f6 !important;
+        border: 2px solid #ffffff !important;
+        box-shadow: 0 0 0 2.5px rgba(59, 130, 246, 0.3) !important;
+        transition: all 0.2s ease !important;
+      }
+      .react-flow__handle:hover {
+        transform: scale(1.4) !important;
+        background: #1d4ed8 !important;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.45) !important;
+      }
+
+      /* React Flow Connector Edges */
+      .react-flow__edge-path {
+        stroke: #94a3b8 !important;
+        stroke-width: 2.5 !important;
+      }
+
+      /* Right Settings Drawer */
+      .react-flow__node ~ div {
+        border-radius: 1.5rem !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

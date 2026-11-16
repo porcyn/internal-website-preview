@@ -401,7 +401,7 @@
 
     <!-- Topbar Header -->
     <header class="real-topbar bg-white border-b border-slate-200 px-3 sm:px-4 flex items-center justify-between shrink-0 shadow-xs relative z-30">
-      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+      <div class="flex items-center gap-2.5 text-xs min-w-0 flex-1 mr-2">
         <!-- Hamburger Button (Mobile < 768px matching organizations.html) -->
         <button type="button" onclick="toggleMobileSidebar()"
           class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0 cursor-pointer"
@@ -409,19 +409,23 @@
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
 
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+          <i data-lucide="network" class="w-4 h-4"></i>
+        </div>
 
         <!-- Breadcrumbs (Truncates gracefully on compact widths) -->
-        <div class="flex items-center gap-1.5 min-w-0 truncate text-[11px] sm:text-xs">
+        <div class="flex items-center gap-2 min-w-0 truncate text-[11px] sm:text-xs">
           <span class="text-slate-400 font-medium hidden sm:inline whitespace-nowrap">บัญชี / สร้างหน่วยงาน</span>
           <span class="text-slate-300 hidden sm:inline">/</span>
           <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+          <span class="hidden lg:inline-flex px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-bold border border-blue-200">Interactive Builder</span>
         </div>
       </div>
 
       <!-- Right Actions: Navigation & Help & Fullscreen -->
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
         <a href="./org-tree.html"
-          class="px-2.5 sm:px-3 py-1.5 text-blue-700 bg-white hover:bg-blue-50/80 rounded-xl transition-all inline-flex items-center gap-1.5 cursor-pointer font-semibold text-[11px] sm:text-xs border border-blue-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap"
+          class="px-2.5 sm:px-3 py-1.5 text-blue-700 bg-blue-50/80 hover:bg-blue-100 rounded-xl transition-all inline-flex items-center gap-1.5 cursor-pointer font-semibold text-[11px] sm:text-xs border border-blue-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap"
           title="ดูตัวอย่างผังองค์กร (Org Tree Preview)">
           <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-600"></i>
           <span class="hidden sm:inline">ดูตัวอย่างผัง (Preview)</span>
@@ -445,34 +449,43 @@
       </div>
     </header>
 
-    <!-- Quick-Start Helper Banner -->
-    <div id="quick-start-banner" class="bg-gradient-to-r from-blue-50/95 via-indigo-50/95 to-slate-50/95 backdrop-blur-md border-b border-indigo-100/90 px-3 sm:px-4 py-2 transition-all duration-300 shrink-0">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-2.5">
-        <div class="flex items-start sm:items-center gap-2.5 min-w-0 flex-1">
-          <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-indigo-600 text-white shrink-0 shadow-2xs text-[11px] font-bold">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+    <!-- Quick-Start Helper Banner (Modern Floating Ribbon) -->
+    <div id="quick-start-banner" class="bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-2xs rounded-2xl mx-3 sm:mx-4 my-2 px-3 sm:px-4 py-1.5 transition-all duration-300 shrink-0">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto whitespace-nowrap" style="scrollbar-width: none;">
+        <!-- Left: Steps in 1 Single Line -->
+        <div class="flex items-center gap-2 min-w-0 shrink-0 whitespace-nowrap">
+          <span class="inline-flex items-center justify-center w-5 h-5 rounded-md bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shrink-0 shadow-2xs text-[10px] font-bold">
+            <i data-lucide="sparkles" class="w-3 h-3"></i>
           </span>
-          <div class="flex flex-wrap items-center gap-2 text-xs">
-            <span class="font-bold text-slate-900 hidden sm:inline">วิธีสร้างผัง:</span>
-            <div class="flex items-center gap-2 bg-white/90 border border-blue-100/90 rounded-xl px-2.5 py-1 shadow-2xs">
-              <span class="w-4 h-4 rounded-md bg-blue-600 text-white text-[10px] font-bold inline-flex items-center justify-center shrink-0">1</span>
-              <span class="text-slate-700">นำเข้าข้อมูลที่ปุ่ม <strong class="text-blue-700 font-semibold">"จัดการข้อมูล"</strong> มุมขวาบน</span>
-            </div>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-300 hidden lg:inline"></i>
-            <div class="flex items-center gap-2 bg-white/90 border border-indigo-100/90 rounded-xl px-2.5 py-1 shadow-2xs">
-              <span class="w-4 h-4 rounded-md bg-indigo-600 text-white text-[10px] font-bold inline-flex items-center justify-center shrink-0">2</span>
-              <span class="text-slate-700">กดปุ่ม <strong class="text-indigo-700 font-semibold">"เพิ่มลูก"</strong> บนการ์ดเพื่อแตกกิ่ง</span>
-            </div>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-300 hidden lg:inline"></i>
-            <div class="flex items-center gap-2 bg-white/90 border border-violet-100/90 rounded-xl px-2.5 py-1 shadow-2xs">
-              <span class="w-4 h-4 rounded-md bg-violet-600 text-white text-[10px] font-bold inline-flex items-center justify-center shrink-0">3</span>
-              <span class="text-slate-700">ลากจุดกลมเชื่อมสายงาน หรือกด <strong class="text-violet-700 font-semibold">"แก้ไข"</strong></span>
-            </div>
+          <span class="font-bold text-slate-900 text-xs hidden sm:inline">วิธีใช้งาน:</span>
+
+          <!-- Step 1: เลือกมุมมอง -->
+          <div class="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 rounded-lg px-2 py-0.5 shadow-2xs text-[11px]">
+            <span class="w-4 h-4 rounded-md bg-blue-600 text-white text-[9.5px] font-bold inline-flex items-center justify-center shrink-0">1</span>
+            <span class="text-slate-700">เลือก: <strong class="text-blue-700 font-semibold">[ผังโครงสร้าง]</strong> หรือ <strong class="text-slate-800 font-semibold">[ตาราง]</strong></span>
+          </div>
+
+          <i data-lucide="arrow-right" class="w-3 h-3 text-slate-300 shrink-0"></i>
+
+          <!-- Step 2: แตกกิ่ง -->
+          <div class="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 rounded-lg px-2 py-0.5 shadow-2xs text-[11px]">
+            <span class="w-4 h-4 rounded-md bg-indigo-600 text-white text-[9.5px] font-bold inline-flex items-center justify-center shrink-0">2</span>
+            <span class="text-slate-700">แตกกิ่ง: กดปุ่มสีดำ <strong class="text-indigo-700 font-semibold">[เพิ่มหน่วยงานย่อย]</strong> บนการ์ด</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="w-3 h-3 text-slate-300 shrink-0"></i>
+
+          <!-- Step 3: โยงสายงาน / จัดการข้อมูล -->
+          <div class="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 rounded-lg px-2 py-0.5 shadow-2xs text-[11px]">
+            <span class="w-4 h-4 rounded-md bg-violet-600 text-white text-[9.5px] font-bold inline-flex items-center justify-center shrink-0">3</span>
+            <span class="text-slate-700">โยงสายงาน: ลากจุดกลม / บันทึกที่ <strong class="text-violet-700 font-semibold">[จัดการข้อมูล]</strong></span>
           </div>
         </div>
-        <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
+
+        <!-- Right: Actions in 1 Single Line -->
+        <div class="flex items-center gap-2 shrink-0 whitespace-nowrap pl-2">
           <button type="button" onclick="openBuilderGuideModal()" class="text-[11px] font-semibold text-indigo-700 hover:text-indigo-800 hover:underline inline-flex items-center gap-1 cursor-pointer">
-            ดูคู่มือฉบับเต็ม <i data-lucide="chevron-right" class="w-3 h-3"></i>
+            คู่มือละเอียด <i data-lucide="chevron-right" class="w-3 h-3"></i>
           </button>
           <span class="text-slate-300">|</span>
           <button type="button" onclick="dismissQuickBanner()" class="text-[11px] text-slate-500 hover:text-slate-800 inline-flex items-center gap-1 cursor-pointer" title="ซ่อนแถบแนะนำนี้">
@@ -617,16 +630,15 @@
           </div>
           <div class="space-y-1 text-xs">
             <div class="flex items-center gap-2">
-              <h4 class="font-bold text-slate-900 text-sm">นำเข้าหรือจัดการข้อมูลเดิม</h4>
-              <span class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-[10px] font-semibold">ปุ่ม "จัดการข้อมูล"</span>
+              <h4 class="font-bold text-slate-900 text-sm">เลือกมุมมองที่ต้องการทำงาน</h4>
+              <span class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-[10px] font-semibold">ผังโครงสร้าง vs ตารางข้อมูล</span>
             </div>
             <p class="text-slate-600 leading-relaxed">
-              ที่มุมขวาบนของพื้นที่ทำงาน ให้คลิกปุ่ม <strong class="text-blue-700 font-semibold">"จัดการข้อมูล"</strong> (สีน้ำเงิน) ท่านสามารถ:
+              เครื่องมือนี้มี 2 รูปแบบให้เลือกทำงานตามความสะดวก:
             </p>
             <ul class="list-disc list-inside text-slate-600 space-y-0.5 ml-1">
-              <li><strong>ดาวน์โหลดไฟล์ Excel ตัวอย่าง</strong> เพื่อกรอกข้อมูลสายงานตามแบบฟอร์ม</li>
-              <li><strong>อัปโหลดไฟล์ Excel / CSV</strong> เพื่อสร้างผังอัตโนมัติทันที</li>
-              <li>หรือเลือก <strong>"ล้างข้อมูล"</strong> เพื่อเริ่มสร้างผังใหม่ตั้งแต่ต้น</li>
+              <li><strong>แท็บ [ผังโครงสร้าง]:</strong> แสดงเป็นการ์ดแผนผังต้นไม้ เหมาะกับการลากวางสายงานแบบเห็นภาพรวม</li>
+              <li><strong>แท็บ [ตารางข้อมูล]:</strong> แสดงเป็นตารางรายการ เหมาะกับการอ่านข้อมูลแบบแถวและแก้ไขข้อมูลทีละหน่วยงาน</li>
             </ul>
           </div>
         </div>
@@ -642,12 +654,11 @@
               <span class="px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700 text-[10px] font-semibold">ปุ่ม "เพิ่มลูก"</span>
             </div>
             <p class="text-slate-600 leading-relaxed">
-              ชี้เมาส์ไปที่กล่องหรือการ์ดหน่วยงานที่ต้องการ จะปรากฏปุ่มควบคุมด้านล่างการ์ด:
+              สามารถเริ่มเพิ่มหน่วยงานย่อยได้ทันทีโดยไม่ต้องนำเข้าไฟล์:
             </p>
             <ul class="list-disc list-inside text-slate-600 space-y-0.5 ml-1">
-              <li>คลิกปุ่ม <strong class="text-blue-600 font-semibold">+ เพิ่มลูก</strong> เพื่อสร้างหน่วยงานย่อยภายใต้สังกัดนั้นทันที</li>
-              <li>สามารถคลิกปุ่ม <strong>"แก้ไข"</strong> เพื่อเปลี่ยนชื่อหน่วยงาน, ระบุ Note, หรือตั้งเงื่อนไขส่งต่อ</li>
-              <li>คลิกปุ่ม <strong>"ลบ"</strong> เพื่อลบหน่วยงานและกิ่งย่อยที่ไม่ต้องการ</li>
+              <li><strong>ในผังโครงสร้าง:</strong> กดปุ่มสีดำ <strong class="text-slate-900 font-semibold">"เพิ่มหน่วยงาน"</strong> หรือ <strong class="text-slate-900 font-semibold">"เพิ่มหน่วยงานย่อย"</strong> ที่ด้านล่างของการ์ด</li>
+              <li><strong>ในตารางข้อมูล:</strong> กดปุ่ม <strong class="text-slate-900 font-semibold">"เพิ่มลูก"</strong> ที่คอลัมน์ "การจัดการ" ท้ายแถวนั้นๆ</li>
             </ul>
           </div>
         </div>
@@ -659,16 +670,16 @@
           </div>
           <div class="space-y-1 text-xs">
             <div class="flex items-center gap-2">
-              <h4 class="font-bold text-slate-900 text-sm">โยงสายงานหรือย้ายสังกัด (Drag & Drop)</h4>
-              <span class="px-2 py-0.5 rounded-md bg-violet-100 text-violet-700 text-[10px] font-semibold">ลากเส้นเชื่อม</span>
+              <h4 class="font-bold text-slate-900 text-sm">โยงสายงานหรือแก้ไขรายละเอียด</h4>
+              <span class="px-2 py-0.5 rounded-md bg-violet-100 text-violet-700 text-[10px] font-semibold">ลากเชื่อมโยง / แก้ไข</span>
             </div>
             <p class="text-slate-600 leading-relaxed">
-              ต้องการย้ายสายการบังคับบัญชาหรือโยงสายงานข้ามหน่วยงาน:
+              ปรับแต่งตำแหน่งและคุณสมบัติของหน่วยงาน:
             </p>
             <ul class="list-disc list-inside text-slate-600 space-y-0.5 ml-1">
-              <li>คลิกค้างที่ <strong>จุดวงกลมเชื่อมต่อ (Connector Point)</strong> บนขอบการ์ด</li>
-              <li>ลากเส้นไปปล่อยลงบนการ์ดหน่วยงานปลายทางที่ต้องการให้เป็นหัวหน้าสายงาน</li>
-              <li>ผังจะทำการคำนวณ Level และจัดเรียงตำแหน่งโครงสร้างให้โดยอัตโนมัติ</li>
+              <li><strong>ลากจุดกลม:</strong> ในแท็บผังโครงสร้าง คลิกค้างที่จุดกลมขอบการ์ดแล้วลากไปหาหน่วยงานหัวหน้าสายงาน</li>
+              <li><strong>กดปุ่ม "แก้ไข":</strong> เพื่อเปลี่ยนชื่อหน่วยงาน, ระบุ Note, หรือตั้งเงื่อนไขรับ/ส่งต่อ</li>
+              <li><strong>กดปุ่ม "ลบ":</strong> เพื่อลบหน่วยงานที่ไม่ต้องการ</li>
             </ul>
           </div>
         </div>
@@ -680,15 +691,16 @@
           </div>
           <div class="space-y-1 text-xs">
             <div class="flex items-center gap-2">
-              <h4 class="font-bold text-slate-900 text-sm">ตรวจสอบและบันทึกข้อมูล</h4>
-              <span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-700 text-[10px] font-semibold">ดูตัวอย่าง / บันทึก</span>
+              <h4 class="font-bold text-slate-900 text-sm">บันทึก หรือนำเข้า/ส่งออก (ปุ่มจัดการข้อมูล)</h4>
+              <span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-700 text-[10px] font-semibold">ปุ่ม "จัดการข้อมูล"</span>
             </div>
             <p class="text-slate-600 leading-relaxed">
-              เมื่อทำการจัดผังเรียบร้อยแล้ว:
+              คลิกปุ่ม <strong class="text-slate-800 font-semibold">"จัดการข้อมูล"</strong> ที่มุมขวาบนเมื่อต้องการ:
             </p>
             <ul class="list-disc list-inside text-slate-600 space-y-0.5 ml-1">
-              <li>กดปุ่ม <strong class="text-blue-700 font-semibold">"ดูตัวอย่างผัง (Preview)"</strong> ที่แถบด้านบน เพื่อตรวจเช็คความถูกต้องในมุมมองภาพรวมต้นไม้</li>
-              <li>กดปุ่ม <strong>"บันทึกแบบร่าง"</strong> หรือ <strong>"ส่งออก"</strong> ข้อมูลผังสายงานกลับสู่ระบบ Traffy Fondue</li>
+              <li><strong>บันทึกแบบร่าง (Save Draft):</strong> บันทึกผังที่ทำค้างไว้ในระบบ</li>
+              <li><strong>ส่งออกเป็น Excel / CSV:</strong> นำข้อมูลผังสายงานออกไปใช้งานต่อ</li>
+              <li><strong>นำเข้าข้อมูล (Import):</strong> สำหรับผู้ที่มีไฟล์ Excel/CSV เดิมอยู่แล้วและต้องการโหลดเข้ามาสร้างผัง</li>
             </ul>
           </div>
         </div>
