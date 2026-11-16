@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Visual Org Builder</title>
-    <script type="module" crossorigin src="./assets/index-CmZFDMwO.js?v=38"></script>
+    <script type="module" crossorigin src="./assets/index-CmZFDMwO.js?v=39"></script>
     <link rel="modulepreload" crossorigin href="./assets/vendor-BrOzYggY.js">
     <link rel="modulepreload" crossorigin href="./assets/xyflow-BzaZ1F1N.js">
     <link rel="modulepreload" crossorigin href="./assets/xlsx-BBWTpfDg.js">
@@ -175,6 +175,16 @@
         white-space: nowrap !important;
       }
 
+      /* Organization Name Column: Keep full text on 1 single line */
+      table td:nth-child(2) {
+        min-width: 220px !important;
+        white-space: nowrap !important;
+      }
+      table td:nth-child(2) span {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+      }
+
       /* Guide Modal Header Close Button: Pin strictly to top-right corner */
       button[aria-label="ปิดคำแนะนำ"],
       button[aria-label="ปิดหน้าต่างนำเข้า"],
@@ -183,13 +193,6 @@
         top: 0.875rem !important;
         right: 0.875rem !important;
         z-index: 50 !important;
-      }
-
-      /* Guarantee clearance so title and description never collide with close button */
-      div[class*="bg-gradient-to-r"] h2,
-      div[class*="bg-gradient-to-r"] p {
-        padding-right: 3rem !important;
-        word-break: break-word !important;
       }
 
       @media (min-width: 768px) {
