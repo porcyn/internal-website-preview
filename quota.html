@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เพิ่มโควต้า - Traffy Fondue Internal Website</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Noto Sans Thai & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /*
+      Breakpoints (WCAG 1.4.10 & Internal Website Standard):
+        mobile   ≤ 767px    @media (max-width: 767px)
+        tablet   768–1023px @media (min-width: 768px) and (max-width: 1023px)
+        desktop  ≥ 1024px   @media (min-width: 1024px)
+    */
+    :root {
+      --font-family: "Noto Sans Thai", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --page-min-width: 320px;
+      --content-max-width: 1536px;
+      --page-padding: 32px;
+      --sidebar-width: 260px;
+      --sidebar-collapsed-width: 72px;
+      --topbar-height: 64px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root {
+        --page-padding: 24px;
+      }
+    }
+
+        /* DashboardLayout Content Container */
+    #content-container {
+      padding: var(--page-padding) !important;
+      box-sizing: border-box;
+    }
+    .dashboard-body,
+    #content-container > div,
+    #content-container > section {
+      width: 100%;
+      max-width: var(--content-max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --page-padding: 16px;
+        --topbar-height: 56px;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-width: var(--page-min-width);
+      font-family: var(--font-family);
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
+    }
+
+    /* REAL PROJECT SIDEBAR STYLES */
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .real-user-card {
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+    .real-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .real-menu-active {
+      background: #111827 !important;
+      color: #ffffff !important;
+    }
+    .real-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .real-children-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px solid #e2e8f0;
+    }
+    .real-nested-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #334155;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-nested-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .real-action-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .real-action-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+      line-height: 1.2;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .real-action-badge:hover {
+      background: #cbd5e1;
+      color: #0f172a;
+    }
+    .real-nested-item.real-nested-active .real-action-badge,
+    .real-nested-item.real-menu-active .real-action-badge {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+    }
+    .real-nested-item.real-nested-active .real-action-badge:hover,
+    .real-nested-item.real-menu-active .real-action-badge:hover {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    /* REAL PROJECT TOPBAR STYLES */
+    .real-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--page-padding);
+      flex-shrink: 0;
+    }
+    .real-topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .real-topbar-btn:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .real-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (max-width: 767px) {
+      .real-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 280px;
+        max-width: 84vw;
+        height: 100vh;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transform: translateX(-100%);
+      }
+      .real-sidebar.sidebar-open {
+        transform: translateX(0) !important;
+      }
+      .real-topbar {
+        padding: 0 var(--page-padding);
+        height: var(--topbar-height);
+      }
+    }
+    .real-nested-item.real-nested-active,
+    .real-nested-item.real-nested-active:hover {
+      position: relative;
+      background: #52525b !important;
+      color: #ffffff !important;
+    }
+    .real-nested-item.real-nested-active::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #111827;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body class="flex h-screen overflow-hidden text-xs">
+
+  <!-- 1. SIDEBAR NAVIGATION -->
+    <!-- Mobile Drawer Backdrop -->
+  <div id="mobile-sidebar-backdrop" onclick="closeMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden md:hidden transition-opacity duration-300"></div>
+
+  <!-- Main Sidebar (Pinned on Desktop, Slide-over Drawer on Mobile) -->
+  <aside id="main-sidebar" class="real-sidebar select-none">
+    
+    <!-- User Card -->
+    <div class="real-user-card">
+      <div class="flex items-center gap-2.5">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="User Profile"
+          class="w-9 h-9 rounded-full object-cover bg-slate-200 flex-shrink-0"
+        />
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-sm font-semibold text-slate-900 truncate leading-tight">Chayanid (Admin)</p>
+          <p class="m-0 text-xs text-slate-500 truncate">chayanid@nectec.or.th</p>
+        </div>
+        <!-- Close button on Mobile Drawer -->
+        <button type="button" onclick="closeMobileSidebar()" class="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="ปิดเมนู">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <!-- Logout on Desktop -->
+        <button type="button" class="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 transition-colors" title="ออกจากระบบ">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-1 mt-2">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">
+          ADMIN
+        </span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700">
+          EDITOR
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+            <nav class="flex flex-col gap-0.5">
+      <!-- 1. จัดการหน่วยงาน -->
+      <a href="./organizations.html" class="real-menu-item ">
+        <i data-lucide="building-2" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+      </a>
+
+      <!-- 2. จัดการ Case -->
+      <a href="./cases.html" class="real-menu-item mt-1 ">
+        <i data-lucide="file-text" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Case</span>
+      </a>
+
+      <!-- ปลดล็อกและโควต้า -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="lock-open" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">ปลดล็อกและโควต้า</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./reset-otp.html" class="real-nested-item">
+            <span class="flex-1 truncate">Reset OTP</span>
+          </a>
+          <a href="./unblock-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">ปลดบล็อกบัญชี</span>
+          </a>
+          <a href="./quota.html" class="real-nested-item real-nested-active font-medium" aria-current="page">
+            <span class="flex-1 truncate">เพิ่มโควต้า</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Flex Message -->
+      <a href="./flex-message.html" class="real-menu-item mt-1 ">
+        <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">Flex Message</span>
+      </a>
+
+<!-- 6. จัดการแชทบอท (Bot Studio) -->
+      <a href="./bot-studio.html" class="real-menu-item mt-1">
+        <i data-lucide="bot" class="w-[18px] h-[18px] shrink-0"></i>
+        <span class="flex-1 truncate">จัดการ Line Bot</span>
+      </a>
+
+      <!-- 6. รายงานและสถิติ (Group with Children: สถิติ Rich Menu) -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="chart-column" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">รายงานและสถิติ</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./org-group-stats.html" class="real-nested-item ">
+            <span class="flex-1 truncate">สถิติกลุ่มหน่วยงาน</span>
+          </a>
+          <a href="./richmenu-stats.html" class="real-nested-item ">
+            <span class="flex-1 truncate">สถิติ Rich Menu</span>
+          </a>
+          <a href="./bkk-assessment.html" class="real-nested-item" title="คำนวณคะแนนคุณภาพแต่ละเขตและหน่วยงานในกลุ่มเพื่อนชัชชาติ เพื่อใช้ประเมิน กทม.">
+            <span class="flex-1 truncate">ประเมินคุณภาพ กทม.</span>
+            <span class="real-action-group">
+              <span class="real-action-badge" title="ดาวน์โหลด CSV" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php?output=csv', '_blank')">[CSV]</span>
+              <span class="real-action-badge" title="เปิดดู JSON API" onclick="event.stopPropagation(); window.open('https://dashboard.traffy.in.th/api_for_bkk_assessment.php', '_blank')">[JSON]</span>
+            </span>
+          </a>
+          <a href="./impact.html" class="real-nested-item">
+            <span class="flex-1 truncate">คำนวณ Impact</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- บัญชี / สร้างหน่วยงาน -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="building" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">บัญชี / สร้างหน่วยงาน</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./create-official-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ</span>
+          </a>
+          <a href="./create-org-chart.html" class="real-nested-item">
+            <span class="flex-1 truncate">สร้างบัญชีทางการ + ผูกผังองค์กร</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. จัดการผู้ใช้ -->
+      <a href="./users.html" class="real-menu-item mt-1 ">
+        <i data-lucide="users" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">จัดการผู้ใช้</span>
+      </a>
+
+      <!-- ประวัติการแก้ไข -->
+      <a href="./audit-logs.html" class="real-menu-item mt-1">
+        <i data-lucide="history" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">ประวัติการแก้ไข</span>
+      </a>
+
+      <!-- 7. FAQ -->
+      <a href="./faq.html" class="real-menu-item mt-1 ">
+        <i data-lucide="circle-help" class="w-[18px] h-[18px] flex-shrink-0"></i>
+        <span class="flex-1 truncate">FAQ</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- 2. MAIN CONTENT AREA -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden">
+    
+    <!-- Topbar Header -->
+    <header class="real-topbar">
+      <!-- Left: Mobile Hamburger + Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs min-w-0 flex-1 mr-2">
+        <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+        <span class="text-slate-400 font-medium whitespace-nowrap">ปลดล็อกและโควต้า</span>
+        <span class="text-slate-300">/</span>
+        <span class="font-bold text-slate-800 truncate">เพิ่มโควต้า</span>
+      </div>
+
+
+    </header>
+
+    <!-- Scrollable Content Body (หน้าโล่งเปล่าๆ รอเพื่อนมาแปะโค้ด) -->
+    <div class="flex-1 overflow-y-auto" id="content-container">
+
+      <div class="w-full mx-auto">
+
+        <!-- View 1: เลือกหน่วยงาน -->
+        <section id="view-search" class="bg-white p-4 sm:p-6 rounded-[20px] sm:rounded-3xl border border-slate-200 shadow-sm flex flex-col gap-5">
+          <header class="flex items-center gap-3">
+            <span class="w-11 h-11 flex-shrink-0 flex items-center justify-center text-white bg-slate-900 rounded-2xl shadow"><i data-lucide="gauge" class="w-5 h-5"></i></span>
+            <div>
+              <h1 class="m-0 text-lg font-bold leading-tight text-slate-900">เพิ่มโควต้า</h1>
+              <p class="mt-1 mb-0 text-xs text-slate-500">ค้นหาหน่วยงานด้วยชื่อหรือรหัส Group ID แล้วเลือกโควต้าที่จะเพิ่ม</p>
+            </div>
+          </header>
+
+          <form onsubmit="searchOrg(event)">
+            <label for="org-search" class="block mb-1.5 text-xs font-semibold text-slate-700">พิมพ์ชื่อ หรือรหัส ID หน่วยงาน</label>
+            <div class="flex gap-2">
+              <div class="relative flex-1 min-w-0">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                <input id="org-search" type="text" autocomplete="off" placeholder="เช่น 151 หรือ Traffy @ ITS Lab2" oninput="document.getElementById('org-search-btn').disabled = !this.value.trim()" class="w-full pl-10 pr-4 py-2.5 text-[13px] text-slate-800 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none transition-all">
+              </div>
+              <button id="org-search-btn" type="submit" disabled class="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 text-[13px] font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors">
+                <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                <span>ค้นหา</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="pt-4 border-t border-slate-100">
+            <h2 id="org-list-title" class="m-0 mb-3 text-xs font-bold text-slate-600">หน่วยงานที่เปิดล่าสุด</h2>
+            <ul id="org-list" class="grid grid-cols-1 lg:grid-cols-2 gap-3 m-0 p-0 list-none"></ul>
+            <p id="org-list-empty" class="hidden m-0 py-6 px-4 text-xs text-center text-slate-400 bg-slate-50 border border-dashed border-slate-200 rounded-2xl">ไม่พบหน่วยงานที่ตรงกับคำค้นหา</p>
+          </div>
+        </section>
+
+        <!-- View 2: เลือกโควต้าและจำนวน -->
+        <div id="view-form" class="hidden">
+          <div class="flex flex-col gap-5">
+            <section class="flex flex-wrap items-center gap-3.5 px-5 py-4 bg-white border border-slate-200 rounded-[20px] shadow-sm">
+              <span class="w-12 h-12 flex-shrink-0 flex items-center justify-center p-1.5 bg-slate-50 border border-slate-200 rounded-[14px] overflow-hidden">
+                <img src="https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png" alt="" class="w-full h-full object-contain">
+              </span>
+              <div class="flex-1 min-w-[10rem]">
+                <h1 id="org-name" class="m-0 text-base font-bold leading-snug text-slate-900 truncate"></h1>
+                <p id="org-meta" class="mt-0.5 mb-0 text-xs text-slate-500"></p>
+              </div>
+              <button type="button" onclick="changeOrg()" class="w-full sm:w-auto px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 cursor-pointer transition-colors">เปลี่ยนหน่วยงาน</button>
+            </section>
+
+            <section class="flex flex-col gap-4 p-4 sm:p-6 bg-white border border-slate-200 rounded-[20px] sm:rounded-3xl shadow-sm">
+              <h2 class="flex items-center gap-2 m-0 text-sm font-bold text-slate-900">
+                <span class="w-6 h-6 flex-shrink-0 inline-flex items-center justify-center text-xs font-bold text-white bg-slate-900 rounded-full">1</span>
+                เลือกโควต้าที่จะเพิ่ม
+              </h2>
+              <div id="type-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup" aria-label="ประเภทโควต้า"></div>
+
+              <h2 class="flex items-center gap-2 m-0 mt-2 text-sm font-bold text-slate-900">
+                <span class="w-6 h-6 flex-shrink-0 inline-flex items-center justify-center text-xs font-bold text-white bg-slate-900 rounded-full">2</span>
+                จำนวนที่จะเพิ่ม
+              </h2>
+              <div id="amount-chips" class="flex flex-wrap gap-2" role="radiogroup" aria-label="จำนวนที่จะเพิ่ม"></div>
+              <label id="custom-field" class="hidden items-center gap-2 max-w-xs">
+                <span class="flex-shrink-0 text-xs font-semibold text-slate-700">จำนวน</span>
+                <input id="custom-amount" type="text" inputmode="numeric" placeholder="เช่น 300" oninput="onCustomAmount(this)" class="flex-1 min-w-0 px-3 py-2 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none">
+                <span id="custom-unit" class="flex-shrink-0 text-xs text-slate-500">ครั้ง</span>
+              </label>
+
+              <footer class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-2 px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div id="quota-summary" class="text-sm text-slate-700"></div>
+                <button id="quota-confirm-btn" type="button" onclick="openQuotaModal()" disabled class="flex-shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-xl disabled:bg-slate-300 disabled:cursor-not-allowed cursor-pointer transition-colors">
+                  <i data-lucide="check" class="w-4 h-4"></i>
+                  <span>ยืนยันเพิ่มโควต้า</span>
+                </button>
+              </footer>
+            </section>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Confirm Modal -->
+  <div id="confirmModal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onclick="closeConfirmModal()"></div>
+    <div id="confirmModalContent" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 w-full max-w-sm mx-4 relative z-10 text-center opacity-0 transform scale-95 transition-all">
+      <button type="button" onclick="closeConfirmModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors cursor-pointer" aria-label="ปิด">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="w-16 h-16 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mx-auto mb-4 border-4 border-amber-100">
+        <i data-lucide="gauge" class="w-7 h-7"></i>
+      </div>
+      <h3 id="confirmModalTitle" class="text-xl font-bold text-slate-900 mb-2">ยืนยันเพิ่มโควต้า</h3>
+      <p id="confirmModalText" class="text-sm text-slate-500 mb-6"></p>
+      <div class="flex gap-3">
+        <button type="button" onclick="closeConfirmModal()" class="flex-1 py-3 rounded-xl font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all text-sm cursor-pointer">ยกเลิก</button>
+        <button type="button" onclick="confirmAction()" class="flex-1 py-3 rounded-xl font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-all text-sm cursor-pointer">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div id="toast-box" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
+    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 text-xs font-medium border border-slate-800">
+      <i data-lucide="circle-check" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toast-message">แจ้งเตือน</span>
+    </div>
+  </div>
+
+  <script>
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (!sidebar || !backdrop) return;
+      const isOpen = sidebar.classList.contains('sidebar-open');
+      if (isOpen) {
+        closeMobileSidebar();
+      } else {
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (sidebar) sidebar.classList.remove('sidebar-open');
+      if (backdrop) backdrop.classList.add('hidden');
+    }
+
+    lucide.createIcons();
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast-box');
+      const msgEl = document.getElementById('toast-message');
+      if (!toast || !msgEl) return;
+
+      msgEl.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2200);
+    }
+  </script>
+  <script>
+    function openConfirmModal(text) {
+      document.getElementById('confirmModalText').textContent = text;
+      const modal = document.getElementById('confirmModal');
+      const content = document.getElementById('confirmModalContent');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      requestAnimationFrame(() => {
+        content.classList.remove('opacity-0', 'scale-95');
+        content.classList.add('opacity-100', 'scale-100');
+      });
+    }
+
+    function closeConfirmModal() {
+      const modal = document.getElementById('confirmModal');
+      const content = document.getElementById('confirmModalContent');
+      content.classList.remove('opacity-100', 'scale-100');
+      content.classList.add('opacity-0', 'scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }, 150);
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeConfirmModal();
+    });
+
+    const ORG_LOGO = 'https://storage.googleapis.com/traffy_public_bucket/traffy_logo/Image_fondue_logo.png';
+    const MOCK_ORGS = [
+      { id: 151, name: 'Traffy @ ITS Lab2', province: 'ปทุมธานี' },
+      { id: 2001, name: 'สำนักงานเขตปทุมวัน', province: 'กรุงเทพมหานคร' },
+      { id: 3150, name: 'เทศบาลนครนนทบุรี', province: 'นนทบุรี' },
+      { id: 4321, name: 'องค์การบริหารส่วนจังหวัดเชียงใหม่', province: 'เชียงใหม่' },
+      { id: 5102, name: 'สำนักงานเขตบางรัก', province: 'กรุงเทพมหานคร' },
+    ];
+    const RECENT_ORG_IDS = [151, 2001, 3150];
+    const QUOTA_TYPES = [
+      { key: 'exchange_api', label: 'Exchange API', description: 'จำนวนครั้งที่หน่วยงานเรียกใช้ Exchange API ได้', unit: 'ครั้ง', icon: 'arrow-left-right' },
+      { key: 'noti_news', label: 'Notification News', description: 'จำนวนครั้งที่ส่งข่าวสารและการแจ้งเตือนได้ (fondue-alert ใน Citydata)', unit: 'ครั้ง', icon: 'megaphone' },
+    ];
+    const QUOTA_AMOUNTS = [200, 500, 1000];
+    const quota = { org: null, typeKey: null, amount: null, isCustom: false };
+
+    const formatNumber = (value) => value.toLocaleString('th-TH');
+    const selectedType = () => QUOTA_TYPES.find((type) => type.key === quota.typeKey);
+
+    function renderOrgList(orgs, title) {
+      document.getElementById('org-list-title').textContent = title;
+      document.getElementById('org-list').innerHTML = orgs.map((org) => `
+        <li>
+          <button type="button" onclick="selectOrg(${org.id})" class="w-full flex items-center gap-3 px-4 py-3.5 text-left bg-slate-50 border border-slate-200 rounded-2xl hover:bg-white hover:border-slate-400 hover:shadow-sm cursor-pointer transition-all">
+            <span class="w-9 h-9 flex-shrink-0 flex items-center justify-center p-1 bg-white border border-slate-200 rounded-xl overflow-hidden"><img src="${ORG_LOGO}" alt="" class="w-full h-full object-contain"></span>
+            <span class="flex-1 min-w-0 flex flex-col">
+              <span class="text-[13px] font-bold text-slate-900 truncate">${org.name}</span>
+              <span class="mt-0.5 text-[11px] text-slate-500">ID: ${org.id} • ${org.province}</span>
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0 text-slate-400"></i>
+          </button>
+        </li>`).join('');
+      document.getElementById('org-list-empty').classList.toggle('hidden', orgs.length > 0);
+      lucide.createIcons();
+    }
+
+    function searchOrg(event) {
+      event.preventDefault();
+      const query = document.getElementById('org-search').value.trim();
+      if (!query) return;
+      const lower = query.toLowerCase();
+      const found = MOCK_ORGS.filter((org) => String(org.id) === query || org.name.toLowerCase().includes(lower));
+      if (found.length === 1) {
+        selectOrg(found[0].id);
+        return;
+      }
+      renderOrgList(found, `ผลการค้นหา (${found.length} หน่วยงาน)`);
+    }
+
+    function selectOrg(id) {
+      Object.assign(quota, { org: MOCK_ORGS.find((org) => org.id === id), typeKey: null, amount: null, isCustom: false });
+      document.getElementById('custom-amount').value = '';
+      document.getElementById('org-name').textContent = quota.org.name;
+      document.getElementById('org-meta').textContent = `ID: ${quota.org.id} • ${quota.org.province}`;
+      document.getElementById('view-search').classList.add('hidden');
+      document.getElementById('view-form').classList.remove('hidden');
+      renderTypes();
+      renderAmounts();
+      renderSummary();
+    }
+
+    function changeOrg() {
+      quota.org = null;
+      document.getElementById('view-form').classList.add('hidden');
+      document.getElementById('view-search').classList.remove('hidden');
+    }
+
+    function renderTypes() {
+      document.getElementById('type-grid').innerHTML = QUOTA_TYPES.map((type) => {
+        const selected = type.key === quota.typeKey;
+        return `
+          <button type="button" role="radio" aria-checked="${selected}" onclick="pickType('${type.key}')" class="w-full flex flex-col gap-1.5 p-4 text-left rounded-2xl border cursor-pointer transition-all ${selected ? 'bg-green-50 border-green-600 ring-1 ring-green-600' : 'bg-white border-slate-200 hover:border-slate-400'}">
+            <span class="flex items-center justify-between mb-1">
+              <span class="w-9 h-9 flex items-center justify-center rounded-xl ${selected ? 'text-white bg-green-600' : 'text-slate-700 bg-slate-100'}"><i data-lucide="${type.icon}" class="w-[18px] h-[18px]"></i></span>
+              <span class="w-5 h-5 flex items-center justify-center rounded-full border-[1.5px] text-white ${selected ? 'bg-green-600 border-green-600' : 'border-slate-300'}">${selected ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}</span>
+            </span>
+            <span class="text-sm font-bold text-slate-900">${type.label}</span>
+            <span class="text-xs leading-snug text-slate-500">${type.description}</span>
+          </button>`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function renderAmounts() {
+      const chipClass = (active) => `min-w-[5.5rem] px-4 py-2 text-sm font-semibold rounded-full border cursor-pointer transition-colors tabular-nums ${active ? 'text-white bg-slate-900 border-slate-900' : 'text-slate-700 bg-white border-slate-200 hover:border-slate-400'}`;
+      const presets = QUOTA_AMOUNTS.map((value) => {
+        const active = !quota.isCustom && quota.amount === value;
+        return `<button type="button" role="radio" aria-checked="${active}" onclick="pickAmount(${value})" class="${chipClass(active)}">+${formatNumber(value)}</button>`;
+      }).join('');
+      document.getElementById('amount-chips').innerHTML = `${presets}<button type="button" role="radio" aria-checked="${quota.isCustom}" onclick="pickCustom()" class="${chipClass(quota.isCustom)}">กำหนดเอง</button>`;
+
+      const field = document.getElementById('custom-field');
+      field.classList.toggle('hidden', !quota.isCustom);
+      field.classList.toggle('flex', quota.isCustom);
+    }
+
+    function renderSummary() {
+      const type = selectedType();
+      const isReady = Boolean(type && quota.amount > 0);
+      document.getElementById('custom-unit').textContent = type ? type.unit : 'ครั้ง';
+      document.getElementById('quota-summary').innerHTML = isReady
+        ? `<span class="block text-[11px] font-semibold text-slate-500">${type.label}</span>เพิ่ม <strong class="text-lg text-slate-900 tabular-nums">${formatNumber(quota.amount)}</strong> ${type.unit}`
+        : '<span class="text-xs text-slate-400">เลือกประเภทโควต้าและจำนวนก่อนกดยืนยัน</span>';
+      document.getElementById('quota-confirm-btn').disabled = !isReady;
+    }
+
+    function pickType(key) {
+      quota.typeKey = key;
+      renderTypes();
+      renderSummary();
+    }
+
+    function pickAmount(value) {
+      quota.isCustom = false;
+      quota.amount = value;
+      renderAmounts();
+      renderSummary();
+    }
+
+    function pickCustom() {
+      quota.isCustom = true;
+      quota.amount = Number(document.getElementById('custom-amount').value) || null;
+      renderAmounts();
+      renderSummary();
+      document.getElementById('custom-amount').focus();
+    }
+
+    function onCustomAmount(input) {
+      input.value = input.value.replace(/\D/g, '').slice(0, 6);
+      quota.amount = Number(input.value) || null;
+      renderSummary();
+    }
+
+    function openQuotaModal() {
+      const type = selectedType();
+      openConfirmModal(`เพิ่ม ${type.label} ${formatNumber(quota.amount)} ${type.unit} ให้ ${quota.org.name}`);
+    }
+
+    function confirmAction() {
+      const type = selectedType();
+      closeConfirmModal();
+      showToast(`เพิ่ม ${type.label} ${formatNumber(quota.amount)} ${type.unit} ให้ ${quota.org.name} แล้ว`);
+      quota.amount = null;
+      quota.isCustom = false;
+      document.getElementById('custom-amount').value = '';
+      renderAmounts();
+      renderSummary();
+    }
+
+    renderOrgList(MOCK_ORGS.filter((org) => RECENT_ORG_IDS.includes(org.id)), 'หน่วยงานที่เปิดล่าสุด');
+  </script>
+</body>
+</html>

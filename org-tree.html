@@ -474,10 +474,25 @@
         <i data-lucide="users" class="w-[19px] h-[19px] shrink-0"></i>
         <span class="nav-item-label">จัดการผู้ใช้</span>
       </a>
-      <a href="./reset-otp.html" class="nav-item">
-        <i data-lucide="key-round" class="w-[19px] h-[19px] shrink-0"></i>
-        <span class="nav-item-label">Reset OTP</span>
-      </a>
+      <!-- ปลดล็อกและโควต้า -->
+      <div class="nav-group">
+        <div class="nav-group-header" id="mobile-group-unlock-header" onclick="toggleSidebarGroup('mobile-group-unlock', 'mobile-chevron-group-unlock')" title="ปลดล็อกและโควต้า">
+          <i data-lucide="lock-open" class="w-[18px] h-[18px] shrink-0"></i>
+          <span class="nav-group-label">ปลดล็อกและโควต้า</span>
+          <i data-lucide="chevron-down" class="nav-chevron w-4 h-4" id="mobile-chevron-group-unlock"></i>
+        </div>
+        <div class="nav-children hidden" id="mobile-group-unlock">
+          <a href="./reset-otp.html" class="nav-nested-item">
+            <span class="flex-1 truncate">Reset OTP</span>
+          </a>
+          <a href="./unblock-account.html" class="nav-nested-item">
+            <span class="flex-1 truncate">ปลดบล็อกบัญชี</span>
+          </a>
+          <a href="./quota.html" class="nav-nested-item">
+            <span class="flex-1 truncate">เพิ่มโควต้า</span>
+          </a>
+        </div>
+      </div>
       <a href="./flex-message.html" class="nav-item">
         <i data-lucide="message-square" class="w-[19px] h-[19px] shrink-0"></i>
         <span class="nav-item-label">Flex Message</span>
@@ -580,10 +595,25 @@
         <i data-lucide="users" class="w-[19px] h-[19px] shrink-0"></i>
         <span class="nav-item-label">จัดการผู้ใช้</span>
       </a>
-      <a href="./reset-otp.html" class="nav-item" title="Reset OTP">
-        <i data-lucide="key-round" class="w-[19px] h-[19px] shrink-0"></i>
-        <span class="nav-item-label">Reset OTP</span>
-      </a>
+      <!-- ปลดล็อกและโควต้า -->
+      <div class="nav-group">
+        <div class="nav-group-header" id="desktop-group-unlock-header" onclick="toggleSidebarGroup('desktop-group-unlock', 'desktop-chevron-group-unlock')" title="ปลดล็อกและโควต้า">
+          <i data-lucide="lock-open" class="w-[18px] h-[18px] shrink-0"></i>
+          <span class="nav-group-label">ปลดล็อกและโควต้า</span>
+          <i data-lucide="chevron-down" class="nav-chevron w-4 h-4" id="desktop-chevron-group-unlock"></i>
+        </div>
+        <div class="nav-children hidden" id="desktop-group-unlock">
+          <a href="./reset-otp.html" class="nav-nested-item">
+            <span class="flex-1 truncate">Reset OTP</span>
+          </a>
+          <a href="./unblock-account.html" class="nav-nested-item">
+            <span class="flex-1 truncate">ปลดบล็อกบัญชี</span>
+          </a>
+          <a href="./quota.html" class="nav-nested-item">
+            <span class="flex-1 truncate">เพิ่มโควต้า</span>
+          </a>
+        </div>
+      </div>
       <a href="./flex-message.html" class="nav-item" title="Flex Message">
         <i data-lucide="message-square" class="w-[19px] h-[19px] shrink-0"></i>
         <span class="nav-item-label">Flex Message</span>

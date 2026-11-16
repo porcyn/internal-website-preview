@@ -237,6 +237,23 @@
       background: #f8fafc;
       color: #0f172a;
     }
+    .real-nested-item.real-nested-active,
+    .real-nested-item.real-nested-active:hover {
+      position: relative;
+      background: #52525b !important;
+      color: #ffffff !important;
+    }
+    .real-nested-item.real-nested-active::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #111827;
+      transform: translateY(-50%);
+    }
   </style>
 </head>
 <body class="flex h-screen overflow-hidden text-xs">
@@ -281,11 +298,24 @@
         <span class="flex-1 truncate">จัดการ Case</span>
       </a>
 
-      <!-- Reset OTP (ACTIVE) -->
-      <a href="./reset-otp.html" class="real-menu-item real-menu-active mt-1">
-        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">Reset OTP</span>
-      </a>
+      <!-- ปลดล็อกและโควต้า -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="lock-open" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">ปลดล็อกและโควต้า</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./reset-otp.html" class="real-nested-item real-nested-active font-medium" aria-current="page">
+            <span class="flex-1 truncate">Reset OTP</span>
+          </a>
+          <a href="./unblock-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">ปลดบล็อกบัญชี</span>
+          </a>
+          <a href="./quota.html" class="real-nested-item">
+            <span class="flex-1 truncate">เพิ่มโควต้า</span>
+          </a>
+        </div>
+      </div>
 
       <a href="./flex-message.html" class="real-menu-item mt-1">
         <i data-lucide="message-square" class="w-[18px] h-[18px] flex-shrink-0"></i>
@@ -365,7 +395,7 @@
         <button type="button" onclick="toggleMobileSidebar()" class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0" title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-        <span class="text-slate-400 font-medium whitespace-nowrap">Traffy Backstage</span>
+        <span class="text-slate-400 font-medium whitespace-nowrap">ปลดล็อกและโควต้า</span>
         <span class="text-slate-300">/</span>
         <span class="font-bold text-slate-800 truncate">Reset OTP</span>
       </div>

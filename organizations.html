@@ -398,11 +398,24 @@
         <span class="flex-1 truncate">จัดการ Case</span>
       </a>
 
-      <!-- 3. Reset OTP -->
-      <a href="./reset-otp.html" class="real-menu-item mt-1">
-        <i data-lucide="key-round" class="w-[18px] h-[18px] flex-shrink-0"></i>
-        <span class="flex-1 truncate">Reset OTP</span>
-      </a>
+      <!-- ปลดล็อกและโควต้า -->
+      <div class="flex flex-col gap-1 mt-1">
+        <div class="real-group-header">
+          <i data-lucide="lock-open" class="w-[18px] h-[18px] flex-shrink-0"></i>
+          <span class="flex-1 truncate">ปลดล็อกและโควต้า</span>
+        </div>
+        <div class="real-children-group">
+          <a href="./reset-otp.html" class="real-nested-item">
+            <span class="flex-1 truncate">Reset OTP</span>
+          </a>
+          <a href="./unblock-account.html" class="real-nested-item">
+            <span class="flex-1 truncate">ปลดบล็อกบัญชี</span>
+          </a>
+          <a href="./quota.html" class="real-nested-item">
+            <span class="flex-1 truncate">เพิ่มโควต้า</span>
+          </a>
+        </div>
+      </div>
 
       <!-- 4. Flex Message -->
       <a href="./flex-message.html" class="real-menu-item mt-1">
