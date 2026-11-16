@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Visual Org Builder</title>
-    <script type="module" crossorigin src="./assets/index-CmZFDMwO.js?v=14"></script>
+    <script type="module" crossorigin src="./assets/index-CmZFDMwO.js?v=26"></script>
     <link rel="modulepreload" crossorigin href="./assets/vendor-BrOzYggY.js">
     <link rel="modulepreload" crossorigin href="./assets/xyflow-BzaZ1F1N.js">
     <link rel="modulepreload" crossorigin href="./assets/xlsx-BBWTpfDg.js">
@@ -28,15 +28,132 @@
         --color-blue-900: #1e3a8a !important;
       }
 
-      body, #root {
+      /* True Full-Height Responsive App Shell */
+      html, body, #root {
+        height: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
         font-family: 'Noto Sans Thai', 'Prompt', system-ui, -apple-system, sans-serif !important;
         background-color: #f8fafc !important;
+      }
+
+      /* Make the root container fill 100% of iframe */
+      #root > div {
+        height: 100% !important;
+        max-height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+
+      /* HIDE DEVELOPER CLUTTER: Remove Enterprise + JSON and UI/API Version badges */
+      header span[class*="bg-blue-100"],
+      header div[class*="border-l"][class*="border-slate-300"] {
+        display: none !important;
+      }
+
+      /* Header Navigation Card: Exact replica of organizations.html */
+      header {
+        flex-shrink: 0 !important;
+        background: #ffffff !important;
+        border-radius: 1rem !important; /* rounded-2xl */
+        border: 1px solid rgba(226, 232, 240, 0.9) !important; /* border-slate-200/90 */
+        padding: 0.625rem 1rem !important; /* p-3 sm:px-5 */
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; /* shadow-2xs */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 0.75rem !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+      header::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      /* Left: Icon inside rounded-xl box + Title matching organizations.html */
+      header h1 {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.625rem !important; /* gap-2.5 */
+        margin: 0 !important;
+        min-width: 0 !important;
+        flex-shrink: 0 !important;
+      }
+      header h1 > svg {
+        width: 2rem !important; /* w-8 */
+        height: 2rem !important; /* h-8 */
+        padding: 0.35rem !important;
+        border-radius: 0.75rem !important; /* rounded-xl */
+        background-color: #eff6ff !important; /* bg-blue-50 */
+        color: #2563eb !important; /* text-blue-600 */
+        border: 1px solid #dbeafe !important; /* border-blue-100 */
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important; /* shadow-2xs */
+        flex-shrink: 0 !important;
+      }
+      header h1 > span.whitespace-nowrap {
+        display: inline-block !important;
+        font-size: 0.8125rem !important; /* text-xs sm:text-sm */
+        font-weight: 700 !important; /* font-bold */
+        color: #0f172a !important; /* text-slate-900 */
+        line-height: 1.25 !important;
+        white-space: nowrap !important;
+      }
+
+      /* View Switcher: Exact replica of organizations.html (หน้าจัดการหน่วยงาน) */
+      header div[class*="rounded-xl"][class*="border"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.375rem !important; /* gap-1.5 */
+        padding: 0.25rem !important; /* p-1 */
+        background-color: rgba(248, 250, 252, 0.95) !important; /* bg-slate-50/90 */
+        border: 1px solid rgba(226, 232, 240, 0.8) !important; /* border-slate-200/70 */
+        border-radius: 0.75rem !important; /* rounded-xl */
+        box-shadow: none !important;
+        flex-shrink: 0 !important;
+        overflow-x: auto !important;
+        scrollbar-width: none !important;
+      }
+      header div[class*="rounded-xl"][class*="border"]::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      /* React Flow Canvas Full Responsive Fill */
+      .react-flow {
+        width: 100% !important;
+        height: 100% !important;
+        flex: 1 !important;
+      }
+
+      /* Right Settings Drawer Responsive Sizing */
+      @media (max-width: 1024px) {
+        /* On laptop / tablet, prevent drawer from exceeding 45% of width */
+        div[class*="animate-in fade-in slide-in-from-right-4"] {
+          max-width: 360px !important;
+          z-index: 50 !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+        /* On mobile, convert drawer to full slide-over overlay */
+        div[class*="animate-in fade-in slide-in-from-right-4"] {
+          position: fixed !important;
+          inset: 0 0 0 auto !important;
+          width: 90vw !important;
+          max-width: 380px !important;
+          height: 100vh !important;
+          z-index: 100 !important;
+          box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2) !important;
+        }
       }
 
       /* React Flow Canvas Background */
       .react-flow__pane {
         background-color: #f8fafc !important;
-        background-image: radial-gradient(rgba(148, 163, 184, 0.35) 1.25px, transparent 1.25px) !important;
+        background-image: radial-gradient(rgba(148, 163, 184, 0.3) 1.25px, transparent 1.25px) !important;
         background-size: 24px 24px !important;
       }
 
@@ -55,8 +172,18 @@
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
       }
 
+      /* Soft subtle group dashed container */
+      div[class*="border-dashed"] {
+        border-width: 1.5px !important;
+        border-color: #cbd5e1 !important;
+        border-style: dashed !important;
+        background: rgba(248, 250, 252, 0.45) !important;
+        backdrop-filter: blur(4px) !important;
+      }
+
       /* Override dark/brown border on root node to modern gradient border */
-      .react-flow__node div[class*="border-slate-900"] {
+      .react-flow__node div[class*="border-slate-900"],
+      .react-flow__node div[class*="border-blue-500"] {
         border: 2px solid #3b82f6 !important;
         box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.18), 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
       }
@@ -84,8 +211,8 @@
 
       .react-flow__node button:first-child {
         background: #f8fafc !important;
-        color: #475569 !important;
-        border: 1px solid #e2e8f0 !important;
+        color: #334155 !important;
+        border: 1px solid #cbd5e1 !important;
         font-weight: 600 !important;
         border-radius: 10px !important;
         transition: all 0.2s ease !important;
@@ -93,7 +220,7 @@
       .react-flow__node button:first-child:hover {
         background: #f1f5f9 !important;
         color: #0f172a !important;
-        border-color: #cbd5e1 !important;
+        border-color: #94a3b8 !important;
       }
 
       /* React Flow Connector Points (Handles) */
@@ -117,7 +244,13 @@
         stroke-width: 2.5 !important;
       }
 
-      /* Top Header / Nav Tabs in iframe */
+      /* Top Header in iframe */
+      header {
+        border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(12px) !important;
+      }
+
       button[class*="bg-blue-600"] {
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
         color: #ffffff !important;
