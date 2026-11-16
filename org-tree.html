@@ -1297,7 +1297,7 @@
 
     // --- 2. APP STATE ---
     let appScreen = 'results'; // 'search' or 'results' (Default directly to results screen)
-    let currentResultView = 'hierarchy'; // 'hierarchy' (แบบผังบนลงล่าง) or 'modern' (แบบตาราง)
+    let currentResultView = 'modern'; // 'modern' (แบบตาราง - แสดงก่อนเป็นค่าเริ่มต้น) or 'hierarchy' (แบบผังบนลงล่าง)
     let currentSearchTerm = '';
     let currentZoom = 1.0;
     let activeModalPath = null;
@@ -1412,12 +1412,12 @@
       const input = document.getElementById('main-search-input');
       const val = input.value.trim() || 'Traffy @ ITS Lab2';
       goToResultScreen(val, '151');
-      setResultView('hierarchy');
+      setResultView('modern');
     }
 
     function selectRecentOrg(id, name) {
       goToResultScreen(name, id);
-      setResultView('hierarchy');
+      setResultView('modern');
     }
 
     // --- 4. VIEW SELECTOR: ตาราง vs ผังองค์กร (MATCHING organizations.html) ---
@@ -2430,7 +2430,7 @@
       // Expanded by default as requested: user immediately sees the entire hierarchy
       collapsedPaths.clear();
       goToResultScreen('Traffy @ ITS Lab2', '151');
-      setResultView('hierarchy');
+      setResultView('modern');
       setupCanvasInteractions();
       lucide.createIcons();
     };
