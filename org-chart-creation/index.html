@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Visual Org Builder</title>
-    <script type="module" crossorigin src="./assets/index-CmZFDMwO.js?v=12"></script>
+    <script type="module" crossorigin src="./assets/index-CmZFDMwO.js?v=14"></script>
     <link rel="modulepreload" crossorigin href="./assets/vendor-BrOzYggY.js">
     <link rel="modulepreload" crossorigin href="./assets/xyflow-BzaZ1F1N.js">
     <link rel="modulepreload" crossorigin href="./assets/xlsx-BBWTpfDg.js">
@@ -13,6 +13,20 @@
     <style>
       /* Ultra-Modern SaaS Elevation for Visual Org Builder */
       @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+      /* FIX PALETTE: Replace legacy brown coffee variables with Vibrant Modern Royal Blue */
+      :root {
+        --color-blue-50: #eff6ff !important;
+        --color-blue-100: #dbeafe !important;
+        --color-blue-200: #bfdbfe !important;
+        --color-blue-300: #93c5fd !important;
+        --color-blue-400: #60a5fa !important;
+        --color-blue-500: #3b82f6 !important;
+        --color-blue-600: #2563eb !important;
+        --color-blue-700: #1d4ed8 !important;
+        --color-blue-800: #1e40af !important;
+        --color-blue-900: #1e3a8a !important;
+      }
 
       body, #root {
         font-family: 'Noto Sans Thai', 'Prompt', system-ui, -apple-system, sans-serif !important;
@@ -22,7 +36,7 @@
       /* React Flow Canvas Background */
       .react-flow__pane {
         background-color: #f8fafc !important;
-        background-image: radial-gradient(rgba(148, 163, 184, 0.4) 1.25px, transparent 1.25px) !important;
+        background-image: radial-gradient(rgba(148, 163, 184, 0.35) 1.25px, transparent 1.25px) !important;
         background-size: 24px 24px !important;
       }
 
@@ -35,10 +49,16 @@
       .react-flow__node > div {
         border-radius: 1.25rem !important;
         box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
-        border: 1px solid rgba(226, 232, 240, 0.95) !important;
+        border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
         background: rgba(255, 255, 255, 0.98) !important;
         backdrop-filter: blur(10px) !important;
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      /* Override dark/brown border on root node to modern gradient border */
+      .react-flow__node div[class*="border-slate-900"] {
+        border: 2px solid #3b82f6 !important;
+        box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.18), 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
       }
 
       .react-flow__node:hover > div {
@@ -47,7 +67,7 @@
         border-color: rgba(59, 130, 246, 0.4) !important;
       }
 
-      /* Card Bottom Action Buttons */
+      /* Card Action Buttons */
       .react-flow__node button:last-child {
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
         color: #ffffff !important;
@@ -78,23 +98,29 @@
 
       /* React Flow Connector Points (Handles) */
       .react-flow__handle {
-        width: 11px !important;
-        height: 11px !important;
+        width: 12px !important;
+        height: 12px !important;
         background: #3b82f6 !important;
         border: 2px solid #ffffff !important;
-        box-shadow: 0 0 0 2.5px rgba(59, 130, 246, 0.3) !important;
+        box-shadow: 0 0 0 2.5px rgba(59, 130, 246, 0.35) !important;
         transition: all 0.2s ease !important;
       }
       .react-flow__handle:hover {
-        transform: scale(1.4) !important;
+        transform: scale(1.35) !important;
         background: #1d4ed8 !important;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.45) !important;
+        box-shadow: 0 0 0 4.5px rgba(59, 130, 246, 0.5) !important;
       }
 
       /* React Flow Connector Edges */
       .react-flow__edge-path {
         stroke: #94a3b8 !important;
         stroke-width: 2.5 !important;
+      }
+
+      /* Top Header / Nav Tabs in iframe */
+      button[class*="bg-blue-600"] {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+        color: #ffffff !important;
       }
 
       /* Right Settings Drawer */
