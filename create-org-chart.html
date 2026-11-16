@@ -498,7 +498,7 @@
 
     <!-- Embedded Application Container (Full Responsive Shell) -->
     <div id="iframe-wrapper" class="flex-1 min-h-0 w-full h-full flex flex-col overflow-hidden bg-[#f8fafc] relative">
-      <iframe id="org-chart-iframe" src="./org-chart-creation/index.html?v=37"
+      <iframe id="org-chart-iframe" src="./org-chart-creation/index.html?v=38"
         class="w-full h-full border-0 bg-transparent flex-1 block" title="สร้างบัญชีทางการ + ผูกผังองค์กร"></iframe>
     </div>
   </main>
@@ -508,7 +508,7 @@
     (function ensureFreshIframe() {
       const iframe = document.getElementById('org-chart-iframe');
       if (iframe && (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-        iframe.src = './org-chart-creation/index.html?v=37&ts=' + Date.now();
+        iframe.src = './org-chart-creation/index.html?v=38&ts=' + Date.now();
       }
     })();
     // Initialize Lucide Icons
