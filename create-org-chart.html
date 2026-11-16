@@ -421,7 +421,7 @@
       <!-- Right Actions: Navigation & Help & Fullscreen -->
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
         <a href="./org-tree.html"
-          class="px-2.5 sm:px-3 py-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors inline-flex items-center gap-1.5 cursor-pointer font-medium text-[11px] sm:text-xs border border-blue-200 shadow-2xs whitespace-nowrap"
+          class="px-2.5 sm:px-3 py-1.5 text-blue-700 bg-white hover:bg-blue-50/80 rounded-xl transition-all inline-flex items-center gap-1.5 cursor-pointer font-semibold text-[11px] sm:text-xs border border-blue-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap"
           title="ดูตัวอย่างผังองค์กร (Org Tree Preview)">
           <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-600"></i>
           <span class="hidden sm:inline">ดูตัวอย่างผัง (Preview)</span>
@@ -429,7 +429,7 @@
         </a>
 
         <button type="button" onclick="openBuilderGuideModal()"
-          class="px-2.5 sm:px-3 py-1.5 text-amber-800 bg-amber-50 hover:bg-amber-100 rounded-xl transition-colors inline-flex items-center gap-1.5 cursor-pointer font-medium text-[11px] sm:text-xs border border-amber-200 shadow-2xs whitespace-nowrap"
+          class="px-2.5 sm:px-3 py-1.5 text-amber-800 bg-amber-50/80 hover:bg-amber-100 rounded-xl transition-all inline-flex items-center gap-1.5 cursor-pointer font-semibold text-[11px] sm:text-xs border border-amber-200/90 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap"
           title="คู่มือวิธีสร้างผัง">
           <i data-lucide="help-circle" class="w-3.5 h-3.5 text-amber-600"></i>
           <span class="hidden sm:inline">วิธีสร้างผัง</span>
@@ -437,7 +437,7 @@
         </button>
 
         <button type="button" onclick="toggleFullscreen()"
-          class="px-2.5 sm:px-3 py-1.5 text-slate-700 hover:bg-slate-100 rounded-xl transition-colors inline-flex items-center gap-1.5 cursor-pointer font-medium text-[11px] sm:text-xs border border-slate-200 shadow-2xs bg-white whitespace-nowrap"
+          class="px-2.5 sm:px-3 py-1.5 text-slate-700 bg-white hover:bg-slate-100 rounded-xl transition-all inline-flex items-center gap-1.5 cursor-pointer font-medium text-[11px] sm:text-xs border border-slate-200 shadow-2xs hover:shadow-xs active:scale-95 whitespace-nowrap"
           title="ขยายเต็มจอ">
           <i data-lucide="maximize" id="fullscreen-icon" class="w-3.5 h-3.5 text-slate-600"></i>
           <span>เต็มจอ</span>
@@ -446,32 +446,32 @@
     </header>
 
     <!-- Quick-Start Helper Banner -->
-    <div id="quick-start-banner" class="bg-gradient-to-r from-blue-50/90 via-indigo-50/90 to-purple-50/90 border-b border-blue-100/80 px-3 sm:px-4 py-2 transition-all duration-300 shrink-0">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-2">
-        <div class="flex items-start sm:items-center gap-2.5 min-w-0">
-          <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-blue-600 text-white shrink-0 shadow-2xs text-[11px] font-bold">
+    <div id="quick-start-banner" class="bg-gradient-to-r from-blue-50/95 via-indigo-50/95 to-slate-50/95 backdrop-blur-md border-b border-indigo-100/90 px-3 sm:px-4 py-2 transition-all duration-300 shrink-0">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-2.5">
+        <div class="flex items-start sm:items-center gap-2.5 min-w-0 flex-1">
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-indigo-600 text-white shrink-0 shadow-2xs text-[11px] font-bold">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
           </span>
-          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-            <span class="font-bold text-slate-900">วิธีสร้างผังอย่างง่าย:</span>
-            <span class="inline-flex items-center gap-1 text-slate-700">
-              <span class="w-4 h-4 rounded-full bg-blue-200 text-blue-800 text-[10px] font-bold inline-flex items-center justify-center">1</span>
-              <span>นำเข้าข้อมูลที่ปุ่ม <strong class="text-blue-700 font-semibold">"จัดการข้อมูล"</strong> มุมขวาบน</span>
-            </span>
-            <span class="text-slate-300 hidden md:inline">→</span>
-            <span class="inline-flex items-center gap-1 text-slate-700">
-              <span class="w-4 h-4 rounded-full bg-blue-200 text-blue-800 text-[10px] font-bold inline-flex items-center justify-center">2</span>
-              <span>กดปุ่ม <strong class="text-blue-700 font-semibold">"เพิ่มลูก"</strong> บนการ์ดเพื่อแตกกิ่ง</span>
-            </span>
-            <span class="text-slate-300 hidden md:inline">→</span>
-            <span class="inline-flex items-center gap-1 text-slate-700">
-              <span class="w-4 h-4 rounded-full bg-blue-200 text-blue-800 text-[10px] font-bold inline-flex items-center justify-center">3</span>
-              <span>ลากเส้นเชื่อมต่อ หรือกด <strong class="text-blue-700 font-semibold">"แก้ไข"</strong> ข้อมูล</span>
-            </span>
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="font-bold text-slate-900 hidden sm:inline">วิธีสร้างผัง:</span>
+            <div class="flex items-center gap-2 bg-white/90 border border-blue-100/90 rounded-xl px-2.5 py-1 shadow-2xs">
+              <span class="w-4 h-4 rounded-md bg-blue-600 text-white text-[10px] font-bold inline-flex items-center justify-center shrink-0">1</span>
+              <span class="text-slate-700">นำเข้าข้อมูลที่ปุ่ม <strong class="text-blue-700 font-semibold">"จัดการข้อมูล"</strong> มุมขวาบน</span>
+            </div>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-300 hidden lg:inline"></i>
+            <div class="flex items-center gap-2 bg-white/90 border border-indigo-100/90 rounded-xl px-2.5 py-1 shadow-2xs">
+              <span class="w-4 h-4 rounded-md bg-indigo-600 text-white text-[10px] font-bold inline-flex items-center justify-center shrink-0">2</span>
+              <span class="text-slate-700">กดปุ่ม <strong class="text-indigo-700 font-semibold">"เพิ่มลูก"</strong> บนการ์ดเพื่อแตกกิ่ง</span>
+            </div>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-300 hidden lg:inline"></i>
+            <div class="flex items-center gap-2 bg-white/90 border border-violet-100/90 rounded-xl px-2.5 py-1 shadow-2xs">
+              <span class="w-4 h-4 rounded-md bg-violet-600 text-white text-[10px] font-bold inline-flex items-center justify-center shrink-0">3</span>
+              <span class="text-slate-700">ลากจุดกลมเชื่อมสายงาน หรือกด <strong class="text-violet-700 font-semibold">"แก้ไข"</strong></span>
+            </div>
           </div>
         </div>
         <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
-          <button type="button" onclick="openBuilderGuideModal()" class="text-[11px] font-semibold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-1 cursor-pointer">
+          <button type="button" onclick="openBuilderGuideModal()" class="text-[11px] font-semibold text-indigo-700 hover:text-indigo-800 hover:underline inline-flex items-center gap-1 cursor-pointer">
             ดูคู่มือฉบับเต็ม <i data-lucide="chevron-right" class="w-3 h-3"></i>
           </button>
           <span class="text-slate-300">|</span>

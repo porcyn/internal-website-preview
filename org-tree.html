@@ -383,17 +383,50 @@
       z-index: 1;
     }
 
+    /* Modern Enterprise Card Styling */
+    .node-card-topdown {
+      position: relative;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: 1.25rem;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.02);
+      overflow: visible;
+    }
+    .node-card-topdown:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(99, 102, 241, 0.3);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+    .node-card-topdown.ancestor-highlight {
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.28), 0 16px 32px -6px rgba(99, 102, 241, 0.25) !important;
+      transform: translateY(-4px);
+    }
+    .node-card-topdown.level-filter-dim {
+      opacity: 0.25;
+      filter: grayscale(0.7);
+      transform: scale(0.96);
+      pointer-events: none;
+    }
+    .node-card-topdown.level-filter-highlight {
+      border-color: #4f46e5 !important;
+      box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.35), 0 12px 28px -4px rgba(79, 70, 229, 0.22) !important;
+      transform: scale(1.03);
+    }
+
     /* Modal Backdrop */
     .modal-backdrop {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5);
       backdrop-filter: blur(4px); z-index: 50; transition: opacity 0.2s ease;
     }
 
-    /* Responsive Dot Grid Canvas */
+    /* Responsive Dot Grid Canvas with Modern Precision Feel */
     .dot-grid-canvas {
       background-color: #f8fafc;
-      background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
-      background-size: 20px 20px;
+      background-image: radial-gradient(rgba(148, 163, 184, 0.45) 1.25px, transparent 1.25px);
+      background-size: 24px 24px;
     }
   </style>
 </head>
@@ -894,14 +927,35 @@
           <!-- ======================================================== -->
           <!-- OPTION B: ผังองค์กรแบบบนลงล่าง (TOP-DOWN ORG CHART)       -->
           <!-- ======================================================== -->
-          <div id="result-view-hierarchy" class="hidden flex-1 flex-col h-full rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs overflow-hidden bg-white">
+          <div id="result-view-hierarchy" class="hidden flex-1 flex-col h-full rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden bg-white relative">
             <!-- Scrollable Canvas Area (Only this area scrolls) -->
             <div class="flex-1 overflow-auto dot-grid-canvas relative p-2 sm:p-4 select-none" id="hierarchy-canvas-viewport">
-              <!-- Canvas Touch Hint Badge -->
-              <div class="sticky top-2 left-2 inline-flex items-center gap-1.5 bg-white/95 backdrop-blur px-3 py-1.5 rounded-xl border border-slate-200/80 text-[11px] text-slate-600 shadow-2xs pointer-events-none z-10">
-                <i data-lucide="move" class="w-3.5 h-3.5 text-sky-500"></i>
-                <span class="hidden sm:inline">คลิกค้างลากเพื่อเลื่อนผัง หรือกด "พอดีจอ"</span>
-                <span class="sm:hidden">ลากเพื่อเลื่อนดูผัง</span>
+              <!-- Top Floating Bar: Quick Level Filter & Touch Hint -->
+              <div class="sticky top-2 left-2 z-20 flex flex-wrap items-center gap-2 max-w-full">
+                <!-- Quick Level Filter Pills -->
+                <div class="inline-flex items-center gap-1 p-1 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-xs overflow-x-auto">
+                  <button type="button" onclick="filterTreeByLevel(0)" id="filter-pill-0" class="filter-level-pill px-2.5 py-1 rounded-xl text-[10.5px] font-bold bg-slate-900 text-white transition-all cursor-pointer shadow-2xs whitespace-nowrap">
+                    ทั้งหมด (28)
+                  </button>
+                  <button type="button" onclick="filterTreeByLevel(1)" id="filter-pill-1" class="filter-level-pill px-2.5 py-1 rounded-xl text-[10.5px] font-semibold text-indigo-700 hover:bg-indigo-50 border border-indigo-200/60 transition-all cursor-pointer whitespace-nowrap">
+                    🏢 Lv.1 สำนัก (1)
+                  </button>
+                  <button type="button" onclick="filterTreeByLevel(2)" id="filter-pill-2" class="filter-level-pill px-2.5 py-1 rounded-xl text-[10.5px] font-semibold text-sky-700 hover:bg-sky-50 border border-sky-200/60 transition-all cursor-pointer whitespace-nowrap">
+                    📁 Lv.2 ฝ่าย (3)
+                  </button>
+                  <button type="button" onclick="filterTreeByLevel(3)" id="filter-pill-3" class="filter-level-pill px-2.5 py-1 rounded-xl text-[10.5px] font-semibold text-emerald-700 hover:bg-emerald-50 border border-emerald-200/60 transition-all cursor-pointer whitespace-nowrap">
+                    📂 Lv.3 ส่วน/กลุ่ม (12)
+                  </button>
+                  <button type="button" onclick="filterTreeByLevel(4)" id="filter-pill-4" class="filter-level-pill px-2.5 py-1 rounded-xl text-[10.5px] font-semibold text-amber-700 hover:bg-amber-50 border border-amber-200/60 transition-all cursor-pointer whitespace-nowrap">
+                    👥 Lv.4 ปฏิบัติการ (12)
+                  </button>
+                </div>
+
+                <!-- Canvas Drag Hint Badge -->
+                <div class="hidden md:inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200/80 text-[11px] text-slate-500 shadow-2xs pointer-events-none">
+                  <i data-lucide="move" class="w-3.5 h-3.5 text-sky-500"></i>
+                  <span>คลิกค้างลากเพื่อเลื่อนผัง</span>
+                </div>
               </div>
 
               <!-- Org Chart Tree Container (Top-Down) -->
@@ -914,16 +968,33 @@
               </div>
             </div>
 
+            <!-- Floating Mini-Map Preview Widget (Toggled from dock) -->
+            <div id="minimap-container" class="absolute bottom-16 right-4 z-30 hidden flex-col bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 w-44 sm:w-48 ring-1 ring-black/5">
+              <div class="px-2.5 py-1.5 bg-slate-50/90 border-b border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-700 select-none">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="map" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>แผนที่ผัง (Minimap)</span>
+                </div>
+                <button type="button" onclick="toggleMinimap()" class="text-slate-400 hover:text-slate-600 cursor-pointer p-0.5 rounded" title="ปิดแผนที่ย่อ">
+                  <i data-lucide="x" class="w-3 h-3"></i>
+                </button>
+              </div>
+              <div id="minimap-viewport-box" class="relative w-full h-28 bg-slate-50/80 cursor-crosshair overflow-hidden" onclick="handleMinimapClick(event)" title="คลิกเพื่อเลื่อนไปยังจุดที่ต้องการ">
+                <svg id="minimap-svg" class="w-full h-full pointer-events-none"></svg>
+                <div id="minimap-rect" class="absolute border-2 border-indigo-600 bg-indigo-500/20 rounded pointer-events-none transition-all duration-75"></div>
+              </div>
+            </div>
+
             <!-- Dedicated Bottom Control Bar (แถบควบคุมด้านล่างฟิตพอดีจอ ไม่เลื่อน ไม่ล้น) -->
-            <div class="bg-white border-t border-slate-200 px-2.5 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-1 sm:gap-2 shrink-0 z-20 flex-nowrap overflow-hidden">
-              <!-- Left: Node Count Indicator -->
-              <div class="flex items-center gap-1.5 text-xs text-slate-600 shrink-0">
-                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse shrink-0"></span>
+            <div class="bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-2.5 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-1 sm:gap-2 shrink-0 z-20 flex-nowrap overflow-hidden">
+              <!-- Left: Node Count & Level Legend -->
+              <div class="flex items-center gap-1.5 sm:gap-2 text-xs text-slate-600 shrink-0">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
                 <span class="font-bold text-slate-800 text-xs hidden md:inline whitespace-nowrap">ผังโครงสร้างสายงาน</span>
-                <span id="tree-node-count-badge" class="px-1.5 sm:px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-[10px] font-bold border border-indigo-200 whitespace-nowrap shrink-0">28 หน่วยงาน</span>
+                <span id="tree-node-count-badge" class="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-[10px] font-bold border border-indigo-200 whitespace-nowrap shrink-0">28 หน่วยงาน</span>
               </div>
 
-              <!-- Right: Action Controls in 1 Single Row (พอดีจอ ไม่ล้นออกไปให้เลื่อน) -->
+              <!-- Right: Action Controls in 1 Single Row -->
               <div class="flex items-center gap-1 sm:gap-1.5 shrink-0 flex-nowrap">
                 <!-- Branch Collapse/Expand Controls -->
                 <div class="flex items-center bg-slate-100 rounded-xl p-0.5 border border-slate-200/80 shrink-0">
@@ -962,6 +1033,18 @@
                     <span class="hidden sm:inline">พอดีจอ</span>
                   </button>
                 </div>
+
+                <!-- Minimap Toggle Button -->
+                <button
+                  type="button"
+                  id="minimap-toggle-btn"
+                  onclick="toggleMinimap()"
+                  class="hidden sm:inline-flex items-center gap-1 px-2 sm:px-2.5 h-7 sm:h-8 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-[10px] sm:text-xs font-bold border border-slate-200/80 transition-all cursor-pointer whitespace-nowrap shadow-2xs"
+                  title="เปิด/ปิด แผนที่ผังย่อ (Minimap)"
+                >
+                  <i data-lucide="map" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>แผนที่</span>
+                </button>
               </div>
             </div>
           </div>
@@ -1073,7 +1156,11 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="p-4 sm:p-5 border-t border-slate-100 flex items-center justify-end gap-3 bg-slate-50/50 rounded-b-3xl">
+      <div class="p-4 sm:p-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2.5 bg-slate-50/50 rounded-b-3xl">
+        <a id="modal-edit-in-builder-btn" href="./create-org-chart.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 font-semibold transition-colors cursor-pointer text-xs shadow-2xs">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5 text-blue-600"></i>
+          <span>แก้ไข/ต่อเติมผังนี้</span>
+        </a>
         <a id="modal-manage-org-btn" href="./organizations.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold transition-colors cursor-pointer text-xs shadow-2xs">
           <span>ดูในหน้าจัดการหน่วยงาน</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
@@ -1753,12 +1840,158 @@
         const card = document.querySelector(`[data-node-path="${current}"]`);
         if (card) {
           if (isEnter) {
-            card.classList.add('ring-2', 'ring-blue-500', 'border-blue-500', 'shadow-md');
+            card.classList.add('ancestor-highlight');
           } else {
-            card.classList.remove('ring-2', 'ring-blue-500', 'border-blue-500', 'shadow-md');
+            card.classList.remove('ancestor-highlight');
           }
         }
       }
+    }
+
+    // Quick Level Filter for Tree View
+    let currentLevelFilter = 0;
+    function filterTreeByLevel(level) {
+      currentLevelFilter = level;
+      // Update filter button styling
+      document.querySelectorAll('.filter-level-pill').forEach(btn => {
+        btn.classList.remove('bg-slate-900', 'text-white', 'shadow-2xs');
+        btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+      });
+      const activeBtn = document.getElementById(`filter-pill-${level}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+        activeBtn.classList.add('bg-slate-900', 'text-white', 'shadow-2xs');
+      }
+
+      const allCards = document.querySelectorAll('.node-card-topdown');
+      if (level === 0) {
+        allCards.forEach(card => {
+          card.classList.remove('level-filter-dim', 'level-filter-highlight');
+        });
+        return;
+      }
+
+      allCards.forEach(card => {
+        const path = card.getAttribute('data-node-path');
+        const node = rawData.find(d => d.path === path);
+        if (node && node.level === level) {
+          card.classList.remove('level-filter-dim');
+          card.classList.add('level-filter-highlight');
+        } else {
+          card.classList.add('level-filter-dim');
+          card.classList.remove('level-filter-highlight');
+        }
+      });
+    }
+
+    // Mini-Map Overview Functions
+    let minimapVisible = false;
+    function toggleMinimap() {
+      const container = document.getElementById('minimap-container');
+      const btn = document.getElementById('minimap-toggle-btn');
+      if (!container) return;
+      minimapVisible = !minimapVisible;
+      if (minimapVisible) {
+        container.classList.remove('hidden');
+        container.classList.add('flex');
+        if (btn) {
+          btn.classList.add('bg-indigo-600', 'text-white');
+          btn.classList.remove('bg-slate-100', 'text-slate-700');
+        }
+        updateMinimap();
+      } else {
+        container.classList.add('hidden');
+        container.classList.remove('flex');
+        if (btn) {
+          btn.classList.remove('bg-indigo-600', 'text-white');
+          btn.classList.add('bg-slate-100', 'text-slate-700');
+        }
+      }
+    }
+
+    function updateMinimap() {
+      if (!minimapVisible) return;
+      const viewport = document.getElementById('hierarchy-canvas-viewport');
+      const container = document.getElementById('hierarchy-container');
+      const svg = document.getElementById('minimap-svg');
+      const rect = document.getElementById('minimap-rect');
+      if (!viewport || !container || !svg || !rect) return;
+
+      const cards = container.querySelectorAll('.node-card-topdown');
+      if (cards.length === 0) return;
+
+      const cWidth = container.scrollWidth || container.offsetWidth;
+      const cHeight = container.scrollHeight || container.offsetHeight;
+
+      const boxWidth = 176;
+      const boxHeight = 112;
+
+      const scaleX = boxWidth / (cWidth || 1);
+      const scaleY = boxHeight / (cHeight || 1);
+      const scale = Math.min(scaleX, scaleY, 0.08);
+
+      let svgContent = '';
+      cards.forEach(card => {
+        const path = card.getAttribute('data-node-path');
+        const node = rawData.find(d => d.path === path);
+        const cLeft = card.offsetLeft;
+        const cTop = card.offsetTop;
+        const cW = card.offsetWidth;
+        const cH = card.offsetHeight;
+
+        const x = cLeft * scale;
+        const y = cTop * scale;
+        const w = Math.max(3.5, cW * scale);
+        const h = Math.max(2.5, cH * scale);
+
+        const colors = { 1: '#6366f1', 2: '#0ea5e9', 3: '#10b981', 4: '#f59e0b' };
+        const color = colors[node ? node.level : 4] || '#94a3b8';
+
+        svgContent += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1" fill="${color}" opacity="0.85"/>`;
+      });
+      svg.innerHTML = svgContent;
+
+      const vScrollLeft = viewport.scrollLeft;
+      const vScrollTop = viewport.scrollTop;
+      const vWidth = viewport.clientWidth;
+      const vHeight = viewport.clientHeight;
+
+      const indX = vScrollLeft * scale;
+      const indY = vScrollTop * scale;
+      const indW = Math.max(14, Math.min(boxWidth, vWidth * scale));
+      const indH = Math.max(10, Math.min(boxHeight, vHeight * scale));
+
+      rect.style.left = `${indX}px`;
+      rect.style.top = `${indY}px`;
+      rect.style.width = `${indW}px`;
+      rect.style.height = `${indH}px`;
+    }
+
+    function handleMinimapClick(e) {
+      const box = document.getElementById('minimap-viewport-box');
+      const viewport = document.getElementById('hierarchy-canvas-viewport');
+      const container = document.getElementById('hierarchy-container');
+      if (!box || !viewport || !container) return;
+
+      const boxRect = box.getBoundingClientRect();
+      const clickX = e.clientX - boxRect.left;
+      const clickY = e.clientY - boxRect.top;
+
+      const cWidth = container.scrollWidth || container.offsetWidth;
+      const cHeight = container.scrollHeight || container.offsetHeight;
+
+      const scaleX = box.clientWidth / (cWidth || 1);
+      const scaleY = box.clientHeight / (cHeight || 1);
+      const scale = Math.min(scaleX, scaleY, 0.08);
+
+      const targetScrollLeft = (clickX / scale) - (viewport.clientWidth / 2);
+      const targetScrollTop = (clickY / scale) - (viewport.clientHeight / 2);
+
+      viewport.scrollTo({
+        left: targetScrollLeft,
+        top: targetScrollTop,
+        behavior: 'smooth'
+      });
     }
 
     function renderHierarchyView() {
@@ -1773,6 +2006,14 @@
         const isRoot = node.level === 1;
         const t = getLevelTheme(node.level);
 
+        const accentGradients = {
+          1: 'from-indigo-500 via-blue-500 to-indigo-600',
+          2: 'from-sky-500 via-blue-400 to-cyan-500',
+          3: 'from-emerald-500 via-teal-400 to-emerald-600',
+          4: 'from-amber-500 via-orange-400 to-amber-600'
+        };
+        const accentGrad = accentGradients[node.level] || 'from-slate-400 to-slate-500';
+
         return `
           <li>
             <div
@@ -1780,16 +2021,19 @@
               data-node-path="${node.path}"
               onmouseenter="highlightAncestors('${node.path}', true)"
               onmouseleave="highlightAncestors('${node.path}', false)"
-              class="node-card-topdown relative bg-white border ${isRoot ? 'border-indigo-500 shadow-md ring-4 ring-indigo-50 w-64 sm:w-72' : 'border-slate-200 shadow-xs hover:border-slate-400 hover:shadow-md w-56 sm:w-60'} rounded-2xl flex flex-col p-3 group transition-all z-10 cursor-pointer text-left"
+              class="node-card-topdown relative bg-white/95 backdrop-blur-xs border ${isRoot ? 'border-indigo-500 shadow-md ring-4 ring-indigo-50/80 w-64 sm:w-72' : 'border-slate-200/90 shadow-2xs hover:border-slate-300 hover:shadow-md w-56 sm:w-60'} rounded-2xl flex flex-col p-3 group transition-all z-10 cursor-pointer text-left"
             >
+              <!-- Top Accent Ribbon -->
+              <div class="absolute top-0 left-3 right-3 h-[3px] bg-gradient-to-r ${accentGrad} rounded-full"></div>
+
               <!-- Card Top: Level Badge + ID -->
-              <div class="flex items-center justify-between gap-1 pb-1.5 border-b border-slate-100">
+              <div class="flex items-center justify-between gap-1 pb-1.5 border-b border-slate-100/90 mt-0.5">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-[9.5px] font-bold ${t.badge} px-1.5 py-0.2 rounded uppercase">Lv.${node.level}</span>
-                  <span class="text-[10px] text-slate-500 font-mono-code font-bold">ID: ${node.group_id}</span>
+                  <span class="text-[9.5px] font-bold ${t.badge} px-2 py-0.5 rounded-md uppercase tracking-wider shadow-2xs">Lv.${node.level}</span>
+                  <span class="text-[10px] text-slate-500 font-mono-code font-bold bg-slate-100/80 px-1.5 py-0.5 rounded border border-slate-200/50">ID: ${node.group_id}</span>
                 </div>
                 ${hasChildren && isCollapsed ? `
-                  <span class="text-[9px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">+${node.children.length} หน่วยงาน</span>
+                  <span class="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-200 shadow-2xs animate-pulse">+${node.children.length} หน่วยงาน</span>
                 ` : ''}
               </div>
 
@@ -1799,7 +2043,7 @@
                   <i data-lucide="${t.icon}" class="w-4 h-4"></i>
                 </div>
                 <div class="min-w-0 flex-1">
-                  <span class="font-bold text-slate-800 text-xs leading-snug group-hover:text-indigo-600 transition-colors line-clamp-2 block" title="${node.group_name}">
+                  <span class="font-bold text-slate-800 text-xs sm:text-[12.5px] leading-snug group-hover:text-indigo-600 transition-colors line-clamp-2 block" title="${node.group_name}">
                     ${node.group_name}
                   </span>
                   ${node.parentName ? `
@@ -1809,10 +2053,13 @@
               </div>
 
               <!-- Card Footer: Conditions / Tag -->
-              <div class="flex items-center justify-between text-[9px] pt-1.5 border-t border-slate-100 font-mono-code text-slate-400">
+              <div class="flex items-center justify-between text-[9px] pt-1.5 border-t border-slate-100/90 font-mono-code text-slate-400">
                 <span class="truncate max-w-[130px]">${node.tag || node.path}</span>
                 ${node.send_cond ? `
-                  <span class="px-1 py-0.2 rounded bg-blue-50 text-blue-700 font-bold border border-blue-200">ส่ง: ${node.send_cond}</span>
+                  <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-blue-50 text-blue-700 font-bold border border-blue-200/70 text-[9px]">
+                    <i data-lucide="arrow-up-right" class="w-2.5 h-2.5 text-blue-600"></i>
+                    <span>ส่ง: ${node.send_cond}</span>
+                  </span>
                 ` : ''}
               </div>
 
@@ -1880,6 +2127,7 @@
 
       if (hierarchy) hierarchy.style.transform = `scale(${currentZoom})`;
       if (zoomText) zoomText.innerText = `${Math.round(currentZoom * 100)}%`;
+      if (minimapVisible) updateMinimap();
     }
 
     function autoFitToScreen() {
@@ -2154,6 +2402,11 @@
           }
         }
       }, { passive: false });
+
+      // Viewport scroll listener to update Mini-Map indicator
+      viewport.addEventListener('scroll', () => {
+        if (minimapVisible) updateMinimap();
+      }, { passive: true });
     }
 
     // Responsive Window Resize Debounce
