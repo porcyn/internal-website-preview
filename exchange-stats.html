@@ -329,6 +329,9 @@
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header (Cleaned up: Single primary CTA elsewhere, high contrast) -->
@@ -455,7 +458,7 @@
 
         <div class="p-4 sm:p-6 lg:p-8 space-y-6 max-w-5xl mx-auto w-full">
 
-          <!-- 1. ORGANIZATION HEADER: Clear Identity + Security Masked Token + ONE Primary CTA -->
+          <!-- 1. ORGANIZATION HEADER: Clear Identity & Primary CTA -->
           <div class="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-xs">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <!-- Org Identity -->
@@ -474,22 +477,9 @@
                     </span>
                   </div>
 
-                  <!-- Organization Meta: ID Badge & Security Masked Token -->
+                  <!-- Organization Meta: ID Badge (Clean, No Token) -->
                   <div class="flex items-center gap-2.5 text-xs text-slate-700 flex-wrap">
                     <span class="font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-300" id="selected-org-id">ID: ORG-1002</span>
-                    <div class="inline-flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-xl border border-slate-300">
-                      <i data-lucide="key" class="w-4 h-4 text-slate-600" aria-hidden="true"></i>
-                      <span class="text-slate-700 font-semibold">Token:</span>
-                      <code id="masked-token-display" class="font-mono text-xs font-bold text-slate-900">tk_live_••••••••842</code>
-                      <div class="flex items-center gap-1 ml-1 border-l border-slate-300 pl-2">
-                        <button type="button" onclick="toggleTokenMask()" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-700 hover:text-slate-950 hover:bg-slate-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600" title="แสดง/ซ่อน Token" aria-label="แสดงหรือซ่อน Exchange Token">
-                          <i data-lucide="eye" id="token-eye-icon" class="w-4 h-4 text-slate-700"></i>
-                        </button>
-                        <button type="button" onclick="copyToken()" class="w-8 h-8 rounded-lg flex items-center justify-center text-blue-700 hover:text-blue-950 hover:bg-blue-100 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600" title="คัดลอก Token" aria-label="คัดลอก Exchange Token">
-                          <i data-lucide="copy" class="w-4 h-4 text-blue-700"></i>
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -865,7 +855,7 @@
     const organizationsData = [
       {
         id: "ORG-1002",
-        token: "tk_live_9482bf10e7a2b91842",
+
         name: "สำนักการระบายน้ำ (กทม.)",
         shortCode: "สนร",
         status: "exceeded",
@@ -894,7 +884,7 @@
       },
       {
         id: "ORG-1014",
-        token: "tk_live_3819fa091c784e2091",
+
         name: "สำนักการโยธา (กทม.)",
         shortCode: "สนย",
         status: "near-limit",
@@ -922,7 +912,7 @@
       },
       {
         id: "ORG-1060",
-        token: "tk_live_7294ac5821039de441",
+
         name: "สำนักงานเขตบางขุนเทียน",
         shortCode: "ขบท",
         status: "near-limit",
@@ -950,7 +940,7 @@
       },
       {
         id: "ORG-1029",
-        token: "tk_live_4910283bc91a827012",
+
         name: "สำนักงานเขตจตุจักร",
         shortCode: "ขจจ",
         status: "normal",
@@ -978,7 +968,7 @@
       },
       {
         id: "ORG-1008",
-        token: "tk_live_198273641abced9012",
+
         name: "สำนักงานเขตคลองเตย",
         shortCode: "ขคต",
         status: "normal",
@@ -1004,7 +994,7 @@
       },
       {
         id: "ORG-1022",
-        token: "tk_live_65412987a0c1e2f345",
+
         name: "สำนักงานเขตพระนคร",
         shortCode: "ขพน",
         status: "normal",
@@ -1030,7 +1020,7 @@
       },
       {
         id: "ORG-1045",
-        token: "tk_live_9812736450fe12dc89",
+
         name: "สำนักงานเขตบางรัก",
         shortCode: "ขบร",
         status: "normal",
@@ -1056,7 +1046,7 @@
       },
       {
         id: "ORG-1077",
-        token: "tk_live_33445566778899aabb",
+
         name: "สำนักสิ่งแวดล้อม (กทม.)",
         shortCode: "สวล",
         status: "normal",
@@ -1086,7 +1076,7 @@
     let selectedOrgId = "ORG-1002"; // Default to critical org (สำนักการระบายน้ำ 102%)
     let activeFilter = "all"; // 'all' | 'exceeded' | 'near-limit' | 'normal'
     let searchQuery = "";
-    let isTokenMasked = true;
+
     let currentSectionTab = "daily"; // 'daily' | 'logs'
 
     // Helper: get filtered and sorted organizations
@@ -1282,9 +1272,6 @@
         }
       }
 
-      // Token Display
-      updateTokenDisplay(org);
-
       // Usage Status Card
       const elUsageBadge = document.getElementById("usage-status-badge");
       const elHeadline = document.getElementById("usage-headline");
@@ -1367,40 +1354,6 @@
     }
 
     
-    // --- TOKEN DISPLAY & MASKING ---
-    function updateTokenDisplay(org) {
-      const elDisplay = document.getElementById("masked-token-display");
-      const eyeIcon = document.getElementById("token-eye-icon");
-      if (!elDisplay) return;
-
-      if (isTokenMasked) {
-        const last4 = (org.token || "842").slice(-4);
-        elDisplay.textContent = `tk_live_••••••••${last4}`;
-        if (eyeIcon) eyeIcon.setAttribute("data-lucide", "eye");
-      } else {
-        elDisplay.textContent = org.token || "tk_live_9482bf10e7a2b91842";
-        if (eyeIcon) eyeIcon.setAttribute("data-lucide", "eye-off");
-      }
-      if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-
-    function toggleTokenMask() {
-      isTokenMasked = !isTokenMasked;
-      const org = organizationsData.find(o => o.id === selectedOrgId);
-      if (org) updateTokenDisplay(org);
-    }
-
-    function copyToken() {
-      const org = organizationsData.find(o => o.id === selectedOrgId);
-      if (!org || !org.token) return;
-
-      navigator.clipboard.writeText(org.token).then(() => {
-        showToast("คัดลอก Exchange Token เรียบร้อยแล้ว");
-      }).catch(() => {
-        showToast("ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยตนเอง");
-      });
-    }
-
     // --- 7. RENDER DAILY CHART (ACCESSIBLE, THRESHOLD LINE, CLAMPED TOOLTIP) ---
     function renderDailyChart(org) {
       const wrapper = document.getElementById("daily-chart-wrapper");
