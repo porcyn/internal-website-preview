@@ -326,6 +326,7 @@
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header (Cleaned up: Single primary CTA elsewhere, high contrast) -->
@@ -354,10 +355,6 @@
           <span class="text-slate-600 font-semibold hidden lg:inline whitespace-nowrap">รายงานและสถิติ</span>
           <span class="text-slate-400 hidden lg:inline" aria-hidden="true">/</span>
           <span class="font-bold text-slate-900 truncate whitespace-nowrap text-sm" id="topbar-title">สถิติ Exchange & Quota การรับ-ส่งข้อมูล</span>
-          <span class="hidden sm:inline-flex px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-950 text-[11px] font-bold border border-emerald-300 items-center gap-1.5 shrink-0 ml-1">
-            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-            <span>ระบบติดตามโควตา Exchange</span>
-          </span>
         </div>
       </div>
 
@@ -441,12 +438,11 @@
         </div>
 
         <!-- Left Panel Footer -->
-        <div class="p-3 bg-white border-t border-slate-200 text-xs text-slate-700 flex items-center justify-between shrink-0 shadow-2xs">
+        <div class="p-3 bg-white border-t border-slate-200 text-xs text-slate-700 flex items-center justify-center shrink-0 shadow-2xs">
           <span class="flex items-center gap-1.5 font-medium">
             <i data-lucide="clock" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
-            <span>รีเซ็ตโควตาทุกวันศุกร์ 11:00 น.</span>
+            <span>รีเซ็ตโควตาทุกวันศุกร์ เวลา 11:00 น.</span>
           </span>
-          <span class="font-bold text-slate-900 text-xs" id="total-allocated-quota">920k / 1.5M</span>
         </div>
       </section>
 
@@ -516,47 +512,25 @@
               <span id="headline-text">เกินโควตา: ระบบจำกัดอัตราการส่งข้อมูลอัตโนมัติ กรุณาปรับเพิ่มโควตาเพื่อกลับมาทำงานปกติ</span>
             </div>
 
-            <!-- Row 1: โควตารายวัน (Daily Limit) -->
-            <div class="space-y-2.5 mb-5 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
+            <!-- Quota Usage Progress Box (Authentic Single Quota per Org) -->
+            <div class="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200">
               <div class="flex items-center justify-between text-xs sm:text-sm">
                 <div>
-                  <div class="text-slate-900 font-bold text-sm">โควตารายวัน (Daily Limit)</div>
-                  <div id="session-reset-text" class="text-xs text-slate-700 font-medium mt-0.5 flex items-center gap-1.5">
-                    <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-600" aria-hidden="true"></i>
-                    <span>รีเซ็ตทุกวัน เวลา 00:00 น.</span>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span id="session-percent-text" class="font-extrabold text-slate-950 text-sm sm:text-base">14%</span>
-                  <div id="session-numbers-text" class="text-xs text-slate-700 mt-0.5 font-semibold">5,200 / 35,700 reqs</div>
-                </div>
-              </div>
-
-              <!-- Progress bar with accessible track & threshold indicators (SC 1.4.1) -->
-              <div class="relative w-full bg-slate-200 rounded-full h-3 overflow-hidden" role="progressbar" id="session-progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100" aria-label="การใช้โควตารายวัน">
-                <div id="session-progress-bar" class="bg-blue-600 h-3 rounded-full transition-all duration-500" style="width: 14%;"></div>
-              </div>
-            </div>
-
-            <!-- Row 2: โควตารอบสัปดาห์ (Weekly Limit) -->
-            <div class="space-y-2.5 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
-              <div class="flex items-center justify-between text-xs sm:text-sm">
-                <div>
-                  <div class="text-slate-900 font-bold text-sm">โควตารอบสัปดาห์ (Weekly Limit)</div>
-                  <div id="week-reset-text" class="text-xs text-slate-700 font-medium mt-0.5 flex items-center gap-1.5">
-                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-600" aria-hidden="true"></i>
+                  <div class="text-slate-900 font-bold text-base">โควตารอบการใช้งาน</div>
+                  <div id="week-reset-text" class="text-xs text-slate-700 font-semibold mt-1 flex items-center gap-1.5">
+                    <i data-lucide="clock" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
                     <span>รีเซ็ตวันศุกร์ 11:00 น.</span>
                   </div>
                 </div>
                 <div class="text-right">
-                  <span id="week-percent-text" class="font-extrabold text-slate-950 text-sm sm:text-base">102%</span>
-                  <div id="week-numbers-text" class="text-xs text-slate-700 mt-0.5 font-semibold">255,000 / 250,000 reqs</div>
+                  <span id="week-percent-text" class="font-extrabold text-slate-950 text-base sm:text-lg">102%</span>
+                  <div id="week-numbers-text" class="text-xs text-slate-700 mt-0.5 font-bold">255,000 / 250,000 reqs</div>
                 </div>
               </div>
 
               <!-- Progress bar with accessible track -->
-              <div class="relative w-full bg-slate-200 rounded-full h-3 overflow-hidden" role="progressbar" id="week-progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="การใช้โควตารอบสัปดาห์">
-                <div id="week-progress-bar" class="bg-rose-600 h-3 rounded-full transition-all duration-500" style="width: 100%;"></div>
+              <div class="relative w-full bg-slate-200 rounded-full h-3.5 overflow-hidden" role="progressbar" id="week-progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="การใช้โควตา">
+                <div id="week-progress-bar" class="bg-rose-600 h-3.5 rounded-full transition-all duration-500" style="width: 100%;"></div>
               </div>
             </div>
 
@@ -564,9 +538,9 @@
             <div class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-700 flex-wrap gap-2">
               <span class="flex items-center gap-1.5 font-medium">
                 <i data-lucide="info" class="w-4 h-4 text-blue-700 shrink-0" aria-hidden="true"></i>
-                <span>รอบสัปดาห์จะรีเซ็ตอัตโนมัติทุกวันศุกร์ เวลา 11:00 น.</span>
+                <span id="card-reset-desc">ระบบจะรีเซ็ตโควตาอัตโนมัติทุกวันศุกร์ เวลา 11:00 น.</span>
               </span>
-              <span class="font-bold text-slate-900" id="card-remain-quota-text">คงเหลือ: 0 reqs</span>
+              <span class="font-bold text-slate-900 text-sm" id="card-remain-quota-text">คงเหลือ: 0 reqs</span>
             </div>
           </div>
 
@@ -649,7 +623,6 @@
                       <tr>
                         <th class="py-3 px-4">วัน / วันที่</th>
                         <th class="py-3 px-3 text-right">จำนวน Request</th>
-                        <th class="py-3 px-3 text-right">% ของโควตารายวัน</th>
                         <th class="py-3 px-3 text-right">สำเร็จ (Success)</th>
                         <th class="py-3 px-3 text-right">ผิดพลาด (Errors)</th>
                         <th class="py-3 px-4 text-center">สถานะ</th>
@@ -880,11 +853,8 @@
         name: "สำนักการระบายน้ำ (กทม.)",
         shortCode: "สนร",
         status: "exceeded",
-        token: "tk_live_9482bf10e7a2b91842",
         thisWeek: { used: 255000, limit: 250000, percent: 102 },
-        currentSession: { used: 5200, limit: 35700, percent: 14, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "98.92%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 8450, success: "99.1%", errors: 76 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 12300, success: "98.8%", errors: 147 },
@@ -911,11 +881,8 @@
         name: "สำนักการโยธา (กทม.)",
         shortCode: "สนย",
         status: "near-limit",
-        token: "tk_live_3819fa091c784e2091",
         thisWeek: { used: 178000, limit: 200000, percent: 89 },
-        currentSession: { used: 6400, limit: 28500, percent: 22, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "99.45%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 11200, success: "99.5%", errors: 56 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 12800, success: "99.4%", errors: 76 },
@@ -941,11 +908,8 @@
         name: "สำนักงานเขตบางขุนเทียน",
         shortCode: "ขบท",
         status: "near-limit",
-        token: "tk_live_7294ac5821039de441",
         thisWeek: { used: 42500, limit: 50000, percent: 85 },
-        currentSession: { used: 1800, limit: 7100, percent: 25, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "99.60%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 2800, success: "99.7%", errors: 8 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 3100, success: "99.6%", errors: 12 },
@@ -971,11 +935,8 @@
         name: "สำนักงานเขตจตุจักร",
         shortCode: "ขจจ",
         status: "normal",
-        token: "tk_live_4910283bc91a827012",
         thisWeek: { used: 55000, limit: 100000, percent: 55 },
-        currentSession: { used: 1200, limit: 14200, percent: 8, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "99.82%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 3800, success: "99.8%", errors: 7 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 4100, success: "99.8%", errors: 8 },
@@ -1001,11 +962,8 @@
         name: "สำนักงานเขตคลองเตย",
         shortCode: "ขคต",
         status: "normal",
-        token: "tk_live_198273641abced9012",
         thisWeek: { used: 38400, limit: 80000, percent: 48 },
-        currentSession: { used: 950, limit: 11400, percent: 8, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "99.75%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 2500, success: "99.8%", errors: 5 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 2800, success: "99.7%", errors: 8 },
@@ -1029,11 +987,8 @@
         name: "สำนักงานเขตพระนคร",
         shortCode: "ขพน",
         status: "normal",
-        token: "tk_live_65412987a0c1e2f345",
         thisWeek: { used: 24600, limit: 60000, percent: 41 },
-        currentSession: { used: 720, limit: 8500, percent: 8, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "99.88%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 1800, success: "99.9%", errors: 2 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 1950, success: "99.8%", errors: 3 },
@@ -1057,11 +1012,8 @@
         name: "สำนักงานเขตบางรัก",
         shortCode: "ขบร",
         status: "normal",
-        token: "tk_live_9812736450fe12dc89",
         thisWeek: { used: 18500, limit: 50000, percent: 37 },
-        currentSession: { used: 610, limit: 7100, percent: 8, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "99.85%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 1300, success: "99.9%", errors: 1 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 1450, success: "99.8%", errors: 2 },
@@ -1085,11 +1037,8 @@
         name: "สำนักสิ่งแวดล้อม (กทม.)",
         shortCode: "สวล",
         status: "normal",
-        token: "tk_live_33445566778899aabb",
         thisWeek: { used: 48000, limit: 150000, percent: 32 },
-        currentSession: { used: 1100, limit: 21400, percent: 5, resetTime: "00:00 น." },
         weeklyReset: "วันศุกร์ 11:00 น.",
-        successRate: "99.90%",
         dailySeries: [
           { day: "อ. 11 พ.ย.", date: "11 พ.ย.", calls: 3200, success: "99.9%", errors: 3 },
           { day: "พ. 12 พ.ย.", date: "12 พ.ย.", calls: 3500, success: "99.9%", errors: 3 },
@@ -1345,41 +1294,26 @@
         }
       }
 
-      // Progress Bars & Numbers
-      const elSessionReset = document.getElementById("session-reset-text");
-      const elSessionPercent = document.getElementById("session-percent-text");
-      const elSessionNumbers = document.getElementById("session-numbers-text");
-      const elSessionBar = document.getElementById("session-progress-bar");
-      const elSessionProgressbar = document.getElementById("session-progressbar");
-
-      if (elSessionReset) elSessionReset.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5 text-slate-600"></i><span>รีเซ็ตทุกวัน เวลา ${org.currentSession.resetTime}</span>`;
-      if (elSessionPercent) elSessionPercent.textContent = `${org.currentSession.percent}%`;
-      if (elSessionNumbers) elSessionNumbers.textContent = `${org.currentSession.used.toLocaleString()} / ${org.currentSession.limit.toLocaleString()} reqs`;
-      if (elSessionBar) {
-        elSessionBar.style.width = `${Math.min(100, org.currentSession.percent)}%`;
-        elSessionBar.className = org.currentSession.percent > 85 ? "bg-amber-500 h-3 rounded-full transition-all duration-500" : "bg-blue-600 h-3 rounded-full transition-all duration-500";
-      }
-      if (elSessionProgressbar) {
-        elSessionProgressbar.setAttribute("aria-valuenow", org.currentSession.percent);
-      }
-
+      // Progress Bar & Quota Numbers
       const elWeekReset = document.getElementById("week-reset-text");
       const elWeekPercent = document.getElementById("week-percent-text");
       const elWeekNumbers = document.getElementById("week-numbers-text");
       const elWeekBar = document.getElementById("week-progress-bar");
       const elWeekProgressbar = document.getElementById("week-progressbar");
+      const elCardResetDesc = document.getElementById("card-reset-desc");
 
-      if (elWeekReset) elWeekReset.innerHTML = `<i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-600"></i><span>รีเซ็ต${org.weeklyReset}</span>`;
+      if (elWeekReset) elWeekReset.innerHTML = `<i data-lucide="clock" class="w-4 h-4 text-blue-600"></i><span>รีเซ็ต${org.weeklyReset}</span>`;
+      if (elCardResetDesc) elCardResetDesc.textContent = `ระบบจะรีเซ็ตโควตาอัตโนมัติทุก${org.weeklyReset}`;
       if (elWeekPercent) elWeekPercent.textContent = `${org.thisWeek.percent}%`;
       if (elWeekNumbers) elWeekNumbers.textContent = `${org.thisWeek.used.toLocaleString()} / ${org.thisWeek.limit.toLocaleString()} reqs`;
       if (elWeekBar) {
         elWeekBar.style.width = `${Math.min(100, org.thisWeek.percent)}%`;
         if (org.thisWeek.percent > 100) {
-          elWeekBar.className = "bg-rose-600 h-3 rounded-full transition-all duration-500";
+          elWeekBar.className = "bg-rose-600 h-3.5 rounded-full transition-all duration-500";
         } else if (org.thisWeek.percent >= 80) {
-          elWeekBar.className = "bg-amber-500 h-3 rounded-full transition-all duration-500";
+          elWeekBar.className = "bg-amber-500 h-3.5 rounded-full transition-all duration-500";
         } else {
-          elWeekBar.className = "bg-blue-600 h-3 rounded-full transition-all duration-500";
+          elWeekBar.className = "bg-blue-600 h-3.5 rounded-full transition-all duration-500";
         }
       }
       if (elWeekProgressbar) {
@@ -1539,8 +1473,6 @@
           `;
         }
 
-        const quotaShare = Math.round((item.calls / (org.thisWeek.limit / 7)) * 100);
-
         return `
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="py-3 px-4 font-bold text-slate-900">
@@ -1548,9 +1480,6 @@
             </td>
             <td class="py-3 px-3 text-right font-extrabold text-slate-900">
               ${item.calls.toLocaleString()}
-            </td>
-            <td class="py-3 px-3 text-right text-slate-700 font-bold">
-              ${quotaShare}%
             </td>
             <td class="py-3 px-3 text-right text-emerald-800 font-bold">
               ${item.success}
@@ -1840,10 +1769,9 @@
       const org = organizationsData.find(o => o.id === selectedOrgId);
       if (!org) return;
 
-      const header = "วัน,วันที่,จำนวน Request,% ของโควตารายวัน,สำเร็จ,ข้อผิดพลาด\n";
+      const header = "วัน,วันที่,จำนวน Request,สำเร็จ,ข้อผิดพลาด\n";
       const rows = org.dailySeries.map(item => {
-        const share = Math.round((item.calls / (org.thisWeek.limit / 7)) * 100);
-        return `"${item.day}","${item.date}",${item.calls},${share}%,"${item.success}",${item.errors}`;
+        return `"${item.day}","${item.date}",${item.calls},"${item.success}",${item.errors}`;
       }).join("\n");
 
       const blob = new Blob(["\uFEFF" + header + rows], { type: "text/csv;charset=utf-8;" });
