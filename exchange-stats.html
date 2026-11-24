@@ -318,60 +318,84 @@
   </aside>
 
   <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header -->
     <header class="h-14 sm:h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between shrink-0 shadow-2xs z-30">
-      <div class="flex items-center gap-2.5 text-xs min-w-0 flex-1 mr-2">
+      <div class="flex items-center gap-2 sm:gap-3 text-xs min-w-0 flex-1 mr-2">
+        <!-- Sidebar Toggle (Mobile) -->
         <button type="button" onclick="openMobileSidebar()"
-          class="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0 cursor-pointer"
+          class="md:hidden p-2 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors flex-shrink-0 cursor-pointer"
           title="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
 
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+        <!-- Back to Org List button on Mobile when viewing Detail -->
+        <button type="button" id="mobile-back-to-list-btn" onclick="setMobileView('list')"
+          class="hidden items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 border border-slate-200">
+          <i data-lucide="arrow-left" class="w-4 h-4 text-slate-600"></i>
+          <span>ดูรายชื่อหน่วยงาน</span>
+        </button>
+
+        <div id="header-brand-badge" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
           <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
         </div>
 
         <div class="flex items-center gap-2 min-w-0 truncate text-[11px] sm:text-xs">
-          <span class="text-slate-400 font-medium hidden sm:inline whitespace-nowrap">รายงานและสถิติ</span>
-          <span class="text-slate-300 hidden sm:inline">/</span>
-          <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0">สถิติ Exchange & Quota การรับ-ส่งข้อมูล</span>
-          <span class="hidden lg:inline-flex px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-bold border border-blue-200">Real-time Sync</span>
+          <span class="text-slate-400 font-medium hidden lg:inline whitespace-nowrap">รายงานและสถิติ</span>
+          <span class="text-slate-300 hidden lg:inline">/</span>
+          <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0" id="topbar-title">สถิติ Exchange & Quota</span>
+          <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200 items-center gap-1 shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Real-time Quota API</span>
+          </span>
         </div>
       </div>
 
       <!-- Right Header Actions -->
       <div class="flex items-center gap-2 shrink-0">
-        <button type="button" onclick="refreshData()" class="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer">
+        <!-- Mobile View Switcher Pill -->
+        <div class="flex md:hidden items-center p-0.5 bg-slate-100 rounded-xl border border-slate-200">
+          <button type="button" onclick="setMobileView('list')" id="mobile-tab-list" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all bg-white text-slate-900 shadow-2xs">
+            หน่วยงาน
+          </button>
+          <button type="button" onclick="setMobileView('detail')" id="mobile-tab-detail" class="px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all text-slate-500 hover:text-slate-900">
+            สถิติ
+          </button>
+        </div>
+
+        <button type="button" onclick="refreshData()" class="px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer">
           <i data-lucide="rotate-cw" id="refresh-spinner" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span class="hidden sm:inline">รีเฟรชข้อมูล</span>
+          <span class="hidden sm:inline">รีเฟรช</span>
         </button>
 
-        <button type="button" onclick="openAddQuotaModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-1.5 cursor-pointer active:scale-95">
+        <button type="button" onclick="openAddQuotaModal()" class="px-3 sm:px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-1.5 cursor-pointer active:scale-95">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-blue-400"></i>
-          <span>เพิ่ม Quota</span>
+          <span class="whitespace-nowrap">ปรับเพิ่ม Quota</span>
         </button>
       </div>
     </header>
 
-    <!-- CONTENT WORKSPACE: Master-Detail Two-Column Layout -->
-    <div class="flex-1 flex overflow-hidden">
+    <!-- CONTENT WORKSPACE: Master-Detail Two-Column Responsive Layout -->
+    <div class="flex-1 flex overflow-hidden relative">
 
       <!-- ======================================================== -->
       <!-- LEFT PANEL: รายการหน่วยงาน & สถานะ Quota / เวลา Reset      -->
       <!-- ======================================================== -->
-      <section class="w-full md:w-[380px] lg:w-[420px] bg-white border-r border-slate-200 flex flex-col shrink-0 h-full overflow-hidden">
+      <section id="master-panel" class="w-full md:w-[350px] lg:w-[390px] xl:w-[420px] bg-white border-r border-slate-200 flex flex-col shrink-0 h-full overflow-hidden transition-all duration-300">
         
         <!-- Left Panel Header: Search & Filter Toolbar -->
-        <div class="p-3.5 sm:p-4 border-b border-slate-200 bg-slate-50/70 space-y-3 shrink-0">
+        <div class="p-3.5 sm:p-4 border-b border-slate-200 bg-slate-50/80 space-y-3 shrink-0">
           <div class="flex items-center justify-between">
-            <h2 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-              <i data-lucide="building" class="w-3.5 h-3.5 text-blue-600"></i>
-              <span>หน่วยงานที่ใช้ Exchange API</span>
-              <span id="org-total-count" class="px-1.5 py-0.2 rounded-full bg-slate-200/80 text-slate-700 text-[10px] font-bold">8</span>
-            </h2>
-            <span class="text-[10px] text-slate-400 font-medium">อัปเดตอัตโนมัติ</span>
+            <div class="flex items-center gap-2">
+              <h2 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="building-2" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>หน่วยงานที่ใช้ Exchange API</span>
+              </h2>
+              <span id="org-total-count" class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold">8</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-medium">Auto-sync 30s</span>
           </div>
 
           <!-- Search Input -->
@@ -382,119 +406,143 @@
               id="org-search-input"
               oninput="handleOrgSearch(this.value)"
               placeholder="ค้นหาชื่อหน่วยงาน, ID, หรือรหัสย่อ..."
-              class="w-full pl-9 pr-8 py-1.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs"
+              class="w-full pl-9 pr-8 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs transition-all"
             >
-            <button id="clear-search-btn" onclick="clearOrgSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            <button id="clear-search-btn" onclick="clearOrgSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
               <i data-lucide="x" class="w-3.5 h-3.5"></i>
             </button>
           </div>
 
-          <!-- Status Filter Tabs (ตาม Requirement จากรูป) -->
-          <div class="flex items-center bg-slate-200/60 p-0.5 rounded-xl border border-slate-200/80 text-[11px]">
-            <button onclick="setFilterStatus('all')" id="filter-all" class="flex-1 py-1 px-1.5 rounded-lg font-bold text-center transition-all bg-white text-slate-900 shadow-2xs whitespace-nowrap cursor-pointer">
-              ทั้งหมด
+          <!-- Filter Pills (ทั้งหมด / ใกล้เต็ม / เกินแล้ว / ปกติ) -->
+          <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5 pb-0.5 text-xs">
+            <button type="button" onclick="setFilter('all')" id="filter-pill-all" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer">
+              ทั้งหมด <span id="count-all" class="ml-1 opacity-80">(8)</span>
             </button>
-            <button onclick="setFilterStatus('near_limit')" id="filter-near" class="flex-1 py-1 px-1.5 rounded-lg font-semibold text-center transition-all text-amber-700 hover:text-amber-900 whitespace-nowrap cursor-pointer">
-              ใกล้เต็ม (>80%)
+            <button type="button" onclick="setFilter('near-limit')" id="filter-pill-near-limit" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
+              ใกล้เต็ม (&gt;80%) <span id="count-near" class="ml-1 text-amber-600 font-bold">(2)</span>
             </button>
-            <button onclick="setFilterStatus('exceeded')" id="filter-exceeded" class="flex-1 py-1 px-1.5 rounded-lg font-semibold text-center transition-all text-rose-700 hover:text-rose-900 whitespace-nowrap cursor-pointer">
-              เกินแล้ว
+            <button type="button" onclick="setFilter('exceeded')" id="filter-pill-exceeded" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
+              เกินแล้ว <span id="count-exceeded" class="ml-1 text-rose-600 font-bold">(1)</span>
             </button>
-            <button onclick="setFilterStatus('normal')" id="filter-normal" class="flex-1 py-1 px-1.5 rounded-lg font-semibold text-center transition-all text-slate-600 hover:text-slate-900 whitespace-nowrap cursor-pointer">
-              ปกติ
+            <button type="button" onclick="setFilter('normal')" id="filter-pill-normal" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
+              ปกติ <span id="count-normal" class="ml-1 text-emerald-600 font-bold">(5)</span>
             </button>
           </div>
         </div>
 
-        <!-- Left Panel: Scrollable Organization Cards List -->
-        <div id="org-list-container" class="flex-1 overflow-y-auto divide-y divide-slate-100 p-2 sm:p-2.5 space-y-1">
-          <!-- Injected by JavaScript -->
+        <!-- Org List Scrollable Container -->
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-100" id="org-list-container">
+          <!-- Rendered via JavaScript -->
         </div>
 
-        <!-- Left Panel Footer Summary -->
-        <div class="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500 shrink-0">
-          <span>รวมหน่วยงานที่มี Exchange: <strong>8 หน่วยงาน</strong></span>
-          <span class="inline-flex items-center gap-1 text-emerald-600 font-semibold">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> ระบบปกติ
+        <!-- Left Panel Footer -->
+        <div class="p-3 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex items-center justify-between shrink-0">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="help-circle" class="w-3.5 h-3.5 text-slate-400"></i>
+            <span>รีเซ็ตโควตาทุกวันศุกร์ 11:00 น.</span>
           </span>
+          <span class="font-mono-code font-bold text-slate-700" id="total-allocated-quota">920k / 1.5M reqs</span>
         </div>
       </section>
 
       <!-- ======================================================== -->
-      <!-- RIGHT PANEL: รายละเอียด Quota, Daily Usage, และ Log       -->
+      <!-- RIGHT PANEL: ข้อมูลการใช้งาน, กล่อง Your Usage Pro, กราฟ, Log -->
       <!-- ======================================================== -->
-      <section class="flex-1 flex flex-col h-full overflow-y-auto bg-[#f8fafc]" id="detail-pane">
+      <section id="detail-panel" class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-y-auto h-full">
 
-        <!-- Selected Org Header Card -->
-        <div class="bg-white border-b border-slate-200 p-4 sm:p-6 shrink-0 shadow-2xs">
-          <div class="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            
-            <!-- Left: Org Info & Health Badge -->
-            <div class="flex items-start gap-3.5 min-w-0">
-              <div id="selected-org-avatar" class="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center shrink-0 shadow-2xs text-lg font-black">
-                กท
+        <!-- Detail Header: Selected Organization Info & Quick Actions -->
+        <div class="p-4 sm:p-6 pb-0">
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-2xs mb-4 sm:mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <!-- Org Identity -->
+              <div class="flex items-start sm:items-center gap-3.5 min-w-0">
+                <div id="org-avatar" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold text-lg flex items-center justify-center shrink-0 shadow-sm">
+                  จจ
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap mb-1">
+                    <h1 id="selected-org-name" class="text-base sm:text-xl font-bold text-slate-900 truncate">
+                      สำนักงานเขตจตุจักร
+                    </h1>
+                    <span id="selected-org-tier" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      Pro Exchange
+                    </span>
+                    <span id="selected-org-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      <span>ใช้งานปกติ (55%)</span>
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+                    <span class="font-mono-code" id="selected-org-id">ID: ORG-1029</span>
+                    <span>•</span>
+                    <span class="flex items-center gap-1">
+                      <i data-lucide="key-round" class="w-3.5 h-3.5 text-slate-400"></i>
+                      <span>Exchange Token:</span>
+                      <code id="selected-org-token" class="font-mono-code bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded text-[11px]">tk_live_9482...e7a</code>
+                    </span>
+                    <button type="button" onclick="copyToken()" class="text-blue-600 hover:text-blue-800 text-[11px] font-semibold underline cursor-pointer">คัดลอก</button>
+                  </div>
+                </div>
               </div>
-              <div class="min-w-0">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <h1 id="selected-org-name" class="text-base sm:text-lg font-bold text-slate-900 truncate">
-                    สำนักงานเขตจตุจักร
-                  </h1>
-                  <span id="selected-org-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700">
-                    ใกล้เต็มโควตา
-                  </span>
-                  <span id="selected-org-tier" class="px-2 py-0.5 rounded-md text-[10.5px] font-mono-code font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                    Pro Exchange Tier
-                  </span>
-                </div>
-                <div class="flex items-center gap-3 text-xs text-slate-500 mt-1 flex-wrap font-mono-code">
-                  <span>ID: <strong class="text-slate-800" id="selected-org-id">ORG-1029</strong></span>
-                  <span>|</span>
-                  <span>API Key: <strong class="text-slate-700 font-mono" id="selected-org-key">tf_live_••••••89a2</strong></span>
-                  <span>|</span>
-                  <span class="text-slate-400">รอบบิล: รายสัปดาห์</span>
-                </div>
+
+              <!-- Quick Action Button -->
+              <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+                <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+                  <i data-lucide="gauge" class="w-4 h-4"></i>
+                  <span>ปรับเพิ่ม Quota หน่วยงานนี้</span>
+                </button>
               </div>
             </div>
 
-            <!-- Right: Quick Actions -->
-            <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
-              <button onclick="openAddQuotaModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-1.5 cursor-pointer active:scale-95">
-                <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>ปรับเพิ่ม Quota</span>
-              </button>
+            <!-- Mini KPI Metric Row -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-4 pt-4 border-t border-slate-100 text-xs">
+              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+                <span class="text-[11px] text-slate-500 block">โควตารวมสัปดาห์นี้</span>
+                <span id="kpi-quota-limit" class="font-bold text-sm font-mono-code text-slate-800">100,000 reqs</span>
+              </div>
+              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+                <span class="text-[11px] text-slate-500 block">เรียกใช้แล้วทั้งหมด</span>
+                <span id="kpi-quota-used" class="font-bold text-sm font-mono-code text-blue-600">55,000 reqs</span>
+              </div>
+              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+                <span class="text-[11px] text-slate-500 block">โควตาคงเหลือ</span>
+                <span id="kpi-quota-remain" class="font-bold text-sm font-mono-code text-emerald-600">45,000 reqs</span>
+              </div>
+              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+                <span class="text-[11px] text-slate-500 block">อัตราสำเร็จ (14 วัน)</span>
+                <span id="kpi-success-rate" class="font-bold text-sm font-mono-code text-slate-800">99.82%</span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Scrollable Detail Body Container -->
-        <div class="flex-1 p-3.5 sm:p-6 max-w-6xl mx-auto w-full space-y-5">
 
           <!-- ======================================================== -->
-          <!-- BLOCK 1: USAGE PROGRESS CARDS (EXACT REPLICA OF IMAGE 2) -->
+          <!-- BLOCK 1: USAGE PRO CARD (ถอดแบบตามรูปที่ 2 แบบ pixel-perfect) -->
           <!-- ======================================================== -->
-          <div class="bg-slate-900 text-white rounded-3xl p-5 sm:p-7 shadow-lg relative overflow-hidden border border-slate-800">
-            <!-- Subtle background accent -->
-            <div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-blue-600/10 blur-3xl pointer-events-none"></div>
+          <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0b1120] rounded-3xl p-5 sm:p-7 text-white shadow-xl border border-slate-800/90 relative overflow-hidden mb-6">
+            
+            <!-- Ambient Glow Effect -->
+            <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-blue-600/15 blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full bg-indigo-600/10 blur-3xl pointer-events-none"></div>
 
             <!-- Card Header matching screenshot -->
-            <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center justify-between mb-2.5 relative z-10">
               <div class="flex items-center gap-2">
-                <span class="text-xs uppercase tracking-wider text-slate-400 font-bold">Your usage</span>
-                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-white/10 text-slate-200">Pro</span>
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Your usage</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-slate-200 border border-white/10">Pro</span>
               </div>
               <span id="usage-status-badge" class="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold bg-emerald-950/80 border border-emerald-800/80 px-2.5 py-0.5 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                <span>Active & Healthy</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Active &amp; Healthy</span>
               </span>
             </div>
 
             <!-- Status Headline (matching "On track. You should reach Friday's reset with room to spare.") -->
-            <h3 id="usage-headline" class="text-base sm:text-lg font-bold text-white mb-6">
+            <h3 id="usage-headline" class="text-base sm:text-lg lg:text-xl font-bold text-white mb-6 relative z-10 leading-snug">
               On track. You should reach Friday's reset with room to spare.
             </h3>
 
             <!-- SECTION A: Current Session (Today's Limit) -->
-            <div class="space-y-2 mb-6">
+            <div class="space-y-2 mb-6 relative z-10">
               <div class="flex items-center justify-between text-xs">
                 <div>
                   <span class="font-bold text-slate-200 text-sm">Current session</span>
@@ -507,13 +555,13 @@
               </div>
 
               <!-- Sleek Progress Bar -->
-              <div class="w-full bg-slate-800/90 rounded-full h-2 overflow-hidden border border-white/5">
-                <div id="session-progress-bar" class="bg-blue-500 h-2 rounded-full transition-all duration-500 shadow-sm" style="width: 7%;"></div>
+              <div class="w-full bg-slate-800/90 rounded-full h-2.5 overflow-hidden border border-white/5 p-0.5">
+                <div id="session-progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm" style="width: 7%;"></div>
               </div>
             </div>
 
             <!-- SECTION B: This week (Weekly/Monthly Quota Cycle) -->
-            <div class="space-y-2 pt-2 border-t border-slate-800/80">
+            <div class="space-y-2 pt-4 border-t border-slate-800/80 relative z-10">
               <div class="flex items-center justify-between text-xs">
                 <div>
                   <span class="font-bold text-slate-200 text-sm">This week</span>
@@ -526,310 +574,361 @@
               </div>
 
               <!-- Sleek Progress Bar -->
-              <div class="w-full bg-slate-800/90 rounded-full h-2 overflow-hidden border border-white/5">
-                <div id="week-progress-bar" class="bg-blue-500 h-2 rounded-full transition-all duration-500 shadow-sm" style="width: 55%;"></div>
+              <div class="w-full bg-slate-800/90 rounded-full h-2.5 overflow-hidden border border-white/5 p-0.5">
+                <div id="week-progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm" style="width: 55%;"></div>
               </div>
             </div>
 
-            <!-- Quick Stat Badges -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-slate-800/80 text-xs">
-              <div class="bg-slate-800/50 p-2.5 rounded-xl border border-white/5">
-                <span class="text-[10px] text-slate-400 block">คงเหลือในรอบนี้</span>
-                <span id="kpi-remaining" class="text-sm font-bold font-mono-code text-white mt-0.5 block">45,000</span>
-              </div>
-              <div class="bg-slate-800/50 p-2.5 rounded-xl border border-white/5">
-                <span class="text-[10px] text-slate-400 block">อัตราการใช้งานเฉลี่ย</span>
-                <span id="kpi-avg" class="text-sm font-bold font-mono-code text-slate-200 mt-0.5 block">7,850 / วัน</span>
-              </div>
-              <div class="bg-slate-800/50 p-2.5 rounded-xl border border-white/5">
-                <span class="text-[10px] text-slate-400 block">คาดการณ์สิ้นเปลือง</span>
-                <span id="kpi-forecast" class="text-sm font-bold text-emerald-400 mt-0.5 block">เพียงพอตลอดรอบ</span>
-              </div>
-              <div class="bg-slate-800/50 p-2.5 rounded-xl border border-white/5">
-                <span class="text-[10px] text-slate-400 block">ประวัติการเพิ่ม Quota</span>
-                <span id="kpi-logs-count" class="text-sm font-bold font-mono-code text-blue-400 mt-0.5 block">3 ครั้งล่าสุด</span>
+            <!-- Footer Action inside Card -->
+            <div class="mt-6 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 relative z-10">
+              <span class="flex items-center gap-1.5 text-[11px]">
+                <i data-lucide="info" class="w-3.5 h-3.5 text-blue-400"></i>
+                <span id="card-footer-tip">หากอัตราการเรียก API เพิ่มสูงขึ้นอย่างต่อเนื่อง ระบบจะแจ้งเตือนผ่าน Line Admin</span>
+              </span>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="openAddQuotaModal()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-colors flex items-center gap-1 cursor-pointer">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>เพิ่ม Quota ทันที</span>
+                </button>
               </div>
             </div>
           </div>
 
           <!-- ======================================================== -->
-          <!-- BLOCK 2: TABS (DAILY USAGE & QUOTA AUDIT LOGS)           -->
+          <!-- BLOCK 2: TABS (DAILY USAGE, AUDIT LOGS, ENDPOINTS)        -->
           <!-- ======================================================== -->
-          <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="space-y-4 mb-8">
             
-            <!-- Segmented Control Tabs Header -->
-            <div class="px-4 sm:px-6 pt-4 border-b border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div class="flex items-center gap-1.5 p-1 bg-slate-200/60 rounded-xl border border-slate-200 self-start text-xs font-semibold">
-                <button
-                  type="button"
-                  id="tab-btn-daily"
-                  onclick="switchDetailTab('daily')"
-                  class="px-3.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer font-bold"
-                >
-                  <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-blue-600"></i>
-                  <span>สถิติการใช้งานรายวัน (Daily Usage)</span>
+            <!-- Tab Switcher -->
+            <div class="flex items-center justify-between border-b border-slate-200 gap-2 flex-wrap pb-1">
+              <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
+                <button type="button" onclick="switchTab('daily')" id="tab-btn-daily" class="tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-blue-600 bg-blue-50/80 border-b-2 border-blue-600 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
+                  <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                  <span>สถิติรายวัน (Daily Usage)</span>
                 </button>
-                <button
-                  type="button"
-                  id="tab-btn-logs"
-                  onclick="switchDetailTab('logs')"
-                  class="px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5 cursor-pointer font-medium"
-                >
-                  <i data-lucide="history" class="w-3.5 h-3.5 text-slate-400"></i>
-                  <span>ประวัติการเพิ่ม Quota (Audit Logs)</span>
-                  <span id="tab-log-badge" class="w-4 h-4 rounded-full bg-slate-200 text-slate-700 text-[10px] inline-flex items-center justify-center font-bold">3</span>
+                <button type="button" onclick="switchTab('logs')" id="tab-btn-logs" class="tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-800 hover:bg-slate-100 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
+                  <i data-lucide="history" class="w-4 h-4"></i>
+                  <span>ประวัติการปรับเพิ่ม (Audit Logs)</span>
+                  <span id="tab-logs-count" class="px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-700 text-[10px] font-bold">4</span>
                 </button>
-                <button
-                  type="button"
-                  id="tab-btn-endpoints"
-                  onclick="switchDetailTab('endpoints')"
-                  class="hidden sm:flex px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all items-center gap-1.5 cursor-pointer font-medium"
-                >
-                  <i data-lucide="network" class="w-3.5 h-3.5 text-slate-400"></i>
-                  <span>Endpoints</span>
+                <button type="button" onclick="switchTab('endpoints')" id="tab-btn-endpoints" class="tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-800 hover:bg-slate-100 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
+                  <i data-lucide="network" class="w-4 h-4"></i>
+                  <span>แยกตาม Endpoint</span>
                 </button>
               </div>
 
-              <!-- Range Filter for Daily Usage Tab -->
-              <div id="daily-filter-bar" class="flex items-center gap-2 pb-3 sm:pb-0">
-                <span class="text-xs text-slate-500 font-medium">ช่วงเวลา:</span>
-                <select id="time-range-select" onchange="changeTimeRange(this.value)" class="bg-white border border-slate-200 rounded-lg text-xs py-1 px-2.5 font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs">
-                  <option value="7">7 วันล่าสุด</option>
-                  <option value="14" selected>14 วันล่าสุด</option>
-                  <option value="30">30 วันล่าสุด</option>
-                </select>
+              <!-- Time Range Selector for Tab -->
+              <div class="hidden sm:flex items-center gap-1 bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-xs">
+                <button type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white text-slate-800 shadow-2xs">14 วันล่าสุด</button>
+                <button type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-500 hover:text-slate-800">30 วัน</button>
+                <button type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-500 hover:text-slate-800">รอบบิลนี้</button>
               </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- TAB CONTENT 1: DAILY USAGE BREAKDOWN       -->
-            <!-- ========================================== -->
-            <div id="tab-content-daily" class="p-4 sm:p-6 space-y-6">
+            <!-- TAB PANE 1: DAILY USAGE CHART & TABLE -->
+            <div id="tab-pane-daily" class="tab-pane space-y-4">
               
-              <!-- Daily Usage Chart (SVG interactive bar chart) -->
-              <div class="space-y-2">
-                <div class="flex items-center justify-between text-xs">
-                  <div class="flex items-center gap-2">
-                    <span class="font-bold text-slate-800">แนวโน้มการเรียกใช้ Exchange API ต่อวัน</span>
-                    <span class="text-slate-400 font-mono-code text-[11px]">(Requests/Day)</span>
+              <!-- Interactive SVG Chart Card -->
+              <div class="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-6 shadow-2xs">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <span>แนวโน้มการเรียกใช้ Exchange API ย้อนหลัง 14 วัน</span>
+                      <span class="text-[11px] font-normal text-slate-500">(Calls per day)</span>
+                    </h4>
+                    <p class="text-xs text-slate-500 mt-0.5">ชี้ที่แท่งกราฟเพื่อดูสถิติจำนวน request อัตราความสำเร็จ และข้อผิดพลาด</p>
                   </div>
-                  <div class="flex items-center gap-4 text-[11px] text-slate-500 font-medium">
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-blue-500"></span> จำนวนการเรียกสำเร็จ</span>
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-rose-400"></span> ขีดจำกัดโควตาวัน</span>
+                  <div class="flex items-center gap-3 text-xs">
+                    <span class="flex items-center gap-1.5 text-slate-600">
+                      <span class="w-3 h-3 rounded bg-blue-500"></span>
+                      <span>ปกติ</span>
+                    </span>
+                    <span class="flex items-center gap-1.5 text-slate-600">
+                      <span class="w-3 h-3 rounded bg-amber-500"></span>
+                      <span>ใกล้ลิมิต</span>
+                    </span>
+                    <span class="flex items-center gap-1.5 text-slate-600">
+                      <span class="w-3 h-3 rounded bg-rose-500"></span>
+                      <span>ทราฟฟิกพุ่งสูง</span>
+                    </span>
                   </div>
                 </div>
 
-                <!-- SVG Chart Container -->
-                <div class="w-full bg-slate-50/70 border border-slate-200/80 rounded-2xl p-4 sm:p-5 relative overflow-hidden">
-                  <div id="daily-chart-container" class="w-full h-48 flex items-end justify-between gap-1 sm:gap-2 pt-6">
-                    <!-- Injected dynamically by JavaScript -->
+                <!-- SVG Daily Chart Container -->
+                <div class="w-full overflow-x-auto pb-2">
+                  <div class="min-w-[550px] h-60 relative flex flex-col justify-end" id="daily-chart-wrapper">
+                    <!-- Rendered via JavaScript -->
                   </div>
+                </div>
+
+                <!-- Chart Footer Summary -->
+                <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+                  <span id="chart-summary-stat">เรียกใช้งานเฉลี่ย: 4,890 reqs/วัน</span>
+                  <span id="chart-peak-stat" class="font-semibold text-slate-700">จุดสูงสุด: 8,420 reqs (18 พ.ย.)</span>
                 </div>
               </div>
 
-              <!-- Daily Usage Data Table -->
-              <div class="space-y-2">
-                <div class="flex items-center justify-between">
+              <!-- Daily Breakdown Table -->
+              <div class="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                <div class="p-3.5 sm:p-4 bg-slate-50/80 border-b border-slate-200 flex items-center justify-between">
                   <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-blue-600"></i>
-                    <span>ตารางบันทึกการใช้งานรายวัน</span>
+                    <i data-lucide="table" class="w-3.5 h-3.5 text-blue-600"></i>
+                    <span>ตารางสถิติแยกตามวัน (Daily Breakdown)</span>
                   </h4>
-                  <span class="text-xs text-slate-400">แสดงผล 14 วันย้อนหลัง</span>
+                  <button type="button" onclick="exportCsvDaily()" class="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1 cursor-pointer">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                    <span>ส่งออก CSV</span>
+                  </button>
                 </div>
-
-                <div class="overflow-x-auto border border-slate-200/90 rounded-2xl shadow-2xs">
+                <div class="overflow-x-auto">
                   <table class="w-full text-left text-xs border-collapse">
-                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
+                    <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
                       <tr>
-                        <th class="py-3 px-4">วันที่ (Date)</th>
-                        <th class="py-3 px-4 text-right">จำนวน Request (Calls)</th>
-                        <th class="py-3 px-4 text-right">โควตาวัน (Cap)</th>
-                        <th class="py-3 px-4 text-right">สัดส่วนที่ใช้ (% Used)</th>
-                        <th class="py-3 px-4 text-center">สถานะ (Status)</th>
+                        <th class="py-2.5 px-3 sm:px-4">วันที่</th>
+                        <th class="py-2.5 px-3 text-right">จำนวน Request</th>
+                        <th class="py-2.5 px-3 text-right">สัดส่วนต่อ Quota วัน</th>
+                        <th class="py-2.5 px-3 text-right">Success Rate</th>
+                        <th class="py-2.5 px-3 text-right">Errors</th>
+                        <th class="py-2.5 px-3 sm:px-4 text-center">สถานะ</th>
                       </tr>
                     </thead>
-                    <tbody id="daily-table-body" class="divide-y divide-slate-100 bg-white">
-                      <!-- Injected by JavaScript -->
+                    <tbody class="divide-y divide-slate-100" id="daily-table-body">
+                      <!-- Rendered via JavaScript -->
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- TAB CONTENT 2: QUOTA AUDIT LOGS            -->
-            <!-- ========================================== -->
-            <div id="tab-content-logs" class="p-4 sm:p-6 space-y-4 hidden">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-600"></i>
-                    <span>ประวัติและ Log การปรับเพิ่ม Quota (Audit Trail)</span>
-                  </h4>
-                  <p class="text-xs text-slate-500 mt-0.5">บันทึกทุกครั้งที่มีผู้ดูแลระบบทำการเพิ่มหรือปรับลดขีดจำกัด Quota ของหน่วยงานนี้</p>
+            <!-- TAB PANE 2: AUDIT LOGS OF QUOTA ADJUSTMENTS -->
+            <div id="tab-pane-logs" class="tab-pane hidden space-y-4">
+              <div class="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
+                <div class="p-3.5 sm:p-4 bg-slate-50/80 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                      <i data-lucide="history" class="w-3.5 h-3.5 text-blue-600"></i>
+                      <span>ประวัติการเพิ่มและปรับแก้ Quota (Audit Logs)</span>
+                    </h4>
+                    <p class="text-xs text-slate-500 mt-0.5">บันทึกทุกคำสั่งการปรับโควตาโดย Admin พร้อมระบุผู้กระทำ เวลา และเหตุผลประกอบ</p>
+                  </div>
+                  <button type="button" onclick="openAddQuotaModal()" class="px-3 py-1.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors self-start sm:self-auto cursor-pointer">
+                    + ปรับเพิ่ม Quota ใหม่
+                  </button>
                 </div>
 
-                <button onclick="openAddQuotaModal()" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer">
-                  <i data-lucide="plus" class="w-3.5 h-3.5 text-blue-600"></i>
-                  <span>บันทึกเพิ่ม Quota ใหม่</span>
-                </button>
-              </div>
-
-              <!-- Log History Table -->
-              <div class="overflow-x-auto border border-slate-200/90 rounded-2xl shadow-2xs">
-                <table class="w-full text-left text-xs border-collapse">
-                  <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
-                    <tr>
-                      <th class="py-3 px-4 w-44">วัน-เวลาที่ปรับ</th>
-                      <th class="py-3 px-4">ผู้ดำเนินการ (Admin)</th>
-                      <th class="py-3 px-4">การเปลี่ยนแปลง (Diff)</th>
-                      <th class="py-3 px-4">ประเภท</th>
-                      <th class="py-3 px-4">เหตุผล / รายละเอียดประกอบ</th>
-                    </tr>
-                  </thead>
-                  <tbody id="logs-table-body" class="divide-y divide-slate-100 bg-white">
-                    <!-- Injected dynamically by JavaScript -->
-                  </tbody>
-                </table>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
+                      <tr>
+                        <th class="py-2.5 px-3 sm:px-4">วัน-เวลา</th>
+                        <th class="py-2.5 px-3">ผู้ดำเนินการ</th>
+                        <th class="py-2.5 px-3 text-right">ยอดที่ปรับเพิ่ม</th>
+                        <th class="py-2.5 px-3 text-right">โควตาใหม่</th>
+                        <th class="py-2.5 px-3">ขอบเขต</th>
+                        <th class="py-2.5 px-3 sm:px-4">เหตุผล / บันทึก (Audit Note)</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100" id="audit-log-table-body">
+                      <!-- Rendered via JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- TAB CONTENT 3: ENDPOINTS BREAKDOWN         -->
-            <!-- ========================================== -->
-            <div id="tab-content-endpoints" class="p-4 sm:p-6 space-y-4 hidden">
-              <div class="flex items-center justify-between">
-                <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                  <i data-lucide="network" class="w-3.5 h-3.5 text-blue-600"></i>
-                  <span>ปริมาณการเรียกใช้งานแยกตาม Endpoint API</span>
-                </h4>
-                <span class="text-xs text-slate-400 font-mono-code">7 วันย้อนหลัง</span>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="endpoints-grid">
-                <!-- Injected dynamically by JavaScript -->
+            <!-- TAB PANE 3: ENDPOINTS BREAKDOWN -->
+            <div id="tab-pane-endpoints" class="tab-pane hidden space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="endpoints-grid">
+                <!-- Rendered via JavaScript -->
               </div>
             </div>
 
           </div>
-
         </div>
       </section>
 
     </div>
   </main>
 
-  <!-- ======================================================== -->
-  <!-- MODAL: ปรับเพิ่ม QUOTA พร้อมบันทึก LOG (REQUIREMENT)      -->
-  <!-- ======================================================== -->
-  <div id="quota-modal-backdrop" onclick="closeAddQuotaModal()" class="modal-backdrop hidden"></div>
-
-  <div id="quota-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-3xl shadow-2xl z-70 transition-all duration-200 scale-95 opacity-0 pointer-events-none p-5 sm:p-6 border border-slate-200 space-y-4">
+<!-- ======================================================== -->
+<!-- MODAL: ปรับเพิ่ม QUOTA (เพิ่มโควตาพร้อมบันทึก AUDIT LOG)     -->
+<!-- ======================================================== -->
+<div id="add-quota-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs transition-opacity duration-200">
+  <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-7 shadow-2xl border border-slate-200 relative transform transition-all duration-200 scale-95 opacity-0" id="modal-card">
     
+    <!-- Modal Close Button -->
+    <button type="button" onclick="closeAddQuotaModal()" class="absolute right-4 sm:right-6 top-4 sm:top-6 p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+
     <!-- Modal Header -->
-    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center shrink-0">
-          <i data-lucide="plus-circle" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">ปรับเพิ่ม Quota ให้หน่วยงาน</h3>
-          <p class="text-xs text-slate-500" id="modal-org-subtitle">สำนักงานเขตจตุจักร (ID: ORG-1029)</p>
-        </div>
+    <div class="flex items-center gap-3 mb-5">
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0">
+        <i data-lucide="gauge" class="w-5 h-5"></i>
       </div>
-      <button onclick="closeAddQuotaModal()" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer">
-        <i data-lucide="x" class="w-4 h-4"></i>
-      </button>
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ปรับเพิ่ม Quota การใช้งาน</h3>
+        <p class="text-xs text-slate-500 mt-0.5" id="modal-org-target-label">หน่วยงาน: สำนักงานเขตจตุจักร</p>
+      </div>
     </div>
 
     <!-- Modal Form -->
-    <form id="quota-form" onsubmit="submitAddQuota(event)" class="space-y-4 text-xs">
+    <form id="add-quota-form" onsubmit="handleQuotaSubmit(event)" class="space-y-4 text-xs">
       
-      <!-- Current vs New Quota Preview Banner -->
-      <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between font-mono-code">
+      <!-- Current vs New Quota Preview Box -->
+      <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
         <div>
-          <span class="text-[10px] text-slate-400 block uppercase">โควตาเดิม (Current)</span>
-          <span id="modal-current-quota" class="font-bold text-slate-800 text-sm">100,000 reqs</span>
+          <span class="text-slate-500 block text-[11px]">โควตารอบสัปดาห์เดิม</span>
+          <span class="font-bold text-slate-800 text-sm font-mono-code" id="modal-current-quota">100,000 reqs</span>
         </div>
         <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
         <div class="text-right">
-          <span class="text-[10px] text-blue-600 block uppercase font-bold">โควตาใหม่ (New Quota)</span>
-          <span id="modal-preview-new-quota" class="font-bold text-blue-600 text-sm">150,000 reqs</span>
+          <span class="text-slate-500 block text-[11px]">โควตาใหม่หลังปรับ</span>
+          <span class="font-bold text-blue-600 text-sm font-mono-code" id="modal-new-quota-preview">150,000 reqs</span>
         </div>
       </div>
 
-      <!-- Input: จำนวนที่ต้องการเพิ่ม -->
-      <div class="space-y-1.5">
-        <label class="block font-bold text-slate-700">จำนวนที่ต้องการเพิ่ม (+ Add Amount):</label>
+      <!-- Increment Amount Selector -->
+      <div>
+        <label class="block font-bold text-slate-700 mb-1.5">จำนวนที่ต้องการเพิ่ม (Requests)</label>
+        
+        <!-- Preset quick buttons -->
+        <div class="grid grid-cols-4 gap-2 mb-2">
+          <button type="button" onclick="setPresetIncrement(10000)" class="preset-btn py-2 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer">+10k</button>
+          <button type="button" onclick="setPresetIncrement(25000)" class="preset-btn py-2 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer">+25k</button>
+          <button type="button" onclick="setPresetIncrement(50000)" class="preset-btn py-2 text-center rounded-xl border-2 border-blue-600 bg-blue-50/70 font-bold text-blue-700 cursor-pointer">+50k</button>
+          <button type="button" onclick="setPresetIncrement(100000)" class="preset-btn py-2 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer">+100k</button>
+        </div>
+
+        <!-- Custom Input -->
         <div class="relative">
           <input
             type="number"
-            id="quota-increment-input"
-            required
-            min="1000"
-            step="1000"
+            id="increment-input"
+            step="5000"
+            min="5000"
             value="50000"
             oninput="updateModalPreview()"
-            class="w-full pl-3 pr-16 py-2 bg-white border border-slate-200 rounded-xl text-xs font-mono-code font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs"
+            class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-mono-code text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            placeholder="หรือระบุจำนวนเอง เช่น 30000"
+            required
           >
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-[11px]">Requests</span>
-        </div>
-        <div class="flex gap-1.5 mt-1.5">
-          <button type="button" onclick="setQuickAdd(10000)" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-bold">+10,000</button>
-          <button type="button" onclick="setQuickAdd(25000)" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-bold">+25,000</button>
-          <button type="button" onclick="setQuickAdd(50000)" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-bold">+50,000</button>
-          <button type="button" onclick="setQuickAdd(100000)" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-bold">+100,000</button>
+          <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-medium">reqs</span>
         </div>
       </div>
 
-      <!-- Select: ประเภทการขยาย -->
-      <div class="space-y-1.5">
-        <label class="block font-bold text-slate-700">ประเภทการปรับเพิ่ม (Adjustment Scope):</label>
-        <select id="quota-type-select" class="w-full py-2 px-3 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs">
-          <option value="temporary">เพิ่มชั่วคราว (เฉพาะรอบบิลปัจจุบัน - หมดอายุเมื่อถึงรอบ Reset)</option>
-          <option value="permanent">เพิ่มถาวร (ปรับขยายโควตาแพ็กเกจประจำ)</option>
-        </select>
+      <!-- Scope of Adjustment -->
+      <div>
+        <label class="block font-bold text-slate-700 mb-1.5">ขอบเขตระยะเวลา</label>
+        <div class="grid grid-cols-2 gap-2">
+          <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+            <input type="radio" name="quota-scope" value="temporary" checked class="text-blue-600 focus:ring-blue-500">
+            <div>
+              <span class="font-bold text-slate-800 block text-xs">ชั่วคราวรอบนี้</span>
+              <span class="text-[10px] text-slate-400">จะรีเซ็ตกลับตามรอบปกติวันศุกร์</span>
+            </div>
+          </label>
+          <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+            <input type="radio" name="quota-scope" value="permanent" class="text-blue-600 focus:ring-blue-500">
+            <div>
+              <span class="font-bold text-slate-800 block text-xs">ถาวร (Upgrade)</span>
+              <span class="text-[10px] text-slate-400">ปรับเป็นโควตาตั้งต้นใหม่ถาวร</span>
+            </div>
+          </label>
+        </div>
       </div>
 
-      <!-- Textarea: เหตุผล (สำคัญสำหรับบันทึก Log) -->
-      <div class="space-y-1.5">
-        <label class="block font-bold text-slate-700">เหตุผลประกอบการขอเพิ่ม (Reason / Audit Note) <span class="text-rose-500">*</span>:</label>
+      <!-- Reason / Audit Note -->
+      <div>
+        <label for="quota-reason-input" class="block font-bold text-slate-700 mb-1.5">เหตุผลประกอบการปรับเพิ่ม (จำเป็นสำหรับบันทึก Log)</label>
         <textarea
           id="quota-reason-input"
+          rows="2"
+          class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs"
+          placeholder="เช่น มีโครงการประชาสัมพันธ์พิเศษ, ได้รับอนุมัติจาก ผอ. เขต, หรือรองรับงาน Event..."
           required
-          rows="3"
-          placeholder="เช่น มีการเชื่อมโยงระบบภายนอกช่วงเทศกาล, ได้รับการอนุมัติเพิ่มโควตารายปี, ประสานงานเร่งด่วน..."
-          class="w-full p-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-2xs"
         ></textarea>
       </div>
 
-      <!-- Modal Footer -->
-      <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-        <button type="button" onclick="closeAddQuotaModal()" class="px-4 py-2 border border-slate-200 text-slate-600 hover:bg-slate-100 rounded-xl font-semibold transition-colors cursor-pointer">
+      <!-- Modal Action Buttons -->
+      <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+        <button type="button" onclick="closeAddQuotaModal()" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-semibold transition-colors cursor-pointer">
           ยกเลิก
         </button>
-        <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-sm transition-all cursor-pointer flex items-center gap-1.5">
+        <button type="submit" class="px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer">
           <i data-lucide="check" class="w-4 h-4"></i>
-          <span>ยืนยันและบันทึก Log</span>
+          <span>ยืนยันการปรับเพิ่ม</span>
         </button>
       </div>
     </form>
   </div>
+</div>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-6 right-6 z-80 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold border border-slate-800">
-      <div class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">
-        <i data-lucide="check" class="w-3 h-3"></i>
-      </div>
-      <span id="toast-text">ทำรายการสำเร็จ</span>
-    </div>
-  </div>
-
-  <!-- ======================================================== -->
-  <!-- JAVASCRIPT STATE & LOGIC                                 -->
-  <!-- ======================================================== -->
+<!-- Toast Notification -->
+<div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2.5 px-4 py-3 bg-slate-900 text-white rounded-2xl shadow-xl text-xs border border-white/10">
+  <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+  <span id="toast-message">ดำเนินการสำเร็จ</span>
+</div>
+  <!-- Core Logic & Interactive SaaS State -->
   <script>
+    // --- Responsive Mobile View State ---
+    let mobileView = 'list'; // 'list' | 'detail'
+
+    function setMobileView(view) {
+      mobileView = view;
+      const masterPanel = document.getElementById('master-panel');
+      const detailPanel = document.getElementById('detail-panel');
+      const backBtn = document.getElementById('mobile-back-to-list-btn');
+      const brandBadge = document.getElementById('header-brand-badge');
+      const tabList = document.getElementById('mobile-tab-list');
+      const tabDetail = document.getElementById('mobile-tab-detail');
+      const topbarTitle = document.getElementById('topbar-title');
+
+      if (window.innerWidth < 768) {
+        if (view === 'list') {
+          masterPanel.classList.remove('hidden');
+          detailPanel.classList.add('hidden');
+          if (backBtn) backBtn.classList.add('hidden');
+          if (brandBadge) brandBadge.classList.remove('hidden');
+          if (topbarTitle) topbarTitle.textContent = 'สถิติ Exchange & Quota';
+
+          if (tabList) {
+            tabList.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all bg-white text-slate-900 shadow-2xs';
+          }
+          if (tabDetail) {
+            tabDetail.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all text-slate-500 hover:text-slate-900';
+          }
+        } else {
+          masterPanel.classList.add('hidden');
+          detailPanel.classList.remove('hidden');
+          if (backBtn) backBtn.classList.remove('hidden');
+          if (brandBadge) brandBadge.classList.add('hidden');
+          const currentOrg = organizationsData.find(o => o.id === selectedOrgId);
+          if (topbarTitle && currentOrg) {
+            topbarTitle.textContent = currentOrg.name;
+          }
+
+          if (tabList) {
+            tabList.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all text-slate-500 hover:text-slate-900';
+          }
+          if (tabDetail) {
+            tabDetail.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all bg-white text-slate-900 shadow-2xs';
+          }
+        }
+      } else {
+        // Desktop / Tablet: always show both side-by-side
+        masterPanel.classList.remove('hidden');
+        detailPanel.classList.remove('hidden');
+        if (backBtn) backBtn.classList.add('hidden');
+        if (brandBadge) brandBadge.classList.remove('hidden');
+        if (topbarTitle) topbarTitle.textContent = 'สถิติ Exchange & Quota';
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      setMobileView(mobileView);
+    });
+
     // --- 1. MOCK DATABASE OF ORGANIZATIONS & QUOTA USAGE ---
     const organizationsData = [
       {
@@ -839,730 +938,1021 @@
         tier: "Pro Exchange",
         avatar: "จจ",
         avatarBg: "bg-blue-50 text-blue-700 border-blue-200",
-        sessionUsed: 8900,
-        sessionLimit: 10000,
-        sessionReset: "Resets at 2:20 PM",
-        weekUsed: 88500,
-        weekLimit: 100000,
-        weekReset: "Resets Friday 11:00 AM",
-        status: "near_limit", // 'normal', 'near_limit', 'exceeded'
-        headline: "High usage. Projected to reach quota limit before reset in 2 days.",
-        apiKey: "tf_live_948a••••89a2",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 14200, limit: 15000, status: "ปกติ" },
-          { date: "23 พ.ย. 69", calls: 15400, limit: 15000, status: "Peak" },
-          { date: "22 พ.ย. 69", calls: 13800, limit: 15000, status: "ปกติ" },
-          { date: "21 พ.ย. 69", calls: 12900, limit: 15000, status: "ปกติ" },
-          { date: "20 พ.ย. 69", calls: 11500, limit: 15000, status: "ปกติ" },
-          { date: "19 พ.ย. 69", calls: 9800, limit: 15000, status: "ปกติ" },
-          { date: "18 พ.ย. 69", calls: 10900, limit: 15000, status: "ปกติ" },
-        ],
-        logs: [
-          { timestamp: "20 พ.ย. 69 14:15 น.", admin: "ชยานิษฐ์ (Admin)", change: "100,000 ➔ 150,000 (+50,000)", type: "เพิ่มชั่วคราว", reason: "รองรับปริมาณรับ-ส่งเรื่องน้ำท่วมขังช่วงฝนตกหนัก" },
-          { timestamp: "01 พ.ย. 69 09:00 น.", admin: "ระบบอัตโนมัติ", change: "100,000 (รีเซ็ตรอบบิล)", type: "Reset ประจำสัปดาห์", reason: "รอบบิลปกติประจำสัปดาห์" }
-        ],
+        token: "tk_live_9482bf10e7a",
+        status: "normal", // 'normal' | 'near-limit' | 'exceeded'
+        forecastStatus: "safe", // 'safe' | 'warning' | 'critical'
+        forecastHeadline: "On track. You should reach Friday's reset with room to spare.",
+        currentSession: {
+          used: 700,
+          limit: 10000,
+          percent: 7,
+          resetText: "Resets at 2:20 PM"
+        },
+        thisWeek: {
+          used: 55000,
+          limit: 100000,
+          percent: 55,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 68450,
+          successRate: "99.82%",
+          errorsCount: 124,
+          avgLatency: "118 ms",
+          peakDay: "18 พ.ย. (8,420 reqs)"
+        },
         endpoints: [
-          { path: "/api/v2/tickets/exchange", calls: "52,400", pct: 60 },
-          { path: "/api/v2/cases/status-sync", calls: "24,100", pct: 27 },
-          { path: "/api/v2/org/notifications", calls: "12,000", pct: 13 }
+          { path: "/api/v2/tickets/sync", method: "POST", calls: 34200, share: "50%", avgLatency: "142 ms", errorRate: "0.1%" },
+          { path: "/api/v2/messages/exchange", method: "POST", calls: 20500, share: "30%", avgLatency: "95 ms", errorRate: "0.05%" },
+          { path: "/api/v2/organizations/status", method: "GET", calls: 8250, share: "12%", avgLatency: "65 ms", errorRate: "0.0%" },
+          { path: "/api/v2/cases/search", method: "GET", calls: 5500, share: "8%", avgLatency: "180 ms", errorRate: "0.4%" }
+        ],
+        auditLogs: [
+          { date: "20 พ.ย. 2026, 14:15", admin: "ธนโชติ (Superadmin)", amount: "+50,000", newLimit: "100,000 reqs", scope: "ชั่วคราวรอบนี้", reason: "รองรับเคสทราฟฟิกน้ำท่วมขังช่วงบ่าย" },
+          { date: "15 พ.ย. 2026, 09:30", admin: "ศิริพร (Ops Lead)", amount: "+25,000", newLimit: "50,000 reqs", scope: "ถาวร", reason: "อัปเกรดแพ็กเกจประจำปีงบประมาณ" },
+          { date: "02 พ.ย. 2026, 11:00", admin: "ธนโชติ (Superadmin)", amount: "+10,000", newLimit: "25,000 reqs", scope: "ชั่วคราวรอบนี้", reason: "แคมเปญลอกท่อระบายน้ำ กทม." },
+          { date: "20 ต.ค. 2026, 10:00", admin: "System Auto", amount: "Reset", newLimit: "15,000 reqs", scope: "รอบอัตโนมัติ", reason: "รอบบิลประจำสัปดาห์" }
+        ],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 3800, max: 10000, success: "99.8%", errors: 8 },
+          { day: "12 พ.ย.", date: "อ.", calls: 4200, max: 10000, success: "99.9%", errors: 4 },
+          { day: "13 พ.ย.", date: "พ.", calls: 5100, max: 10000, success: "99.7%", errors: 15 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 4600, max: 10000, success: "99.8%", errors: 9 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 6200, max: 10000, success: "99.6%", errors: 24 },
+          { day: "16 พ.ย.", date: "ส.", calls: 2400, max: 10000, success: "100%", errors: 0 },
+          { day: "17 พ.ย.", date: "อา.", calls: 2100, max: 10000, success: "100%", errors: 0 },
+          { day: "18 พ.ย.", date: "จ.", calls: 8420, max: 10000, success: "99.4%", errors: 48 },
+          { day: "19 พ.ย.", date: "อ.", calls: 7300, max: 10000, success: "99.7%", errors: 21 },
+          { day: "20 พ.ย.", date: "พ.", calls: 6900, max: 10000, success: "99.8%", errors: 14 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 5800, max: 10000, success: "99.9%", errors: 6 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 7100, max: 10000, success: "99.8%", errors: 12 },
+          { day: "23 พ.ย.", date: "ส.", calls: 2350, max: 10000, success: "100%", errors: 0 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 2180, max: 10000, success: "99.9%", errors: 2 }
         ]
       },
       {
-        id: "ORG-2001",
+        id: "ORG-1014",
         name: "สำนักการโยธา (กทม.)",
         shortCode: "สนย.",
         tier: "Enterprise Exchange",
-        avatar: "โยธา",
-        avatarBg: "bg-indigo-50 text-indigo-700 border-indigo-200",
-        sessionUsed: 700,
-        sessionLimit: 10000,
-        sessionReset: "Resets at 4:00 PM",
-        weekUsed: 55000,
-        weekLimit: 100000,
-        weekReset: "Resets Friday 11:00 AM",
-        status: "normal",
-        headline: "On track. You should reach Friday's reset with room to spare.",
-        apiKey: "tf_live_771f••••110c",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 8200, limit: 15000, status: "ปกติ" },
-          { date: "23 พ.ย. 69", calls: 7900, limit: 15000, status: "ปกติ" },
-          { date: "22 พ.ย. 69", calls: 8500, limit: 15000, status: "ปกติ" },
-          { date: "21 พ.ย. 69", calls: 7400, limit: 15000, status: "ปกติ" },
-          { date: "20 พ.ย. 69", calls: 6900, limit: 15000, status: "ปกติ" },
-          { date: "19 พ.ย. 69", calls: 8100, limit: 15000, status: "ปกติ" },
-          { date: "18 พ.ย. 69", calls: 8000, limit: 15000, status: "ปกติ" },
-        ],
-        logs: [
-          { timestamp: "15 ต.ค. 69 11:20 น.", admin: "ชยานิษฐ์ (Admin)", change: "80,000 ➔ 100,000 (+20,000)", type: "เพิ่มถาวร", reason: "ขยายสายงานกองจัดกรรมสิทธิ์ที่ดิน" }
-        ],
+        avatar: "สนย",
+        avatarBg: "bg-amber-50 text-amber-700 border-amber-200",
+        token: "tk_live_b7410fc9123",
+        status: "near-limit",
+        forecastStatus: "warning",
+        forecastHeadline: "Caution. High traffic detected. Quota might deplete before Friday reset.",
+        currentSession: {
+          used: 8800,
+          limit: 10000,
+          percent: 88,
+          resetText: "Resets at 3:00 PM (ในอีก 2 ชม. 45 นาที)"
+        },
+        thisWeek: {
+          used: 178000,
+          limit: 200000,
+          percent: 89,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 210450,
+          successRate: "99.12%",
+          errorsCount: 420,
+          avgLatency: "210 ms",
+          peakDay: "21 พ.ย. (22,400 reqs)"
+        },
         endpoints: [
-          { path: "/api/v2/cases/status-sync", calls: "35,000", pct: 64 },
-          { path: "/api/v2/tickets/exchange", calls: "15,000", pct: 27 },
-          { path: "/api/v2/reports/summary", calls: "5,000", pct: 9 }
+          { path: "/api/v2/road-works/update", method: "POST", calls: 120000, share: "57%", avgLatency: "240 ms", errorRate: "0.8%" },
+          { path: "/api/v2/tickets/sync", method: "POST", calls: 65000, share: "31%", avgLatency: "160 ms", errorRate: "0.2%" },
+          { path: "/api/v2/cases/search", method: "GET", calls: 25450, share: "12%", avgLatency: "110 ms", errorRate: "0.1%" }
+        ],
+        auditLogs: [
+          { date: "22 พ.ย. 2026, 11:30", admin: "ปรเมศวร์ (Admin กทม.)", amount: "+50,000", newLimit: "200,000 reqs", scope: "ชั่วคราวรอบนี้", reason: "เพิ่มรองรับข้อมูลเชื่อมต่อเซ็นเซอร์ตรวจจับผิวถนน" }
+        ],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 14000, max: 20000, success: "99.2%", errors: 80 },
+          { day: "12 พ.ย.", date: "อ.", calls: 15200, max: 20000, success: "99.4%", errors: 45 },
+          { day: "13 พ.ย.", date: "พ.", calls: 16100, max: 20000, success: "99.1%", errors: 90 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 17600, max: 20000, success: "99.0%", errors: 120 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 18200, max: 20000, success: "98.9%", errors: 140 },
+          { day: "16 พ.ย.", date: "ส.", calls: 8400, max: 20000, success: "99.8%", errors: 10 },
+          { day: "17 พ.ย.", date: "อา.", calls: 7100, max: 20000, success: "99.9%", errors: 5 },
+          { day: "18 พ.ย.", date: "จ.", calls: 19420, max: 20000, success: "98.8%", errors: 160 },
+          { day: "19 พ.ย.", date: "อ.", calls: 18300, max: 20000, success: "99.1%", errors: 90 },
+          { day: "20 พ.ย.", date: "พ.", calls: 17900, max: 20000, success: "99.2%", errors: 80 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 22400, max: 20000, success: "98.5%", errors: 220 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 19100, max: 20000, success: "99.0%", errors: 110 },
+          { day: "23 พ.ย.", date: "ส.", calls: 8350, max: 20000, success: "99.7%", errors: 15 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 8360, max: 20000, success: "99.2%", errors: 30 }
         ]
       },
       {
-        id: "ORG-3412",
-        name: "สำนักการระบายน้ำ",
-        shortCode: "สนน.",
+        id: "ORG-1002",
+        name: "สำนักการระบายน้ำ (กทม.)",
+        shortCode: "สนร.",
         tier: "Enterprise Exchange",
-        avatar: "สนน",
-        avatarBg: "bg-sky-50 text-sky-700 border-sky-200",
-        sessionUsed: 9800,
-        sessionLimit: 10000,
-        sessionReset: "Resets at 1:30 PM",
-        weekUsed: 102400,
-        weekLimit: 100000,
-        weekReset: "Resets Friday 11:00 AM",
+        avatar: "สนร",
+        avatarBg: "bg-rose-50 text-rose-700 border-rose-200",
+        token: "tk_live_d8201fa8842",
         status: "exceeded",
-        headline: "Quota exceeded (102% used). Rate-limiting is currently active.",
-        apiKey: "tf_live_213a••••9920",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 18200, limit: 15000, status: "Over Quota" },
-          { date: "23 พ.ย. 69", calls: 19100, limit: 15000, status: "Over Quota" },
-          { date: "22 พ.ย. 69", calls: 17400, limit: 15000, status: "Over Quota" },
-          { date: "21 พ.ย. 69", calls: 16500, limit: 15000, status: "Peak" },
-          { date: "20 พ.ย. 69", calls: 15800, limit: 15000, status: "Peak" },
-          { date: "19 พ.ย. 69", calls: 15400, limit: 15000, status: "Peak" },
-        ],
-        logs: [
-          { timestamp: "18 พ.ย. 69 16:30 น.", admin: "ชยานิษฐ์ (Admin)", change: "80,000 ➔ 100,000 (+20,000)", type: "เพิ่มชั่วคราว", reason: "รายงานสถานการณ์พายุเข้า" }
-        ],
+        forecastStatus: "critical",
+        forecastHeadline: "Quota Exceeded! 102% used. Automated requests are temporarily throttled.",
+        currentSession: {
+          used: 10200,
+          limit: 10000,
+          percent: 102,
+          resetText: "Resets at 1:40 PM (ในอีก 25 นาที)"
+        },
+        thisWeek: {
+          used: 255000,
+          limit: 250000,
+          percent: 102,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 310500,
+          successRate: "97.45%",
+          errorsCount: 1420,
+          avgLatency: "340 ms",
+          peakDay: "20 พ.ย. (34,100 reqs)"
+        },
         endpoints: [
-          { path: "/api/v2/telemetry/sensors", calls: "65,000", pct: 63 },
-          { path: "/api/v2/tickets/exchange", calls: "25,400", pct: 25 },
-          { path: "/api/v2/cases/status-sync", calls: "12,000", pct: 12 }
+          { path: "/api/v2/water-level/telemetry", method: "POST", calls: 210000, share: "68%", avgLatency: "380 ms", errorRate: "2.8%" },
+          { path: "/api/v2/pump-station/status", method: "GET", calls: 75000, share: "24%", avgLatency: "190 ms", errorRate: "0.5%" },
+          { path: "/api/v2/flood-alerts/broadcast", method: "POST", calls: 25500, share: "8%", avgLatency: "250 ms", errorRate: "1.1%" }
+        ],
+        auditLogs: [
+          { date: "24 พ.ย. 2026, 08:30", admin: "System Watchdog", amount: "Alert", newLimit: "250,000 reqs", scope: "ระบบเตือนภัย", reason: "ทราฟฟิกข้อมูลสถานีสูบน้ำพุ่งเกินโควตา 100%" }
+        ],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 18000, max: 25000, success: "98.5%", errors: 120 },
+          { day: "12 พ.ย.", date: "อ.", calls: 19200, max: 25000, success: "98.7%", errors: 110 },
+          { day: "13 พ.ย.", date: "พ.", calls: 20100, max: 25000, success: "98.1%", errors: 150 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 22600, max: 25000, success: "97.8%", errors: 210 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 24200, max: 25000, success: "97.6%", errors: 280 },
+          { day: "16 พ.ย.", date: "ส.", calls: 12400, max: 25000, success: "99.1%", errors: 30 },
+          { day: "17 พ.ย.", date: "อา.", calls: 11100, max: 25000, success: "99.2%", errors: 25 },
+          { day: "18 พ.ย.", date: "จ.", calls: 28420, max: 25000, success: "97.2%", errors: 380 },
+          { day: "19 พ.ย.", date: "อ.", calls: 29300, max: 25000, success: "96.9%", errors: 420 },
+          { day: "20 พ.ย.", date: "พ.", calls: 34100, max: 25000, success: "96.2%", errors: 680 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 31400, max: 25000, success: "96.8%", errors: 510 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 28100, max: 25000, success: "97.1%", errors: 390 },
+          { day: "23 พ.ย.", date: "ส.", calls: 14350, max: 25000, success: "98.9%", errors: 45 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 16730, max: 25000, success: "97.3%", errors: 160 }
         ]
       },
       {
-        id: "ORG-4015",
-        name: "เทศบาลนครนนทบุรี",
-        shortCode: "ทน.นนท์",
-        tier: "Standard Exchange",
-        avatar: "นนท์",
-        avatarBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
-        sessionUsed: 1200,
-        sessionLimit: 5000,
-        sessionReset: "Resets tomorrow 00:00",
-        weekUsed: 18500,
-        weekLimit: 50000,
-        weekReset: "Resets Monday 00:00",
-        status: "normal",
-        headline: "On track. You should reach Monday's reset with room to spare.",
-        apiKey: "tf_live_554a••••001b",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 2800, limit: 7000, status: "ปกติ" },
-          { date: "23 พ.ย. 69", calls: 3100, limit: 7000, status: "ปกติ" },
-          { date: "22 พ.ย. 69", calls: 2900, limit: 7000, status: "ปกติ" },
-          { date: "21 พ.ย. 69", calls: 2700, limit: 7000, status: "ปกติ" },
-        ],
-        logs: [],
-        endpoints: [
-          { path: "/api/v2/tickets/exchange", calls: "14,000", pct: 75 },
-          { path: "/api/v2/cases/status-sync", calls: "4,500", pct: 25 }
-        ]
-      },
-      {
-        id: "ORG-5120",
+        id: "ORG-1045",
         name: "สำนักงานเขตบางรัก",
         shortCode: "บางรัก",
-        tier: "Pro Exchange",
-        avatar: "บร",
-        avatarBg: "bg-rose-50 text-rose-700 border-rose-200",
-        sessionUsed: 8400,
-        sessionLimit: 10000,
-        sessionReset: "Resets at 5:00 PM",
-        weekUsed: 84000,
-        weekLimit: 100000,
-        weekReset: "Resets Friday 11:00 AM",
-        status: "near_limit",
-        headline: "Approaching quota limit (84% used). Consider reviewing batch jobs.",
-        apiKey: "tf_live_9901••••44c1",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 13500, limit: 15000, status: "Peak" },
-          { date: "23 พ.ย. 69", calls: 14000, limit: 15000, status: "Peak" },
-          { date: "22 พ.ย. 69", calls: 12000, limit: 15000, status: "ปกติ" }
-        ],
-        logs: [],
-        endpoints: [
-          { path: "/api/v2/tickets/exchange", calls: "50,000", pct: 60 },
-          { path: "/api/v2/cases/status-sync", calls: "34,000", pct: 40 }
-        ]
-      },
-      {
-        id: "ORG-6090",
-        name: "กรมทางหลวงชนบท",
-        shortCode: "ทช.",
-        tier: "Enterprise Exchange",
-        avatar: "ทช",
-        avatarBg: "bg-amber-50 text-amber-700 border-amber-200",
-        sessionUsed: 3400,
-        sessionLimit: 10000,
-        sessionReset: "Resets at 3:15 PM",
-        weekUsed: 42000,
-        weekLimit: 100000,
-        weekReset: "Resets Friday 11:00 AM",
-        status: "normal",
-        headline: "On track. You should reach Friday's reset with room to spare.",
-        apiKey: "tf_live_8832••••1048",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 6000, limit: 15000, status: "ปกติ" },
-          { date: "23 พ.ย. 69", calls: 5900, limit: 15000, status: "ปกติ" }
-        ],
-        logs: [],
-        endpoints: [
-          { path: "/api/v2/tickets/exchange", calls: "30,000", pct: 71 },
-          { path: "/api/v2/cases/status-sync", calls: "12,000", pct: 29 }
-        ]
-      },
-      {
-        id: "ORG-7781",
-        name: "สภ.เมืองเชียงใหม่ (ตำรวจภูธร)",
-        shortCode: "สภ.ชม.",
         tier: "Standard Exchange",
-        avatar: "ชม",
-        avatarBg: "bg-purple-50 text-purple-700 border-purple-200",
-        sessionUsed: 4800,
-        sessionLimit: 5000,
-        sessionReset: "Resets at 1:00 PM",
-        weekUsed: 48200,
-        weekLimit: 50000,
-        weekReset: "Resets Sunday 00:00",
-        status: "near_limit",
-        headline: "Critical. 96% used. Immediate reset or quota increase recommended.",
-        apiKey: "tf_live_3391••••77da",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 7800, limit: 8000, status: "Peak" },
-          { date: "23 พ.ย. 69", calls: 7900, limit: 8000, status: "Peak" }
-        ],
-        logs: [],
+        avatar: "บร",
+        avatarBg: "bg-slate-100 text-slate-700 border-slate-300",
+        token: "tk_live_c1042aa1109",
+        status: "normal",
+        forecastStatus: "safe",
+        forecastHeadline: "On track. You should reach Friday's reset with room to spare.",
+        currentSession: {
+          used: 1200,
+          limit: 5000,
+          percent: 24,
+          resetText: "Resets at 4:15 PM"
+        },
+        thisWeek: {
+          used: 18500,
+          limit: 50000,
+          percent: 37,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 38500,
+          successRate: "99.91%",
+          errorsCount: 32,
+          avgLatency: "92 ms",
+          peakDay: "14 พ.ย. (3,800 reqs)"
+        },
         endpoints: [
-          { path: "/api/v2/tickets/exchange", calls: "48,200", pct: 100 }
+          { path: "/api/v2/tickets/sync", method: "POST", calls: 25000, share: "65%", avgLatency: "95 ms", errorRate: "0.05%" },
+          { path: "/api/v2/cases/search", method: "GET", calls: 13500, share: "35%", avgLatency: "88 ms", errorRate: "0.02%" }
+        ],
+        auditLogs: [],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 2400, max: 5000, success: "99.9%", errors: 2 },
+          { day: "12 พ.ย.", date: "อ.", calls: 2600, max: 5000, success: "99.8%", errors: 4 },
+          { day: "13 พ.ย.", date: "พ.", calls: 2900, max: 5000, success: "100%", errors: 0 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 3800, max: 5000, success: "99.9%", errors: 3 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 3100, max: 5000, success: "99.9%", errors: 2 },
+          { day: "16 พ.ย.", date: "ส.", calls: 1100, max: 5000, success: "100%", errors: 0 },
+          { day: "17 พ.ย.", date: "อา.", calls: 900, max: 5000, success: "100%", errors: 0 },
+          { day: "18 พ.ย.", date: "จ.", calls: 3100, max: 5000, success: "99.8%", errors: 5 },
+          { day: "19 พ.ย.", date: "อ.", calls: 3200, max: 5000, success: "99.9%", errors: 3 },
+          { day: "20 พ.ย.", date: "พ.", calls: 2950, max: 5000, success: "100%", errors: 0 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 3400, max: 5000, success: "99.9%", errors: 2 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 3250, max: 5000, success: "99.8%", errors: 6 },
+          { day: "23 พ.ย.", date: "ส.", calls: 1200, max: 5000, success: "100%", errors: 0 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 1100, max: 5000, success: "100%", errors: 0 }
         ]
       },
       {
-        id: "ORG-8833",
+        id: "ORG-1008",
+        name: "สำนักงานเขตคลองเตย",
+        shortCode: "คลองเตย",
+        tier: "Pro Exchange",
+        avatar: "คต",
+        avatarBg: "bg-blue-50 text-blue-700 border-blue-200",
+        token: "tk_live_f77210e998a",
+        status: "normal",
+        forecastStatus: "safe",
+        forecastHeadline: "On track. You should reach Friday's reset with room to spare.",
+        currentSession: {
+          used: 3200,
+          limit: 10000,
+          percent: 32,
+          resetText: "Resets at 5:00 PM"
+        },
+        thisWeek: {
+          used: 48000,
+          limit: 100000,
+          percent: 48,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 59400,
+          successRate: "99.85%",
+          errorsCount: 78,
+          avgLatency: "105 ms",
+          peakDay: "19 พ.ย. (6,700 reqs)"
+        },
+        endpoints: [
+          { path: "/api/v2/tickets/sync", method: "POST", calls: 38000, share: "64%", avgLatency: "115 ms", errorRate: "0.1%" },
+          { path: "/api/v2/messages/exchange", method: "POST", calls: 21400, share: "36%", avgLatency: "88 ms", errorRate: "0.03%" }
+        ],
+        auditLogs: [],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 4100, max: 10000, success: "99.8%", errors: 6 },
+          { day: "12 พ.ย.", date: "อ.", calls: 4300, max: 10000, success: "99.9%", errors: 3 },
+          { day: "13 พ.ย.", date: "พ.", calls: 4900, max: 10000, success: "99.8%", errors: 7 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 5100, max: 10000, success: "99.7%", errors: 12 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 5400, max: 10000, success: "99.8%", errors: 8 },
+          { day: "16 พ.ย.", date: "ส.", calls: 1900, max: 10000, success: "100%", errors: 0 },
+          { day: "17 พ.ย.", date: "อา.", calls: 1800, max: 10000, success: "100%", errors: 0 },
+          { day: "18 พ.ย.", date: "จ.", calls: 5800, max: 10000, success: "99.8%", errors: 9 },
+          { day: "19 พ.ย.", date: "อ.", calls: 6700, max: 10000, success: "99.7%", errors: 15 },
+          { day: "20 พ.ย.", date: "พ.", calls: 5600, max: 10000, success: "99.9%", errors: 4 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 4900, max: 10000, success: "100%", errors: 0 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 5200, max: 10000, success: "99.8%", errors: 7 },
+          { day: "23 พ.ย.", date: "ส.", calls: 2100, max: 10000, success: "100%", errors: 0 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 1600, max: 10000, success: "99.9%", errors: 1 }
+        ]
+      },
+      {
+        id: "ORG-1022",
         name: "สำนักงานเขตพระนคร",
         shortCode: "พระนคร",
         tier: "Pro Exchange",
         avatar: "พน",
-        avatarBg: "bg-teal-50 text-teal-700 border-teal-200",
-        sessionUsed: 2200,
-        sessionLimit: 10000,
-        sessionReset: "Resets at 6:00 PM",
-        weekUsed: 31000,
-        weekLimit: 100000,
-        weekReset: "Resets Friday 11:00 AM",
+        avatarBg: "bg-blue-50 text-blue-700 border-blue-200",
+        token: "tk_live_a9108bc4431",
         status: "normal",
-        headline: "On track. You should reach Friday's reset with room to spare.",
-        apiKey: "tf_live_4477••••2011",
-        dailyHistory: [
-          { date: "24 พ.ย. 69", calls: 4400, limit: 15000, status: "ปกติ" },
-          { date: "23 พ.ย. 69", calls: 4500, limit: 15000, status: "ปกติ" }
-        ],
-        logs: [],
+        forecastStatus: "safe",
+        forecastHeadline: "On track. You should reach Friday's reset with room to spare.",
+        currentSession: {
+          used: 2800,
+          limit: 10000,
+          percent: 28,
+          resetText: "Resets at 2:00 PM"
+        },
+        thisWeek: {
+          used: 41000,
+          limit: 100000,
+          percent: 41,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 52100,
+          successRate: "99.94%",
+          errorsCount: 28,
+          avgLatency: "88 ms",
+          peakDay: "21 พ.ย. (5,800 reqs)"
+        },
         endpoints: [
-          { path: "/api/v2/tickets/exchange", calls: "20,000", pct: 65 },
-          { path: "/api/v2/cases/status-sync", calls: "11,000", pct: 35 }
+          { path: "/api/v2/tickets/sync", method: "POST", calls: 32000, share: "61%", avgLatency: "92 ms", errorRate: "0.04%" },
+          { path: "/api/v2/messages/exchange", method: "POST", calls: 20100, share: "39%", avgLatency: "82 ms", errorRate: "0.01%" }
+        ],
+        auditLogs: [],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 3400, max: 10000, success: "100%", errors: 0 },
+          { day: "12 พ.ย.", date: "อ.", calls: 3700, max: 10000, success: "99.9%", errors: 2 },
+          { day: "13 พ.ย.", date: "พ.", calls: 4100, max: 10000, success: "100%", errors: 0 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 4400, max: 10000, success: "99.9%", errors: 3 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 4800, max: 10000, success: "99.9%", errors: 2 },
+          { day: "16 พ.ย.", date: "ส.", calls: 2100, max: 10000, success: "100%", errors: 0 },
+          { day: "17 พ.ย.", date: "อา.", calls: 1900, max: 10000, success: "100%", errors: 0 },
+          { day: "18 พ.ย.", date: "จ.", calls: 5100, max: 10000, success: "99.8%", errors: 8 },
+          { day: "19 พ.ย.", date: "อ.", calls: 5300, max: 10000, success: "99.9%", errors: 4 },
+          { day: "20 พ.ย.", date: "พ.", calls: 4800, max: 10000, success: "100%", errors: 0 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 5800, max: 10000, success: "99.8%", errors: 7 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 4600, max: 10000, success: "100%", errors: 0 },
+          { day: "23 พ.ย.", date: "ส.", calls: 1200, max: 10000, success: "100%", errors: 0 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 900, max: 10000, success: "100%", errors: 0 }
+        ]
+      },
+      {
+        id: "ORG-1060",
+        name: "สำนักงานเขตบางขุนเทียน",
+        shortCode: "บางขุนเทียน",
+        tier: "Standard Exchange",
+        avatar: "บข",
+        avatarBg: "bg-amber-50 text-amber-700 border-amber-200",
+        token: "tk_live_e3319bf8821",
+        status: "near-limit",
+        forecastStatus: "warning",
+        forecastHeadline: "Trending fast. Expected to reach weekly limit within 24 hours.",
+        currentSession: {
+          used: 4100,
+          limit: 5000,
+          percent: 82,
+          resetText: "Resets at 4:30 PM (ในอีก 1 ชม. 15 นาที)"
+        },
+        thisWeek: {
+          used: 42500,
+          limit: 50000,
+          percent: 85,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 61200,
+          successRate: "99.30%",
+          errorsCount: 190,
+          avgLatency: "135 ms",
+          peakDay: "20 พ.ย. (6,200 reqs)"
+        },
+        endpoints: [
+          { path: "/api/v2/tickets/sync", method: "POST", calls: 45000, share: "73%", avgLatency: "140 ms", errorRate: "0.6%" },
+          { path: "/api/v2/cases/search", method: "GET", calls: 16200, share: "27%", avgLatency: "115 ms", errorRate: "0.2%" }
+        ],
+        auditLogs: [],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 3900, max: 5000, success: "99.5%", errors: 12 },
+          { day: "12 พ.ย.", date: "อ.", calls: 4100, max: 5000, success: "99.4%", errors: 16 },
+          { day: "13 พ.ย.", date: "พ.", calls: 4300, max: 5000, success: "99.2%", errors: 22 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 4600, max: 5000, success: "99.1%", errors: 28 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 4800, max: 5000, success: "98.9%", errors: 35 },
+          { day: "16 พ.ย.", date: "ส.", calls: 2400, max: 5000, success: "99.8%", errors: 2 },
+          { day: "17 พ.ย.", date: "อา.", calls: 2200, max: 5000, success: "99.9%", errors: 1 },
+          { day: "18 พ.ย.", date: "จ.", calls: 5800, max: 5000, success: "99.0%", errors: 30 },
+          { day: "19 พ.ย.", date: "อ.", calls: 5900, max: 5000, success: "98.8%", errors: 38 },
+          { day: "20 พ.ย.", date: "พ.", calls: 6200, max: 5000, success: "98.5%", errors: 52 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 5700, max: 5000, success: "98.9%", errors: 34 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 5100, max: 5000, success: "99.2%", errors: 21 },
+          { day: "23 พ.ย.", date: "ส.", calls: 3100, max: 5000, success: "99.7%", errors: 5 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 3200, max: 5000, success: "99.5%", errors: 8 }
+        ]
+      },
+      {
+        id: "ORG-1077",
+        name: "สำนักสิ่งแวดล้อม (กทม.)",
+        shortCode: "สวล.",
+        tier: "Pro Exchange",
+        avatar: "สวล",
+        avatarBg: "bg-blue-50 text-blue-700 border-blue-200",
+        token: "tk_live_d0092ac3318",
+        status: "normal",
+        forecastStatus: "safe",
+        forecastHeadline: "On track. You should reach Friday's reset with room to spare.",
+        currentSession: {
+          used: 1800,
+          limit: 10000,
+          percent: 18,
+          resetText: "Resets at 2:40 PM"
+        },
+        thisWeek: {
+          used: 32000,
+          limit: 100000,
+          percent: 32,
+          resetText: "Resets Friday 11:00 AM"
+        },
+        stats: {
+          totalCalls14d: 48900,
+          successRate: "99.92%",
+          errorsCount: 38,
+          avgLatency: "94 ms",
+          peakDay: "15 พ.ย. (5,100 reqs)"
+        },
+        endpoints: [
+          { path: "/api/v2/waste-collection/logs", method: "POST", calls: 31000, share: "63%", avgLatency: "98 ms", errorRate: "0.06%" },
+          { path: "/api/v2/air-quality/stations", method: "GET", calls: 17900, share: "37%", avgLatency: "86 ms", errorRate: "0.01%" }
+        ],
+        auditLogs: [],
+        dailySeries: [
+          { day: "11 พ.ย.", date: "จ.", calls: 3200, max: 10000, success: "99.9%", errors: 2 },
+          { day: "12 พ.ย.", date: "อ.", calls: 3500, max: 10000, success: "99.8%", errors: 4 },
+          { day: "13 พ.ย.", date: "พ.", calls: 3800, max: 10000, success: "100%", errors: 0 },
+          { day: "14 พ.ย.", date: "พฤ.", calls: 4200, max: 10000, success: "99.9%", errors: 3 },
+          { day: "15 พ.ย.", date: "ศ.", calls: 5100, max: 10000, success: "99.8%", errors: 6 },
+          { day: "16 พ.ย.", date: "ส.", calls: 1800, max: 10000, success: "100%", errors: 0 },
+          { day: "17 พ.ย.", date: "อา.", calls: 1500, max: 10000, success: "100%", errors: 0 },
+          { day: "18 พ.ย.", date: "จ.", calls: 4600, max: 10000, success: "99.9%", errors: 4 },
+          { day: "19 พ.ย.", date: "อ.", calls: 4800, max: 10000, success: "99.9%", errors: 3 },
+          { day: "20 พ.ย.", date: "พ.", calls: 4400, max: 10000, success: "100%", errors: 0 },
+          { day: "21 พ.ย.", date: "พฤ.", calls: 4700, max: 10000, success: "99.9%", errors: 2 },
+          { day: "22 พ.ย.", date: "ศ.", calls: 4300, max: 10000, success: "100%", errors: 0 },
+          { day: "23 พ.ย.", date: "ส.", calls: 1600, max: 10000, success: "100%", errors: 0 },
+          { day: "24 พ.ย.", date: "วันนี้", calls: 1400, max: 10000, success: "100%", errors: 0 }
         ]
       }
     ];
 
-    // --- 2. APP STATE ---
+    // --- 2. APPLICATION STATE ---
     let selectedOrgId = "ORG-1029";
-    let activeFilter = "all"; // 'all', 'near_limit', 'exceeded', 'normal'
+    let activeFilter = "all"; // 'all' | 'near-limit' | 'exceeded' | 'normal'
     let searchQuery = "";
-    let activeTab = "daily"; // 'daily', 'logs', 'endpoints'
+    let activeTab = "daily"; // 'daily' | 'logs' | 'endpoints'
 
-    // --- 3. INITIALIZATION ---
-    window.addEventListener('DOMContentLoaded', () => {
+    // --- 3. DOM INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", () => {
       renderOrgList();
-      selectOrg(selectedOrgId);
-      lucide.createIcons();
+      renderSelectedOrgDetails();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      setMobileView('list');
     });
 
-    // --- 4. RENDER ORG LIST (LEFT PANEL) ---
+    // --- 4. RENDER ORGANIZATION LIST (LEFT PANEL) ---
     function renderOrgList() {
-      const container = document.getElementById('org-list-container');
+      const container = document.getElementById("org-list-container");
       if (!container) return;
 
       const filtered = organizationsData.filter(org => {
-        // Status filter
-        if (activeFilter !== 'all' && org.status !== activeFilter) return false;
-        // Search filter
-        if (searchQuery) {
-          const q = searchQuery.toLowerCase();
-          return org.name.toLowerCase().includes(q) ||
-                 org.id.toLowerCase().includes(q) ||
-                 org.shortCode.toLowerCase().includes(q);
-        }
+        const matchSearch = org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            org.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            org.shortCode.toLowerCase().includes(searchQuery.toLowerCase());
+        if (!matchSearch) return false;
+
+        if (activeFilter === "near-limit") return org.status === "near-limit";
+        if (activeFilter === "exceeded") return org.status === "exceeded";
+        if (activeFilter === "normal") return org.status === "normal";
         return true;
       });
 
-      document.getElementById('org-total-count').textContent = filtered.length;
+      // Update count indicators
+      const countAll = organizationsData.length;
+      const countNear = organizationsData.filter(o => o.status === "near-limit").length;
+      const countExceeded = organizationsData.filter(o => o.status === "exceeded").length;
+      const countNormal = organizationsData.filter(o => o.status === "normal").length;
+
+      document.getElementById("count-all").textContent = `(${countAll})`;
+      document.getElementById("count-near").textContent = `(${countNear})`;
+      document.getElementById("count-exceeded").textContent = `(${countExceeded})`;
+      document.getElementById("count-normal").textContent = `(${countNormal})`;
+      document.getElementById("org-total-count").textContent = filtered.length;
 
       if (filtered.length === 0) {
         container.innerHTML = `
-          <div class="py-12 px-4 text-center text-slate-400 text-xs">
-            <i data-lucide="building-2" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i>
-            <p class="font-bold text-slate-600">ไม่พบหน่วยงานที่ตรงกับเงื่อนไข</p>
-            <p class="mt-1">ลองเปลี่ยนคำค้นหาหรือตัวกรองด้านบน</p>
+          <div class="p-8 text-center text-slate-400 text-xs">
+            <i data-lucide="search-x" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+            <p>ไม่พบหน่วยงานที่ตรงกับเงื่อนไข</p>
           </div>
         `;
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
         return;
       }
 
       container.innerHTML = filtered.map(org => {
         const isSelected = org.id === selectedOrgId;
-        const weekPct = Math.round((org.weekUsed / org.weekLimit) * 100);
+        const weekPercent = org.thisWeek.percent;
         
-        let barColor = 'bg-blue-500';
-        let badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-        let badgeText = 'ปกติ';
+        let statusBadge = "";
+        let barColor = "bg-blue-500";
 
-        if (org.status === 'near_limit') {
-          barColor = 'bg-amber-500';
-          badgeColor = 'bg-amber-50 text-amber-700 border-amber-200';
-          badgeText = 'ใกล้เต็ม (>80%)';
-        } else if (org.status === 'exceeded') {
-          barColor = 'bg-rose-500';
-          badgeColor = 'bg-rose-50 text-rose-700 border-rose-200';
-          badgeText = 'เกินแล้ว';
+        if (org.status === "exceeded") {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
+              <span>เกิน ${weekPercent}%</span>
+            </span>
+          `;
+          barColor = "bg-rose-500";
+        } else if (org.status === "near-limit") {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              <span>ใกล้เต็ม ${weekPercent}%</span>
+            </span>
+          `;
+          barColor = "bg-amber-500";
+        } else {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span>ปกติ ${weekPercent}%</span>
+            </span>
+          `;
+          barColor = "bg-blue-500";
         }
+
+        const selectedStyle = isSelected
+          ? "bg-blue-50/70 border-l-4 border-blue-600 shadow-2xs"
+          : "hover:bg-slate-50/80 border-l-4 border-transparent";
 
         return `
           <div
-            onclick="selectOrg('${org.id}')"
-            class="p-3 sm:p-3.5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-2.5 ${
-              isSelected 
-                ? 'bg-blue-50/50 border-blue-400 shadow-xs ring-2 ring-blue-500/10' 
-                : 'bg-white border-slate-200/80 hover:border-slate-300 hover:bg-slate-50/80 shadow-2xs'
-            }"
+            onclick="selectOrganization('${org.id}')"
+            class="p-3.5 sm:p-4 cursor-pointer transition-all ${selectedStyle} group"
           >
-            <!-- Card Header: Org Name & Badge -->
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 border ${org.avatarBg}">
-                  ${org.avatar}
-                </div>
-                <div class="min-w-0">
-                  <h4 class="font-bold text-xs sm:text-[13px] text-slate-900 truncate ${isSelected ? 'text-blue-900 font-extrabold' : ''}">
+            <!-- Top Row: Name and Status Badge -->
+            <div class="flex items-start justify-between gap-2 mb-1.5">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-1.5">
+                  <h3 class="text-xs sm:text-[13px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
                     ${org.name}
-                  </h4>
-                  <span class="font-mono-code text-[10px] text-slate-400 block">${org.id}</span>
+                  </h3>
                 </div>
+                <span class="text-[10px] font-mono-code text-slate-400 block mt-0.5">${org.id} • ${org.tier}</span>
               </div>
-              <span class="px-1.5 py-0.5 rounded text-[9.5px] font-bold border shrink-0 ${badgeColor}">
-                ${badgeText}
-              </span>
+              ${statusBadge}
             </div>
 
-            <!-- Quota Progress Bar (Compact in Left List) -->
-            <div class="space-y-1">
-              <div class="flex items-center justify-between text-[10.5px]">
-                <span class="text-slate-500 font-medium font-mono-code">โควตา: ${org.weekUsed.toLocaleString()} / ${org.weekLimit.toLocaleString()}</span>
-                <span class="font-bold font-mono-code ${org.status === 'exceeded' ? 'text-rose-600' : org.status === 'near_limit' ? 'text-amber-600' : 'text-slate-700'}">${weekPct}%</span>
+            <!-- Middle Row: Progress Bar for Weekly Quota -->
+            <div class="space-y-1 my-2">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-500">โควตารอบนี้:</span>
+                <span class="font-mono-code font-bold text-slate-700">${org.thisWeek.used.toLocaleString()} / ${org.thisWeek.limit.toLocaleString()}</span>
               </div>
               <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                <div class="${barColor} h-1.5 rounded-full transition-all duration-300" style="width: ${Math.min(weekPct, 100)}%;"></div>
+                <div class="${barColor} h-1.5 rounded-full transition-all duration-500" style="width: ${Math.min(100, weekPercent)}%;"></div>
               </div>
             </div>
 
-            <!-- Reset Countdown Strip (ตาม Requirement: จะ reset เมื่อไหร่) -->
-            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1.5 border-t border-slate-100/90 font-medium">
-              <span class="inline-flex items-center gap-1">
+            <!-- Bottom Row: Time to Reset (คำตอบโจทย์: จะ reset เมื่อไหร่) -->
+            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-100">
+              <span class="flex items-center gap-1">
                 <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
-                <span>${org.weekReset}</span>
+                <span>${org.thisWeek.resetText}</span>
               </span>
-              <span class="text-blue-600 font-semibold group-hover:underline inline-flex items-center gap-0.5">
-                ดูสถิติ <i data-lucide="chevron-right" class="w-2.5 h-2.5"></i>
+              <span class="font-semibold text-slate-500">
+                คงเหลือ: ${Math.max(0, org.thisWeek.limit - org.thisWeek.used).toLocaleString()}
               </span>
             </div>
           </div>
         `;
-      }).join('');
+      }).join("");
 
-      lucide.createIcons();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
-    // --- 5. SELECT ORGANIZATION ---
-    function selectOrg(id) {
-      selectedOrgId = id;
-      const org = organizationsData.find(o => o.id === id);
+    // --- 5. SELECT ORGANIZATION & SWITCH DETAIL ---
+    function selectOrganization(orgId) {
+      selectedOrgId = orgId;
+      renderOrgList();
+      renderSelectedOrgDetails();
+      if (window.innerWidth < 768) {
+        setMobileView('detail');
+      }
+    }
+
+    // --- 6. RENDER SELECTED ORG DETAILS (RIGHT PANEL) ---
+    function renderSelectedOrgDetails() {
+      const org = organizationsData.find(o => o.id === selectedOrgId) || organizationsData[0];
       if (!org) return;
 
-      // Update Org Header
-      document.getElementById('selected-org-name').textContent = org.name;
-      document.getElementById('selected-org-id').textContent = org.id;
-      document.getElementById('selected-org-key').textContent = org.apiKey;
-      document.getElementById('selected-org-tier').textContent = org.tier;
-      document.getElementById('modal-org-subtitle').textContent = `${org.name} (ID: ${org.id})`;
+      // Header Details
+      document.getElementById("selected-org-name").textContent = org.name;
+      document.getElementById("selected-org-tier").textContent = org.tier;
+      document.getElementById("selected-org-id").textContent = `ID: ${org.id}`;
+      document.getElementById("selected-org-token").textContent = org.token;
+      document.getElementById("org-avatar").textContent = org.avatar;
 
-      const avatarBox = document.getElementById('selected-org-avatar');
-      avatarBox.className = `w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-2xs text-lg font-black border ${org.avatarBg}`;
-      avatarBox.textContent = org.avatar;
-
-      // Status Badge
-      const badge = document.getElementById('selected-org-badge');
-      if (org.status === 'near_limit') {
-        badge.className = "px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-amber-200 bg-amber-50 text-amber-700";
-        badge.textContent = "ใกล้เต็มโควตา (>80%)";
-      } else if (org.status === 'exceeded') {
-        badge.className = "px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-rose-200 bg-rose-50 text-rose-700";
-        badge.textContent = "เกินโควตา (Rate-limited)";
+      // Top Header status badge
+      const headerStatusBadge = document.getElementById("selected-org-status-badge");
+      if (org.status === "exceeded") {
+        headerStatusBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1";
+        headerStatusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span><span>เกินโควตา (${org.thisWeek.percent}%)</span>`;
+      } else if (org.status === "near-limit") {
+        headerStatusBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 flex items-center gap-1";
+        headerStatusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span><span>ใกล้เต็มโควตา (${org.thisWeek.percent}%)</span>`;
       } else {
-        badge.className = "px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-emerald-200 bg-emerald-50 text-emerald-700";
-        badge.textContent = "การใช้งานปกติ";
+        headerStatusBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1";
+        headerStatusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>ใช้งานปกติ (${org.thisWeek.percent}%)</span>`;
       }
 
-      // --- UPDATE BLOCK 1: USAGE (EXACT STYLE OF IMAGE 2) ---
-      document.getElementById('usage-headline').textContent = org.headline;
+      // Mini KPI metrics
+      document.getElementById("kpi-quota-limit").textContent = `${org.thisWeek.limit.toLocaleString()} reqs`;
+      document.getElementById("kpi-quota-used").textContent = `${org.thisWeek.used.toLocaleString()} reqs`;
+      const remain = Math.max(0, org.thisWeek.limit - org.thisWeek.used);
+      document.getElementById("kpi-quota-remain").textContent = `${remain.toLocaleString()} reqs`;
+      document.getElementById("kpi-success-rate").textContent = org.stats.successRate;
+
+      // ==========================================
+      // BLOCK 1: YOUR USAGE PRO CARD (IMAGE 2 MATCH)
+      // ==========================================
+      const usageHeadline = document.getElementById("usage-headline");
+      const usageStatusBadge = document.getElementById("usage-status-badge");
+
+      usageHeadline.textContent = org.forecastHeadline;
+
+      if (org.forecastStatus === "critical") {
+        usageStatusBadge.className = "inline-flex items-center gap-1.5 text-xs text-rose-400 font-semibold bg-rose-950/80 border border-rose-800/80 px-2.5 py-0.5 rounded-full";
+        usageStatusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span><span>Critical Alert</span>`;
+      } else if (org.forecastStatus === "warning") {
+        usageStatusBadge.className = "inline-flex items-center gap-1.5 text-xs text-amber-400 font-semibold bg-amber-950/80 border border-amber-800/80 px-2.5 py-0.5 rounded-full";
+        usageStatusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span><span>High Traffic Warning</span>`;
+      } else {
+        usageStatusBadge.className = "inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold bg-emerald-950/80 border border-emerald-800/80 px-2.5 py-0.5 rounded-full";
+        usageStatusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Active & Healthy</span>`;
+      }
+
+      // Current Session Bar
+      document.getElementById("session-reset-text").textContent = org.currentSession.resetText;
+      document.getElementById("session-percent-text").textContent = `${org.currentSession.percent}% used`;
+      document.getElementById("session-numbers-text").textContent = `${org.currentSession.used.toLocaleString()} / ${org.currentSession.limit.toLocaleString()} reqs`;
       
-      const sessionPct = Math.round((org.sessionUsed / org.sessionLimit) * 100);
-      document.getElementById('session-reset-text').textContent = org.sessionReset;
-      document.getElementById('session-percent-text').textContent = `${sessionPct}% used`;
-      document.getElementById('session-numbers-text').textContent = `${org.sessionUsed.toLocaleString()} / ${org.sessionLimit.toLocaleString()} reqs`;
-      document.getElementById('session-progress-bar').style.width = `${Math.min(sessionPct, 100)}%`;
-      document.getElementById('session-progress-bar').className = sessionPct > 90 ? 'bg-rose-500 h-2 rounded-full shadow-sm' : sessionPct > 70 ? 'bg-amber-400 h-2 rounded-full shadow-sm' : 'bg-blue-500 h-2 rounded-full shadow-sm';
+      const sessionBar = document.getElementById("session-progress-bar");
+      sessionBar.style.width = `${Math.min(100, org.currentSession.percent)}%`;
+      if (org.currentSession.percent >= 100) {
+        sessionBar.className = "bg-gradient-to-r from-rose-500 to-red-600 h-full rounded-full transition-all duration-500 shadow-sm";
+      } else if (org.currentSession.percent >= 80) {
+        sessionBar.className = "bg-gradient-to-r from-amber-400 to-amber-500 h-full rounded-full transition-all duration-500 shadow-sm";
+      } else {
+        sessionBar.className = "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm";
+      }
 
-      const weekPct = Math.round((org.weekUsed / org.weekLimit) * 100);
-      document.getElementById('week-reset-text').textContent = org.weekReset;
-      document.getElementById('week-percent-text').textContent = `${weekPct}% used`;
-      document.getElementById('week-numbers-text').textContent = `${org.weekUsed.toLocaleString()} / ${org.weekLimit.toLocaleString()} reqs`;
-      document.getElementById('week-progress-bar').style.width = `${Math.min(weekPct, 100)}%`;
-      document.getElementById('week-progress-bar').className = weekPct > 90 ? 'bg-rose-500 h-2 rounded-full shadow-sm' : weekPct > 70 ? 'bg-amber-400 h-2 rounded-full shadow-sm' : 'bg-blue-500 h-2 rounded-full shadow-sm';
+      // This Week Bar
+      document.getElementById("week-reset-text").textContent = org.thisWeek.resetText;
+      document.getElementById("week-percent-text").textContent = `${org.thisWeek.percent}% used`;
+      document.getElementById("week-numbers-text").textContent = `${org.thisWeek.used.toLocaleString()} / ${org.thisWeek.limit.toLocaleString()} reqs`;
 
-      // KPI numbers
-      const remaining = Math.max(0, org.weekLimit - org.weekUsed);
-      document.getElementById('kpi-remaining').textContent = `${remaining.toLocaleString()} reqs`;
-      document.getElementById('kpi-logs-count').textContent = `${org.logs.length} ครั้งที่ปรับ`;
-      document.getElementById('tab-log-badge').textContent = org.logs.length;
+      const weekBar = document.getElementById("week-progress-bar");
+      weekBar.style.width = `${Math.min(100, org.thisWeek.percent)}%`;
+      if (org.thisWeek.percent >= 100) {
+        weekBar.className = "bg-gradient-to-r from-rose-500 to-red-600 h-full rounded-full transition-all duration-500 shadow-sm";
+      } else if (org.thisWeek.percent >= 80) {
+        weekBar.className = "bg-gradient-to-r from-amber-400 to-amber-500 h-full rounded-full transition-all duration-500 shadow-sm";
+      } else {
+        weekBar.className = "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm";
+      }
 
-      // Render Active Tab Content
+      // Render Tab Data
       renderDailyChart(org);
       renderDailyTable(org);
-      renderLogsTable(org);
+      renderAuditLogs(org);
       renderEndpoints(org);
 
-      renderOrgList();
-      lucide.createIcons();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
-    // --- 6. RENDER DAILY USAGE CHART ---
+    // --- 7. RENDER INTERACTIVE DAILY USAGE CHART ---
     function renderDailyChart(org) {
-      const container = document.getElementById('daily-chart-container');
-      if (!container) return;
+      const wrapper = document.getElementById("daily-chart-wrapper");
+      if (!wrapper) return;
 
-      const history = org.dailyHistory || [];
-      const maxCalls = 20000;
+      const series = org.dailySeries;
+      const maxVal = Math.max(...series.map(s => s.calls), 10000);
 
-      container.innerHTML = history.map(item => {
-        const heightPct = Math.min(100, Math.round((item.calls / maxCalls) * 100));
-        const isPeak = item.status === 'Peak' || item.status === 'Over Quota';
-        const barColor = isPeak ? 'bg-rose-500 hover:bg-rose-600' : 'bg-blue-500 hover:bg-blue-600';
+      const barsHtml = series.map((item, idx) => {
+        const heightPercent = Math.round((item.calls / maxVal) * 100);
+        let barColor = "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-indigo-600";
+        if (item.calls > 10000) barColor = "from-rose-500 to-rose-600 hover:from-rose-600 hover:to-red-700";
+        else if (item.calls > 7000) barColor = "from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600";
 
         return `
-          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group relative cursor-pointer">
-            <!-- Tooltip Hover Bubble -->
-            <div class="absolute bottom-full mb-2 hidden group-hover:flex flex-col items-center z-20 pointer-events-none">
-              <div class="bg-slate-900 text-white text-[10px] rounded-lg py-1 px-2 shadow-lg whitespace-nowrap font-mono-code">
-                <strong>${item.date}</strong>: ${item.calls.toLocaleString()} calls (${item.status})
+          <div class="flex-1 flex flex-col items-center justify-end h-full group relative px-1">
+            <!-- Tooltip on hover -->
+            <div class="absolute bottom-full mb-2 hidden group-hover:flex flex-col items-center z-30 pointer-events-none">
+              <div class="bg-slate-900 text-white text-[10px] rounded-xl px-2.5 py-1.5 shadow-xl whitespace-nowrap border border-white/10 text-center">
+                <span class="font-bold block text-blue-400">${item.day} (${item.date})</span>
+                <span class="font-mono-code">${item.calls.toLocaleString()} calls</span>
+                <span class="text-emerald-400 block text-[9px]">Success: ${item.success}</span>
               </div>
               <div class="w-1.5 h-1.5 bg-slate-900 rotate-45 -mt-1"></div>
             </div>
 
-            <!-- Animated Bar -->
-            <div class="w-full max-w-[28px] ${barColor} rounded-t-lg transition-all duration-300 shadow-2xs group-hover:scale-105" style="height: ${heightPct}%;"></div>
-            
-            <!-- X-axis date label -->
-            <span class="text-[9.5px] sm:text-[10px] font-mono-code text-slate-400 group-hover:text-slate-800 transition-colors whitespace-nowrap">${item.date.slice(0, 6)}</span>
+            <!-- Bar -->
+            <div class="w-full max-w-[28px] rounded-t-lg bg-gradient-to-t ${barColor} transition-all duration-300 shadow-2xs group-hover:scale-y-105" style="height: ${Math.max(6, heightPercent)}%;"></div>
+
+            <!-- X-axis Label -->
+            <div class="text-[10px] text-slate-500 mt-2 text-center truncate w-full">
+              ${item.day.split(" ")[0]}
+            </div>
           </div>
         `;
-      }).join('');
+      }).join("");
+
+      wrapper.innerHTML = `
+        <!-- Guide Lines -->
+        <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-30 border-b border-slate-200">
+          <div class="border-b border-dashed border-slate-300 w-full text-[9px] text-slate-400 text-right pr-2">${maxVal.toLocaleString()}</div>
+          <div class="border-b border-dashed border-slate-300 w-full text-[9px] text-slate-400 text-right pr-2">${Math.round(maxVal / 2).toLocaleString()}</div>
+          <div></div>
+        </div>
+        <div class="relative z-10 flex items-end justify-between h-48 w-full gap-1 pt-4">
+          ${barsHtml}
+        </div>
+      `;
+
+      // Update summary texts
+      const totalCalls = series.reduce((acc, curr) => acc + curr.calls, 0);
+      const avgCalls = Math.round(totalCalls / series.length);
+      const peakItem = [...series].sort((a, b) => b.calls - a.calls)[0];
+
+      document.getElementById("chart-summary-stat").textContent = `เรียกใช้งานเฉลี่ย: ${avgCalls.toLocaleString()} reqs/วัน (รวม 14 วัน: ${totalCalls.toLocaleString()})`;
+      document.getElementById("chart-peak-stat").textContent = `จุดสูงสุด: ${peakItem.calls.toLocaleString()} reqs (${peakItem.day})`;
     }
 
-    // --- 7. RENDER DAILY BREAKDOWN TABLE ---
+    // --- 8. RENDER DAILY BREAKDOWN TABLE ---
     function renderDailyTable(org) {
-      const tbody = document.getElementById('daily-table-body');
+      const tbody = document.getElementById("daily-table-body");
       if (!tbody) return;
 
-      const history = org.dailyHistory || [];
-      tbody.innerHTML = history.map(item => {
-        const pct = Math.round((item.calls / item.limit) * 100);
-        let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ปกติ</span>`;
-        if (item.status === 'Peak') {
-          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Peak Hour</span>`;
-        } else if (item.status === 'Over Quota') {
-          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">Over Quota</span>`;
+      const series = [...org.dailySeries].reverse();
+      tbody.innerHTML = series.map(item => {
+        let statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700">ปกติ</span>';
+        if (item.calls > 10000) {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700">พุ่งสูงเกินโควตา</span>';
+        } else if (item.calls > 7000) {
+          statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700">ทราฟฟิกสูง</span>';
+        }
+
+        const quotaShare = Math.round((item.calls / (org.thisWeek.limit / 7)) * 100);
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="py-2.5 px-3 sm:px-4 font-semibold text-slate-800">
+              ${item.day} <span class="text-slate-400 font-normal">(${item.date})</span>
+            </td>
+            <td class="py-2.5 px-3 text-right font-mono-code font-bold text-slate-800">
+              ${item.calls.toLocaleString()}
+            </td>
+            <td class="py-2.5 px-3 text-right font-mono-code text-slate-500">
+              ${quotaShare}%
+            </td>
+            <td class="py-2.5 px-3 text-right font-mono-code text-emerald-600 font-semibold">
+              ${item.success}
+            </td>
+            <td class="py-2.5 px-3 text-right font-mono-code ${item.errors > 0 ? 'text-rose-600 font-bold' : 'text-slate-400'}">
+              ${item.errors}
+            </td>
+            <td class="py-2.5 px-3 sm:px-4 text-center">
+              ${statusBadge}
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // --- 9. RENDER AUDIT LOGS (ประวัติการปรับเพิ่ม QUOTA) ---
+    function renderAuditLogs(org) {
+      const tbody = document.getElementById("audit-log-table-body");
+      const countBadge = document.getElementById("tab-logs-count");
+      if (!tbody) return;
+
+      countBadge.textContent = org.auditLogs.length;
+
+      if (org.auditLogs.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="py-8 text-center text-slate-400 text-xs">
+              <i data-lucide="inbox" class="w-6 h-6 mx-auto mb-2 opacity-50"></i>
+              <p>ยังไม่มีประวัติการปรับโควตาย้อนหลังสำหรับหน่วยงานนี้</p>
+            </td>
+          </tr>
+        `;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        return;
+      }
+
+      tbody.innerHTML = org.auditLogs.map(log => {
+        let scopeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">ปกติ</span>';
+        if (log.scope.includes("ชั่วคราว")) {
+          scopeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">ชั่วคราวรอบนี้</span>';
+        } else if (log.scope.includes("ถาวร")) {
+          scopeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">ปรับถาวร</span>';
         }
 
         return `
           <tr class="hover:bg-slate-50/80 transition-colors">
-            <td class="py-2.5 px-4 font-semibold text-slate-800 font-mono-code">${item.date}</td>
-            <td class="py-2.5 px-4 text-right font-bold text-slate-900 font-mono-code">${item.calls.toLocaleString()}</td>
-            <td class="py-2.5 px-4 text-right text-slate-500 font-mono-code">${item.limit.toLocaleString()}</td>
-            <td class="py-2.5 px-4 text-right font-mono-code font-semibold ${pct >= 100 ? 'text-rose-600' : pct >= 80 ? 'text-amber-600' : 'text-slate-700'}">${pct}%</td>
-            <td class="py-2.5 px-4 text-center">${statusBadge}</td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    // --- 8. RENDER QUOTA AUDIT LOGS TABLE ---
-    function renderLogsTable(org) {
-      const tbody = document.getElementById('logs-table-body');
-      if (!tbody) return;
-
-      const logs = org.logs || [];
-      if (logs.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="5" class="py-8 text-center text-slate-400">
-              <i data-lucide="history" class="w-6 h-6 mx-auto mb-1 text-slate-300"></i>
-              <span>ยังไม่มีประวัติการปรับเพิ่ม Quota ให้กับหน่วยงานนี้</span>
+            <td class="py-2.5 px-3 sm:px-4 text-slate-600 font-mono-code text-[11px] whitespace-nowrap">
+              ${log.date}
+            </td>
+            <td class="py-2.5 px-3 font-semibold text-slate-800">
+              ${log.admin}
+            </td>
+            <td class="py-2.5 px-3 text-right font-mono-code font-bold text-emerald-600">
+              ${log.amount}
+            </td>
+            <td class="py-2.5 px-3 text-right font-mono-code text-slate-700">
+              ${log.newLimit}
+            </td>
+            <td class="py-2.5 px-3">
+              ${scopeBadge}
+            </td>
+            <td class="py-2.5 px-3 sm:px-4 text-slate-600 italic">
+              "${log.reason}"
             </td>
           </tr>
         `;
-        lucide.createIcons();
-        return;
-      }
+      }).join("");
 
-      tbody.innerHTML = logs.map(l => `
-        <tr class="hover:bg-slate-50 transition-colors">
-          <td class="py-2.5 px-4 font-mono-code text-slate-600">${l.timestamp}</td>
-          <td class="py-2.5 px-4 font-bold text-slate-800">${l.admin}</td>
-          <td class="py-2.5 px-4 font-mono-code font-bold text-blue-700">${l.change}</td>
-          <td class="py-2.5 px-4">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${l.type.includes('ถาวร') ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-blue-50 text-blue-700 border border-blue-200'}">
-              ${l.type}
-            </span>
-          </td>
-          <td class="py-2.5 px-4 text-slate-600 italic">"${l.reason}"</td>
-        </tr>
-      `).join('');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
-    // --- 9. RENDER ENDPOINTS GRID ---
+    // --- 10. RENDER ENDPOINTS BREAKDOWN ---
     function renderEndpoints(org) {
-      const grid = document.getElementById('endpoints-grid');
-      if (!grid) return;
+      const container = document.getElementById("endpoints-grid");
+      if (!container) return;
 
-      const endpoints = org.endpoints || [];
-      grid.innerHTML = endpoints.map(ep => `
-        <div class="bg-white border border-slate-200 p-3.5 rounded-2xl shadow-2xs space-y-2">
-          <div class="flex items-center justify-between text-xs">
-            <span class="font-mono-code font-bold text-slate-800 truncate" title="${ep.path}">${ep.path}</span>
-            <span class="font-bold text-blue-600 text-[11px] font-mono-code">${ep.pct}%</span>
+      container.innerHTML = org.endpoints.map(ep => `
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-2xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 rounded-md font-mono-code text-[10px] font-bold ${ep.method === 'POST' ? 'bg-indigo-50 text-indigo-700' : 'bg-emerald-50 text-emerald-700'}">
+              ${ep.method}
+            </span>
+            <span class="text-xs font-bold text-slate-800 font-mono-code">${ep.calls.toLocaleString()} reqs (${ep.share})</span>
           </div>
-          <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-            <div class="bg-blue-600 h-1.5 rounded-full" style="width: ${ep.pct}%;"></div>
+          <code class="text-xs font-mono-code font-bold text-slate-900 block truncate mb-3">${ep.path}</code>
+          <div class="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-100">
+            <span>Avg Latency: <strong class="text-slate-700">${ep.avgLatency}</strong></span>
+            <span>Errors: <strong class="${parseFloat(ep.errorRate) > 0.5 ? 'text-rose-600' : 'text-slate-700'}">${ep.errorRate}</strong></span>
           </div>
-          <span class="text-[10px] text-slate-400 block font-mono-code">เรียกใช้แล้ว ${ep.calls} ครั้ง</span>
         </div>
-      `).join('');
+      `).join("");
     }
 
-    // --- 10. TABS SWITCHING ---
-    function switchDetailTab(tab) {
-      activeTab = tab;
-
-      const btnDaily = document.getElementById('tab-btn-daily');
-      const btnLogs = document.getElementById('tab-btn-logs');
-      const btnEndpoints = document.getElementById('tab-btn-endpoints');
-
-      const contentDaily = document.getElementById('tab-content-daily');
-      const contentLogs = document.getElementById('tab-content-logs');
-      const contentEndpoints = document.getElementById('tab-content-endpoints');
-      const filterBar = document.getElementById('daily-filter-bar');
-
-      // Reset styles
-      [btnDaily, btnLogs, btnEndpoints].forEach(b => {
-        if (b) b.className = 'px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5 cursor-pointer font-medium';
+    // --- 11. TAB SWITCHING LOGIC ---
+    function switchTab(tabId) {
+      activeTab = tabId;
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.className = "tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-800 hover:bg-slate-100 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap";
       });
+      document.querySelectorAll(".tab-pane").forEach(pane => pane.classList.add("hidden"));
 
-      [contentDaily, contentLogs, contentEndpoints].forEach(c => {
-        if (c) c.classList.add('hidden');
-      });
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      const activePane = document.getElementById(`tab-pane-${tabId}`);
 
-      if (tab === 'daily') {
-        btnDaily.className = 'px-3.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer font-bold';
-        contentDaily.classList.remove('hidden');
-        if (filterBar) filterBar.classList.remove('hidden');
-      } else if (tab === 'logs') {
-        btnLogs.className = 'px-3.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer font-bold';
-        contentLogs.classList.remove('hidden');
-        if (filterBar) filterBar.classList.add('hidden');
-      } else if (tab === 'endpoints') {
-        btnEndpoints.className = 'px-3.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer font-bold';
-        contentEndpoints.classList.remove('hidden');
-        if (filterBar) filterBar.classList.add('hidden');
-      }
-
-      lucide.createIcons();
-    }
-
-    // --- 11. FILTER & SEARCH HANDLERS ---
-    function setFilterStatus(status) {
-      activeFilter = status;
-      ['all', 'near', 'exceeded', 'normal'].forEach(k => {
-        const btn = document.getElementById(`filter-${k}`);
-        if (btn) {
-          btn.className = 'flex-1 py-1 px-1.5 rounded-lg font-medium text-center transition-all text-slate-600 hover:text-slate-900 whitespace-nowrap cursor-pointer';
-        }
-      });
-
-      const activeBtn = document.getElementById(`filter-${status === 'near_limit' ? 'near' : status}`);
       if (activeBtn) {
-        activeBtn.className = 'flex-1 py-1 px-1.5 rounded-lg font-bold text-center transition-all bg-white text-slate-900 shadow-2xs whitespace-nowrap cursor-pointer';
+        activeBtn.className = "tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-blue-600 bg-blue-50/80 border-b-2 border-blue-600 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap";
+      }
+      if (activePane) {
+        activePane.classList.remove("hidden");
       }
 
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    // --- 12. FILTER & SEARCH HANDLERS ---
+    function setFilter(filterType) {
+      activeFilter = filterType;
+      document.querySelectorAll(".filter-pill").forEach(pill => {
+        pill.className = "filter-pill px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer";
+      });
+      const activePill = document.getElementById(`filter-pill-${filterType}`);
+      if (activePill) {
+        activePill.className = "filter-pill px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer";
+      }
       renderOrgList();
     }
 
-    function handleOrgSearch(val) {
-      searchQuery = val.trim();
-      const clearBtn = document.getElementById('clear-search-btn');
+    function handleOrgSearch(query) {
+      searchQuery = query.trim();
+      const clearBtn = document.getElementById("clear-search-btn");
       if (clearBtn) {
-        if (searchQuery) clearBtn.classList.remove('hidden');
-        else clearBtn.classList.add('hidden');
+        clearBtn.classList.toggle("hidden", searchQuery.length === 0);
       }
       renderOrgList();
     }
 
     function clearOrgSearch() {
-      const input = document.getElementById('org-search-input');
-      if (input) input.value = '';
-      searchQuery = '';
-      document.getElementById('clear-search-btn').classList.add('hidden');
-      renderOrgList();
+      const input = document.getElementById("org-search-input");
+      if (input) input.value = "";
+      handleOrgSearch("");
     }
 
-    function changeTimeRange(val) {
-      showToast(`เปลี่ยนช่วงเวลาเป็น ${val} วันล่าสุดแล้ว`);
-    }
-
-    // --- 12. ADD QUOTA MODAL & LOG SUBMISSION (REQUIREMENT) ---
+    // --- 13. MODAL: ปรับเพิ่ม QUOTA ---
     function openAddQuotaModal() {
       const org = organizationsData.find(o => o.id === selectedOrgId);
       if (!org) return;
 
-      document.getElementById('modal-current-quota').textContent = `${org.weekLimit.toLocaleString()} reqs`;
-      document.getElementById('quota-increment-input').value = 50000;
-      document.getElementById('quota-reason-input').value = "";
+      document.getElementById("modal-org-target-label").textContent = `หน่วยงาน: ${org.name} (${org.id})`;
+      document.getElementById("modal-current-quota").textContent = `${org.thisWeek.limit.toLocaleString()} reqs`;
+      document.getElementById("increment-input").value = 50000;
       updateModalPreview();
 
-      const backdrop = document.getElementById('quota-modal-backdrop');
-      const modal = document.getElementById('quota-modal');
-      backdrop.classList.remove('hidden');
-      modal.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
-      modal.classList.add('scale-100', 'opacity-100');
+      const modal = document.getElementById("add-quota-modal");
+      const card = document.getElementById("modal-card");
+      modal.classList.remove("hidden");
+      setTimeout(() => {
+        card.classList.remove("scale-95", "opacity-0");
+        card.classList.add("scale-100", "opacity-100");
+      }, 10);
     }
 
     function closeAddQuotaModal() {
-      const backdrop = document.getElementById('quota-modal-backdrop');
-      const modal = document.getElementById('quota-modal');
-      backdrop.classList.add('hidden');
-      modal.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-      modal.classList.remove('scale-100', 'opacity-100');
+      const modal = document.getElementById("add-quota-modal");
+      const card = document.getElementById("modal-card");
+      card.classList.remove("scale-100", "opacity-100");
+      card.classList.add("scale-95", "opacity-0");
+      setTimeout(() => {
+        modal.classList.add("hidden");
+      }, 150);
     }
 
-    function setQuickAdd(amount) {
-      document.getElementById('quota-increment-input').value = amount;
+    function setPresetIncrement(val) {
+      document.getElementById("increment-input").value = val;
+      document.querySelectorAll(".preset-btn").forEach(btn => {
+        btn.className = "preset-btn py-2 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer";
+      });
+      event.target.className = "preset-btn py-2 text-center rounded-xl border-2 border-blue-600 bg-blue-50/70 font-bold text-blue-700 cursor-pointer";
       updateModalPreview();
     }
 
     function updateModalPreview() {
       const org = organizationsData.find(o => o.id === selectedOrgId);
       if (!org) return;
-
-      const increment = parseInt(document.getElementById('quota-increment-input').value) || 0;
-      const newTotal = org.weekLimit + increment;
-      document.getElementById('modal-preview-new-quota').textContent = `${newTotal.toLocaleString()} reqs (+${increment.toLocaleString()})`;
+      const inc = parseInt(document.getElementById("increment-input").value) || 0;
+      const newTotal = org.thisWeek.limit + inc;
+      document.getElementById("modal-new-quota-preview").textContent = `${newTotal.toLocaleString()} reqs`;
     }
 
-    function submitAddQuota(e) {
-      e.preventDefault();
+    function handleQuotaSubmit(event) {
+      event.preventDefault();
       const org = organizationsData.find(o => o.id === selectedOrgId);
       if (!org) return;
 
-      const increment = parseInt(document.getElementById('quota-increment-input').value) || 0;
-      const type = document.getElementById('quota-type-select').value;
-      const reason = document.getElementById('quota-reason-input').value.trim();
+      const increment = parseInt(document.getElementById("increment-input").value) || 0;
+      const scopeRadio = document.querySelector('input[name="quota-scope"]:checked');
+      const scope = scopeRadio && scopeRadio.value === "permanent" ? "ปรับถาวร" : "ชั่วคราวรอบนี้";
+      const reason = document.getElementById("quota-reason-input").value.trim();
 
-      if (increment <= 0 || !reason) {
-        alert("กรุณาระบุจำนวนและเหตุผลประกอบการปรับ");
-        return;
-      }
-
-      const oldLimit = org.weekLimit;
-      const newLimit = oldLimit + increment;
-      org.weekLimit = newLimit;
-
-      // Update status if no longer near limit
-      const newPct = (org.weekUsed / newLimit) * 100;
-      if (newPct < 80) org.status = "normal";
-      else if (newPct < 100) org.status = "near_limit";
+      // Update Org State
+      org.thisWeek.limit += increment;
+      org.thisWeek.percent = Math.round((org.thisWeek.used / org.thisWeek.limit) * 100);
+      if (org.thisWeek.percent < 80) org.status = "normal";
+      else if (org.thisWeek.percent < 100) org.status = "near-limit";
       else org.status = "exceeded";
 
-      // Formulate Thai timestamp
+      // Append new Audit Log
       const now = new Date();
-      const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-      const timeStr = `${now.getDate()} ${thaiMonths[now.getMonth()]} 69 ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} น.`;
-
-      // Append Audit Log directly
-      org.logs.unshift({
-        timestamp: timeStr,
-        admin: "ชยานิษฐ์ (Admin)",
-        change: `${oldLimit.toLocaleString()} ➔ ${newLimit.toLocaleString()} (+${increment.toLocaleString()})`,
-        type: type === 'permanent' ? 'เพิ่มถาวร' : 'เพิ่มชั่วคราว',
+      const dateStr = `${now.getDate()} พ.ย. ${now.getFullYear()}, ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+      org.auditLogs.unshift({
+        date: dateStr,
+        admin: "ธนโชติ (Superadmin)",
+        amount: `+${increment.toLocaleString()}`,
+        newLimit: `${org.thisWeek.limit.toLocaleString()} reqs`,
+        scope: scope,
         reason: reason
       });
 
       closeAddQuotaModal();
-      selectOrg(selectedOrgId);
-      showToast(`เพิ่มโควตา +${increment.toLocaleString()} พร้อมบันทึก Audit Log สำเร็จแล้ว`);
+      renderOrgList();
+      renderSelectedOrgDetails();
+      switchTab('logs');
+      showToast(`เพิ่มโควตา +${increment.toLocaleString()} reqs เรียบร้อยแล้ว`);
     }
 
-    // --- 13. TOAST & REFRESH ---
+    // --- 14. UTILITY HELPERS ---
     function showToast(msg) {
-      const toast = document.getElementById('toast');
-      const text = document.getElementById('toast-text');
-      if (!toast || !text) return;
-
-      text.textContent = msg;
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-
+      const toast = document.getElementById("toast-notification");
+      const label = document.getElementById("toast-message");
+      label.textContent = msg;
+      toast.classList.remove("translate-y-12", "opacity-0", "pointer-events-none");
       setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3500);
+        toast.classList.add("translate-y-12", "opacity-0", "pointer-events-none");
+      }, 3000);
+    }
+
+    function copyToken() {
+      const org = organizationsData.find(o => o.id === selectedOrgId);
+      if (org && navigator.clipboard) {
+        navigator.clipboard.writeText(org.token).then(() => {
+          showToast("คัดลอก Exchange Token เรียบร้อยแล้ว");
+        });
+      }
     }
 
     function refreshData() {
-      const icon = document.getElementById('refresh-spinner');
-      if (icon) icon.classList.add('animate-spin');
+      const spinner = document.getElementById("refresh-spinner");
+      if (spinner) spinner.classList.add("animate-spin");
       setTimeout(() => {
-        if (icon) icon.classList.remove('animate-spin');
-        selectOrg(selectedOrgId);
-        showToast("รีเฟรชข้อมูล Quota และสถิติเรียบร้อยแล้ว");
-      }, 600);
+        if (spinner) spinner.classList.remove("animate-spin");
+        renderOrgList();
+        renderSelectedOrgDetails();
+        showToast("รีเฟรชข้อมูลสถานะโควตาล่าสุดแล้ว");
+      }, 500);
     }
 
-    // --- 14. MOBILE SIDEBAR TOGGLE ---
-    function openMobileSidebar() {
-      const sidebar = document.getElementById('main-sidebar');
-      const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      sidebar.classList.remove('-translate-x-full');
-      backdrop.classList.remove('hidden');
-    }
-
-    function closeMobileSidebar() {
-      const sidebar = document.getElementById('main-sidebar');
-      const backdrop = document.getElementById('mobile-sidebar-backdrop');
-      sidebar.classList.add('-translate-x-full');
-      backdrop.classList.add('hidden');
+    function exportCsvDaily() {
+      const org = organizationsData.find(o => o.id === selectedOrgId);
+      if (!org) return;
+      let csv = "Date,Calls,SuccessRate,Errors\n";
+      org.dailySeries.forEach(s => {
+        csv += `"${s.day} (${s.date})",${s.calls},${s.success},${s.errors}\n`;
+      });
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `daily-exchange-quota-${org.id}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("ดาวน์โหลดไฟล์ CSV เรียบร้อยแล้ว");
     }
   </script>
 </body>
