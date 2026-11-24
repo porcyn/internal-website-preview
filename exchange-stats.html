@@ -327,6 +327,7 @@
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header (Cleaned up: Single primary CTA elsewhere, high contrast) -->
@@ -600,9 +601,9 @@
                 </div>
               </div>
 
-              <!-- Bar Chart Container (With Visible Gridlines & Threshold Marker Line) -->
+              <!-- Bar Chart Container (With Clean Y-Axis & No Overlapping Labels) -->
               <div class="bg-slate-50/70 p-4 sm:p-5 rounded-2xl border border-slate-200">
-                <div class="h-64 sm:h-72 w-full relative flex items-end pt-10 pb-6 px-2 sm:px-6" id="daily-chart-wrapper" role="img" aria-label="กราฟแท่งสถิติการใช้งานรายวัน">
+                <div class="h-64 sm:h-72 w-full relative flex items-stretch pt-6 pb-2 px-1 sm:px-4" id="daily-chart-wrapper" role="img" aria-label="กราฟแท่งสถิติการใช้งานรายวัน">
                   <!-- Rendered via JavaScript -->
                 </div>
               </div>
@@ -1411,35 +1412,34 @@
       }).join("");
 
       wrapper.innerHTML = `
-        <!-- Guide Lines & High-Contrast Y-Axis Labels (SC 1.4.3) -->
-        <div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-6 z-0">
-          <!-- Top Grid Line -->
-          <div class="border-b border-dashed border-slate-300 w-full flex items-center justify-between text-[11px] text-slate-700 font-bold px-1">
-            <span>${maxVal.toLocaleString()}</span>
-            <span>เพดานกราฟ</span>
-          </div>
-          <!-- Middle Grid Line -->
-          <div class="border-b border-dashed border-slate-300 w-full flex items-center justify-between text-[11px] text-slate-700 font-semibold px-1">
-            <span>${halfVal.toLocaleString()}</span>
-            <span>ค่าเฉลี่ยกึ่งกลาง</span>
-          </div>
-          <!-- Base Grid Line -->
-          <div class="border-b border-slate-300 w-full flex items-center justify-between text-[11px] text-slate-700 font-bold px-1">
-            <span>0</span>
-            <span>จุดเริ่มต้น</span>
-          </div>
+        <!-- Separate Left Y-Axis Labels Column (Zero Overlap with Bars) -->
+        <div class="w-11 sm:w-14 shrink-0 flex flex-col justify-between text-right pr-2.5 pb-6 text-[10px] sm:text-xs font-semibold text-slate-600 select-none">
+          <span>${maxVal.toLocaleString()}</span>
+          <span>${halfVal.toLocaleString()}</span>
+          <span>0</span>
         </div>
 
-        <!-- THRESHOLD LIMIT LINE: Visible Non-Color Indicator (SC 1.4.1) -->
-        <div class="absolute left-0 right-0 border-t-2 border-dashed border-rose-500 z-10 pointer-events-none flex items-center justify-end pr-2" style="bottom: calc(${thresholdPercent}% + 24px);">
-          <span class="bg-rose-100 text-rose-950 font-bold text-[10px] px-2 py-0.5 rounded-md border border-rose-300 shadow-2xs -mt-3">
-            เส้นจำกัดโควตาแนะนำ: ${dailyThreshold.toLocaleString()} reqs/วัน
-          </span>
-        </div>
+        <!-- Main Chart Plot Area -->
+        <div class="flex-1 h-full relative flex items-end pb-6">
+          
+          <!-- Pure Horizontal Gridlines (No Text Words) -->
+          <div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-6 z-0">
+            <div class="border-b border-dashed border-slate-300 w-full"></div>
+            <div class="border-b border-dashed border-slate-300 w-full"></div>
+            <div class="border-b border-slate-300 w-full"></div>
+          </div>
 
-        <!-- Chart Bars -->
-        <div class="flex items-end justify-between w-full h-full relative z-20 gap-1 sm:gap-2">
-          ${barsHtml}
+          <!-- THRESHOLD LIMIT LINE: Clean Dashed Line with neat badge on left -->
+          <div class="absolute left-0 right-0 border-t-2 border-dashed border-rose-500/80 z-10 pointer-events-none flex items-center justify-start pl-1" style="bottom: calc(${thresholdPercent}% + 24px);">
+            <span class="bg-rose-100 text-rose-950 font-bold text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded border border-rose-300 shadow-2xs -mt-2.5">
+              เกณฑ์แนะนำ: ${dailyThreshold.toLocaleString()} reqs
+            </span>
+          </div>
+
+          <!-- Chart Bars Container -->
+          <div class="flex items-end justify-between w-full h-full relative z-20 gap-0.5 sm:gap-1.5">
+            ${barsHtml}
+          </div>
         </div>
       `;
     }
