@@ -318,6 +318,7 @@
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header -->
@@ -369,9 +370,8 @@
           <span class="hidden sm:inline">รีเฟรชข้อมูล</span>
         </button>
 
-        <!-- Primary Action to fulfill: ควรเพิ่ม quota ได้จากตรงนี้ -->
-        <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
-          <i data-lucide="plus-circle" class="w-4 h-4 text-blue-400"></i>
+        <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-white"></i>
           <span class="whitespace-nowrap">ปรับเพิ่ม Quota</span>
         </button>
       </div>
@@ -432,7 +432,7 @@
 
         <!-- Org List Scrollable Container -->
         <div class="flex-1 overflow-y-auto p-3 space-y-2.5" id="org-list-container">
-          <!-- Rendered via JavaScript: Shows whether near quota limit + when it resets -->
+          <!-- Rendered via JavaScript -->
         </div>
 
         <!-- Left Panel Footer -->
@@ -446,11 +446,11 @@
       </section>
 
       <!-- ========================================================================= -->
-      <!-- RIGHT PANEL: ข้อมูลหน่วยงาน + USAGE PRO CARD + DAILY USAGE + AUDIT LOGS   -->
+      <!-- RIGHT PANEL: ข้อมูลหน่วยงาน + USAGE PRO CARD (LIGHT THEME) + DAILY USAGE + AUDIT LOGS -->
       <!-- ========================================================================= -->
       <section id="detail-panel" class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-y-auto h-full">
 
-        <div class="p-4 sm:p-6 lg:p-8 space-y-6 max-w-6xl mx-auto w-full">
+        <div class="p-4 sm:p-6 lg:p-8 space-y-6 max-w-5xl mx-auto w-full">
 
           <!-- 1. ORGANIZATION HEADER & ACTION BAR -->
           <div class="bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-6 shadow-xs">
@@ -491,12 +491,12 @@
 
               <!-- Action Buttons: ตอบโจทย์ "มีกดไปดู daily usage" และ "ควรเพิ่ม quota ได้จากตรงนี้" -->
               <div class="flex items-center gap-2.5 self-start md:self-center shrink-0 flex-wrap">
-                <button type="button" onclick="toggleDailyUsageSection()" id="btn-toggle-daily" class="px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-2xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shadow-2xs">
-                  <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
-                  <span>กดดู Daily Usage รายวัน</span>
+                <button type="button" onclick="toggleDailyUsageSection()" id="btn-toggle-daily" class="px-4 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-2xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shadow-2xs">
+                  <i data-lucide="bar-chart-3" class="w-4 h-4 text-blue-600"></i>
+                  <span>ดู Daily Usage รายวัน</span>
                 </button>
 
-                <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+                <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
                   <i data-lucide="plus-circle" class="w-4 h-4"></i>
                   <span>+ เพิ่ม Quota ตอนนี้</span>
                 </button>
@@ -505,82 +505,87 @@
           </div>
 
           <!-- ========================================================================= -->
-          <!-- REQ 2 (IMAGE 2): YOUR USAGE PRO CARD (ดีไซน์ถอดแบบ Image 2 สวยหรูคมกริบ)    -->
+          <!-- REQ 2 (IMAGE 2): YOUR USAGE PRO CARD (LIGHT & CLEAN THEME - สวย สบายตา)      -->
           <!-- ========================================================================= -->
-          <div class="bg-[#18181b] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-zinc-800 relative overflow-hidden">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm relative overflow-hidden">
             
-            <!-- Header Line: Your usage Pro (ถอดแบบตรงตามรูปภาพ 2 เป๊ะๆ) -->
-            <div class="flex items-center justify-between mb-4">
+            <!-- Top Line: Your usage Pro + Status Badge -->
+            <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-2">
-                <span class="text-sm font-semibold text-zinc-100">Your usage</span>
-                <span class="text-xs text-zinc-400 font-medium">Pro</span>
+                <span class="text-base font-bold text-slate-900 tracking-tight">Your usage</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Pro</span>
               </div>
-              <span id="usage-status-badge" class="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-medium bg-emerald-950/60 border border-emerald-800/80 px-2.5 py-0.5 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>On Track</span>
+              <span id="usage-status-badge" class="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>On track (ปกติ)</span>
               </span>
             </div>
 
             <!-- Headline status: On track. You should reach Friday's reset with room to spare. -->
-            <div id="usage-headline" class="text-base sm:text-lg text-zinc-200 font-medium mb-8">
-              On track. You should reach Friday's reset with room to spare.
+            <div id="usage-headline" class="text-sm sm:text-base text-slate-700 font-medium mb-6 bg-slate-50 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-2.5">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+              <span>On track. You should reach Friday's reset with room to spare.</span>
             </div>
 
-            <div class="border-t border-zinc-800/80 my-4"></div>
-
             <!-- Row 1: Current session & Resets at 2:20 PM & 7% used & blue bar -->
-            <div class="space-y-2 mb-6">
+            <div class="space-y-2.5 mb-6 bg-slate-50/60 p-4 rounded-2xl border border-slate-100">
               <div class="flex items-center justify-between text-xs sm:text-sm">
                 <div>
-                  <div class="text-zinc-200 font-medium">Current session</div>
-                  <div id="session-reset-text" class="text-xs text-zinc-400 mt-0.5">Resets at 2:20 PM</div>
+                  <div class="text-slate-900 font-bold text-sm">Current session</div>
+                  <div id="session-reset-text" class="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
+                    <span>Resets at 2:20 PM (อีก 2 ชม. 15 นาที)</span>
+                  </div>
                 </div>
                 <div class="text-right">
-                  <span id="session-percent-text" class="text-zinc-300 font-medium">7% used</span>
-                  <div id="session-numbers-text" class="text-[11px] text-zinc-500 font-mono mt-0.5">700 / 10,000 reqs</div>
+                  <span id="session-percent-text" class="text-slate-900 font-bold text-base">7% used</span>
+                  <div id="session-numbers-text" class="text-xs text-slate-500 mt-0.5">700 / 10,000 reqs</div>
                 </div>
               </div>
 
-              <!-- Thin sleek blue progress bar (ตรงตามรูปภาพ 2) -->
-              <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
-                <div id="session-progress-bar" class="bg-blue-500 h-1.5 rounded-full transition-all duration-500" style="width: 7%;"></div>
+              <!-- Thin sleek blue progress bar -->
+              <div class="w-full bg-slate-200/80 rounded-full h-2 overflow-hidden">
+                <div id="session-progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: 7%;"></div>
               </div>
             </div>
 
             <!-- Row 2: This week & Resets Friday 11:00 AM & 55% used & blue bar -->
-            <div class="space-y-2">
+            <div class="space-y-2.5 bg-slate-50/60 p-4 rounded-2xl border border-slate-100">
               <div class="flex items-center justify-between text-xs sm:text-sm">
                 <div>
-                  <div class="text-zinc-200 font-medium">This week</div>
-                  <div id="week-reset-text" class="text-xs text-zinc-400 mt-0.5">Resets Friday 11:00 AM</div>
+                  <div class="text-slate-900 font-bold text-sm">This week</div>
+                  <div id="week-reset-text" class="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+                    <i data-lucide="calendar" class="w-3 h-3 text-slate-400"></i>
+                    <span>Resets Friday 11:00 AM (อีก 3 วัน)</span>
+                  </div>
                 </div>
                 <div class="text-right">
-                  <span id="week-percent-text" class="text-zinc-300 font-medium">55% used</span>
-                  <div id="week-numbers-text" class="text-[11px] text-zinc-500 font-mono mt-0.5">55,000 / 100,000 reqs</div>
+                  <span id="week-percent-text" class="text-slate-900 font-bold text-base">55% used</span>
+                  <div id="week-numbers-text" class="text-xs text-slate-500 mt-0.5">55,000 / 100,000 reqs</div>
                 </div>
               </div>
 
-              <!-- Thin sleek blue progress bar (ตรงตามรูปภาพ 2) -->
-              <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
-                <div id="week-progress-bar" class="bg-blue-500 h-1.5 rounded-full transition-all duration-500" style="width: 55%;"></div>
+              <!-- Thin sleek blue progress bar -->
+              <div class="w-full bg-slate-200/80 rounded-full h-2 overflow-hidden">
+                <div id="week-progress-bar" class="bg-gradient-to-r from-blue-600 to-indigo-600 h-2 rounded-full transition-all duration-500" style="width: 55%;"></div>
               </div>
             </div>
 
             <!-- Footer Toolbar inside Card -->
-            <div class="mt-8 pt-4 border-t border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-zinc-400">
-              <span class="flex items-center gap-1.5 text-zinc-400">
-                <i data-lucide="info" class="w-3.5 h-3.5 text-blue-400"></i>
-                <span>รีเซ็ตโควตาอัตโนมัติทุกวันศุกร์ 11:00 น. | โควตาคงเหลือ: <strong class="text-zinc-200" id="card-remain-quota">45,000 reqs</strong></span>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500">
+              <span class="flex items-center gap-1.5 text-slate-600">
+                <i data-lucide="info" class="w-4 h-4 text-blue-500"></i>
+                <span>รีเซ็ตโควตารอบสัปดาห์ทุกวันศุกร์ 11:00 น. | โควตาคงเหลือ: <strong class="text-slate-900 font-bold" id="card-remain-quota">45,000 reqs</strong></span>
               </span>
-              <button type="button" onclick="openAddQuotaModal()" class="px-3.5 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs transition-colors flex items-center gap-1.5 cursor-pointer self-start sm:self-auto border border-zinc-700">
-                <i data-lucide="plus" class="w-3.5 h-3.5 text-blue-400"></i>
-                <span>เพิ่มโควตารอบนี้ทันที</span>
+              <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer self-start sm:self-auto border border-blue-200">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>ปรับเพิ่มโควตารอบนี้</span>
               </button>
             </div>
           </div>
 
           <!-- ========================================================================= -->
-          <!-- REQ 3: "มีกดไปดู daily usage" (SECTION DAILY USAGE ซ่อน/แสดง หรือเปิดดูได้) -->
+          <!-- REQ 3: "มีกดไปดู daily usage" (SECTION DAILY USAGE)                        -->
           <!-- ========================================================================= -->
           <div id="daily-usage-section" class="space-y-4 transition-all duration-300">
             <div class="bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-xs">
@@ -649,18 +654,18 @@
               <div>
                 <div class="flex items-center gap-2">
                   <span class="w-7 h-7 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center">
-                    <i data-lucide="history" class="w-4 h-4"></i>
+                    <i data-lucide="history" class="w-4 h-4 text-blue-600"></i>
                   </span>
                   <h3 class="text-base sm:text-lg font-bold text-slate-900">
                     ประวัติการปรับเพิ่ม Quota (Audit Logs)
                   </h3>
-                  <span id="log-count-pill" class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">4 รายการ</span>
+                  <span id="log-count-pill" class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">4 รายการ</span>
                 </div>
                 <p class="text-xs text-slate-500 mt-1">แสดงประวัติเมื่อมีการเพิ่มโควตาจากหน้านี้ บันทึกชื่อผู้ดำเนินการ วันเวลา และเหตุผลทันที</p>
               </div>
 
-              <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs self-start sm:self-auto">
-                <i data-lucide="plus" class="w-3.5 h-3.5 text-blue-400"></i>
+              <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs self-start sm:self-auto">
+                <i data-lucide="plus" class="w-3.5 h-3.5 text-white"></i>
                 <span>+ ปรับเพิ่ม Quota ใหม่</span>
               </button>
             </div>
@@ -800,7 +805,7 @@
         <button type="button" onclick="closeAddQuotaModal()" class="px-5 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-bold transition-colors cursor-pointer text-xs">
           ยกเลิก
         </button>
-        <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer text-xs">
+        <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer text-xs">
           <i data-lucide="check" class="w-4 h-4"></i>
           <span>ยืนยันการปรับเพิ่ม</span>
         </button>
