@@ -316,11 +316,12 @@
 
   <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header -->
-    <header class="h-14 sm:h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between shrink-0 shadow-2xs z-30">
-      <div class="flex items-center gap-2 sm:gap-3 text-xs min-w-0 flex-1 mr-2">
+    <header class="h-16 bg-white border-b border-slate-200/90 px-4 sm:px-6 flex items-center justify-between shrink-0 shadow-2xs z-30">
+      <div class="flex items-center gap-3 text-xs min-w-0 flex-1 mr-2">
         <!-- Sidebar Toggle (Mobile) -->
         <button type="button" onclick="openMobileSidebar()"
           class="md:hidden p-2 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors flex-shrink-0 cursor-pointer"
@@ -335,40 +336,40 @@
           <span>ดูรายชื่อหน่วยงาน</span>
         </button>
 
-        <div id="header-brand-badge" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+        <div id="header-brand-badge" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
           <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
         </div>
 
-        <div class="flex items-center gap-2 min-w-0 truncate text-[11px] sm:text-xs">
+        <div class="flex items-center gap-2 min-w-0 truncate text-xs">
           <span class="text-slate-400 font-medium hidden lg:inline whitespace-nowrap">รายงานและสถิติ</span>
           <span class="text-slate-300 hidden lg:inline">/</span>
-          <span class="font-bold text-slate-900 truncate whitespace-nowrap min-w-0" id="topbar-title">สถิติ Exchange & Quota</span>
-          <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200 items-center gap-1 shrink-0">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Real-time Quota API</span>
+          <span class="font-bold text-slate-900 truncate whitespace-nowrap text-sm" id="topbar-title">สถิติ Exchange & Quota การรับ-ส่งข้อมูล</span>
+          <span class="hidden sm:inline-flex px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold border border-emerald-200 items-center gap-1.5 shrink-0 ml-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Real-time Quota Sync</span>
           </span>
         </div>
       </div>
 
       <!-- Right Header Actions -->
-      <div class="flex items-center gap-2 shrink-0">
+      <div class="flex items-center gap-2.5 shrink-0">
         <!-- Mobile View Switcher Pill -->
         <div class="flex md:hidden items-center p-0.5 bg-slate-100 rounded-xl border border-slate-200">
-          <button type="button" onclick="setMobileView('list')" id="mobile-tab-list" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all bg-white text-slate-900 shadow-2xs">
+          <button type="button" onclick="setMobileView('list')" id="mobile-tab-list" class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-white text-slate-900 shadow-2xs">
             หน่วยงาน
           </button>
-          <button type="button" onclick="setMobileView('detail')" id="mobile-tab-detail" class="px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all text-slate-500 hover:text-slate-900">
+          <button type="button" onclick="setMobileView('detail')" id="mobile-tab-detail" class="px-2.5 py-1 rounded-lg text-xs font-medium transition-all text-slate-500 hover:text-slate-900">
             สถิติ
           </button>
         </div>
 
-        <button type="button" onclick="refreshData()" class="px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer">
+        <button type="button" onclick="refreshData()" class="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer">
           <i data-lucide="rotate-cw" id="refresh-spinner" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span class="hidden sm:inline">รีเฟรช</span>
+          <span class="hidden sm:inline">รีเฟรชข้อมูล</span>
         </button>
 
-        <button type="button" onclick="openAddQuotaModal()" class="px-3 sm:px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-1.5 cursor-pointer active:scale-95">
-          <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-blue-400"></i>
+        <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-blue-400"></i>
           <span class="whitespace-nowrap">ปรับเพิ่ม Quota</span>
         </button>
       </div>
@@ -380,65 +381,65 @@
       <!-- ======================================================== -->
       <!-- LEFT PANEL: รายการหน่วยงาน & สถานะ Quota / เวลา Reset      -->
       <!-- ======================================================== -->
-      <section id="master-panel" class="w-full md:w-[350px] lg:w-[390px] xl:w-[420px] bg-white border-r border-slate-200 flex flex-col shrink-0 h-full overflow-hidden transition-all duration-300">
+      <section id="master-panel" class="w-full md:w-[360px] lg:w-[400px] xl:w-[420px] bg-slate-50/50 border-r border-slate-200 flex flex-col shrink-0 h-full overflow-hidden transition-all duration-300">
         
         <!-- Left Panel Header: Search & Filter Toolbar -->
-        <div class="p-3.5 sm:p-4 border-b border-slate-200 bg-slate-50/80 space-y-3 shrink-0">
+        <div class="p-4 border-b border-slate-200 bg-white space-y-3 shrink-0 shadow-2xs">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <h2 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                <i data-lucide="building-2" class="w-3.5 h-3.5 text-blue-600"></i>
+                <i data-lucide="building-2" class="w-4 h-4 text-blue-600"></i>
                 <span>หน่วยงานที่ใช้ Exchange API</span>
               </h2>
-              <span id="org-total-count" class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold">8</span>
+              <span id="org-total-count" class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[11px] font-bold">8</span>
             </div>
-            <span class="text-[10px] text-slate-400 font-medium">Auto-sync 30s</span>
+            <span class="text-[11px] text-slate-400 font-medium">Auto-sync 30s</span>
           </div>
 
           <!-- Search Input -->
           <div class="relative">
-            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
             <input
               type="text"
               id="org-search-input"
               oninput="handleOrgSearch(this.value)"
               placeholder="ค้นหาชื่อหน่วยงาน, ID, หรือรหัสย่อ..."
-              class="w-full pl-9 pr-8 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs transition-all"
+              class="w-full pl-10 pr-9 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs transition-all"
             >
-            <button id="clear-search-btn" onclick="clearOrgSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
-              <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            <button id="clear-search-btn" onclick="clearOrgSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5">
+              <i data-lucide="x" class="w-4 h-4"></i>
             </button>
           </div>
 
           <!-- Filter Pills (ทั้งหมด / ใกล้เต็ม / เกินแล้ว / ปกติ) -->
           <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5 pb-0.5 text-xs">
-            <button type="button" onclick="setFilter('all')" id="filter-pill-all" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-2xs transition-all whitespace-nowrap cursor-pointer">
+            <button type="button" onclick="setFilter('all')" id="filter-pill-all" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white shadow-xs transition-all whitespace-nowrap cursor-pointer">
               ทั้งหมด <span id="count-all" class="ml-1 opacity-80">(8)</span>
             </button>
-            <button type="button" onclick="setFilter('near-limit')" id="filter-pill-near-limit" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
+            <button type="button" onclick="setFilter('near-limit')" id="filter-pill-near-limit" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
               ใกล้เต็ม (&gt;80%) <span id="count-near" class="ml-1 text-amber-600 font-bold">(2)</span>
             </button>
-            <button type="button" onclick="setFilter('exceeded')" id="filter-pill-exceeded" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
+            <button type="button" onclick="setFilter('exceeded')" id="filter-pill-exceeded" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
               เกินแล้ว <span id="count-exceeded" class="ml-1 text-rose-600 font-bold">(1)</span>
             </button>
-            <button type="button" onclick="setFilter('normal')" id="filter-pill-normal" class="filter-pill px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
+            <button type="button" onclick="setFilter('normal')" id="filter-pill-normal" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all whitespace-nowrap cursor-pointer">
               ปกติ <span id="count-normal" class="ml-1 text-emerald-600 font-bold">(5)</span>
             </button>
           </div>
         </div>
 
         <!-- Org List Scrollable Container -->
-        <div class="flex-1 overflow-y-auto divide-y divide-slate-100" id="org-list-container">
+        <div class="flex-1 overflow-y-auto p-3 space-y-2.5" id="org-list-container">
           <!-- Rendered via JavaScript -->
         </div>
 
         <!-- Left Panel Footer -->
-        <div class="p-3 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex items-center justify-between shrink-0">
+        <div class="p-3.5 bg-white border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between shrink-0 shadow-2xs">
           <span class="flex items-center gap-1.5">
-            <i data-lucide="help-circle" class="w-3.5 h-3.5 text-slate-400"></i>
+            <i data-lucide="clock" class="w-3.5 h-3.5 text-blue-500"></i>
             <span>รีเซ็ตโควตาทุกวันศุกร์ 11:00 น.</span>
           </span>
-          <span class="font-mono-code font-bold text-slate-700" id="total-allocated-quota">920k / 1.5M reqs</span>
+          <span class="font-bold text-slate-700" id="total-allocated-quota">920k / 1.5M reqs</span>
         </div>
       </section>
 
@@ -447,178 +448,229 @@
       <!-- ======================================================== -->
       <section id="detail-panel" class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-y-auto h-full">
 
-        <!-- Detail Header: Selected Organization Info & Quick Actions -->
-        <div class="p-4 sm:p-6 pb-0">
-          <div class="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-2xs mb-4 sm:mb-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
+
+          <!-- 1. ORGANIZATION HERO CARD -->
+          <div class="bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-6 shadow-xs">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <!-- Org Identity -->
-              <div class="flex items-start sm:items-center gap-3.5 min-w-0">
-                <div id="org-avatar" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold text-lg flex items-center justify-center shrink-0 shadow-sm">
+              <div class="flex items-start sm:items-center gap-4 min-w-0">
+                <div id="org-avatar" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold text-xl flex items-center justify-center shrink-0 shadow-md">
                   จจ
                 </div>
                 <div class="min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap mb-1">
-                    <h1 id="selected-org-name" class="text-base sm:text-xl font-bold text-slate-900 truncate">
+                  <div class="flex items-center gap-2.5 flex-wrap mb-1.5">
+                    <h1 id="selected-org-name" class="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight truncate">
                       สำนักงานเขตจตุจักร
                     </h1>
-                    <span id="selected-org-tier" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                    <span id="selected-org-tier" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
                       Pro Exchange
                     </span>
-                    <span id="selected-org-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span id="selected-org-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                       <span>ใช้งานปกติ (55%)</span>
                     </span>
                   </div>
                   <div class="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
-                    <span class="font-mono-code" id="selected-org-id">ID: ORG-1029</span>
+                    <span class="font-semibold text-slate-700" id="selected-org-id">ID: ORG-1029</span>
                     <span>•</span>
-                    <span class="flex items-center gap-1">
-                      <i data-lucide="key-round" class="w-3.5 h-3.5 text-slate-400"></i>
-                      <span>Exchange Token:</span>
-                      <code id="selected-org-token" class="font-mono-code bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded text-[11px]">tk_live_9482...e7a</code>
+                    <span class="flex items-center gap-1.5">
+                      <i data-lucide="key" class="w-3.5 h-3.5 text-slate-400"></i>
+                      <span>API Token:</span>
+                      <code id="selected-org-token" class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-mono text-xs">tk_live_9482bf10e7a</code>
                     </span>
-                    <button type="button" onclick="copyToken()" class="text-blue-600 hover:text-blue-800 text-[11px] font-semibold underline cursor-pointer">คัดลอก</button>
+                    <button type="button" onclick="copyToken()" class="text-blue-600 hover:text-blue-800 font-bold hover:underline cursor-pointer flex items-center gap-1">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                      <span>คัดลอก</span>
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <!-- Quick Action Button -->
-              <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
-                <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+              <!-- Primary Action Button -->
+              <div class="flex items-center gap-2 self-start md:self-center shrink-0">
+                <button type="button" onclick="openAddQuotaModal()" class="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95">
                   <i data-lucide="gauge" class="w-4 h-4"></i>
                   <span>ปรับเพิ่ม Quota หน่วยงานนี้</span>
                 </button>
               </div>
             </div>
 
-            <!-- Mini KPI Metric Row -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-4 pt-4 border-t border-slate-100 text-xs">
-              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
-                <span class="text-[11px] text-slate-500 block">โควตารวมสัปดาห์นี้</span>
-                <span id="kpi-quota-limit" class="font-bold text-sm font-mono-code text-slate-800">100,000 reqs</span>
+            <!-- 4 Modern Stat Tiles (สวย อ่านง่าย ไม่ใช้ฟอนต์ Terminal) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-100">
+              
+              <!-- Tile 1 -->
+              <div class="bg-slate-50/80 hover:bg-slate-50 border border-slate-200/70 p-3.5 sm:p-4 rounded-2xl transition-all">
+                <div class="flex items-center justify-between text-slate-500 text-xs mb-1.5">
+                  <span class="font-medium">โควตาสัปดาห์นี้</span>
+                  <div class="w-7 h-7 rounded-xl bg-blue-100/70 text-blue-600 flex items-center justify-center">
+                    <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                  </div>
+                </div>
+                <div class="text-lg sm:text-2xl font-bold text-slate-900" id="kpi-quota-limit">
+                  100,000 <span class="text-xs font-normal text-slate-500">reqs</span>
+                </div>
+                <span class="text-[11px] text-slate-400 block mt-0.5">รีเซ็ตทุกรอบ 7 วัน</span>
               </div>
-              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
-                <span class="text-[11px] text-slate-500 block">เรียกใช้แล้วทั้งหมด</span>
-                <span id="kpi-quota-used" class="font-bold text-sm font-mono-code text-blue-600">55,000 reqs</span>
+
+              <!-- Tile 2 -->
+              <div class="bg-blue-50/40 hover:bg-blue-50/60 border border-blue-100 p-3.5 sm:p-4 rounded-2xl transition-all">
+                <div class="flex items-center justify-between text-blue-600 text-xs mb-1.5">
+                  <span class="font-medium text-slate-600">เรียกใช้ไปแล้ว</span>
+                  <div class="w-7 h-7 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </div>
+                </div>
+                <div class="text-lg sm:text-2xl font-bold text-blue-700" id="kpi-quota-used">
+                  55,000 <span class="text-xs font-normal text-blue-500">reqs</span>
+                </div>
+                <span class="text-[11px] text-blue-600/70 block mt-0.5" id="kpi-used-percent-sub">55% ของโควตารวม</span>
               </div>
-              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
-                <span class="text-[11px] text-slate-500 block">โควตาคงเหลือ</span>
-                <span id="kpi-quota-remain" class="font-bold text-sm font-mono-code text-emerald-600">45,000 reqs</span>
+
+              <!-- Tile 3 -->
+              <div class="bg-emerald-50/40 hover:bg-emerald-50/60 border border-emerald-100 p-3.5 sm:p-4 rounded-2xl transition-all">
+                <div class="flex items-center justify-between text-emerald-600 text-xs mb-1.5">
+                  <span class="font-medium text-slate-600">โควตาคงเหลือ</span>
+                  <div class="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                  </div>
+                </div>
+                <div class="text-lg sm:text-2xl font-bold text-emerald-700" id="kpi-quota-remain">
+                  45,000 <span class="text-xs font-normal text-emerald-500">reqs</span>
+                </div>
+                <span class="text-[11px] text-emerald-600/70 block mt-0.5" id="kpi-remain-percent-sub">ยังใช้ได้อีก 45%</span>
               </div>
-              <div class="bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
-                <span class="text-[11px] text-slate-500 block">อัตราสำเร็จ (14 วัน)</span>
-                <span id="kpi-success-rate" class="font-bold text-sm font-mono-code text-slate-800">99.82%</span>
+
+              <!-- Tile 4 -->
+              <div class="bg-purple-50/40 hover:bg-purple-50/60 border border-purple-100 p-3.5 sm:p-4 rounded-2xl transition-all">
+                <div class="flex items-center justify-between text-purple-600 text-xs mb-1.5">
+                  <span class="font-medium text-slate-600">อัตราสำเร็จ (14 วัน)</span>
+                  <div class="w-7 h-7 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                  </div>
+                </div>
+                <div class="text-lg sm:text-2xl font-bold text-purple-700" id="kpi-success-rate">
+                  99.82%
+                </div>
+                <span class="text-[11px] text-purple-600/70 block mt-0.5" id="kpi-latency-sub">Latency เฉลี่ย ~118ms</span>
               </div>
+
             </div>
           </div>
 
-          <!-- ======================================================== -->
-          <!-- BLOCK 1: USAGE PRO CARD (ถอดแบบตามรูปที่ 2 แบบ pixel-perfect) -->
-          <!-- ======================================================== -->
-          <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0b1120] rounded-3xl p-5 sm:p-7 text-white shadow-xl border border-slate-800/90 relative overflow-hidden mb-6">
+          <!-- 2. BLOCK: YOUR USAGE PRO CARD (ดีไซน์ตาม Reference Image 2 แต่สวยหรูโมเดิร์น) -->
+          <div class="bg-gradient-to-br from-slate-900 via-[#131d31] to-[#0b1120] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-slate-800/90 relative overflow-hidden">
             
-            <!-- Ambient Glow Effect -->
-            <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-blue-600/15 blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full bg-indigo-600/10 blur-3xl pointer-events-none"></div>
+            <!-- Ambient Radial Glow Effects -->
+            <div class="absolute -right-16 -top-16 w-72 h-72 rounded-full bg-blue-600/15 blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-16 -bottom-16 w-72 h-72 rounded-full bg-indigo-600/15 blur-3xl pointer-events-none"></div>
 
             <!-- Card Header matching screenshot -->
-            <div class="flex items-center justify-between mb-2.5 relative z-10">
-              <div class="flex items-center gap-2">
-                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Your usage</span>
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-slate-200 border border-white/10">Pro</span>
+            <div class="flex items-center justify-between mb-3 relative z-10">
+              <div class="flex items-center gap-2.5">
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-extrabold">Your usage</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white/10 text-white border border-white/15">Pro</span>
               </div>
-              <span id="usage-status-badge" class="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold bg-emerald-950/80 border border-emerald-800/80 px-2.5 py-0.5 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="usage-status-badge" class="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold bg-emerald-950/90 border border-emerald-700/80 px-3 py-1 rounded-full shadow-xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>Active &amp; Healthy</span>
               </span>
             </div>
 
             <!-- Status Headline (matching "On track. You should reach Friday's reset with room to spare.") -->
-            <h3 id="usage-headline" class="text-base sm:text-lg lg:text-xl font-bold text-white mb-6 relative z-10 leading-snug">
+            <h3 id="usage-headline" class="text-base sm:text-xl lg:text-2xl font-bold text-white mb-8 relative z-10 leading-snug">
               On track. You should reach Friday's reset with room to spare.
             </h3>
 
             <!-- SECTION A: Current Session (Today's Limit) -->
-            <div class="space-y-2 mb-6 relative z-10">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 mb-5 relative z-10 space-y-2.5 backdrop-blur-xs">
               <div class="flex items-center justify-between text-xs">
                 <div>
-                  <span class="font-bold text-slate-200 text-sm">Current session</span>
-                  <p id="session-reset-text" class="text-[11px] text-slate-400 mt-0.5">Resets at 2:20 PM</p>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-white text-sm sm:text-base">Current session</span>
+                    <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30">รอบรายวัน</span>
+                  </div>
+                  <p id="session-reset-text" class="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
+                    <span>Resets at 2:20 PM (อีก 2 ชม. 15 นาที)</span>
+                  </p>
                 </div>
                 <div class="text-right">
-                  <span id="session-percent-text" class="font-bold text-sm font-mono-code text-slate-200">7% used</span>
-                  <p id="session-numbers-text" class="text-[11px] text-slate-400 font-mono-code mt-0.5">700 / 10,000 reqs</p>
+                  <span id="session-percent-text" class="font-bold text-base sm:text-lg text-white">7% used</span>
+                  <p id="session-numbers-text" class="text-xs text-slate-400 mt-0.5">700 / 10,000 reqs</p>
                 </div>
               </div>
 
               <!-- Sleek Progress Bar -->
-              <div class="w-full bg-slate-800/90 rounded-full h-2.5 overflow-hidden border border-white/5 p-0.5">
-                <div id="session-progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm" style="width: 7%;"></div>
+              <div class="w-full bg-slate-800/90 rounded-full h-3 overflow-hidden border border-white/10 p-0.5">
+                <div id="session-progress-bar" class="bg-gradient-to-r from-sky-400 to-blue-500 h-full rounded-full transition-all duration-500 shadow-sm" style="width: 7%;"></div>
               </div>
             </div>
 
             <!-- SECTION B: This week (Weekly/Monthly Quota Cycle) -->
-            <div class="space-y-2 pt-4 border-t border-slate-800/80 relative z-10">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 relative z-10 space-y-2.5 backdrop-blur-xs">
               <div class="flex items-center justify-between text-xs">
                 <div>
-                  <span class="font-bold text-slate-200 text-sm">This week</span>
-                  <p id="week-reset-text" class="text-[11px] text-slate-400 mt-0.5">Resets Friday 11:00 AM</p>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-white text-sm sm:text-base">This week</span>
+                    <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">รอบสัปดาห์</span>
+                  </div>
+                  <p id="week-reset-text" class="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="calendar" class="w-3 h-3 text-slate-400"></i>
+                    <span>Resets Friday 11:00 AM (อีก 3 วัน)</span>
+                  </p>
                 </div>
                 <div class="text-right">
-                  <span id="week-percent-text" class="font-bold text-sm font-mono-code text-slate-200">55% used</span>
-                  <p id="week-numbers-text" class="text-[11px] text-slate-400 font-mono-code mt-0.5">55,000 / 100,000 reqs</p>
+                  <span id="week-percent-text" class="font-bold text-base sm:text-lg text-white">55% used</span>
+                  <p id="week-numbers-text" class="text-xs text-slate-400 mt-0.5">55,000 / 100,000 reqs</p>
                 </div>
               </div>
 
               <!-- Sleek Progress Bar -->
-              <div class="w-full bg-slate-800/90 rounded-full h-2.5 overflow-hidden border border-white/5 p-0.5">
+              <div class="w-full bg-slate-800/90 rounded-full h-3 overflow-hidden border border-white/10 p-0.5">
                 <div id="week-progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm" style="width: 55%;"></div>
               </div>
             </div>
 
             <!-- Footer Action inside Card -->
-            <div class="mt-6 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 relative z-10">
-              <span class="flex items-center gap-1.5 text-[11px]">
-                <i data-lucide="info" class="w-3.5 h-3.5 text-blue-400"></i>
-                <span id="card-footer-tip">หากอัตราการเรียก API เพิ่มสูงขึ้นอย่างต่อเนื่อง ระบบจะแจ้งเตือนผ่าน Line Admin</span>
+            <div class="mt-6 pt-5 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 relative z-10">
+              <span class="flex items-center gap-2 text-xs">
+                <i data-lucide="info" class="w-4 h-4 text-blue-400 shrink-0"></i>
+                <span id="card-footer-tip">ระบบจะรีเซ็ตโควตารอบสัปดาห์อัตโนมัติทุกวันศุกร์ เวลา 11:00 น. หากต้องการเพิ่มชั่วคราวสามารถกดปุ่มปรับเพิ่มได้ทันที</span>
               </span>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="openAddQuotaModal()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-colors flex items-center gap-1 cursor-pointer">
-                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                  <span>เพิ่ม Quota ทันที</span>
-                </button>
-              </div>
+              <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer shrink-0 border border-white/10">
+                <i data-lucide="plus" class="w-3.5 h-3.5 text-blue-400"></i>
+                <span>ปรับเพิ่ม Quota ทันที</span>
+              </button>
             </div>
           </div>
 
-          <!-- ======================================================== -->
-          <!-- BLOCK 2: TABS (DAILY USAGE, AUDIT LOGS, ENDPOINTS)        -->
-          <!-- ======================================================== -->
-          <div class="space-y-4 mb-8">
+          <!-- 3. TABS SECTION: DAILY USAGE, AUDIT LOGS, ENDPOINTS -->
+          <div class="space-y-4">
             
-            <!-- Tab Switcher -->
+            <!-- Segmented Modern Tab Switcher -->
             <div class="flex items-center justify-between border-b border-slate-200 gap-2 flex-wrap pb-1">
-              <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
-                <button type="button" onclick="switchTab('daily')" id="tab-btn-daily" class="tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-blue-600 bg-blue-50/80 border-b-2 border-blue-600 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
+              <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                <button type="button" onclick="switchTab('daily')" id="tab-btn-daily" class="tab-btn px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm text-blue-700 bg-blue-50 border border-blue-200/80 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap shadow-2xs">
                   <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
                   <span>สถิติรายวัน (Daily Usage)</span>
                 </button>
-                <button type="button" onclick="switchTab('logs')" id="tab-btn-logs" class="tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-800 hover:bg-slate-100 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
+                <button type="button" onclick="switchTab('logs')" id="tab-btn-logs" class="tab-btn px-4 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm text-slate-600 hover:text-slate-900 hover:bg-white flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
                   <i data-lucide="history" class="w-4 h-4"></i>
                   <span>ประวัติการปรับเพิ่ม (Audit Logs)</span>
-                  <span id="tab-logs-count" class="px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-700 text-[10px] font-bold">4</span>
+                  <span id="tab-logs-count" class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-bold">4</span>
                 </button>
-                <button type="button" onclick="switchTab('endpoints')" id="tab-btn-endpoints" class="tab-btn px-3 sm:px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-800 hover:bg-slate-100 flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
+                <button type="button" onclick="switchTab('endpoints')" id="tab-btn-endpoints" class="tab-btn px-4 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm text-slate-600 hover:text-slate-900 hover:bg-white flex items-center gap-2 cursor-pointer transition-all whitespace-nowrap">
                   <i data-lucide="network" class="w-4 h-4"></i>
                   <span>แยกตาม Endpoint</span>
                 </button>
               </div>
 
               <!-- Time Range Selector for Tab -->
-              <div class="hidden sm:flex items-center gap-1 bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-xs">
-                <button type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white text-slate-800 shadow-2xs">14 วันล่าสุด</button>
-                <button type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-500 hover:text-slate-800">30 วัน</button>
-                <button type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-500 hover:text-slate-800">รอบบิลนี้</button>
+              <div class="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200 text-xs">
+                <button type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 shadow-2xs">14 วันล่าสุด</button>
+                <button type="button" class="px-3 py-1.5 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-800">30 วัน</button>
+                <button type="button" class="px-3 py-1.5 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-800">รอบบิลนี้</button>
               </div>
             </div>
 
@@ -626,26 +678,26 @@
             <div id="tab-pane-daily" class="tab-pane space-y-4">
               
               <!-- Interactive SVG Chart Card -->
-              <div class="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-6 shadow-2xs">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+              <div class="bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-7 shadow-xs">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                   <div>
-                    <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
                       <span>แนวโน้มการเรียกใช้ Exchange API ย้อนหลัง 14 วัน</span>
-                      <span class="text-[11px] font-normal text-slate-500">(Calls per day)</span>
+                      <span class="text-xs font-normal text-slate-500">(Calls per day)</span>
                     </h4>
                     <p class="text-xs text-slate-500 mt-0.5">ชี้ที่แท่งกราฟเพื่อดูสถิติจำนวน request อัตราความสำเร็จ และข้อผิดพลาด</p>
                   </div>
-                  <div class="flex items-center gap-3 text-xs">
-                    <span class="flex items-center gap-1.5 text-slate-600">
-                      <span class="w-3 h-3 rounded bg-blue-500"></span>
+                  <div class="flex items-center gap-3.5 text-xs">
+                    <span class="flex items-center gap-1.5 text-slate-600 font-medium">
+                      <span class="w-3 h-3 rounded-md bg-blue-500 shadow-2xs"></span>
                       <span>ปกติ</span>
                     </span>
-                    <span class="flex items-center gap-1.5 text-slate-600">
-                      <span class="w-3 h-3 rounded bg-amber-500"></span>
+                    <span class="flex items-center gap-1.5 text-slate-600 font-medium">
+                      <span class="w-3 h-3 rounded-md bg-amber-500 shadow-2xs"></span>
                       <span>ใกล้ลิมิต</span>
                     </span>
-                    <span class="flex items-center gap-1.5 text-slate-600">
-                      <span class="w-3 h-3 rounded bg-rose-500"></span>
+                    <span class="flex items-center gap-1.5 text-slate-600 font-medium">
+                      <span class="w-3 h-3 rounded-md bg-rose-500 shadow-2xs"></span>
                       <span>ทราฟฟิกพุ่งสูง</span>
                     </span>
                   </div>
@@ -653,40 +705,40 @@
 
                 <!-- SVG Daily Chart Container -->
                 <div class="w-full overflow-x-auto pb-2">
-                  <div class="min-w-[550px] h-60 relative flex flex-col justify-end" id="daily-chart-wrapper">
+                  <div class="min-w-[550px] h-64 relative flex flex-col justify-end" id="daily-chart-wrapper">
                     <!-- Rendered via JavaScript -->
                   </div>
                 </div>
 
                 <!-- Chart Footer Summary -->
-                <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
-                  <span id="chart-summary-stat">เรียกใช้งานเฉลี่ย: 4,890 reqs/วัน</span>
-                  <span id="chart-peak-stat" class="font-semibold text-slate-700">จุดสูงสุด: 8,420 reqs (18 พ.ย.)</span>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+                  <span id="chart-summary-stat" class="font-medium">เรียกใช้งานเฉลี่ย: 4,890 reqs/วัน</span>
+                  <span id="chart-peak-stat" class="font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-lg">จุดสูงสุด: 8,420 reqs (18 พ.ย.)</span>
                 </div>
               </div>
 
               <!-- Daily Breakdown Table -->
-              <div class="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
-                <div class="p-3.5 sm:p-4 bg-slate-50/80 border-b border-slate-200 flex items-center justify-between">
-                  <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <i data-lucide="table" class="w-3.5 h-3.5 text-blue-600"></i>
+              <div class="bg-white border border-slate-200/90 rounded-3xl overflow-hidden shadow-xs">
+                <div class="p-4 sm:p-5 bg-slate-50/80 border-b border-slate-200 flex items-center justify-between">
+                  <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                    <i data-lucide="table" class="w-4 h-4 text-blue-600"></i>
                     <span>ตารางสถิติแยกตามวัน (Daily Breakdown)</span>
                   </h4>
-                  <button type="button" onclick="exportCsvDaily()" class="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1 cursor-pointer">
+                  <button type="button" onclick="exportCsvDaily()" class="text-xs text-blue-600 hover:text-blue-800 font-bold flex items-center gap-1.5 cursor-pointer bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
                     <span>ส่งออก CSV</span>
                   </button>
                 </div>
                 <div class="overflow-x-auto">
                   <table class="w-full text-left text-xs border-collapse">
-                    <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
+                    <thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
                       <tr>
-                        <th class="py-2.5 px-3 sm:px-4">วันที่</th>
-                        <th class="py-2.5 px-3 text-right">จำนวน Request</th>
-                        <th class="py-2.5 px-3 text-right">สัดส่วนต่อ Quota วัน</th>
-                        <th class="py-2.5 px-3 text-right">Success Rate</th>
-                        <th class="py-2.5 px-3 text-right">Errors</th>
-                        <th class="py-2.5 px-3 sm:px-4 text-center">สถานะ</th>
+                        <th class="py-3 px-4">วันที่</th>
+                        <th class="py-3 px-3 text-right">จำนวน Request</th>
+                        <th class="py-3 px-3 text-right">สัดส่วนต่อ Quota วัน</th>
+                        <th class="py-3 px-3 text-right">Success Rate</th>
+                        <th class="py-3 px-3 text-right">Errors</th>
+                        <th class="py-3 px-4 text-center">สถานะ</th>
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100" id="daily-table-body">
@@ -699,30 +751,30 @@
 
             <!-- TAB PANE 2: AUDIT LOGS OF QUOTA ADJUSTMENTS -->
             <div id="tab-pane-logs" class="tab-pane hidden space-y-4">
-              <div class="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-2xs">
-                <div class="p-3.5 sm:p-4 bg-slate-50/80 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="bg-white border border-slate-200/90 rounded-3xl overflow-hidden shadow-xs">
+                <div class="p-4 sm:p-5 bg-slate-50/80 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                      <i data-lucide="history" class="w-3.5 h-3.5 text-blue-600"></i>
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                      <i data-lucide="history" class="w-4 h-4 text-blue-600"></i>
                       <span>ประวัติการเพิ่มและปรับแก้ Quota (Audit Logs)</span>
                     </h4>
                     <p class="text-xs text-slate-500 mt-0.5">บันทึกทุกคำสั่งการปรับโควตาโดย Admin พร้อมระบุผู้กระทำ เวลา และเหตุผลประกอบ</p>
                   </div>
-                  <button type="button" onclick="openAddQuotaModal()" class="px-3 py-1.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors self-start sm:self-auto cursor-pointer">
+                  <button type="button" onclick="openAddQuotaModal()" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors self-start sm:self-auto cursor-pointer shadow-2xs">
                     + ปรับเพิ่ม Quota ใหม่
                   </button>
                 </div>
 
                 <div class="overflow-x-auto">
                   <table class="w-full text-left text-xs border-collapse">
-                    <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
+                    <thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
                       <tr>
-                        <th class="py-2.5 px-3 sm:px-4">วัน-เวลา</th>
-                        <th class="py-2.5 px-3">ผู้ดำเนินการ</th>
-                        <th class="py-2.5 px-3 text-right">ยอดที่ปรับเพิ่ม</th>
-                        <th class="py-2.5 px-3 text-right">โควตาใหม่</th>
-                        <th class="py-2.5 px-3">ขอบเขต</th>
-                        <th class="py-2.5 px-3 sm:px-4">เหตุผล / บันทึก (Audit Note)</th>
+                        <th class="py-3 px-4">วัน-เวลา</th>
+                        <th class="py-3 px-3">ผู้ดำเนินการ</th>
+                        <th class="py-3 px-3 text-right">ยอดที่ปรับเพิ่ม</th>
+                        <th class="py-3 px-3 text-right">โควตาใหม่</th>
+                        <th class="py-3 px-3">ขอบเขต</th>
+                        <th class="py-3 px-4">เหตุผล / บันทึก (Audit Note)</th>
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100" id="audit-log-table-body">
@@ -751,20 +803,20 @@
 <!-- MODAL: ปรับเพิ่ม QUOTA (เพิ่มโควตาพร้อมบันทึก AUDIT LOG)     -->
 <!-- ======================================================== -->
 <div id="add-quota-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs transition-opacity duration-200">
-  <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-7 shadow-2xl border border-slate-200 relative transform transition-all duration-200 scale-95 opacity-0" id="modal-card">
+  <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative transform transition-all duration-200 scale-95 opacity-0" id="modal-card">
     
     <!-- Modal Close Button -->
-    <button type="button" onclick="closeAddQuotaModal()" class="absolute right-4 sm:right-6 top-4 sm:top-6 p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer">
+    <button type="button" onclick="closeAddQuotaModal()" class="absolute right-5 top-5 p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer">
       <i data-lucide="x" class="w-5 h-5"></i>
     </button>
 
     <!-- Modal Header -->
-    <div class="flex items-center gap-3 mb-5">
-      <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0">
+    <div class="flex items-center gap-3.5 mb-6">
+      <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-md shrink-0">
         <i data-lucide="gauge" class="w-5 h-5"></i>
       </div>
       <div>
-        <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ปรับเพิ่ม Quota การใช้งาน</h3>
+        <h3 class="text-lg font-bold text-slate-900 leading-tight">ปรับเพิ่ม Quota การใช้งาน</h3>
         <p class="text-xs text-slate-500 mt-0.5" id="modal-org-target-label">หน่วยงาน: สำนักงานเขตจตุจักร</p>
       </div>
     </div>
@@ -773,28 +825,30 @@
     <form id="add-quota-form" onsubmit="handleQuotaSubmit(event)" class="space-y-4 text-xs">
       
       <!-- Current vs New Quota Preview Box -->
-      <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
+      <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
         <div>
-          <span class="text-slate-500 block text-[11px]">โควตารอบสัปดาห์เดิม</span>
-          <span class="font-bold text-slate-800 text-sm font-mono-code" id="modal-current-quota">100,000 reqs</span>
+          <span class="text-slate-500 block text-xs mb-0.5">โควตารอบสัปดาห์เดิม</span>
+          <span class="font-bold text-slate-900 text-base" id="modal-current-quota">100,000 reqs</span>
         </div>
-        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
+        <div class="w-8 h-8 rounded-full bg-white shadow-2xs border border-slate-200 flex items-center justify-center text-slate-400">
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </div>
         <div class="text-right">
-          <span class="text-slate-500 block text-[11px]">โควตาใหม่หลังปรับ</span>
-          <span class="font-bold text-blue-600 text-sm font-mono-code" id="modal-new-quota-preview">150,000 reqs</span>
+          <span class="text-slate-500 block text-xs mb-0.5">โควตาใหม่หลังปรับ</span>
+          <span class="font-bold text-blue-600 text-base" id="modal-new-quota-preview">150,000 reqs</span>
         </div>
       </div>
 
       <!-- Increment Amount Selector -->
       <div>
-        <label class="block font-bold text-slate-700 mb-1.5">จำนวนที่ต้องการเพิ่ม (Requests)</label>
+        <label class="block font-bold text-slate-800 mb-2">จำนวนที่ต้องการเพิ่ม (Requests)</label>
         
         <!-- Preset quick buttons -->
-        <div class="grid grid-cols-4 gap-2 mb-2">
-          <button type="button" onclick="setPresetIncrement(10000)" class="preset-btn py-2 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer">+10k</button>
-          <button type="button" onclick="setPresetIncrement(25000)" class="preset-btn py-2 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer">+25k</button>
-          <button type="button" onclick="setPresetIncrement(50000)" class="preset-btn py-2 text-center rounded-xl border-2 border-blue-600 bg-blue-50/70 font-bold text-blue-700 cursor-pointer">+50k</button>
-          <button type="button" onclick="setPresetIncrement(100000)" class="preset-btn py-2 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer">+100k</button>
+        <div class="grid grid-cols-4 gap-2 mb-2.5">
+          <button type="button" onclick="setPresetIncrement(10000)" class="preset-btn py-2.5 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer text-xs">+10k</button>
+          <button type="button" onclick="setPresetIncrement(25000)" class="preset-btn py-2.5 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer text-xs">+25k</button>
+          <button type="button" onclick="setPresetIncrement(50000)" class="preset-btn py-2.5 text-center rounded-xl border-2 border-blue-600 bg-blue-50/70 font-bold text-blue-700 cursor-pointer text-xs">+50k</button>
+          <button type="button" onclick="setPresetIncrement(100000)" class="preset-btn py-2.5 text-center rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-colors text-slate-700 cursor-pointer text-xs">+100k</button>
         </div>
 
         <!-- Custom Input -->
@@ -806,30 +860,30 @@
             min="5000"
             value="50000"
             oninput="updateModalPreview()"
-            class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-mono-code text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            class="w-full px-4 py-2.5 border border-slate-200 rounded-xl font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm"
             placeholder="หรือระบุจำนวนเอง เช่น 30000"
             required
           >
-          <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-medium">reqs</span>
+          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-xs">requests</span>
         </div>
       </div>
 
       <!-- Scope of Adjustment -->
       <div>
-        <label class="block font-bold text-slate-700 mb-1.5">ขอบเขตระยะเวลา</label>
-        <div class="grid grid-cols-2 gap-2">
-          <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
-            <input type="radio" name="quota-scope" value="temporary" checked class="text-blue-600 focus:ring-blue-500">
+        <label class="block font-bold text-slate-800 mb-2">ขอบเขตระยะเวลา</label>
+        <div class="grid grid-cols-2 gap-2.5">
+          <label class="flex items-start gap-2.5 p-3 rounded-2xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+            <input type="radio" name="quota-scope" value="temporary" checked class="mt-0.5 text-blue-600 focus:ring-blue-500">
             <div>
-              <span class="font-bold text-slate-800 block text-xs">ชั่วคราวรอบนี้</span>
-              <span class="text-[10px] text-slate-400">จะรีเซ็ตกลับตามรอบปกติวันศุกร์</span>
+              <span class="font-bold text-slate-900 block text-xs">ชั่วคราวรอบนี้</span>
+              <span class="text-[11px] text-slate-400 block mt-0.5">จะรีเซ็ตกลับตามรอบปกติวันศุกร์</span>
             </div>
           </label>
-          <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
-            <input type="radio" name="quota-scope" value="permanent" class="text-blue-600 focus:ring-blue-500">
+          <label class="flex items-start gap-2.5 p-3 rounded-2xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+            <input type="radio" name="quota-scope" value="permanent" class="mt-0.5 text-blue-600 focus:ring-blue-500">
             <div>
-              <span class="font-bold text-slate-800 block text-xs">ถาวร (Upgrade)</span>
-              <span class="text-[10px] text-slate-400">ปรับเป็นโควตาตั้งต้นใหม่ถาวร</span>
+              <span class="font-bold text-slate-900 block text-xs">ถาวร (Upgrade)</span>
+              <span class="text-[11px] text-slate-400 block mt-0.5">ปรับเป็นโควตาตั้งต้นใหม่ถาวร</span>
             </div>
           </label>
         </div>
@@ -837,22 +891,22 @@
 
       <!-- Reason / Audit Note -->
       <div>
-        <label for="quota-reason-input" class="block font-bold text-slate-700 mb-1.5">เหตุผลประกอบการปรับเพิ่ม (จำเป็นสำหรับบันทึก Log)</label>
+        <label for="quota-reason-input" class="block font-bold text-slate-800 mb-1.5">เหตุผลประกอบการปรับเพิ่ม (จำเป็นสำหรับบันทึก Log)</label>
         <textarea
           id="quota-reason-input"
           rows="2"
-          class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs"
+          class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs"
           placeholder="เช่น มีโครงการประชาสัมพันธ์พิเศษ, ได้รับอนุมัติจาก ผอ. เขต, หรือรองรับงาน Event..."
           required
         ></textarea>
       </div>
 
       <!-- Modal Action Buttons -->
-      <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
-        <button type="button" onclick="closeAddQuotaModal()" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-semibold transition-colors cursor-pointer">
+      <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-slate-100">
+        <button type="button" onclick="closeAddQuotaModal()" class="px-5 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-bold transition-colors cursor-pointer text-xs">
           ยกเลิก
         </button>
-        <button type="submit" class="px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer">
+        <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer text-xs">
           <i data-lucide="check" class="w-4 h-4"></i>
           <span>ยืนยันการปรับเพิ่ม</span>
         </button>
@@ -866,8 +920,7 @@
   <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
   <span id="toast-message">ดำเนินการสำเร็จ</span>
 </div>
-  <!-- Core Logic & Interactive SaaS State -->
-  <script>
+<script>
     // --- Responsive Mobile View State ---
     let mobileView = 'list'; // 'list' | 'detail'
 
@@ -1404,7 +1457,7 @@
 
       if (filtered.length === 0) {
         container.innerHTML = `
-          <div class="p-8 text-center text-slate-400 text-xs">
+          <div class="p-8 text-center text-slate-400 text-xs bg-white rounded-2xl border border-slate-200">
             <i data-lucide="search-x" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
             <p>ไม่พบหน่วยงานที่ตรงกับเงื่อนไข</p>
           </div>
@@ -1418,75 +1471,83 @@
         const weekPercent = org.thisWeek.percent;
         
         let statusBadge = "";
-        let barColor = "bg-blue-500";
+        let barColor = "bg-gradient-to-r from-blue-500 to-indigo-500";
 
         if (org.status === "exceeded") {
           statusBadge = `
-            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full shrink-0">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-full shrink-0 shadow-2xs">
               <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
               <span>เกิน ${weekPercent}%</span>
             </span>
           `;
-          barColor = "bg-rose-500";
+          barColor = "bg-gradient-to-r from-rose-500 to-red-600";
         } else if (org.status === "near-limit") {
           statusBadge = `
-            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full shrink-0">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full shrink-0 shadow-2xs">
               <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
               <span>ใกล้เต็ม ${weekPercent}%</span>
             </span>
           `;
-          barColor = "bg-amber-500";
+          barColor = "bg-gradient-to-r from-amber-400 to-amber-500";
         } else {
           statusBadge = `
-            <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full shrink-0 shadow-2xs">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span>ปกติ ${weekPercent}%</span>
             </span>
           `;
-          barColor = "bg-blue-500";
+          barColor = "bg-gradient-to-r from-blue-500 to-indigo-500";
         }
 
         const selectedStyle = isSelected
-          ? "bg-blue-50/70 border-l-4 border-blue-600 shadow-2xs"
-          : "hover:bg-slate-50/80 border-l-4 border-transparent";
+          ? "bg-blue-50/90 border-blue-400 shadow-sm ring-2 ring-blue-500/20"
+          : "bg-white hover:bg-slate-50/90 border-slate-200/80 hover:border-slate-300 shadow-2xs";
 
         return `
           <div
             onclick="selectOrganization('${org.id}')"
-            class="p-3.5 sm:p-4 cursor-pointer transition-all ${selectedStyle} group"
+            class="p-4 rounded-2xl cursor-pointer transition-all border ${selectedStyle} group"
           >
-            <!-- Top Row: Name and Status Badge -->
-            <div class="flex items-start justify-between gap-2 mb-1.5">
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center gap-1.5">
-                  <h3 class="text-xs sm:text-[13px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
+            <!-- Top Row: Avatar Initial + Name + Status Badge -->
+            <div class="flex items-start justify-between gap-2.5 mb-2.5">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-xl ${org.avatarBg} font-bold text-xs flex items-center justify-center shrink-0 border">
+                  ${org.avatar}
+                </div>
+                <div class="min-w-0">
+                  <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
                     ${org.name}
                   </h3>
+                  <span class="text-[10px] text-slate-400 block font-medium mt-0.5">${org.id} • ${org.tier}</span>
                 </div>
-                <span class="text-[10px] font-mono-code text-slate-400 block mt-0.5">${org.id} • ${org.tier}</span>
               </div>
               ${statusBadge}
             </div>
 
-            <!-- Middle Row: Progress Bar for Weekly Quota -->
-            <div class="space-y-1 my-2">
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="text-slate-500">โควตารอบนี้:</span>
-                <span class="font-mono-code font-bold text-slate-700">${org.thisWeek.used.toLocaleString()} / ${org.thisWeek.limit.toLocaleString()}</span>
+            <!-- Middle Row: Quota Numbers & Progress Meter -->
+            <div class="space-y-1.5 my-2.5 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-500 font-medium">โควตาสัปดาห์นี้:</span>
+                <span class="font-bold text-slate-800">${org.thisWeek.used.toLocaleString()} / ${org.thisWeek.limit.toLocaleString()}</span>
               </div>
-              <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                <div class="${barColor} h-1.5 rounded-full transition-all duration-500" style="width: ${Math.min(100, weekPercent)}%;"></div>
+              <div class="w-full bg-slate-200/80 rounded-full h-2 overflow-hidden">
+                <div class="${barColor} h-2 rounded-full transition-all duration-500" style="width: ${Math.min(100, weekPercent)}%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+                <span>ใช้ไป ${weekPercent}%</span>
+                <span class="font-semibold text-slate-600">คงเหลือ: ${Math.max(0, org.thisWeek.limit - org.thisWeek.used).toLocaleString()} reqs</span>
               </div>
             </div>
 
             <!-- Bottom Row: Time to Reset (คำตอบโจทย์: จะ reset เมื่อไหร่) -->
-            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-100">
-              <span class="flex items-center gap-1">
-                <i data-lucide="clock" class="w-3 h-3 text-slate-400"></i>
-                <span>${org.thisWeek.resetText}</span>
+            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+              <span class="flex items-center gap-1.5 text-slate-500">
+                <i data-lucide="clock" class="w-3.5 h-3.5 text-blue-500"></i>
+                <span class="font-medium">${org.thisWeek.resetText}</span>
               </span>
-              <span class="font-semibold text-slate-500">
-                คงเหลือ: ${Math.max(0, org.thisWeek.limit - org.thisWeek.used).toLocaleString()}
+              <span class="text-blue-600 font-bold group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+                <span>ดูสถิติ</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </span>
             </div>
           </div>
@@ -1532,11 +1593,18 @@
       }
 
       // Mini KPI metrics
-      document.getElementById("kpi-quota-limit").textContent = `${org.thisWeek.limit.toLocaleString()} reqs`;
-      document.getElementById("kpi-quota-used").textContent = `${org.thisWeek.used.toLocaleString()} reqs`;
+      document.getElementById("kpi-quota-limit").innerHTML = `${org.thisWeek.limit.toLocaleString()} <span class="text-xs font-normal text-slate-500">reqs</span>`;
+      document.getElementById("kpi-quota-used").innerHTML = `${org.thisWeek.used.toLocaleString()} <span class="text-xs font-normal text-blue-500">reqs</span>`;
       const remain = Math.max(0, org.thisWeek.limit - org.thisWeek.used);
-      document.getElementById("kpi-quota-remain").textContent = `${remain.toLocaleString()} reqs`;
+      document.getElementById("kpi-quota-remain").innerHTML = `${remain.toLocaleString()} <span class="text-xs font-normal text-emerald-500">reqs</span>`;
       document.getElementById("kpi-success-rate").textContent = org.stats.successRate;
+      
+      const usedSub = document.getElementById("kpi-used-percent-sub");
+      if (usedSub) usedSub.textContent = `${org.thisWeek.percent}% ของโควตารวม`;
+      const remainSub = document.getElementById("kpi-remain-percent-sub");
+      if (remainSub) remainSub.textContent = `ยังใช้ได้อีก ${Math.max(0, 100 - org.thisWeek.percent)}%`;
+      const latSub = document.getElementById("kpi-latency-sub");
+      if (latSub) latSub.textContent = `Latency เฉลี่ย ~${org.stats.avgLatency}`;
 
       // ==========================================
       // BLOCK 1: YOUR USAGE PRO CARD (IMAGE 2 MATCH)
