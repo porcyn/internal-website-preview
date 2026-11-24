@@ -332,6 +332,7 @@
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header (Cleaned up: Single primary CTA elsewhere, high contrast) -->
@@ -1590,18 +1591,36 @@
     }
 
     // --- 11. FILTER & SEARCH WITH AUTOMATIC DETAIL SYNCHRONIZATION ---
+    const filterPillStyles = {
+      all: {
+        active: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-slate-900 text-white shadow-xs border border-slate-900 transition-all truncate cursor-pointer ring-2 ring-slate-900/20 focus:outline-none focus:ring-2 focus:ring-blue-600",
+        inactive: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 transition-all truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600"
+      },
+      exceeded: {
+        active: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-rose-600 text-white shadow-xs border border-rose-600 transition-all truncate cursor-pointer ring-2 ring-rose-500/30 focus:outline-none focus:ring-2 focus:ring-rose-600",
+        inactive: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-white text-rose-900 border border-rose-300 hover:bg-rose-50 transition-all truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-rose-600"
+      },
+      "near-limit": {
+        active: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-amber-500 text-white shadow-xs border border-amber-600 transition-all truncate cursor-pointer ring-2 ring-amber-500/30 focus:outline-none focus:ring-2 focus:ring-amber-600",
+        inactive: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-white text-amber-950 border border-amber-300 hover:bg-amber-50 transition-all truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-600"
+      },
+      normal: {
+        active: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-xs border border-emerald-600 transition-all truncate cursor-pointer ring-2 ring-emerald-500/30 focus:outline-none focus:ring-2 focus:ring-emerald-600",
+        inactive: "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-white text-emerald-950 border border-emerald-300 hover:bg-emerald-50 transition-all truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-600"
+      }
+    };
+
     function setFilter(filterType) {
       activeFilter = filterType;
       
-      // Update pills
-      document.querySelectorAll(".filter-pill").forEach(pill => {
-        pill.className = "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition-all truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600";
-        pill.setAttribute("aria-selected", "false");
-      });
-      const activePill = document.getElementById(`filter-pill-${filterType}`);
-      if (activePill) {
-        activePill.className = "filter-pill min-h-[36px] py-1.5 px-1 rounded-xl text-xs font-bold bg-slate-900 text-white shadow-xs transition-all truncate cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600";
-        activePill.setAttribute("aria-selected", "true");
+      // Update pills preserving their color identities permanently
+      for (const [key, styles] of Object.entries(filterPillStyles)) {
+        const pill = document.getElementById(`filter-pill-${key}`);
+        if (pill) {
+          const isActive = key === filterType;
+          pill.className = isActive ? styles.active : styles.inactive;
+          pill.setAttribute("aria-selected", isActive ? "true" : "false");
+        }
       }
 
       // CRITICAL UX SYNC: If currently selected org is NOT in the filtered list,
