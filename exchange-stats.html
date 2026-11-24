@@ -324,6 +324,7 @@
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header (Cleaned up: Single primary CTA elsewhere, high contrast) -->
@@ -336,12 +337,12 @@
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
 
-        <!-- Back to Org List button on Mobile when viewing Detail -->
+        <!-- Back to Org List button on Mobile when viewing Detail (Fixed: 1 Line with inline-flex & whitespace-nowrap) -->
         <button type="button" id="mobile-back-to-list-btn" onclick="setMobileView('list')"
-          class="hidden items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 border border-slate-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-blue-600"
           aria-label="กลับไปหน้ารายชื่อหน่วยงาน">
-          <i data-lucide="arrow-left" class="w-4 h-4 text-slate-700"></i>
-          <span>ดูรายชื่อหน่วยงาน</span>
+          <i data-lucide="arrow-left" class="w-4 h-4 text-slate-700 shrink-0"></i>
+          <span class="whitespace-nowrap">ดูรายชื่อหน่วยงาน</span>
         </button>
 
         <div id="header-brand-badge" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
@@ -835,7 +836,10 @@
         if (view === "list") {
           masterPanel.classList.remove("hidden");
           detailPanel.classList.add("hidden");
-          if (backBtn) backBtn.classList.add("hidden");
+          if (backBtn) {
+            backBtn.classList.add("hidden");
+            backBtn.classList.remove("inline-flex");
+          }
           if (brandBadge) brandBadge.classList.remove("hidden");
           if (topbarTitle) topbarTitle.textContent = "สถิติ Exchange & Quota การรับ-ส่งข้อมูล";
 
@@ -848,7 +852,10 @@
         } else {
           masterPanel.classList.add("hidden");
           detailPanel.classList.remove("hidden");
-          if (backBtn) backBtn.classList.remove("hidden");
+          if (backBtn) {
+            backBtn.classList.remove("hidden");
+            backBtn.classList.add("inline-flex");
+          }
           if (brandBadge) brandBadge.classList.add("hidden");
           const currentOrg = organizationsData.find(o => o.id === selectedOrgId);
           if (topbarTitle && currentOrg) {
@@ -865,7 +872,10 @@
       } else {
         masterPanel.classList.remove("hidden");
         detailPanel.classList.remove("hidden");
-        if (backBtn) backBtn.classList.add("hidden");
+        if (backBtn) {
+          backBtn.classList.add("hidden");
+          backBtn.classList.remove("inline-flex");
+        }
         if (brandBadge) brandBadge.classList.remove("hidden");
         if (topbarTitle) topbarTitle.textContent = "สถิติ Exchange & Quota การรับ-ส่งข้อมูล";
       }
