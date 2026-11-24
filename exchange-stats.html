@@ -338,20 +338,20 @@
 
     <!-- Topbar Header (Cleaned up: Single primary CTA elsewhere, high contrast) -->
     <header class="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shrink-0 z-30 shadow-2xs">
-      <div class="flex items-center gap-3 text-xs min-w-0 flex-1 mr-2">
+      <div class="flex items-center gap-2.5 text-xs min-w-0 flex-1 mr-2">
         <!-- Sidebar Toggle (Mobile) -->
-        <button type="button" onclick="openMobileSidebar()"
+        <button type="button" onclick="openMobileSidebar()" id="mobile-sidebar-toggle-btn"
           class="md:hidden w-9 h-9 flex items-center justify-center text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors shrink-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600"
           title="เปิดเมนูนำทาง" aria-label="เปิดเมนูนำทาง">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
 
-        <!-- Back to Org List button on Mobile when viewing Detail (Compact 1-line label) -->
+        <!-- Back to Org List button on Mobile (Shown ONLY when viewing Detail) -->
         <button type="button" id="mobile-back-to-list-btn" onclick="setMobileView('list')"
-          class="hidden inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 border border-slate-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-blue-600"
-          aria-label="กลับไปหน้ารายชื่อหน่วยงาน">
+          class="hidden md:hidden inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 border border-slate-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-2xs"
+          aria-label="ย้อนกลับไปดูรายชื่อหน่วยงาน">
           <i data-lucide="arrow-left" class="w-4 h-4 text-slate-700 shrink-0"></i>
-          <span class="whitespace-nowrap">รายชื่อ</span>
+          <span>ดูรายชื่อหน่วยงาน</span>
         </button>
 
         <div id="header-brand-badge" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
@@ -361,21 +361,13 @@
         <div class="flex items-center gap-2 min-w-0 truncate text-xs">
           <span class="text-slate-600 font-semibold hidden lg:inline whitespace-nowrap">รายงานและสถิติ</span>
           <span class="text-slate-400 hidden lg:inline" aria-hidden="true">/</span>
-          <span class="font-bold text-slate-900 truncate whitespace-nowrap text-sm" id="topbar-title">สถิติ Exchange & Quota การรับ-ส่งข้อมูล</span>
+          <span class="font-bold text-slate-900 truncate whitespace-nowrap text-sm hidden md:inline" id="topbar-title">สถิติ Exchange & Quota การรับ-ส่งข้อมูล</span>
         </div>
       </div>
 
       <!-- Right Header Actions (Refresh + Mobile switcher) -->
       <div class="flex items-center gap-2.5 shrink-0">
-        <!-- Mobile View Switcher Pill -->
-        <div class="flex md:hidden items-center p-0.5 bg-slate-100 rounded-xl border border-slate-300">
-          <button type="button" onclick="setMobileView('list')" id="mobile-tab-list" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-slate-900 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-600">
-            หน่วยงาน
-          </button>
-          <button type="button" onclick="setMobileView('detail')" id="mobile-tab-detail" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-700 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600">
-            สถิติ
-          </button>
-        </div>
+
 
         <button type="button" onclick="refreshData()" class="min-h-[36px] px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold shadow-2xs transition-all flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600" aria-label="รีเฟรชข้อมูลโควตา">
           <i data-lucide="rotate-cw" id="refresh-spinner" class="w-4 h-4 text-slate-600"></i>
@@ -464,31 +456,31 @@
           <div class="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-xs">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <!-- Org Identity -->
-              <div class="flex items-start sm:items-center gap-4 min-w-0">
-                <div id="org-avatar" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold text-lg flex items-center justify-center shrink-0 shadow-sm" aria-hidden="true">
+              <div class="flex items-start sm:items-center gap-3.5 sm:gap-4 min-w-0">
+                <div id="org-avatar" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold text-base sm:text-lg flex items-center justify-center shrink-0 shadow-sm" aria-hidden="true">
                   สนร
                 </div>
-                <div class="min-w-0">
-                  <div class="flex items-center gap-2.5 flex-wrap mb-2">
-                    <h1 id="selected-org-name" class="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight truncate">
-                      สำนักการระบายน้ำ (กทม.)
-                    </h1>
-                    <span id="selected-org-status-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-950 border border-rose-300 flex items-center gap-1.5">
-                      <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-700" aria-hidden="true"></i>
+                <div class="min-w-0 flex-1">
+                  <h1 id="selected-org-name" class="text-base sm:text-2xl font-bold text-slate-900 tracking-tight leading-snug">
+                    สำนักการระบายน้ำ (กทม.)
+                  </h1>
+
+                  <!-- Red Status Badge and ID on the EXACT SAME LINE -->
+                  <div class="flex items-center gap-1.5 sm:gap-2 flex-nowrap mt-1.5 sm:mt-2">
+                    <span id="selected-org-status-badge" class="px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold bg-rose-100 text-rose-950 border border-rose-300 inline-flex items-center gap-1 shadow-2xs whitespace-nowrap shrink-0">
+                      <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-700 shrink-0" aria-hidden="true"></i>
                       <span>เกินโควตา (102%)</span>
                     </span>
-                  </div>
-
-                  <!-- Organization Meta: ID Badge (Clean, No Token) -->
-                  <div class="flex items-center gap-2.5 text-xs text-slate-700 flex-wrap">
-                    <span class="font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-300" id="selected-org-id">ID: ORG-1002</span>
+                    <span class="font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-full text-[11px] sm:text-xs border border-slate-300 inline-flex items-center whitespace-nowrap shrink-0" id="selected-org-id">
+                      ID: ORG-1002
+                    </span>
                   </div>
                 </div>
               </div>
 
-              <!-- THE ONLY PRIMARY CTA: ปรับเพิ่มโควตา (No duplicate '+', clear high-contrast CTA) -->
-              <div class="flex items-center gap-2 self-start md:self-center shrink-0">
-                <button type="button" onclick="openAddQuotaModal()" class="min-h-[44px] px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+              <!-- Primary CTA: ปรับเพิ่มโควตา -->
+              <div class="flex items-center gap-2 self-stretch md:self-center shrink-0 pt-1 md:pt-0">
+                <button type="button" onclick="openAddQuotaModal()" class="w-full md:w-auto min-h-[44px] px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                   <i data-lucide="plus" class="w-4 h-4" aria-hidden="true"></i>
                   <span>ปรับเพิ่มโควตา</span>
                 </button>
@@ -502,13 +494,13 @@
           <div class="bg-white rounded-3xl p-4 sm:p-6 lg:p-7 border border-slate-200 shadow-sm relative overflow-hidden">
             
             <!-- Card Header: Context-adjusted for Admin -->
-            <div class="flex items-center justify-between mb-3.5 flex-wrap gap-2">
-              <div class="flex items-center gap-2">
-                <div class="w-2.5 h-2.5 rounded-full bg-blue-700" aria-hidden="true"></div>
-                <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">สถานะโควตา Exchange API</h2>
+            <div class="flex items-center justify-between mb-3.5 flex-nowrap gap-2">
+              <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <div class="w-2.5 h-2.5 rounded-full bg-blue-700 shrink-0" aria-hidden="true"></div>
+                <h2 class="text-xs sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap shrink-0"><span class="sm:hidden">สถานะโควตา</span><span class="hidden sm:inline">สถานะโควตา Exchange API</span></h2>
               </div>
-              <span id="usage-status-badge" class="inline-flex items-center gap-1.5 text-xs text-rose-950 font-bold bg-rose-100 border border-rose-300 px-3.5 py-1.5 rounded-full shadow-2xs">
-                <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-700" aria-hidden="true"></i>
+              <span id="usage-status-badge" class="inline-flex items-center gap-1 text-[11px] sm:text-xs text-rose-950 font-bold bg-rose-100 border border-rose-300 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-2xs shrink-0 whitespace-nowrap">
+                <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-700 shrink-0" aria-hidden="true"></i>
                 <span>เกินโควตา (102%)</span>
               </span>
             </div>
@@ -552,35 +544,12 @@
           </div>
 
           <!-- ========================================================================= -->
-          <!-- 3. TABS: สถิติรายวัน (DAILY USAGE) & ประวัติการปรับโควตา (AUDIT LOGS)        -->
+          <!-- 3. สถิติการใช้งานรายวัน (DAILY USAGE)                              -->
           <!-- ========================================================================= -->
           <div class="bg-white border border-slate-200 rounded-3xl p-4 sm:p-6 lg:p-7 shadow-xs space-y-5">
             
-            <!-- Tab Switcher Navigation with Responsive Compact Labels on Mobile -->
-            <div class="flex items-center justify-between border-b border-slate-200 pb-3 flex-wrap gap-2.5">
-              <div class="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full sm:w-auto" role="tablist" aria-label="สถิติและประวัติการปรับโควตา">
-                <button type="button" onclick="switchSectionTab('daily')" id="tab-btn-daily" role="tab" aria-selected="true" class="min-h-[40px] px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-100 text-blue-900 border border-blue-300 flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600">
-                  <i data-lucide="bar-chart-3" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
-                  <span class="hidden sm:inline">สถิติการใช้งานรายวัน (Daily Usage)</span>
-                  <span class="sm:hidden whitespace-nowrap">สถิติรายวัน</span>
-                </button>
-                <button type="button" onclick="switchSectionTab('logs')" id="tab-btn-logs" role="tab" aria-selected="false" class="min-h-[40px] px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-transparent flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600">
-                  <i data-lucide="history" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
-                  <span class="hidden sm:inline">ประวัติการปรับเพิ่มโควตา (Audit Logs)</span>
-                  <span class="sm:hidden whitespace-nowrap">ประวัติการปรับ</span>
-                  <span id="tab-log-badge" class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-800 text-xs font-bold">2</span>
-                </button>
-              </div>
-
-              <!-- Export CSV Action on the right -->
-              <button type="button" onclick="exportCsvDaily()" class="min-h-[36px] text-xs text-blue-800 hover:text-blue-950 font-bold flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600 ml-auto sm:ml-0" aria-label="ส่งออกข้อมูลสถิติรายวันเป็น CSV">
-                <i data-lucide="download" class="w-4 h-4 text-slate-700" aria-hidden="true"></i>
-                <span>ส่งออก CSV</span>
-              </button>
-            </div>
-
             <!-- TAB 1: DAILY USAGE (CHART + TABLE) -->
-            <div id="pane-daily-usage" class="space-y-6" role="tabpanel" aria-labelledby="tab-btn-daily">
+            <div id="pane-daily-usage" class="space-y-6">
               
               <!-- Chart Header Info & WCAG Non-Color Legend -->
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
@@ -619,27 +588,35 @@
               </div>
 
               <!-- Daily Summary Table with Icons in Status Column (SC 1.4.1) -->
-              <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-                <div class="bg-slate-100 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
-                  <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                    <i data-lucide="table-2" class="w-4 h-4 text-blue-700" aria-hidden="true"></i>
-                    <span>ตารางรายละเอียดการเรียกใช้รายวัน</span>
-                  </h4>
-                  <span class="text-xs text-slate-700 font-semibold">ย้อนหลัง 14 วัน</span>
+              <div class="border border-slate-300 rounded-2xl overflow-hidden shadow-2xs bg-white">
+                <div class="bg-slate-100 px-4 sm:px-5 py-3.5 border-b border-slate-300 flex items-center justify-between gap-2.5">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <i data-lucide="table-2" class="w-4 h-4 text-blue-700 shrink-0" aria-hidden="true"></i>
+                    <h4 class="text-xs sm:text-sm font-bold text-slate-900 tracking-wide truncate">
+                      <span class="sm:hidden">สถิติรายวัน</span>
+                      <span class="hidden sm:inline">สถิติการใช้งานรายวัน (ย้อนหลัง 14 วัน)</span>
+                    </h4>
+                  </div>
+
+                  <!-- Export CSV Button: Contextually placed at table corner -->
+                  <button type="button" onclick="exportCsvDaily()" class="shrink-0 min-h-[34px] text-xs font-bold text-blue-800 hover:text-blue-950 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 transition-colors shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600" aria-label="ส่งออกข้อมูลสถิติรายวันเป็น CSV">
+                    <i data-lucide="download" class="w-3.5 h-3.5 text-blue-700" aria-hidden="true"></i>
+                    <span>ส่งออก CSV</span>
+                  </button>
                 </div>
 
                 <div class="overflow-x-auto max-h-80 overflow-y-auto">
-                  <table class="w-full text-xs text-left text-slate-800">
-                    <thead class="text-[11px] uppercase bg-slate-50 text-slate-700 font-bold border-b border-slate-200 sticky top-0 z-10">
+                  <table class="w-full text-xs text-left text-slate-800 border-collapse">
+                    <thead class="text-[11px] uppercase bg-slate-50 text-slate-800 font-bold border-b border-slate-300 sticky top-0 z-10">
                       <tr>
-                        <th class="py-3 px-4">วัน / วันที่</th>
-                        <th class="py-3 px-3 text-right">จำนวน Request</th>
-                        <th class="py-3 px-3 text-right">สำเร็จ (Success)</th>
-                        <th class="py-3 px-3 text-right">ผิดพลาด (Errors)</th>
-                        <th class="py-3 px-4 text-center">สถานะ</th>
+                        <th class="py-3 px-4 whitespace-nowrap border-r border-slate-200">วัน / วันที่</th>
+                        <th class="py-3 px-3 text-right whitespace-nowrap border-r border-slate-200">จำนวน Request</th>
+                        <th class="py-3 px-3 text-right whitespace-nowrap border-r border-slate-200">สำเร็จ (Success)</th>
+                        <th class="py-3 px-3 text-right whitespace-nowrap border-r border-slate-200">ผิดพลาด (Errors)</th>
+                        <th class="py-3 px-4 text-center whitespace-nowrap">สถานะ</th>
                       </tr>
                     </thead>
-                    <tbody id="daily-table-body" class="divide-y divide-slate-200 bg-white">
+                    <tbody id="daily-table-body" class="divide-y divide-slate-300 bg-white">
                       <!-- Rendered via JavaScript -->
                     </tbody>
                   </table>
@@ -647,33 +624,6 @@
               </div>
             </div>
 
-            <!-- TAB 2: AUDIT LOGS -->
-            <div id="pane-audit-logs" class="space-y-4 hidden" role="tabpanel" aria-labelledby="tab-btn-logs">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="font-bold text-slate-900 text-sm sm:text-base">บันทึกประวัติการปรับเพิ่มโควตา (Audit Logs)</h3>
-                  <p class="text-xs text-slate-700 mt-0.5 font-medium">บันทึกทุกคำขอปรับโควตา ผู้ดำเนินการ และเหตุผลตามข้อกำหนด</p>
-                </div>
-              </div>
-
-              <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-                <div class="overflow-x-auto">
-                  <table class="w-full text-xs text-left text-slate-800">
-                    <thead class="text-[11px] uppercase bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
-                      <tr>
-                        <th class="py-3 px-4">วัน-เวลา</th>
-                        <th class="py-3 px-3">ผู้ดำเนินการ</th>
-                        <th class="py-3 px-3 text-right">ยอดที่ปรับเพิ่ม</th>
-                        <th class="py-3 px-3 text-right">โควตาใหม่รอบสัปดาห์</th>
-                        <th class="py-3 px-4">เหตุผล / บันทึกกำกับ</th>
-                      </tr>
-                    </thead>
-                    <tbody id="audit-log-table-body" class="divide-y divide-slate-200 bg-white">
-                      <!-- Rendered via JavaScript -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
             </div>
 
           </div>
@@ -800,57 +750,55 @@
       const detailPanel = document.getElementById("detail-panel");
       const backBtn = document.getElementById("mobile-back-to-list-btn");
       const brandBadge = document.getElementById("header-brand-badge");
+      const sidebarToggle = document.getElementById("mobile-sidebar-toggle-btn");
       const topbarTitle = document.getElementById("topbar-title");
-      const tabList = document.getElementById("mobile-tab-list");
-      const tabDetail = document.getElementById("mobile-tab-detail");
 
       if (window.innerWidth < 768) {
         if (view === "list") {
+          // List View: แสดงเฉพาะรายชื่อหน่วยงาน ไม่ต้องแสดงสถิติ (ต้องกดเลือกก่อนถึงจะแสดง)
           masterPanel.classList.remove("hidden");
           detailPanel.classList.add("hidden");
           if (backBtn) {
             backBtn.classList.add("hidden");
             backBtn.classList.remove("inline-flex");
           }
+          if (sidebarToggle) sidebarToggle.classList.remove("hidden");
           if (brandBadge) brandBadge.classList.remove("hidden");
-          if (topbarTitle) topbarTitle.textContent = "สถิติ Exchange & Quota การรับ-ส่งข้อมูล";
-
-          if (tabList) {
-            tabList.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-slate-900 shadow-2xs";
-          }
-          if (tabDetail) {
-            tabDetail.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-700 hover:text-slate-900";
+          if (topbarTitle) {
+            topbarTitle.textContent = "สถิติ Exchange & Quota";
+            topbarTitle.classList.remove("hidden");
           }
         } else {
+          // Detail View: เมื่อกดเลือกหน่วยงานแล้ว แสดงหน้าสถิติ พร้อมปุ่ม "ย้อนกลับดูรายชื่อหน่วยงาน"
           masterPanel.classList.add("hidden");
           detailPanel.classList.remove("hidden");
           if (backBtn) {
             backBtn.classList.remove("hidden");
             backBtn.classList.add("inline-flex");
           }
+          if (sidebarToggle) sidebarToggle.classList.add("hidden");
           if (brandBadge) brandBadge.classList.add("hidden");
-          const currentOrg = organizationsData.find(o => o.id === selectedOrgId);
-          if (topbarTitle && currentOrg) {
-            topbarTitle.textContent = currentOrg.name;
-          }
-
-          if (tabList) {
-            tabList.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-700 hover:text-slate-900";
-          }
-          if (tabDetail) {
-            tabDetail.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-slate-900 shadow-2xs";
+          if (topbarTitle) {
+            topbarTitle.textContent = "";
+            topbarTitle.classList.add("hidden");
           }
         }
       } else {
+        // Desktop View: แสดงทั้ง 2 คอลัมน์เคียงข้างกัน
         masterPanel.classList.remove("hidden");
         detailPanel.classList.remove("hidden");
         if (backBtn) {
           backBtn.classList.add("hidden");
           backBtn.classList.remove("inline-flex");
         }
+        if (sidebarToggle) sidebarToggle.classList.add("hidden");
         if (brandBadge) brandBadge.classList.remove("hidden");
-        if (topbarTitle) topbarTitle.textContent = "สถิติ Exchange & Quota การรับ-ส่งข้อมูล";
+        if (topbarTitle) {
+          topbarTitle.textContent = "สถิติ Exchange & Quota การรับ-ส่งข้อมูล";
+          topbarTitle.classList.remove("hidden");
+        }
       }
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     window.addEventListener("resize", () => {
@@ -1083,8 +1031,7 @@
     let activeFilter = "all"; // 'all' | 'exceeded' | 'near-limit' | 'normal'
     let searchQuery = "";
 
-    let currentSectionTab = "daily"; // 'daily' | 'logs'
-
+    
     // Helper: get filtered and sorted organizations
     function getFilteredOrganizations() {
       return organizationsData.filter(org => {
@@ -1195,9 +1142,9 @@
                   </h3>
                 </div>
                 <div class="flex items-center gap-2 mt-0.5 text-[11px] text-slate-700">
-                  <span class="font-bold text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded">${org.id}</span>
+                  <span class="${isSelected ? 'font-bold text-slate-900 bg-white border border-blue-300 shadow-2xs px-2 py-0.5 rounded-md' : 'font-bold text-slate-700 bg-slate-100 border border-slate-200/80 px-2 py-0.5 rounded-md'}">${org.id}</span>
                   ${isSelected ? `
-                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-blue-900 bg-blue-100 px-2 py-0.5 rounded-md border border-blue-300">
+                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-blue-950 bg-blue-100/90 px-2 py-0.5 rounded-md border border-blue-300 shadow-2xs">
                       <i data-lucide="check" class="w-3 h-3 text-blue-700"></i>
                       <span>กำลังดูข้อมูล</span>
                     </span>
@@ -1267,13 +1214,13 @@
 
       if (elBadge) {
         if (org.status === "exceeded") {
-          elBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-950 border border-rose-300 flex items-center gap-1.5";
+          elBadge.className = "px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold bg-rose-100 text-rose-950 border border-rose-300 inline-flex items-center gap-1 shadow-2xs whitespace-nowrap shrink-0";
           elBadge.innerHTML = `<i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-700"></i><span>เกินโควตา (${org.thisWeek.percent}%)</span>`;
         } else if (org.status === "near-limit") {
-          elBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-950 border border-amber-300 flex items-center gap-1.5";
+          elBadge.className = "px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold bg-amber-100 text-amber-950 border border-amber-300 inline-flex items-center gap-1 shadow-2xs whitespace-nowrap shrink-0";
           elBadge.innerHTML = `<i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-800"></i><span>ใกล้เต็มโควตา (${org.thisWeek.percent}%)</span>`;
         } else {
-          elBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 flex items-center gap-1.5";
+          elBadge.className = "px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 inline-flex items-center gap-1 shadow-2xs whitespace-nowrap shrink-0";
           elBadge.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-700"></i><span>ใช้งานปกติ (${org.thisWeek.percent}%)</span>`;
         }
       }
@@ -1288,14 +1235,14 @@
 
       if (elUsageBadge) {
         if (org.status === "exceeded") {
-          elUsageBadge.className = "inline-flex items-center gap-1.5 text-xs text-rose-950 font-bold bg-rose-100 border border-rose-300 px-3.5 py-1.5 rounded-full shadow-2xs";
-          elUsageBadge.innerHTML = `<i data-lucide="alert-octagon" class="w-4 h-4 text-rose-700"></i><span>เกินโควตา (${percent}%)</span>`;
+          elUsageBadge.className = "inline-flex items-center gap-1 text-[11px] sm:text-xs text-rose-950 font-bold bg-rose-100 border border-rose-300 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-2xs shrink-0 whitespace-nowrap";
+          elUsageBadge.innerHTML = `<i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-700 shrink-0"></i><span class="whitespace-nowrap">เกินโควตา (${percent}%)</span>`;
         } else if (org.status === "near-limit") {
-          elUsageBadge.className = "inline-flex items-center gap-1.5 text-xs text-amber-950 font-bold bg-amber-100 border border-amber-300 px-3.5 py-1.5 rounded-full shadow-2xs";
-          elUsageBadge.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4 text-amber-800"></i><span>ใกล้เต็มโควตา (${percent}%)</span>`;
+          elUsageBadge.className = "inline-flex items-center gap-1 text-[11px] sm:text-xs text-amber-950 font-bold bg-amber-100 border border-amber-300 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-2xs shrink-0 whitespace-nowrap";
+          elUsageBadge.innerHTML = `<i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-800 shrink-0"></i><span class="whitespace-nowrap">ใกล้เต็มโควตา (${percent}%)</span>`;
         } else {
-          elUsageBadge.className = "inline-flex items-center gap-1.5 text-xs text-emerald-950 font-bold bg-emerald-100 border border-emerald-300 px-3.5 py-1.5 rounded-full shadow-2xs";
-          elUsageBadge.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-700"></i><span>ใช้งานปกติ (${percent}%)</span>`;
+          elUsageBadge.className = "inline-flex items-center gap-1 text-[11px] sm:text-xs text-emerald-950 font-bold bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-2xs shrink-0 whitespace-nowrap";
+          elUsageBadge.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-700 shrink-0"></i><span class="whitespace-nowrap">ใช้งานปกติ (${percent}%)</span>`;
         }
       }
 
@@ -1345,17 +1292,12 @@
       const remainNum = Math.max(0, org.thisWeek.limit - org.thisWeek.used);
       if (elRemain) elRemain.textContent = `คงเหลือ: ${remainNum.toLocaleString()} reqs`;
 
-      // Update Audit Logs Badge Count
-      const elTabLogBadge = document.getElementById("tab-log-badge");
-      if (elTabLogBadge) {
-        elTabLogBadge.textContent = org.auditLogs ? org.auditLogs.length : 0;
-      }
+// Audit logs managed globally in audit-logs.html
 
       // Render Sub-components
       renderDailyChart(org);
       renderDailyTable(org);
-      renderAuditLogs(org);
-
+      
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
@@ -1451,11 +1393,13 @@
             <div class="border-b border-slate-300 w-full"></div>
           </div>
 
-          <!-- THRESHOLD LIMIT LINE: Clean Dashed Line with neat badge on left -->
-          <div class="absolute left-0 right-0 border-t-2 border-dashed border-rose-500/80 z-10 pointer-events-none flex items-center justify-start pl-1" style="bottom: calc(${thresholdPercent}% + 24px);">
-            <span class="bg-rose-100 text-rose-950 font-bold text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded border border-rose-300 shadow-2xs -mt-2.5">
-              เกณฑ์แนะนำ: ${dailyThreshold.toLocaleString()} reqs
-            </span>
+          <!-- THRESHOLD LIMIT LINE: Distinct reference line with label strictly ABOVE the line (z-30) -->
+          <div class="absolute left-0 right-0 border-t-2 border-dashed border-rose-500 z-30 pointer-events-none" style="bottom: calc(${thresholdPercent}% + 26px);">
+            <div class="absolute bottom-1 sm:bottom-1.5 left-1.5 sm:left-3 flex items-center gap-1.5">
+              <span class="bg-white text-rose-900 font-bold text-[9px] sm:text-[10px] px-2.5 py-0.5 rounded-md border border-rose-300 shadow-xs whitespace-nowrap">
+                เกณฑ์แนะนำ: ${dailyThreshold.toLocaleString()} reqs/วัน
+              </span>
+            </div>
           </div>
 
           <!-- Chart Bars Container -->
@@ -1496,20 +1440,20 @@
         }
 
         return `
-          <tr class="hover:bg-slate-50 transition-colors">
-            <td class="py-3 px-4 font-bold text-slate-900">
+          <tr class="hover:bg-blue-50/40 even:bg-slate-50/50 transition-colors">
+            <td class="py-3 px-4 font-bold text-slate-900 border-r border-slate-200 whitespace-nowrap">
               ${item.day} <span class="text-slate-600 font-semibold">(${item.date})</span>
             </td>
-            <td class="py-3 px-3 text-right font-extrabold text-slate-900">
+            <td class="py-3 px-3 text-right font-extrabold text-slate-900 border-r border-slate-200 whitespace-nowrap">
               ${item.calls.toLocaleString()}
             </td>
-            <td class="py-3 px-3 text-right text-emerald-800 font-bold">
+            <td class="py-3 px-3 text-right text-emerald-800 font-bold border-r border-slate-200 whitespace-nowrap">
               ${item.success}
             </td>
-            <td class="py-3 px-3 text-right ${item.errors > 0 ? 'text-rose-700 font-bold' : 'text-slate-500 font-medium'}">
-              ${item.errors}
+            <td class="py-3 px-3 text-right ${item.errors > 0 ? 'text-rose-700 font-bold' : 'text-slate-500 font-semibold'} border-r border-slate-200 whitespace-nowrap">
+              ${item.errors.toLocaleString()}
             </td>
-            <td class="py-3 px-4 text-center">
+            <td class="py-3 px-4 text-center whitespace-nowrap">
               ${statusBadge}
             </td>
           </tr>
@@ -1517,86 +1461,6 @@
       }).join("");
 
       if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-
-    // --- 9. RENDER AUDIT LOGS (GUARANTEED POPULATED) ---
-    function renderAuditLogs(org) {
-      const tbody = document.getElementById("audit-log-table-body");
-      if (!tbody) return;
-
-      if (!org.auditLogs || org.auditLogs.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="5" class="py-8 text-center text-slate-600">
-              <div class="flex flex-col items-center justify-center gap-1.5">
-                <i data-lucide="inbox" class="w-6 h-6 text-slate-400" aria-hidden="true"></i>
-                <span class="font-bold text-slate-800 text-xs">ยังไม่มีประวัติการปรับเพิ่มโควตาสำหรับหน่วยงานนี้</span>
-                <span class="text-[11px] text-slate-600">กดปุ่ม "ปรับเพิ่มโควตา" ด้านบนเพื่อทำการปรับยอดและลงบันทึกแรก</span>
-              </div>
-            </td>
-          </tr>
-        `;
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-        return;
-      }
-
-      tbody.innerHTML = org.auditLogs.map(log => `
-        <tr class="hover:bg-slate-50 transition-colors">
-          <td class="py-3 px-4 font-bold text-slate-900 whitespace-nowrap">
-            ${log.date}
-          </td>
-          <td class="py-3 px-3 font-semibold text-slate-800">
-            ${log.actor}
-          </td>
-          <td class="py-3 px-3 text-right font-extrabold text-emerald-800">
-            ${log.change}
-          </td>
-          <td class="py-3 px-3 text-right font-bold text-slate-900">
-            ${log.newLimit}
-          </td>
-          <td class="py-3 px-4 text-slate-800 font-medium max-w-xs sm:max-w-md">
-            ${log.reason}
-          </td>
-        </tr>
-      `).join("");
-
-      if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-
-    // --- 10. TAB NAVIGATION (DAILY USAGE VS AUDIT LOGS) ---
-    function switchSectionTab(tab) {
-      currentSectionTab = tab;
-      const paneDaily = document.getElementById("pane-daily-usage");
-      const paneLogs = document.getElementById("pane-audit-logs");
-      const btnDaily = document.getElementById("tab-btn-daily");
-      const btnLogs = document.getElementById("tab-btn-logs");
-
-      const activeClass = "min-h-[40px] px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-100 text-blue-900 border border-blue-300 flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600";
-      const inactiveClass = "min-h-[40px] px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-transparent flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600";
-
-      if (tab === "daily") {
-        if (paneDaily) paneDaily.classList.remove("hidden");
-        if (paneLogs) paneLogs.classList.add("hidden");
-        if (btnDaily) {
-          btnDaily.className = activeClass;
-          btnDaily.setAttribute("aria-selected", "true");
-        }
-        if (btnLogs) {
-          btnLogs.className = inactiveClass;
-          btnLogs.setAttribute("aria-selected", "false");
-        }
-      } else {
-        if (paneDaily) paneDaily.classList.add("hidden");
-        if (paneLogs) paneLogs.classList.remove("hidden");
-        if (btnDaily) {
-          btnDaily.className = inactiveClass;
-          btnDaily.setAttribute("aria-selected", "false");
-        }
-        if (btnLogs) {
-          btnLogs.className = activeClass;
-          btnLogs.setAttribute("aria-selected", "true");
-        }
-      }
     }
 
     // --- 11. FILTER & SEARCH WITH AUTOMATIC DETAIL SYNCHRONIZATION ---
@@ -1769,8 +1633,6 @@
       closeAddQuotaModal();
       showToast(`ปรับเพิ่มโควตา ${org.name} จำนวน +${incVal.toLocaleString()} reqs เรียบร้อยแล้ว`);
 
-      // Switch to Audit Logs tab so user immediately sees their log!
-      switchSectionTab("logs");
 
       renderOrgList();
       renderSelectedOrgDetails();

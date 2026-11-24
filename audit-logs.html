@@ -416,7 +416,7 @@
               class="flex items-center gap-2 self-start sm:self-auto bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
               <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               <span class="text-xs text-slate-600 font-medium">บันทึกทั้งหมด <span id="count-display"
-                  class="font-bold text-slate-900 font-mono-code">10</span> รายการ</span>
+                  class="font-bold text-slate-900 font-mono-code">22</span> รายการ</span>
             </div>
           </div>
 
@@ -431,12 +431,17 @@
             <button onclick="selectModule('organizations')" id="btn-tab-organizations"
               class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
               <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
-              <span>จัดการหน่วยงาน</span>
+              <span>จัดการหน่วยงาน & ผัง</span>
+            </button>
+            <button onclick="selectModule('quota')" id="btn-tab-quota"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
+              <span>สถิติ & โควตา API</span>
             </button>
             <button onclick="selectModule('cases')" id="btn-tab-cases"
               class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
               <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-              <span>เรื่องแจ้ง (Case)</span>
+              <span>เรื่องแจ้ง & ค้นหาซ้ำ</span>
             </button>
             <button onclick="selectModule('users')" id="btn-tab-users"
               class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
@@ -445,8 +450,18 @@
             </button>
             <button onclick="selectModule('security')" id="btn-tab-security"
               class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
-              <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
-              <span>Reset OTP</span>
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>ความปลอดภัย & OTP</span>
+            </button>
+            <button onclick="selectModule('chatbot')" id="btn-tab-chatbot"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+              <span>แชทบอท & LINE</span>
+            </button>
+            <button onclick="selectModule('assessments')" id="btn-tab-assessments"
+              class="org-tab-btn py-2 px-3 sm:px-3.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i>
+              <span>แบบประเมิน & อื่นๆ</span>
             </button>
           </div>
 
@@ -475,46 +490,54 @@
                 </button>
 
                 <div id="mobile-tab-menu"
-                  class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1">
+                  class="hidden absolute top-full mt-1.5 left-0 right-0 bg-white border border-slate-200 rounded-xl p-1.5 shadow-xl z-50 flex flex-col gap-1 max-h-80 overflow-y-auto">
                   <button type="button" onclick="selectMobileTab('all')"
                     class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-semibold text-slate-900 bg-slate-100 text-left cursor-pointer"
                     data-tab="all">
-                    <span
-                      class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i
-                        data-lucide="history" class="w-3.5 h-3.5"></i></span>
+                    <span class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i data-lucide="history" class="w-3.5 h-3.5"></i></span>
                     <span class="flex-1 truncate">ทั้งหมด</span>
                   </button>
                   <button type="button" onclick="selectMobileTab('organizations')"
                     class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                     data-tab="organizations">
-                    <span
-                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                        data-lucide="building-2" class="w-3.5 h-3.5"></i></span>
-                    <span class="flex-1 truncate">จัดการหน่วยงาน</span>
+                    <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="building-2" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">จัดการหน่วยงาน & ผัง</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('quota')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="quota">
+                    <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">สถิติ & โควตา API</span>
                   </button>
                   <button type="button" onclick="selectMobileTab('cases')"
                     class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                     data-tab="cases">
-                    <span
-                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                        data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
-                    <span class="flex-1 truncate">เรื่องแจ้ง (Case)</span>
+                    <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">เรื่องแจ้ง & ค้นหาซ้ำ</span>
                   </button>
                   <button type="button" onclick="selectMobileTab('users')"
                     class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                     data-tab="users">
-                    <span
-                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                        data-lucide="users" class="w-3.5 h-3.5"></i></span>
+                    <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="users" class="w-3.5 h-3.5"></i></span>
                     <span class="flex-1 truncate">ผู้ใช้งาน & สิทธิ์</span>
                   </button>
                   <button type="button" onclick="selectMobileTab('security')"
                     class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                     data-tab="security">
-                    <span
-                      class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i
-                        data-lucide="key-round" class="w-3.5 h-3.5"></i></span>
-                    <span class="flex-1 truncate">Reset OTP</span>
+                    <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">ความปลอดภัย & OTP</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('chatbot')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="chatbot">
+                    <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="bot" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">แชทบอท & LINE</span>
+                  </button>
+                  <button type="button" onclick="selectMobileTab('assessments')"
+                    class="mobile-tab-item flex items-center gap-2.5 w-full p-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                    data-tab="assessments">
+                    <span class="w-6 h-6 rounded-md bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0"><i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i></span>
+                    <span class="flex-1 truncate">แบบประเมิน & อื่นๆ</span>
                   </button>
                 </div>
               </div>
@@ -695,10 +718,287 @@
 
     // Data Store
     const auditLogsData = [
+      // --- สถิติ & โควตา API (exchange-stats.html, quota.html) ---
+      {
+        id: "LOG-10505",
+        module: "quota",
+        moduleLabel: "สถิติ & โควตา API",
+        actionType: "update",
+        target: "สำนักการระบายน้ำ (กทม.) (ORG-1002)",
+        actionTitle: "ปรับเพิ่มโควตาสัปดาห์",
+        summaryChange: "200,000 ➔ 250,000 reqs (+50,000)",
+        fullSummary: "อนุมัติขยายโควตาสัปดาห์รองรับช่วงมรสุมฝนตกหนัก มีการเชื่อมต่อ API ตรวจวัดระดับน้ำต่อเนื่อง",
+        actorName: "แอดมิน กทม. (Somchai)",
+        actorEmail: "somchai.m@bkk.go.th",
+        actorRole: "SUPER ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+        date: "24 พ.ย. 69",
+        time: "11:00 น.",
+        timestamp: "24 พ.ย. 2569 11:00 น.",
+        diff: [
+          { field: "โควตาต่อสัปดาห์", oldVal: "200,000 reqs", newVal: "250,000 reqs" },
+          { field: "อัตราเพดานสูงสุด (Rate Limit)", oldVal: "20,000 reqs/วัน", newVal: "35,000 reqs/วัน" }
+        ],
+        comment: "อนุมัติการร้องขอเพิ่มโควตาฉุกเฉินจากหน้าสถิติ Exchange & Quota การรับ-ส่งข้อมูล"
+      },
+      {
+        id: "LOG-10504",
+        module: "quota",
+        moduleLabel: "สถิติ & โควตา API",
+        actionType: "update",
+        target: "สำนักการโยธา (กทม.) (ORG-1014)",
+        actionTitle: "อัปเกรดแผนโควตา API",
+        summaryChange: "Pro Exchange ➔ Enterprise Exchange",
+        fullSummary: "ปรับระดับแพ็กเกจการเชื่อมต่อ Exchange API เป็นระดับองค์กร เพื่อรองรับการส่งพิกัดงานซ่อมถนน",
+        actorName: "วิชัย (Tech Lead)",
+        actorEmail: "wichai.p@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80",
+        date: "24 พ.ย. 69",
+        time: "09:30 น.",
+        timestamp: "24 พ.ย. 2569 09:30 น.",
+        diff: [
+          { field: "แพ็กเกจโควตา", oldVal: "Pro Exchange (100k)", newVal: "Enterprise Exchange (200k)" },
+          { field: "รอบการรีเซ็ต", oldVal: "วันศุกร์ 11:00 น.", newVal: "วันศุกร์ 11:00 น." }
+        ],
+        comment: "ปรับเปลี่ยนตามบันทึกข้อตกลงความร่วมมือการเชื่อมโยงระบบรับส่งข้อมูล"
+      },
+      {
+        id: "LOG-10503",
+        module: "quota",
+        moduleLabel: "สถิติ & โควตา API",
+        actionType: "create",
+        target: "สำนักงานเขตจตุจักร (ORG-1029)",
+        actionTitle: "ออก Exchange Token ใหม่",
+        summaryChange: "สร้าง Token: tk_live_••••10e7a",
+        fullSummary: "สร้าง Token ใหม่สำหรับการเชื่อมโยงระบบ Smart District พร้อมกำหนดวันหมดอายุ 1 ปี",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "23 พ.ย. 69",
+        time: "16:15 น.",
+        timestamp: "23 พ.ย. 2569 16:15 น.",
+        diff: [
+          { field: "Exchange Token", oldVal: "-", newVal: "tk_live_9482bf10e7a (ใช้งานปกติ)" },
+          { field: "สิทธิ์การเข้าถึง", oldVal: "Read-only", newVal: "Read-Write Exchange" }
+        ],
+        comment: "ออก Token ใหม่เพื่อใช้กับ API Gateway v2"
+      },
+
+      // --- แชทบอท & LINE OA (bot-studio, flex-message, richmenu, richmenu-stats, create-official-account) ---
+      {
+        id: "LOG-10502",
+        module: "chatbot",
+        moduleLabel: "แชทบอท & LINE",
+        actionType: "update",
+        target: "LINE OA: Traffy Fondue กทม.",
+        actionTitle: "เผยแพร่ Rich Menu ใหม่",
+        summaryChange: "เวอร์ชัน 3.1 ➔ เวอร์ชัน 3.2 (เมนูน้ำท่วม)",
+        fullSummary: "เปิดใช้งาน Rich Menu ประชาชนเวอร์ชัน 3.2 โดยเพิ่มปุ่มลัด 'แจ้งเหตุน้ำท่วมขังเร่งด่วน' ในแถบหลัก",
+        actorName: "กุลณัฐ (Chatbot UX)",
+        actorEmail: "kulnat.s@bkk.go.th",
+        actorRole: "EDITOR",
+        actorAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80",
+        date: "24 พ.ย. 69",
+        time: "08:45 น.",
+        timestamp: "24 พ.ย. 2569 08:45 น.",
+        diff: [
+          { field: "Active Rich Menu", oldVal: "RM-BKK-STD-V3.1", newVal: "RM-BKK-FLOOD-V3.2" },
+          { field: "จำนวนแท็บแอ็กชัน", oldVal: "6 ช่อง", newVal: "6 ช่อง (ปรับ Action 2 เป็นด่วน)" }
+        ],
+        comment: "เปิดเมนูลัดสำหรับฤดูมรสุมผ่านหน้าระบบจัดการ Rich Menu"
+      },
+      {
+        id: "LOG-10501",
+        module: "chatbot",
+        moduleLabel: "แชทบอท & LINE",
+        actionType: "create",
+        target: "Flex Message: แจ้งเตือนสถานการณ์น้ำท่วม",
+        actionTitle: "สร้างเทมเพลต Flex Message",
+        summaryChange: "เทมเพลตใหม่: FLOOD-ALERT-BUBBLE",
+        fullSummary: "ออกแบบการ์ด Bubble Flex Message แบบไดนามิกพร้อมปุ่มดูระดับน้ำแบบเรียลไทม์",
+        actorName: "กุลณัฐ (Chatbot UX)",
+        actorEmail: "kulnat.s@bkk.go.th",
+        actorRole: "EDITOR",
+        actorAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80",
+        date: "23 พ.ย. 69",
+        time: "14:20 น.",
+        timestamp: "23 พ.ย. 2569 14:20 น.",
+        diff: [
+          { field: "Template Key", oldVal: "-", newVal: "FLOOD-ALERT-BUBBLE" },
+          { field: "Alt Text", oldVal: "-", newVal: "แจ้งเตือนสถานการณ์น้ำท่วมขังในพื้นที่ของคุณ" }
+        ],
+        comment: "บันทึกเทมเพลตจากระบบ Flex Message Designer"
+      },
+      {
+        id: "LOG-10500",
+        module: "chatbot",
+        moduleLabel: "แชทบอท & LINE",
+        actionType: "create",
+        target: "LINE OA สำนักงานเขตพระโขนง",
+        actionTitle: "เชื่อมต่อ LINE Official Account",
+        summaryChange: "เพิ่ม LINE Channel: @bkk_phrakhanong",
+        fullSummary: "ผูก Webhook URL และ Channel Secret สำหรับระบบรับเรื่องร้องเรียนระดับเขต",
+        actorName: "วิชัย (Tech Lead)",
+        actorEmail: "wichai.p@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80",
+        date: "22 พ.ย. 69",
+        time: "10:10 น.",
+        timestamp: "22 พ.ย. 2569 10:10 น.",
+        diff: [
+          { field: "Channel ID", oldVal: "-", newVal: "2006941829" },
+          { field: "Webhook Status", oldVal: "Disconnected", newVal: "Verified (200 OK)" }
+        ],
+        comment: "สร้างและเชื่อมต่อบัญชีทางการจากหน้าสร้าง Official Account"
+      },
+
+      // --- แบบประเมิน & อื่นๆ (bkk-assessment, impact, faq) ---
+      {
+        id: "LOG-10499",
+        module: "assessments",
+        moduleLabel: "แบบประเมิน & อื่นๆ",
+        actionType: "update",
+        target: "เกณฑ์ประเมิน กทม. (BKK Assessment)",
+        actionTitle: "ปรับเกณฑ์ชี้วัด KPI ไตรมาส 4",
+        summaryChange: "ปรับค่าน้ำหนักความพึงพอใจ 30% ➔ 40%",
+        fullSummary: "ปรับสูตรการคิดคะแนนประเมินประสิทธิภาพการแก้ไขปัญหาเรื่องร้องเรียนของสำนักงานเขต 50 เขต",
+        actorName: "ดร.วรภัทร (Policy Lead)",
+        actorEmail: "worapat.k@bkk.go.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80",
+        date: "21 พ.ย. 69",
+        time: "15:40 น.",
+        timestamp: "21 พ.ย. 2569 15:40 น.",
+        diff: [
+          { field: "ค่าน้ำหนักความพึงพอใจประชาชน", oldVal: "30%", newVal: "40%" },
+          { field: "เกณฑ์เวลาเฉลี่ย (SLA)", oldVal: "72 ชั่วโมง", newVal: "48 ชั่วโมง" }
+        ],
+        comment: "บันทึกแก้ไขเกณฑ์ประเมินผลการดำเนินงาน กทม. ประจำปีงบประมาณ 2569"
+      },
+      {
+        id: "LOG-10498",
+        module: "assessments",
+        moduleLabel: "แบบประเมิน & อื่นๆ",
+        actionType: "create",
+        target: "คลังคำถาม FAQ ประชาชน",
+        actionTitle: "เพิ่มหมวดคำถามที่พบบ่อย",
+        summaryChange: "เพิ่มคำถาม: การติดตามสถานะเรื่องร้องเรียน",
+        fullSummary: "เพิ่มคู่มือและคำถามตอบด่วนเรื่องขั้นตอนการติดตามเคสเมื่อได้รับการแจ้งเตือนทาง LINE",
+        actorName: "กุลณัฐ (Chatbot UX)",
+        actorEmail: "kulnat.s@bkk.go.th",
+        actorRole: "EDITOR",
+        actorAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80",
+        date: "20 พ.ย. 69",
+        time: "11:20 น.",
+        timestamp: "20 พ.ย. 2569 11:20 น.",
+        diff: [
+          { field: "FAQ หมวด", oldVal: "-", newVal: "การใช้งานสำหรับประชาชน" },
+          { field: "สถานะการแสดงผล", oldVal: "-", newVal: "เผยแพร่ทันที (Published)" }
+        ],
+        comment: "เพิ่มข้อมูลช่วยเหลือประชาชนจากหน้าจัดการ FAQ"
+      },
+      {
+        id: "LOG-10497",
+        module: "assessments",
+        moduleLabel: "แบบประเมิน & อื่นๆ",
+        actionType: "update",
+        target: "รายงานสรุปผลกระทบ (Impact Dashboard)",
+        actionTitle: "ส่งออกรายงานผลกระทบประจำปี",
+        summaryChange: "ส่งออกไฟล์: Impact-BKK-Annual-2026.xlsx",
+        fullSummary: "ดาวน์โหลดรายงานสถิติการแก้ไขปัญหาเรื่องร้องเรียน 50 เขต รวม 1.2 ล้านเรื่อง",
+        actorName: "แอดมิน กทม. (Somchai)",
+        actorEmail: "somchai.m@bkk.go.th",
+        actorRole: "SUPER ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+        date: "19 พ.ย. 69",
+        time: "17:00 น.",
+        timestamp: "19 พ.ย. 2569 17:00 น.",
+        diff: [
+          { field: "ช่วงเวลาข้อมูล", oldVal: "-", newVal: "01 ม.ค. 2569 - 19 พ.ย. 2569" },
+          { field: "รูปแบบข้อมูล", oldVal: "-", newVal: "Excel + Anonymized CSV" }
+        ],
+        comment: "ดาวน์โหลดเพื่อนำเสนอผู้บริหาร กทม."
+      },
+
+      // --- เรื่องแจ้ง & ค้นหาซ้ำ (cases.html, cases-v2.html, search-duplicate.html) ---
+      {
+        id: "LOG-10496",
+        module: "cases",
+        moduleLabel: "เรื่องแจ้ง & ค้นหาซ้ำ",
+        actionType: "update",
+        target: "Case #2026-BKK-94881",
+        actionTitle: "รวมเคสซ้ำ (Merge Duplicate)",
+        summaryChange: "รวมเคสย่อย 3 รายการ ➔ เคสหลัก #94881",
+        fullSummary: "รวมเรื่องแจ้งน้ำท่วมขังบริเวณแยกอโศก-สุขุมวิท ที่ประชาชนแจ้งซ้ำกัน 3 เรื่องเข้าด้วยกัน",
+        actorName: "สมชาย (Staff)",
+        actorEmail: "somchai.m@bkk.go.th",
+        actorRole: "STAFF",
+        actorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+        date: "18 พ.ย. 69",
+        time: "14:10 น.",
+        timestamp: "18 พ.ย. 2569 14:10 น.",
+        diff: [
+          { field: "สถานะเคสซ้ำ", oldVal: "รอตรวจสอบ (3 เคส)", newVal: "รวมเข้ากับเคสหลัก #94881" },
+          { field: "การแจ้งเตือนประชาชน", oldVal: "-", newVal: "ส่งข้อความอัตโนมัติแจ้งการรวมเรื่อง" }
+        ],
+        comment: "ดำเนินการผ่านหน้าระบบค้นหาเรื่องซ้ำ (Search Duplicate)"
+      },
+
+      // --- ความปลอดภัย & บัญชี (reset-otp.html, unblock-account.html) ---
+      {
+        id: "LOG-10495",
+        module: "security",
+        moduleLabel: "ความปลอดภัย & OTP",
+        actionType: "security",
+        target: "บัญชี: natthawut.s@bkk.go.th",
+        actionTitle: "ปลดบล็อกบัญชีผู้ใช้งาน",
+        summaryChange: "บล็อก (ใส่รหัสผิด 5 ครั้ง) ➔ ใช้งานได้ปกติ",
+        fullSummary: "เจ้าหน้าที่เขตยืนยันตัวตนผ่านวิดีโอคอลกับแอดมินกลาง จึงดำเนินการปลดล็อกการระงับบัญชี",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "17 พ.ย. 69",
+        time: "13:25 น.",
+        timestamp: "17 พ.ย. 2569 13:25 น.",
+        diff: [
+          { field: "สถานะบัญชี", oldVal: "Locked (Exceeded Attempts)", newVal: "Active" },
+          { field: "บังคับเปลี่ยนรหัสผ่าน", oldVal: "False", newVal: "True (เข้าสู่ระบบครั้งถัดไป)" }
+        ],
+        comment: "ปลดบล็อกผ่านหน้าระบบ Unblock Account ตามคำร้องเลขที่ REQ-SEC-492"
+      },
+
+      // --- จัดการหน่วยงาน & ผัง (organizations, org-tree, create-org-chart, org-group-stats) ---
+      {
+        id: "LOG-10494",
+        module: "organizations",
+        moduleLabel: "จัดการหน่วยงาน & ผัง",
+        actionType: "create",
+        target: "ผังโครงสร้าง: สำนักสิ่งแวดล้อม",
+        actionTitle: "สร้างผังองค์กรระดับสำนัก",
+        summaryChange: "เพิ่มผังใหม่ 4 กอง 12 ฝ่าย",
+        fullSummary: "สร้างผังองค์กรแบบไดนามิกพร้อมกำหนดสิทธิ์การส่งต่องานระหว่างฝ่ายความสะอาดและฝ่ายสิ่งแวดล้อม",
+        actorName: "ชยานิษฐ์ (Admin)",
+        actorEmail: "chayanid@nectec.or.th",
+        actorRole: "ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        date: "16 พ.ย. 69",
+        time: "10:50 น.",
+        timestamp: "16 พ.ย. 2569 10:50 น.",
+        diff: [
+          { field: "ผังองค์กร", oldVal: "-", newVal: "Tree-ORG-ENV-2026" },
+          { field: "จำนวนโหนดในผัง", oldVal: "0", newVal: "16 หน่วยงานย่อย" }
+        ],
+        comment: "สร้างและเผยแพร่ผังองค์กรผ่านหน้า Create Org Chart"
+      },
+
+      // --- รายการเดิมที่มีคุณภาพ ---
       {
         id: "LOG-10492",
         module: "organizations",
-        moduleLabel: "จัดการหน่วยงาน",
+        moduleLabel: "จัดการหน่วยงาน & ผัง",
         actionType: "update",
         target: "สำนักงานเขตราชเทวี (ORG-89241)",
         actionTitle: "แก้ไขข้อมูลเขต",
@@ -720,7 +1020,7 @@
       {
         id: "LOG-10491",
         module: "cases",
-        moduleLabel: "เรื่องแจ้ง (Case)",
+        moduleLabel: "เรื่องแจ้ง & ค้นหาซ้ำ",
         actionType: "status",
         target: "Case #2026-BKK-94021",
         actionTitle: "เปลี่ยนสถานะเคส",
@@ -735,181 +1035,180 @@
         timestamp: "03 พ.ย. 2569 11:48 น.",
         diff: [
           { field: "สถานะเคส", oldVal: "กำลังดำเนินการ", newVal: "เสร็จสิ้น" },
-          { field: "เจ้าหน้าที่ผู้รับผิดชอบ", oldVal: "ยังไม่ระบุ", newVal: "นายสมชาย มีสุข (ฝ่ายโยธา)" }
+          { field: "เวลาปิดเคส", oldVal: "-", newVal: "03 พ.ย. 69 11:48 น." }
         ],
-        comment: "เจ้าหน้าที่ฝ่ายโยธาลงพื้นที่ลอกท่อและดูดเลนออกหมดแล้ว ตอนนี้น้ำระบายได้คล่องปกติ"
+        comment: "ท่อระบายน้ำไม่มีสิ่งอุดตัน น้ำไหลได้ปกติแล้ว"
       },
       {
         id: "LOG-10490",
         module: "cases",
-        moduleLabel: "เรื่องแจ้ง (Case)",
+        moduleLabel: "เรื่องแจ้ง & ค้นหาซ้ำ",
         actionType: "update",
-        target: "Case #2026-BKK-93998",
+        target: "Case #2026-BKK-93910",
         actionTitle: "ส่งต่อเรื่องให้ กฟน.",
-        summaryChange: "ส่งต่อให้ การไฟฟ้านครหลวง (กฟน.)",
-        fullSummary: "ส่งต่อเรื่องให้การไฟฟ้านครหลวง (กฟน.) เข้ามาดูหน้างาน",
-        actorName: "ชยานิษฐ์ (Admin)",
-        actorEmail: "chayanid@nectec.or.th",
-        actorRole: "ADMIN",
-        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        summaryChange: "เขตปทุมวัน ➔ กฟน. เขตคลองเตย",
+        fullSummary: "ส่งต่อเสาไฟส่องสว่างดับ ให้การไฟฟ้านครหลวงรับช่วงดูแล",
+        actorName: "กุลณัฐ (Operator)",
+        actorEmail: "kulnat.s@bkk.go.th",
+        actorRole: "OPERATOR",
+        actorAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80",
         date: "03 พ.ย. 69",
-        time: "11:12 น.",
-        timestamp: "03 พ.ย. 2569 11:12 น.",
+        time: "11:15 น.",
+        timestamp: "03 พ.ย. 2569 11:15 น.",
         diff: [
-          { field: "หน่วยงานรับผิดชอบ", oldVal: "สำนักงานเขตราชเทวี", newVal: "การไฟฟ้านครหลวง (MEA)" }
+          { field: "หน่วยงานผู้รับผิดชอบ", oldVal: "สำนักงานเขตปทุมวัน", newVal: "การไฟฟ้านครหลวง (กฟน.)" }
         ],
-        comment: "หน้างานเป็นสายไฟและสายสื่อสารพันกันอันตราย อยู่นอกเหนืออำนาจเขต เลยส่งเรื่องต่อให้ กฟน. ช่วยจัดระเบียบสาย"
+        comment: "พื้นที่เสาไฟฟ้าดังกล่าวอยู่ในความดูแลของ กฟน. คลองเตย"
       },
       {
         id: "LOG-10489",
         module: "organizations",
-        moduleLabel: "จัดการหน่วยงาน",
+        moduleLabel: "จัดการหน่วยงาน & ผัง",
         actionType: "create",
-        target: "ศูนย์บริการสาธารณสุข 4 (ORG-89240)",
+        target: "ฝ่ายรักษาความสะอาด เขตบางรัก (ORG-89299)",
         actionTitle: "เพิ่มหน่วยงานใหม่",
-        summaryChange: "ลงทะเบียนหน่วยงาน + ปักหมุดพิกัด",
-        fullSummary: "สร้างบัญชีทางการและกำหนดขอบเขตพื้นที่แขวงทุ่งพญาไท",
+        summaryChange: "สร้าง Node ฝ่ายใหม่ในระบบ",
+        fullSummary: "สร้างสังกัดหน่วยงานย่อยภายใต้สำนักงานเขตบางรัก",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
         actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
         date: "03 พ.ย. 69",
-        time: "10:15 น.",
-        timestamp: "03 พ.ย. 2569 10:15 น.",
+        time: "10:30 น.",
+        timestamp: "03 พ.ย. 2569 10:30 น.",
         diff: [
-          { field: "ชื่อหน่วยงาน", oldVal: "(ไม่มี)", newVal: "ศูนย์บริการสาธารณสุข 4 (คลินิกอบอุ่น)" },
-          { field: "พิกัดสำนักงาน", oldVal: "(ไม่มี)", newVal: "13.7634, 100.5348" }
+          { field: "รหัสหน่วยงาน", oldVal: "-", newVal: "ORG-89299" },
+          { field: "ระดับหน่วยงาน", oldVal: "-", newVal: "ระดับฝ่าย (Sub-division)" }
         ],
-        comment: "เพิ่มหน่วยงานเข้าระบบ เตรียมเปิดรับเรื่องร้องเรียนจากชาวบ้านในพื้นที่"
+        comment: "จัดตั้งฝ่ายใหม่เพื่อรองรับการบริหารจัดการขยะมูลฝอย"
       },
       {
         id: "LOG-10488",
         module: "users",
         moduleLabel: "ผู้ใช้งาน & สิทธิ์",
         actionType: "update",
-        target: "witthawat.s@bkk.go.th",
+        target: "สุรชัย สิทธิการ (surachai.s@bkk.go.th)",
         actionTitle: "ปรับสิทธิ์การใช้งาน",
-        summaryChange: "Viewer ➔ ผู้แก้ไข (เขตดินแดง)",
-        fullSummary: "เปลี่ยนสิทธิ์จาก Viewer เป็นผู้แก้ไข (EDITOR) ประจำเขตดินแดง",
-        actorName: "ชยานิษฐ์ (Admin)",
-        actorEmail: "chayanid@nectec.or.th",
-        actorRole: "ADMIN",
-        actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
-        date: "03 พ.ย. 69",
-        time: "09:20 น.",
-        timestamp: "03 พ.ย. 2569 09:20 น.",
+        summaryChange: "STAFF ➔ ADMIN",
+        fullSummary: "เลื่อนขั้นเป็นหัวหน้าฝ่าย และมอบสิทธิ์จัดการบัญชีระดับเขต",
+        actorName: "ดร.วรภัทร (Super Admin)",
+        actorEmail: "worapat.k@bkk.go.th",
+        actorRole: "SUPER ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80",
+        date: "02 พ.ย. 69",
+        time: "16:20 น.",
+        timestamp: "02 พ.ย. 2569 16:20 น.",
         diff: [
-          { field: "สิทธิ์การใช้งาน", oldVal: "VIEWER (ดูได้อย่างเดียว)", newVal: "EDITOR (แก้ไขได้)" },
-          { field: "สังกัดเขต", oldVal: "ส่วนกลาง", newVal: "สำนักงานเขตดินแดง" }
+          { field: "Role", oldVal: "STAFF", newVal: "ADMIN" },
+          { field: "สิทธิ์การเข้าถึง", oldVal: "จัดการเคสอย่างเดียว", newVal: "จัดการผู้ใช้ + ออกรายงาน" }
         ],
-        comment: "ปรับสิทธิ์เป็นผู้ดูแล ให้ช่วยตอบและจัดการเรื่องร้องเรียนของเขตดินแดง"
+        comment: "แต่งตั้งเป็นหัวหน้างานฝ่ายรักษาความสะอาดคนใหม่"
       },
       {
         id: "LOG-10487",
         module: "organizations",
-        moduleLabel: "จัดการหน่วยงาน",
+        moduleLabel: "จัดการหน่วยงาน & ผัง",
         actionType: "update",
-        target: "ผังองค์กร: สำนักการระบายน้ำ",
+        target: "ผังองค์กรสำนักงานเขตปทุมวัน (ORG-89012)",
         actionTitle: "ปรับสายงานในผัง",
-        summaryChange: "ย้าย 'กลุ่มงานระบายน้ำ' ➔ 'กองระบบคลอง'",
-        fullSummary: "ย้ายกลุ่มงานระบบระบายน้ำฝั่งตะวันออกไปสังกัดกองระบบคลอง",
-        actorName: "ประวิทย์ (Editor)",
-        actorEmail: "prawit.r@bkk.go.th",
-        actorRole: "EDITOR",
-        actorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80",
-        date: "03 พ.ย. 69",
-        time: "08:35 น.",
-        timestamp: "03 พ.ย. 2569 08:35 น.",
-        diff: [
-          { field: "หน่วยงานต้นสังกัด", oldVal: "สำนักการระบายน้ำ", newVal: "กองระบบคลอง" }
-        ],
-        comment: "ย้ายฝ่ายงานให้ตรงตามผังองค์กรใหม่ปี 2570"
-      },
-      {
-        id: "LOG-10486",
-        module: "security",
-        moduleLabel: "Reset OTP",
-        actionType: "update",
-        target: "เบอร์: 089-765-xxxx",
-        actionTitle: "ปลดล็อก OTP",
-        summaryChange: "โดนล็อก ➔ พร้อมใช้งาน (ล้างรอบผิด)",
-        fullSummary: "ล้างประวัติการใส่รหัสผิดเกิน 5 ครั้ง และส่งรหัส OTP ให้ใหม่",
+        summaryChange: "ย้ายฝ่ายโยธา ➔ ขึ้นตรงปลัดเขต",
+        fullSummary: "ย้ายสายการบังคับบัญชาฝ่ายโยธาให้ขึ้นตรงต่อปลัดเขต",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
         actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
         date: "02 พ.ย. 69",
-        time: "16:40 น.",
-        timestamp: "02 พ.ย. 2569 16:40 น.",
+        time: "15:40 น.",
+        timestamp: "02 พ.ย. 2569 15:40 น.",
         diff: [
-          { field: "สถานะ OTP", oldVal: "โดนระงับชั่วคราว (Locked)", newVal: "พร้อมใช้งาน (Active)" },
-          { field: "จำนวนครั้งที่กดผิด", oldVal: "5 ครั้ง", newVal: "0 ครั้ง" }
+          { field: "ผู้บังคับบัญชาโดยตรง", oldVal: "รองปลัดเขต (โยธา)", newVal: "ปลัดสำนักงานเขต" }
         ],
-        comment: "เจ้าหน้าที่เพิ่งเปลี่ยนซิมเบอร์ใหม่แล้วกดรหัสผิดจนระบบล็อก ตรวจสอบตัวตนแล้วจึงปลดล็อกให้ใช้งานได้ต่อ"
+        comment: "ปรับโครงสร้างการบริหารตามคำสั่งเขตที่ 142/2569"
+      },
+      {
+        id: "LOG-10486",
+        module: "security",
+        moduleLabel: "ความปลอดภัย & OTP",
+        actionType: "security",
+        target: "บัญชี: thanawat.p@nectec.or.th",
+        actionTitle: "รีเซ็ต OTP 2FA",
+        summaryChange: "รีเซ็ต Secret Key 2FA",
+        fullSummary: "ผู้ใช้ทำโทรศัพท์เครื่องเดิมสูญหาย ขอรีเซ็ต 2FA ผ่านแอดมินกลาง",
+        actorName: "ดร.วรภัทร (Super Admin)",
+        actorEmail: "worapat.k@bkk.go.th",
+        actorRole: "SUPER ADMIN",
+        actorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80",
+        date: "02 พ.ย. 69",
+        time: "14:10 น.",
+        timestamp: "02 พ.ย. 2569 14:10 น.",
+        diff: [
+          { field: "2FA Status", oldVal: "Configured", newVal: "Reset & Awaiting Setup" }
+        ],
+        comment: "ยืนยันตัวตนด้วยบัตรข้าราชการเรียบร้อยแล้ว รีเซ็ตผ่านหน้า Reset OTP"
       },
       {
         id: "LOG-10485",
         module: "cases",
-        moduleLabel: "เรื่องแจ้ง (Case)",
+        moduleLabel: "เรื่องแจ้ง & ค้นหาซ้ำ",
         actionType: "update",
-        target: "Case #2026-BKK-93810",
+        target: "Case #2026-BKK-93512",
         actionTitle: "ย้ายหมุดพิกัด",
-        summaryChange: "ย้ายหมุดไปตรงเสาไฟ ปากซอยเพชรบุรี 7",
-        fullSummary: "ขยับหมุดพิกัดให้ตรงกับเสาไฟต้นที่มีปัญหาจริง ปากซอยเพชรบุรี 7",
+        summaryChange: "13.7462, 100.5312 ➔ 13.7468, 100.5320",
+        fullSummary: "ปรับแก้พิกัดให้ตรงกับจุดที่ท่อระบายน้ำชำรุดจริง",
         actorName: "สมชาย (Staff)",
         actorEmail: "somchai.m@bkk.go.th",
         actorRole: "STAFF",
         actorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
         date: "02 พ.ย. 69",
-        time: "14:15 น.",
-        timestamp: "02 พ.ย. 2569 14:15 น.",
+        time: "11:05 น.",
+        timestamp: "02 พ.ย. 2569 11:05 น.",
         diff: [
-          { field: "พิกัดตำแหน่ง", oldVal: "13.7540, 100.5280", newVal: "13.7548, 100.5292" }
+          { field: "ละติจูด/ลองจิจูด", oldVal: "13.7462, 100.5312", newVal: "13.7468, 100.5320" }
         ],
-        comment: "คนแจ้งปักหมุดคลาดไปประมาณ 80 เมตร ช่างไปดูหน้างานแล้วเลยย้ายหมุดให้ตรงกับเสาไฟที่สายไฟขาด"
+        comment: "ผู้แจ้งปักหมุดคลาดเคลื่อนไปประมาณ 80 เมตร เจ้าหน้าที่ลงพื้นที่และแก้ไขพิกัดแล้ว"
       },
       {
         id: "LOG-10484",
         module: "organizations",
-        moduleLabel: "จัดการหน่วยงาน",
-        actionType: "delete",
-        target: "หน่วยเฉพาะกิจพิเศษ (ORG-1004)",
+        moduleLabel: "จัดการหน่วยงาน & ผัง",
+        actionType: "status",
+        target: "ฝ่ายเทศกิจ เขตดินแดง (ORG-89104)",
         actionTitle: "ปิดรับเรื่องชั่วคราว",
-        summaryChange: "เปิดรับเรื่อง ➔ ซ่อนไว้ก่อน",
-        fullSummary: "เปลี่ยนสถานะหน่วยงานเป็น 'ซ่อนไว้ก่อน' เนื่องจากจบภารกิจแล้ว",
+        summaryChange: "เปิดรับเรื่อง ➔ ปิดรับเรื่องชั่วคราว",
+        fullSummary: "ระบบปิดรับเรื่องชั่วคราวเนื่องจากมีการย้ายที่ทำการสำนักงาน",
         actorName: "ชยานิษฐ์ (Admin)",
         actorEmail: "chayanid@nectec.or.th",
         actorRole: "ADMIN",
         actorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
-        date: "02 พ.ย. 69",
-        time: "11:00 น.",
-        timestamp: "02 พ.ย. 2569 11:00 น.",
+        date: "01 พ.ย. 69",
+        time: "09:00 น.",
+        timestamp: "01 พ.ย. 2569 09:00 น.",
         diff: [
-          { field: "สถานะการรับเรื่อง", oldVal: "เปิดใช้งานปกติ", newVal: "ซ่อนไว้ก่อน (ปิดรับเรื่อง)" }
+          { field: "สถานะการรับเรื่อง", oldVal: "เปิดรับเรื่องปกติ", newVal: "ปิดรับเรื่องชั่วคราว (3 วัน)" }
         ],
-        comment: "ปิดรับเรื่องชั่วคราวเนื่องจากเสร็จสิ้นภารกิจเฉพาะกิจแล้ว"
+        comment: "ปรับปรุงระบบโครงข่ายภายในสำนักงานใหม่"
       },
       {
         id: "LOG-10483",
         module: "cases",
-        moduleLabel: "เรื่องแจ้ง (Case)",
+        moduleLabel: "เรื่องแจ้ง & ค้นหาซ้ำ",
         actionType: "create",
-        target: "Case #2026-BKK-93774",
+        target: "Case #2026-BKK-93001",
         actionTitle: "เปิดเคสแทนประชาชน",
-        summaryChange: "แจ้งเคสด่วน: ฝาท่อชำรุด",
-        fullSummary: "เจ้าหน้าที่เดินตรวจพื้นที่แล้วเจอฝาท่อแตก เลยเปิดเรื่องแจ้งซ่อมด่วนเอง",
-        actorName: "ประวิทย์ (Editor)",
-        actorEmail: "prawit.r@bkk.go.th",
-        actorRole: "EDITOR",
-        actorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80",
+        summaryChange: "บันทึกเรื่องร้องเรียนใหม่ทางโทรศัพท์สายด่วน",
+        fullSummary: "ประชาชนโทรแจ้งทางโทรศัพท์สายด่วน 1555 เรื่องกลิ่นขยะสะสม",
+        actorName: "กุลณัฐ (Operator)",
+        actorEmail: "kulnat.s@bkk.go.th",
+        actorRole: "OPERATOR",
+        actorAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80",
         date: "01 พ.ย. 69",
-        time: "15:30 น.",
-        timestamp: "01 พ.ย. 2569 15:30 น.",
+        time: "08:30 น.",
+        timestamp: "01 พ.ย. 2569 08:30 น.",
         diff: [
-          { field: "ช่องทางรับแจ้ง", oldVal: "(ไม่มี)", newVal: "เจ้าหน้าที่ตรวจพบเอง" },
-          { field: "ความเร่งด่วน", oldVal: "(ไม่มี)", newVal: "ด่วนมาก" }
+          { field: "ช่องทางการแจ้ง", oldVal: "-", newVal: "สายด่วน กทม. 1555" },
+          { field: "ประเภทปัญหา", oldVal: "-", newVal: "ความสะอาดและขยะมูลฝอย" }
         ],
-        comment: "ฝาท่อแตกกลัวคนเดินตกตอนกลางคืน เลยเอากรวยส้มมาตั้งเตือนไว้ก่อน แล้วประสานฝ่ายโยธามาเปลี่ยนฝาใหม่"
+        comment: "รับเรื่องจากคุณวิภาดา แจ้งปัญหาขยะตกค้างหน้าหมู่บ้าน"
       }
     ];
 
@@ -917,10 +1216,13 @@
 
     const moduleConfig = {
       all: { label: 'ทั้งหมด', icon: 'history', iconBg: 'bg-slate-100', iconColor: 'text-slate-700' },
-      organizations: { label: 'จัดการหน่วยงาน', icon: 'building-2', iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
-      cases: { label: 'เรื่องแจ้ง (Case)', icon: 'file-text', iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
+      organizations: { label: 'จัดการหน่วยงาน & ผัง', icon: 'building-2', iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
+      quota: { label: 'สถิติ & โควตา API', icon: 'bar-chart-3', iconBg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
+      cases: { label: 'เรื่องแจ้ง & ค้นหาซ้ำ', icon: 'file-text', iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
       users: { label: 'ผู้ใช้งาน & สิทธิ์', icon: 'users', iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
-      security: { label: 'Reset OTP', icon: 'key-round', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600' }
+      security: { label: 'ความปลอดภัย & OTP', icon: 'shield-check', iconBg: 'bg-rose-50', iconColor: 'text-rose-600' },
+      chatbot: { label: 'แชทบอท & LINE', icon: 'bot', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600' },
+      assessments: { label: 'แบบประเมิน & อื่นๆ', icon: 'clipboard-check', iconBg: 'bg-teal-50', iconColor: 'text-teal-600' }
     };
 
     const actionConfig = {
@@ -1105,7 +1407,7 @@
       currentModule = key;
 
       // 1. Update Desktop Tabs
-      const tabIds = ['all', 'organizations', 'cases', 'users', 'security'];
+      const tabIds = ['all', 'organizations', 'quota', 'cases', 'users', 'security', 'chatbot', 'assessments'];
       tabIds.forEach(id => {
         const btn = document.getElementById('btn-tab-' + id);
         if (!btn) return;
