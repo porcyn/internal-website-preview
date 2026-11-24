@@ -325,6 +325,7 @@
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
     <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] overflow-hidden h-screen">
 
     <!-- Topbar Header (Cleaned up: Single primary CTA elsewhere, high contrast) -->
@@ -475,22 +476,9 @@
                     </span>
                   </div>
 
-                  <!-- Security Masked Token: High-Contrast Pills, Target Size >= 32px (SC 2.5.8 & SC 1.4.3) -->
+                  <!-- Organization Meta: ID Badge (Clean & focused on Req, No unnecessary Token) -->
                   <div class="flex items-center gap-2.5 text-xs text-slate-700 flex-wrap">
                     <span class="font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-300" id="selected-org-id">ID: ORG-1002</span>
-                    <div class="inline-flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-xl border border-slate-300">
-                      <i data-lucide="key" class="w-4 h-4 text-slate-600" aria-hidden="true"></i>
-                      <span class="text-slate-700 font-semibold">Token:</span>
-                      <code id="masked-token-display" class="font-mono text-xs font-bold text-slate-900">tk_live_••••••••842</code>
-                      <div class="flex items-center gap-1 ml-1 border-l border-slate-300 pl-2">
-                        <button type="button" onclick="toggleTokenMask()" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-700 hover:text-slate-950 hover:bg-slate-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600" title="แสดง/ซ่อน Token" aria-label="แสดงหรือซ่อน Exchange Token">
-                          <i data-lucide="eye" id="token-eye-icon" class="w-4 h-4 text-slate-700"></i>
-                        </button>
-                        <button type="button" onclick="copyToken()" class="w-8 h-8 rounded-lg flex items-center justify-center text-blue-700 hover:text-blue-950 hover:bg-blue-100 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600" title="คัดลอก Token" aria-label="คัดลอก Exchange Token">
-                          <i data-lucide="copy" class="w-4 h-4 text-blue-700"></i>
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -1126,7 +1114,6 @@
     let selectedOrgId = "ORG-1002"; // Default to critical org (สำนักการระบายน้ำ 102%)
     let activeFilter = "all"; // 'all' | 'exceeded' | 'near-limit' | 'normal'
     let searchQuery = "";
-    let isTokenMasked = true;
     let currentSectionTab = "daily"; // 'daily' | 'logs'
 
     // Helper: get filtered and sorted organizations
@@ -1321,9 +1308,6 @@
         }
       }
 
-      // Token Display
-      updateTokenDisplay(org);
-
       // Usage Status Card
       const elUsageBadge = document.getElementById("usage-status-badge");
       const elHeadline = document.getElementById("usage-headline");
@@ -1418,29 +1402,6 @@
       renderAuditLogs(org);
 
       if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-
-    // --- 6. TOKEN DISPLAY & MASKING ---
-    function updateTokenDisplay(org) {
-      const elDisplay = document.getElementById("masked-token-display");
-      const eyeIcon = document.getElementById("token-eye-icon");
-      if (!elDisplay) return;
-
-      if (isTokenMasked) {
-        const last4 = org.token.slice(-4);
-        elDisplay.textContent = `tk_live_••••••••${last4}`;
-        if (eyeIcon) eyeIcon.setAttribute("data-lucide", "eye");
-      } else {
-        elDisplay.textContent = org.token;
-        if (eyeIcon) eyeIcon.setAttribute("data-lucide", "eye-off");
-      }
-      if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-
-    function toggleTokenMask() {
-      isTokenMasked = !isTokenMasked;
-      const org = organizationsData.find(o => o.id === selectedOrgId);
-      if (org) updateTokenDisplay(org);
     }
 
     // --- 7. RENDER DAILY CHART (ACCESSIBLE, THRESHOLD LINE, CLAMPED TOOLTIP) ---
@@ -1859,18 +1820,6 @@
         toast.classList.remove("translate-y-0", "opacity-100");
         toast.classList.add("translate-y-12", "opacity-0", "pointer-events-none");
       }, 3500);
-    }
-
-    // --- 14. COPY TOKEN ---
-    function copyToken() {
-      const org = organizationsData.find(o => o.id === selectedOrgId);
-      if (!org) return;
-
-      navigator.clipboard.writeText(org.token).then(() => {
-        showToast("คัดลอก Exchange Token เรียบร้อยแล้ว");
-      }).catch(() => {
-        showToast("ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยตนเอง");
-      });
     }
 
     // --- 15. REFRESH DATA SIMULATION ---
